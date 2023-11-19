@@ -79,7 +79,7 @@
                 CRUD_UserModal.style.display = "block";
                 $(".modal-header #title_modal").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("สร้างข้อมูลผู้ใช้");
-                $(".modal-body #url_route").val("dashboard/owner/create/3");
+                $(".modal-body #url_route").val("dashboard/owner/create/2");
             } else if (load_check == 2) {
                 CRUD_UserModal.style.display = "block";
                 const rowData = JSON.parse(decodeURIComponent(data_encode));

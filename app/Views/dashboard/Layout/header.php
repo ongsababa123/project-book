@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit:300,400,400i,700&display=swap">
+    <link rel="stylesheet" href="<?= base_url('dist/css/fontsgoogle.css'); ?>">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= base_url('plugins/fontawesome-free/css/all.min.css'); ?>">
     <!-- Theme style -->
@@ -33,7 +33,7 @@
     tbody {
         border-bottom: 10px solid #ccc;
         text-align: center;
-        
+
     }
 
     .table thead th {
@@ -90,7 +90,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-light-primary elevation-4">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="<?= site_url('/dashboard/index'); ?>" class="brand-link">
                 <span class="brand-text ml-1">ระบบการจัดการ ร้านบางเล่ม</span>
@@ -123,7 +123,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                        <a href="<?= site_url('/dashboard/employee/index'); ?>" class="nav-link">
+                            <a href="<?= site_url('/dashboard/employee/index'); ?>" class="nav-link">
                                 <i class="nav-icon fas fa-user-tie"></i>
                                 <p>
                                     ข้อมูลพนักงาน
@@ -131,7 +131,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                        <a href="<?= site_url('/dashboard/owner/index'); ?>" class="nav-link">
+                            <a href="<?= site_url('/dashboard/owner/index'); ?>" class="nav-link">
                                 <i class="nav-icon fas fa-user-secret"></i>
                                 <p>
                                     ข้อมูลเจ้าของร้าน
@@ -139,7 +139,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                        <a href="<?= site_url('/dashboard/admin/index'); ?>" class="nav-link">
+                            <a href="<?= site_url('/dashboard/admin/index'); ?>" class="nav-link">
                                 <i class="nav-icon fas fa-user-shield"></i>
                                 <p>
                                     ข้อมูลผู้ดูแลระบบ
@@ -151,7 +151,7 @@
                         </div>
                         <li class="nav-header">ระบบการจัดการหนังสือ</li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="<?= site_url('/dashboard/book/index'); ?>" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
                                     ข้อมูลหนังสือ
@@ -159,10 +159,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="<?= site_url('/dashboard/history/index'); ?>" class="nav-link">
                                 <i class="nav-icon fas fa-history"></i>
                                 <p>
                                     ประวัติการเช่า
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= site_url('/dashboard/category/index'); ?>" class="nav-link">
+                                <i class="nav-icon fas fa-bookmark"></i>
+                                <p>
+                                    หมวดหมู่หนังสือ
                                 </p>
                             </a>
                         </li>
@@ -171,7 +179,7 @@
                         </div>
                         <li class="nav-header">ระบบการจัดการระบบ</li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                        <a href="<?= site_url('/dashboard/late-price/index'); ?>" class="nav-link">
                                 <i class="nav-icon fas fa-cash-register"></i>
                                 <p>
                                     ข้อมูลค่าปรับ
@@ -179,7 +187,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                        <a href="<?= site_url('/dashboard/promotion/index'); ?>" class="nav-link">
                                 <i class="nav-icon fas fa-ad"></i>
                                 <p>
                                     ข้อมูลโปรโมชั่น

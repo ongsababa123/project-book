@@ -4,13 +4,24 @@ namespace App\Controllers;
 
 use App\Models\HistoryModels;
 use App\Models\UserModels;
-
+use App\Models\BookModels;
+use App\Models\CategoryModels;
+use App\Models\LateFeesModels;
 class UserController extends BaseController
 {
     public function customer_index()
     {
+        $BookModels = new BookModels();
+        $HistoryModels = new HistoryModels();
+        $CategoryModels = new CategoryModels();
+        $LateFeesModels = new LateFeesModels();
+        $data['data_book'] = $BookModels->findAll();
+        $data['data_category'] = $CategoryModels->findAll();
+        $data['data_latefees'] = $LateFeesModels->findAll();
+        $data['data_history'] = $HistoryModels->findAll();
+
         echo view('dashboard/layout/header');
-        echo view('dashboard/customer');
+        echo view('dashboard/customer' , $data);
     }
 
     public function employee_index()
@@ -23,6 +34,12 @@ class UserController extends BaseController
     {
         echo view('dashboard/layout/header');
         echo view('dashboard/owner');
+    }
+
+    public function admin_index()
+    {
+        echo view('dashboard/layout/header');
+        echo view('dashboard/admin');
     }
 
     public function create_user($type = null)

@@ -1,4 +1,13 @@
 <title>Customer Table</title>
+<style>
+    #form_details_history {
+        display: none;
+    }
+
+    #form_details_image {
+        display: none;
+    }
+</style>
 
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
@@ -202,7 +211,7 @@
                         'render': function (data, type, row, meta) {
                             const encodedRowData = encodeURIComponent(JSON.stringify(row));
                             return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-user-edit"></i> แก้ไขข้อมูล</button>
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>`;
+                            <a href="<?= site_url('dashboard/history/history/user/') ?>${data.id_user}" target="_blank" class="btn btn-info"><i class="fas fa-info-circle"></i> ประวัติการเช่า</a>`;
                         }
                     },
                 ]
@@ -275,4 +284,3 @@
             });
         }
     </script>
-    

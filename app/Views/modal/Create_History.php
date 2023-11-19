@@ -1,0 +1,127 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="overlay preloader">
+            <i class="fas fa-2x fa-sync fa-spin"></i>
+        </div>
+        <div class="modal-header bg-info">
+            <h4 class="modal-title" id="title_modal" name="title_modal"></h4>
+        </div>
+        <div class="modal-body">
+            <form class="mb-3" id="form_create_history" action="javascript:void(0)" method="post"
+                enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>ชือหนังสือ</label>
+                    <div class="select2-secondary ">
+                        <select class="select2" multiple="multiple" data-placeholder="Select Books"
+                            data-dropdown-css-class="select2-secondary" style="width: 100%;" id="name_book_create"
+                            required>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>ชื่อผู้ยืม</label>
+                    <div class="select2-secondary ">
+                        <select class="form-control gray-text" name="name_user_create" id="name_user_create">
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>วันที่ยืม</label>
+                            <div class="input-group date" id="rental_date__create" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input gray-text"
+                                    data-target="#rental_date__create" name="rental_date_create" id="rental_date_create"
+                                    required />
+                                <div class="input-group-append" data-target="#rental_date__create"
+                                    data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>วันที่ต้องคืน</label>
+                            <div class="input-group date" id="return_date__crate" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input gray-text"
+                                    data-target="#return_date__crate" name="return_date_create" id="return_date_create"
+                                    required />
+                                <div class="input-group-append" data-target="#return_date__crate"
+                                    data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>ราคาหนังสือ(ยอดรวม)</label>
+                            <input type="text" class="form-control" placeholder="ราคาเช่า(รวม)" id="price_book_"
+                                name="price_book_" disabled>
+                        </div>
+                    </div>
+                </div>
+                <input type="text" class="form-control" placeholder="กรอกวันที่ยืม" id="price_book_create" name="price_book_create" hidden>
+                <input type="text" id="url_route" name="url_route" hidden>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"></button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".overlay").hide();
+    });
+
+    $("#form_create_history").on('submit', function (e) {
+        e.preventDefault();
+        const urlRouteInput = document.getElementById("url_route");
+        action_(urlRouteInput.value, 'form_create_history');
+    });
+</script>
+<script>
+    $(function () {
+        //Date picker
+        $('#return_date__crate').datetimepicker({
+            format: 'YYYY-MM-DD',
+        });
+        $('#rental_date__create').datetimepicker({
+            format: 'YYYY-MM-DD',
+        });
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        $(".select2").select2({
+            closeOnSelect: false,
+            placeholder: "Placeholder",
+            allowHtml: true,
+            allowClear: true,
+            tags: true // creates new options on the fly
+        });
+    });
+</script>
+<script>
+    var data_book = <?php echo json_encode($data_book); ?>;
+
+    $("#name_book_create").on('change', function () {
+        var selectedValues = $(this).val();
+        let price__ = 0;
+
+        if (selectedValues) {
+            selectedValues.forEach(element => {
+                let book__mat = data_book.find(element_book___ => element_book___.id_book === element);
+                price__ = price__ + parseInt(book__mat.price);
+                $(".modal-body #price_book_create").val(price__);
+                $(".modal-body #price_book_").val(price__);
+            });
+        }
+    });
+</script>
