@@ -35,7 +35,7 @@ class Address extends \Faker\Provider\Address
         'Libanas', 'Liberija', 'Libija', 'Lichtenšteinas', 'Lietuva', 'Liuksemburgas', 'Macao', 'Madagaskaras',
         'Makedonija', 'Malaizija', 'Malavis', 'Maldivai', 'Malis', 'Malta', 'Marianos šiaurinės salos', 'Marokas',
         'Martinika', 'Maršalo Salos', 'Mauricijus', 'Mauritanija', 'Mayotte’as', 'Meino sala', 'Meksika', 'Mergelių salos
-    (JAV)', 'Mianmaras', 'Mikronezija', 'Moldova', 'Monakas', 'Mongolija', 'Montserratas', 'Mozambikas', 'Namibija',
+    (JAV)', 'Mianmaras', 'Mikronezija', 'Moldova', 'Monakas', 'Mongolija', 'Kanitas', 'Mozambikas', 'Namibija',
         'Naujoji Kaledonija', 'Naujoji Zelandija', 'Nauru', 'Nepalas', 'Nežinoma ar neteisinga sritis', 'Nigerija',
         'Nigeris', 'Nikaragva', 'Niue', 'Norfolko sala', 'Norvegija', 'Nyderlandai', 'Olandijos Antilai', 'Omanas',
         'Pakistanas', 'Palau', 'Palestinos teritorija', 'Panama', 'Papua Naujoji Gvinėja', 'Paragvajus', 'Peru', 'Pietų
