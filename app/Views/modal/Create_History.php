@@ -14,14 +14,15 @@
                     <div class="select2-secondary ">
                         <select class="select2" multiple="multiple" data-placeholder="Select Books"
                             data-dropdown-css-class="select2-secondary" style="width: 100%;" id="name_book_create"
-                            required>
+                            required onchange="change()">
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>ชื่อผู้ยืม</label>
                     <div class="select2-secondary ">
-                        <select class="form-control gray-text" name="name_user_create" id="name_user_create">
+                        <select class="form-control gray-text" name="name_user_create" id="name_user_create"
+                            onchange="change()">
                         </select>
                     </div>
                 </div>
@@ -58,13 +59,28 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
+                            <label>ส่วนลดโปรโมชั่น</label>
+                            <p id="details_promotion"></p>
+                            <input type="text" class="form-control" placeholder="โปรโมชั่น" id="promotion_book"
+                                name="promotion_book" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
                             <label>ราคาหนังสือ(ยอดรวม)</label>
                             <input type="text" class="form-control" placeholder="ราคาเช่า(รวม)" id="price_book_"
                                 name="price_book_" disabled>
                         </div>
                     </div>
                 </div>
-                <input type="text" class="form-control" placeholder="กรอกวันที่ยืม" id="price_book_create" name="price_book_create" hidden>
+                <input type="text" class="form-control" id="price_book_create"
+                    name="price_book_create" hidden>
+                <input type="text" class="form-control" id="sumid_promotion"
+                    name="sumid_promotion" hidden>
+                    <input type="text" class="form-control" id="sum_price_promotion"
+                    name="sum_price_promotion" hidden>
                 <input type="text" id="url_route" name="url_route" hidden>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"></button>
@@ -111,17 +127,30 @@
 <script>
     var data_book = <?php echo json_encode($data_book); ?>;
 
-    $("#name_book_create").on('change', function () {
-        var selectedValues = $(this).val();
+    function change() {
+        var selectedid_book = [];
         let price__ = 0;
-
-        if (selectedValues) {
-            selectedValues.forEach(element => {
-                let book__mat = data_book.find(element_book___ => element_book___.id_book === element);
+        var selectElement = document.getElementById("name_book_create");
+        var id_user = document.getElementById("name_user_create").value;
+        for (var i = 0; i < selectElement.options.length; i++) {
+            if (selectElement.options[i].selected) {
+                selectedid_book.push(selectElement.options[i].value);
+                let book__mat = data_book.find(element_book___ => element_book___.id_book === selectElement.options[i].value);
                 price__ = price__ + parseInt(book__mat.price);
-                $(".modal-body #price_book_create").val(price__);
-                $(".modal-body #price_book_").val(price__);
-            });
+            }
         }
-    });
+
+        check_promotion(id_user, selectedid_book, price__, function (result) {
+            console.log(result);
+            $(".modal-body #details_promotion").html(result.text);
+            $(".modal-body #promotion_book").val(result.price_promotion);
+            $(".modal-body #sum_price_promotion").val(result.price_promotion);
+
+            $(".modal-body #sumid_promotion").val(result.sumid_promotion);
+
+            $(".modal-body #price_book_create").val(result.price_result);
+            $(".modal-body #price_book_").val(result.price_result);
+        });
+
+    }
 </script>

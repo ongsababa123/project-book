@@ -92,6 +92,7 @@
             <?= $this->include("modal/Create_History"); ?>
         </div>
     </div>
+    <?= $this->include("Check_pro"); ?>
     <!-- InputMask -->
     <script src="<?= base_url('plugins/moment/moment.min.js'); ?>"></script>
     <!-- date-range-picker -->
@@ -131,7 +132,6 @@
                 });
 
                 data_user.forEach(element_user_cr => {
-                    console.log(element_user_cr.id_user);
                     if (element_user_cr.status_user == 1) {
                         var newOption = $('<option>').val(element_user_cr.id_user).text(element_user_cr.name + ' ' + element_user_cr.lastname);
                         $(".modal-body #name_user_create").append(newOption);
@@ -387,7 +387,6 @@
                                 } else{
                                     var price_fess_totel = 0;
                                 }
-                                console.log(price_fess_totel);
                                 return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>
                                 <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการคืนใช่หรือไม่', 'dashboard/history/submit/${data.id_history}/${price_fess_totel}')" ><i class="fas fa-check"></i></button>
                             <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" ><i class="fas fa-store-slash"></i></button>`;
@@ -406,6 +405,7 @@
             var formData = new FormData(document.getElementById(form));
             if (form == 'form_create_history') {
                 formData.append('name_book_create__', $('#name_book_create').val());
+                formData.append('sumid_promotion', $('#sumid_promotion').val());
             }
             $.ajax({
                 url: '<?= base_url() ?>' + url,
@@ -416,7 +416,6 @@
                 contentType: false,
                 dataType: "JSON",
                 success: function (response) {
-                    console.log(response);
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
@@ -500,7 +499,6 @@
                             'X-Requested-With': 'XMLHttpRequest'
                         }
                     }).done(function (response) {
-                        // console.log(response);
                         if (response.success) {
                             Swal.fire({
                                 title: response.message,

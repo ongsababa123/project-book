@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'DashboardController::index');
+$routes->get('/', 'HomeController::index');
 $routes->group("dashboard/", function ($routes) {
     $routes->match(['get', 'post'], 'index', 'DashboardController::index');  
 });
@@ -76,4 +76,5 @@ $routes->group("dashboard/promotion/", function ($routes) {
     $routes->match(['get', 'post'], 'index', 'PromotionController::index');  
     $routes->match(['get', 'post'], 'getdata', 'PromotionController::get_data_table');  //getData
     $routes->match(['get', 'post'], 'edit/(:num)/(:num)', 'PromotionController::edit_promotion/$1/$2');  //edit
+    $routes->match(['get', 'post'], 'calculate', 'PromotionController::cal_promotion');  //promotion1
 });

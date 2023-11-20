@@ -7,6 +7,7 @@ use App\Models\UserModels;
 use App\Models\BookModels;
 use App\Models\CategoryModels;
 use App\Models\LateFeesModels;
+use App\Models\PromotionModels;
 
 
 class HistoryController extends BaseController
@@ -44,6 +45,8 @@ class HistoryController extends BaseController
             'submit_date' => null,
             'sum_price' => $this->request->getVar('price_book_create'),
             'late_price' => null,
+            'id_promotion' => $this->request->getVar('sumid_promotion'),
+            'sum_price_promotion' => $this->request->getVar('sum_price_promotion'),
         ];
         $check = $HistoryModels->save($data);
         if ($check) {
@@ -146,18 +149,19 @@ class HistoryController extends BaseController
         $UserModels = new UserModels();
         $CategoryModels = new CategoryModels();
         $BookModels = new BookModels();
+        $PromotionModels = new PromotionModels();
 
         $data['data_book'] = $BookModels->findAll();
+        $data['data_promotion'] = $PromotionModels->findAll();
+        $data['data_category'] = $CategoryModels->findAll();
         $data['data_category'] = $CategoryModels->findAll();
         $data['data_history'] = $HistoryModels->getWhere(['id_history' => $id_history])->getResultArray();
 
         if (!empty($data['data_history'])) {
             $id_user = $data['data_history'][0]['id_user'];
             $data['data_user'] = $UserModels->getWhere(['id_user' => $id_user])->getResultArray();
-
             echo view('dashboard/bill_view', $data);
         } else {
-
             echo "History record not found for id_history: $id_history";
         }
     }

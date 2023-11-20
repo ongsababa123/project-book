@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\PromotionModels;
+use App\Models\HistoryModels;
 
 class PromotionController extends BaseController
 {
@@ -12,7 +13,7 @@ class PromotionController extends BaseController
         echo view('dashboard/promotion');
     }
 
-    public function edit_promotion($id_promotion = null , $status = null)
+    public function edit_promotion($id_promotion = null, $status = null)
     {
         helper(['form']);
         $PromotionModels = new PromotionModels();
@@ -61,4 +62,51 @@ class PromotionController extends BaseController
 
         return $this->response->setJSON($response);
     }
+
+    public function cal_promotion()
+    {
+        $promotionModels = new PromotionModels();
+        $data['promotion'] = $promotionModels->findAll();
+    
+        $historyModels = new HistoryModels();
+        $id_user = $this->request->getVar('id_user');
+        $sum_id_book = $this->request->getVar('sum_id_book');
+        $sum_price = $this->request->getVar('sum_price');
+        $sum_id_book_array = explode(',', $sum_id_book);
+        $text = null;
+        $sumid_promotion = null;
+        $price_promotion = 0;
+    
+        $countHis = $historyModels->where('id_user', $id_user)->countAllResults();
+    
+        if (count($sum_id_book_array) >= 3) {
+            if ($data['promotion'][0]['status'] == '1') {
+                $sum_price -= 10;
+                $text .= $data['promotion'][0]['details'] . '<br>';
+                $sumid_promotion .= $data['promotion'][0]['id_promotion']. ',';
+                $price_promotion += 10;
+            }
+        }
+    
+        if ($countHis >= 3) {
+            if ($data['promotion'][1]['status'] == '1') {
+                $sum_price -= 20;
+                $text .= $data['promotion'][1]['details'] . '<br>';
+                $sumid_promotion .= $data['promotion'][1]['id_promotion'];
+                $price_promotion += 20;
+            }
+        }
+        if ($sum_price < 0) {
+            $sum_price = 0;
+        }
+        $response = [
+            'price_result' => $sum_price,
+            'price_promotion' => $price_promotion,
+            'sumid_promotion' => $sumid_promotion,
+            'text' => $text,
+        ];
+    
+        return $this->response->setJSON($response);
+    }
+    
 }

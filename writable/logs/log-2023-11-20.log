@@ -1,0 +1,61 @@
+CRITICAL - 2023-11-20 04:14:09 --> Unsupported operand types: string + string
+in APPPATH\Controllers\PromotionController.php on line 82.
+ 1 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\PromotionController->cal_promotion()
+ 2 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PromotionController))
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-20 04:14:47 --> Unsupported operand types: string * int
+in APPPATH\Controllers\PromotionController.php on line 82.
+ 1 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\PromotionController->cal_promotion()
+ 2 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PromotionController))
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-20 04:15:48 --> Unsupported operand types: string * int
+in APPPATH\Controllers\PromotionController.php on line 82.
+ 1 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\PromotionController->cal_promotion()
+ 2 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PromotionController))
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-20 04:16:11 --> Unsupported operand types: string * int
+in APPPATH\Controllers\PromotionController.php on line 82.
+ 1 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\PromotionController->cal_promotion()
+ 2 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PromotionController))
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-20 04:16:23 --> Unsupported operand types: string * int
+in APPPATH\Controllers\PromotionController.php on line 82.
+ 1 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\PromotionController->cal_promotion()
+ 2 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\PromotionController))
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-20 08:01:32 --> Undefined variable $data
+in APPPATH\Views\dashboard\home.php on line 42.
+ 1 APPPATH\Views\dashboard\home.php(42): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $data', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\home.php', 42)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\home.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/home', [], true)
+ 5 APPPATH\Controllers\DashboardController.php(15): view('dashboard/home', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\DashboardController->index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DashboardController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-20 08:20:18 --> Undefined variable $data
+in APPPATH\Views\dashboard\home.php on line 164.
+ 1 APPPATH\Views\dashboard\home.php(164): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $data', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\home.php', 164)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\home.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/home', [], true)
+ 5 APPPATH\Controllers\DashboardController.php(15): view('dashboard/home', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\DashboardController->index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DashboardController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-20 09:12:18 --> Invalid file: "userview/home.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('userview/home.php')
+ 2 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/home', [], true)
+ 3 APPPATH\Controllers\HomeController.php(11): view('userview/home')
+ 4 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()

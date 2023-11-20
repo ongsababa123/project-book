@@ -61,4 +61,6 @@ class LatePriceController extends BaseController
 
         return $this->response->setJSON($response);
     }
+
+
 }

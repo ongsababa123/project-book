@@ -1,6 +1,7 @@
 <title>User History</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
 
+
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
         <section class="content-header">
@@ -66,19 +67,21 @@
                                                     </div>
                                                     <div>
                                                         <div>
-                                                            <?php $data_history_values = explode(',', $value['id_book']); ?>
+                                                            <?php $data_history_values = explode(',', $value['id_book']);
+                                                            $pice_total = 0;
+                                                            ?>
                                                             <?php foreach ($data_history_values as $index => $element): ?>
                                                                 <?php
                                                                 $filtered_books = array_filter($data_book, function ($value_book) use ($element) {
                                                                     return $value_book['id_book'] === $element;
                                                                 });
                                                                 $matching_book = reset($filtered_books);
+                                                                $pice_total = $pice_total + $matching_book['price'];
 
                                                                 $filtered_category = array_filter($data_category, function ($value_category) use ($matching_book) {
                                                                     return $value_category['id_category'] === $matching_book['category_id'];
                                                                 });
                                                                 $matching_category = reset($filtered_category);
-
                                                                 ?>
                                                                 <div class="row mb-2 mt-2" id="form_details_image">
                                                                     <div class="col-sm-2 ml-3 text-center border">
@@ -132,15 +135,15 @@
                                                         </div>
                                                         <div class="col-sm-12" style="background-color:#f0f0f0;">
                                                             <div class="row ml-3">
-                                                                <div class="col-sm-5 mt-3">
+                                                                <div class="col-sm-2 mt-3">
                                                                     <div class="form-group">
                                                                         <label>ยอดรวม</label>
                                                                         <p>
-                                                                            <?= $value['sum_price'] ?> บาท
+                                                                            <?= $pice_total ?> บาท
                                                                         </p>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-5 mt-3">
+                                                                <div class="col-sm-2 mt-3">
                                                                     <div class="form-group">
                                                                         <label>ค่าปรับ</label>
                                                                         <?php if ($value['late_price'] === null): ?>
@@ -150,6 +153,26 @@
                                                                                 <?= $value['late_price'] ?> บาท
                                                                             </p>
                                                                         <?php endif; ?>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-2 mt-3">
+                                                                    <div class="form-group">
+                                                                        <label>ส่วนลด</label>
+                                                                        <?php if ($value['sum_price_promotion'] === null): ?>
+                                                                            <p>ไม่มีมีส่วนลด</p>
+                                                                        <?php else: ?>
+                                                                            <p>
+                                                                                <?= $value['sum_price_promotion'] ?> บาท
+                                                                            </p>
+                                                                        <?php endif; ?>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 mt-3">
+                                                                    <div class="form-group">
+                                                                        <label>ยอดรวม(ทั้งหมด)</label>
+                                                                        <p>
+                                                                            <?= $value['sum_price'] ?> บาท
+                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-2">
@@ -181,6 +204,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <?php $pice_total = 0; ?>
                                             <?php endforeach; ?>
                                         </form>
                                     </div>

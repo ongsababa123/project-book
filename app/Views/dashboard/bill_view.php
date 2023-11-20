@@ -17,6 +17,9 @@
         font-family: 'Kanit', sans-serif;
     }
 </style>
+<?php
+$pice_total = 0;
+?>
 
 <body>
     <div class="wrapper">
@@ -82,7 +85,9 @@
                                 <?php $filtered_books = array_filter($data_book, function ($value_book) use ($element) {
                                     return $value_book['id_book'] === $element;
                                 });
-                                $matching_book = reset($filtered_books); ?>
+                                $matching_book = reset($filtered_books);
+                                $pice_total = $pice_total + $matching_book['price']
+                                    ?>
                                 <tr>
                                     <td>
                                         <?= $index + 1 ?>
@@ -140,7 +145,7 @@
                             <tr>
                                 <th style="width:50%">ราคารวม:</th>
                                 <td>
-                                    <?= $data_history[0]['sum_price'] ?>
+                                    <?= $pice_total ?>
                                 </td>
                             </tr>
                             <tr>
@@ -154,8 +159,14 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>ส่วนลดโปรโมชั่น (9.3%)</th>
-                                <td>10.34฿</td>
+                                <th>ส่วนลดโปรโมชั่น</th>
+                                <td>
+                                    <?php if ($data_history[0]['id_promotion'] === null): ?>
+                                        ไม่มีส่วนลด
+                                    <?php else: ?>
+                                        <?= $data_history[0]['sum_price_promotion'] ?>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                             <tr>
                                 <th>ยอดรวม:</th>

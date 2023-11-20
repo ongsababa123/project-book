@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-11-19T16:39:07.415Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="X8MTHsDx57oTEx1jt1L2" version="22.1.3" type="device">
+<mxfile host="app.diagrams.net" modified="2023-11-20T03:53:44.894Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="vlWeR2fyfx-tihFBJdjU" version="22.1.3" type="device">
   <diagram name="หน้า-1" id="HYrOw2vbyxPXMUA1Kma0">
-    <mxGraphModel dx="2377" dy="2437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1252" dy="1829" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -359,7 +359,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="9VO5_gYoO6aW6VXsWO2F-177" value="history_book_table" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;strokeColor=#000000;fontSize=16;strokeWidth=2;fillColor=#28a745;" parent="1" vertex="1">
-          <mxGeometry x="827" y="200" width="462.00000000000045" height="390" as="geometry" />
+          <mxGeometry x="827" y="200" width="462.00000000000045" height="430" as="geometry" />
         </mxCell>
         <mxCell id="9VO5_gYoO6aW6VXsWO2F-178" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" parent="9VO5_gYoO6aW6VXsWO2F-177" vertex="1">
           <mxGeometry y="30" width="462.00000000000045" height="40" as="geometry" />
@@ -523,6 +523,24 @@
             <mxRectangle width="202" height="40" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="lthAIileWM3t9Atvukou-1" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" vertex="1" parent="9VO5_gYoO6aW6VXsWO2F-177">
+          <mxGeometry y="390" width="462.00000000000045" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lthAIileWM3t9Atvukou-2" value="id_promotion (FK)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="lthAIileWM3t9Atvukou-1">
+          <mxGeometry width="153" height="40" as="geometry">
+            <mxRectangle width="153" height="40" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lthAIileWM3t9Atvukou-3" value="varchar (10)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="lthAIileWM3t9Atvukou-1">
+          <mxGeometry x="153" width="107" height="40" as="geometry">
+            <mxRectangle width="107" height="40" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lthAIileWM3t9Atvukou-4" value="รหัสโปรโมชั่น" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="lthAIileWM3t9Atvukou-1">
+          <mxGeometry x="260" width="202" height="40" as="geometry">
+            <mxRectangle width="202" height="40" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="9VO5_gYoO6aW6VXsWO2F-214" value="สถานะหนังสือ&lt;br&gt;0 = ไม่พร้อมใช้งาน&lt;br&gt;1 = พร้อมใช้งาน&lt;br&gt;2 = กำลังเช่า" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="70" y="397.5" width="140" height="105" as="geometry" />
         </mxCell>
@@ -530,7 +548,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="9VO5_gYoO6aW6VXsWO2F-257" value="late_fees_table" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;strokeColor=#000000;fontSize=16;strokeWidth=2;fillColor=#e39426;" parent="1" vertex="1">
-          <mxGeometry x="827" y="600" width="462.00000000000045" height="150" as="geometry" />
+          <mxGeometry x="827" y="680" width="462.00000000000045" height="150" as="geometry" />
         </mxCell>
         <mxCell id="9VO5_gYoO6aW6VXsWO2F-258" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" parent="9VO5_gYoO6aW6VXsWO2F-257" vertex="1">
           <mxGeometry y="30" width="462.00000000000045" height="40" as="geometry" />
@@ -778,10 +796,10 @@
         <mxCell id="dte0unYEwiuYdA9rihWW-10" value="สถานะหมวดหมู่&lt;br&gt;0 = off&lt;br&gt;1 = on" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="80" y="787.5" width="140" height="105" as="geometry" />
         </mxCell>
-        <mxCell id="4ymOLo8W9Ud6zIMEC1eV-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;endArrow=none;endFill=0;" edge="1" parent="1" source="4ymOLo8W9Ud6zIMEC1eV-1" target="9VO5_gYoO6aW6VXsWO2F-299">
+        <mxCell id="4ymOLo8W9Ud6zIMEC1eV-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;endArrow=none;endFill=0;" parent="1" source="4ymOLo8W9Ud6zIMEC1eV-1" target="9VO5_gYoO6aW6VXsWO2F-299" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="4ymOLo8W9Ud6zIMEC1eV-1" value="สถานะ&lt;br&gt;0 = off&lt;br&gt;1 = on" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="4ymOLo8W9Ud6zIMEC1eV-1" value="สถานะ&lt;br&gt;0 = off&lt;br&gt;1 = on" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="560" y="917" width="140" height="105" as="geometry" />
         </mxCell>
       </root>

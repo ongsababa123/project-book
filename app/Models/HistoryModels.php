@@ -10,6 +10,6 @@ class HistoryModels extends Model
 
     protected $primaryKey = 'id_history';
 
-    protected $allowedFields = ['id_user' , 'id_book' , 'rental_date' , 'return_date' , 'submit_date' , 'sum_price' , 'late_price' ];
+    protected $allowedFields = ['id_user' , 'id_book' , 'rental_date' , 'return_date' , 'submit_date' , 'sum_price' , 'late_price' , 'id_promotion', 'sum_price_promotion' ];
 
 }
