@@ -12,4 +12,21 @@ class BookModels extends Model
 
     protected $allowedFields = ['name_book' , 'book_author' , 'details' , 'pic_book' , 'status_book' , 'price' , 'category_id'];
 
+    public function searchProducts($search, $perPage, $offset)
+    {
+        if ($search) {
+            return $this->like('name_book', $search)->findAll($perPage, $offset);
+        } else {
+            return $this->findAll($perPage, $offset);
+        }
+    }
+
+    public function countSearchResults($search)
+    {
+        if ($search) {
+            return $this->like('name_book', $search)->countAllResults();
+        } else {
+            return $this->countAllResults();
+        }
+    }
 }

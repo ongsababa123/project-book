@@ -19,7 +19,9 @@ class Pager extends BaseConfig
      * and the desired group as $pagerGroup;
      *
      * @var array<string, string>
+     * 
      */
+    
     public array $templates = [
         'default_full'   => 'CodeIgniter\Pager\Views\default_full',
         'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
@@ -34,4 +36,4 @@ class Pager extends BaseConfig
      * The default number of results shown in a single page.
      */
     public int $perPage = 20;
-}
+    }

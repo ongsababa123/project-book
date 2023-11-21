@@ -6,6 +6,11 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'HomeController::index');
+$routes->group("/", function ($routes) {
+    $routes->match(['get', 'post'], 'book/booklist', 'HomeController::index_listbook');  
+
+});
+
 $routes->group("dashboard/", function ($routes) {
     $routes->match(['get', 'post'], 'index', 'DashboardController::index');  
 });

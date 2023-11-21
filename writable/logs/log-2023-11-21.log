@@ -1,0 +1,308 @@
+CRITICAL - 2023-11-21 02:16:24 --> Invalid file: "userview/layout/headeruser.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('userview/layout/headeruser.php')
+ 2 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/layout/headeruser', [], true)
+ 3 APPPATH\Controllers\HomeController.php(10): view('userview/layout/headeruser')
+ 4 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 02:16:30 --> Invalid file: "userview/layout/headeruser.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('userview/layout/headeruser.php')
+ 2 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/layout/headeruser', [], true)
+ 3 APPPATH\Controllers\HomeController.php(10): view('userview/layout/headeruser')
+ 4 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 02:16:31 --> Invalid file: "userview/layout/headeruser.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('userview/layout/headeruser.php')
+ 2 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/layout/headeruser', [], true)
+ 3 APPPATH\Controllers\HomeController.php(10): view('userview/layout/headeruser')
+ 4 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 02:16:32 --> Invalid file: "userview/layout/headeruser.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('userview/layout/headeruser.php')
+ 2 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/layout/headeruser', [], true)
+ 3 APPPATH\Controllers\HomeController.php(10): view('userview/layout/headeruser')
+ 4 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 02:16:32 --> Invalid file: "userview/layout/headeruser.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('userview/layout/headeruser.php')
+ 2 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/layout/headeruser', [], true)
+ 3 APPPATH\Controllers\HomeController.php(10): view('userview/layout/headeruser')
+ 4 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 02:16:32 --> Invalid file: "userview/layout/headeruser.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('userview/layout/headeruser.php')
+ 2 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/layout/headeruser', [], true)
+ 3 APPPATH\Controllers\HomeController.php(10): view('userview/layout/headeruser')
+ 4 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 02:16:33 --> Invalid file: "userview/layout/headeruser.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('userview/layout/headeruser.php')
+ 2 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/layout/headeruser', [], true)
+ 3 APPPATH\Controllers\HomeController.php(10): view('userview/layout/headeruser')
+ 4 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 02:16:33 --> Invalid file: "userview/layout/headeruser.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('userview/layout/headeruser.php')
+ 2 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/layout/headeruser', [], true)
+ 3 APPPATH\Controllers\HomeController.php(10): view('userview/layout/headeruser')
+ 4 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 03:29:50 --> Undefined variable $imageSrc
+in APPPATH\Views\userview\Home.php on line 94.
+ 1 APPPATH\Views\userview\Home.php(94): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $imageSrc', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Home.php', 94)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Home.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Home', [], true)
+ 5 APPPATH\Controllers\HomeController.php(14): view('userview/Home', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 03:30:22 --> Undefined variable $book
+in APPPATH\Views\userview\Home.php on line 104.
+ 1 APPPATH\Views\userview\Home.php(104): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $book', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Home.php', 104)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Home.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Home', [], true)
+ 5 APPPATH\Controllers\HomeController.php(14): view('userview/Home', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 04:25:50 --> The framework needs the following extension(s) installed and loaded: "GD".
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 74.
+ 1 SYSTEMPATH\Images\Handlers\GDHandler.php(34): CodeIgniter\Exceptions\FrameworkException::forMissingExtension('GD')
+ 2 SYSTEMPATH\Config\Services.php(347): CodeIgniter\Images\Handlers\GDHandler->__construct(Object(Config\Images))
+ 3 SYSTEMPATH\Config\BaseService.php(258): CodeIgniter\Config\Services::image('gd', Object(Config\Images), false)
+ 4 SYSTEMPATH\Config\BaseService.php(199): CodeIgniter\Config\BaseService::__callStatic('image', [...])
+ 5 SYSTEMPATH\Config\Services.php(338): CodeIgniter\Config\BaseService::getSharedInstance('image', null, null)
+ 6 SYSTEMPATH\Config\BaseService.php(258): CodeIgniter\Config\Services::image()
+ 7 APPPATH\Controllers\BookController.php(53): CodeIgniter\Config\BaseService::__callStatic('image', [])
+ 8 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\BookController->create_book()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BookController))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 04:26:01 --> The framework needs the following extension(s) installed and loaded: "GD".
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 74.
+ 1 SYSTEMPATH\Images\Handlers\GDHandler.php(34): CodeIgniter\Exceptions\FrameworkException::forMissingExtension('GD')
+ 2 SYSTEMPATH\Config\Services.php(347): CodeIgniter\Images\Handlers\GDHandler->__construct(Object(Config\Images))
+ 3 SYSTEMPATH\Config\BaseService.php(258): CodeIgniter\Config\Services::image('gd', Object(Config\Images), false)
+ 4 SYSTEMPATH\Config\BaseService.php(199): CodeIgniter\Config\BaseService::__callStatic('image', [...])
+ 5 SYSTEMPATH\Config\Services.php(338): CodeIgniter\Config\BaseService::getSharedInstance('image', null, null)
+ 6 SYSTEMPATH\Config\BaseService.php(258): CodeIgniter\Config\Services::image()
+ 7 APPPATH\Controllers\BookController.php(53): CodeIgniter\Config\BaseService::__callStatic('image', [])
+ 8 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\BookController->create_book()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BookController))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 04:26:08 --> Call to a member function isValid() on null
+in APPPATH\Controllers\BookController.php on line 34.
+ 1 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\BookController->create_book()
+ 2 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BookController))
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 04:36:17 --> Unsupported operand types: int + string
+in APPPATH\Views\userview\Booklist.php on line 74.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 4 APPPATH\Controllers\HomeController.php(24): view('userview/Booklist', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 04:36:31 --> Unsupported operand types: string + string
+in APPPATH\Views\userview\Booklist.php on line 74.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 4 APPPATH\Controllers\HomeController.php(24): view('userview/Booklist', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 04:39:17 --> mb_convert_encoding(): Unable to detect character encoding
+in APPPATH\Views\userview\Booklist.php on line 74.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mb_convert_encoding(): Unable to detect character encoding', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php', 74)
+ 2 APPPATH\Views\userview\Booklist.php(74): mb_convert_encoding('¸™à¹‚à¸¥à¸', 'UTF-8', 'auto')
+ 3 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php')
+ 4 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 6 APPPATH\Controllers\HomeController.php(24): view('userview/Booklist', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 04:40:53 --> Unsupported operand types: string + string
+in APPPATH\Views\userview\Booklist.php on line 77.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 4 APPPATH\Controllers\HomeController.php(24): view('userview/Booklist', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 07:20:22 --> Undefined variable $categories
+in APPPATH\Views\userview\Booklist.php on line 96.
+ 1 APPPATH\Views\userview\Booklist.php(96): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $categories', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php', 96)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 5 APPPATH\Controllers\HomeController.php(27): view('userview/Booklist', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 08:36:58 --> Undefined variable $pager
+in APPPATH\Views\userview\Booklist.php on line 189.
+ 1 APPPATH\Views\userview\Booklist.php(189): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $pager', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php', 189)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 5 APPPATH\Controllers\HomeController.php(35): view('userview/Booklist', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 08:39:30 --> Call to undefined method CodeIgniter\Pager\Pager::hasPrevious()
+in APPPATH\Views\userview\Booklist.php on line 193.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 4 APPPATH\Controllers\HomeController.php(32): view('userview/Booklist', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 08:43:01 --> Call to undefined method CodeIgniter\Pager\Pager::getPreviousPage()
+in APPPATH\Views\userview\Booklist.php on line 195.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 4 APPPATH\Controllers\HomeController.php(32): view('userview/Booklist', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 09:09:31 --> Call to a member function links() on null
+in APPPATH\Views\userview\Booklist.php on line 1.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 4 APPPATH\Controllers\HomeController.php(44): view('userview/Booklist', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 09:09:43 --> Call to a member function links() on null
+in APPPATH\Views\userview\Booklist.php on line 1.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 4 APPPATH\Controllers\HomeController.php(44): view('userview/Booklist', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 09:11:16 --> Call to a member function links() on null
+in APPPATH\Views\userview\Booklist.php on line 1.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 4 APPPATH\Controllers\HomeController.php(44): view('userview/Booklist', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 09:11:17 --> Call to a member function links() on null
+in APPPATH\Views\userview\Booklist.php on line 1.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 4 APPPATH\Controllers\HomeController.php(44): view('userview/Booklist', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 09:12:16 --> Call to undefined method App\Models\BookModels::pager
+in SYSTEMPATH\Model.php on line 873.
+ 1 APPPATH\Controllers\HomeController.php(38): CodeIgniter\Model->__call('pager', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 09:13:26 --> Call to undefined method App\Models\BookModels::pager
+in SYSTEMPATH\Model.php on line 873.
+ 1 APPPATH\Controllers\HomeController.php(38): CodeIgniter\Model->__call('pager', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 09:34:54 --> foreach() argument must be of type array|object, null given
+in APPPATH\Views\userview\Booklist.php on line 195.
+ 1 APPPATH\Views\userview\Booklist.php(195): CodeIgniter\Debug\Exceptions->errorHandler(2, 'foreach() argument must be of type array|object, null given', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php', 195)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 5 APPPATH\Controllers\HomeController.php(32): view('userview/Booklist', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 09:35:09 --> Undefined variable $pager
+in APPPATH\Views\userview\Booklist.php on line 195.
+ 1 APPPATH\Views\userview\Booklist.php(195): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $pager', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php', 195)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 5 APPPATH\Controllers\HomeController.php(27): view('userview/Booklist', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 09:35:19 --> Undefined variable $pager
+in APPPATH\Views\userview\Booklist.php on line 195.
+ 1 APPPATH\Views\userview\Booklist.php(195): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $pager', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php', 195)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 5 APPPATH\Controllers\HomeController.php(27): view('userview/Booklist', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-21 09:35:26 --> Undefined variable $pager
+in APPPATH\Views\userview\Booklist.php on line 195.
+ 1 APPPATH\Views\userview\Booklist.php(195): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $pager', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php', 195)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 5 APPPATH\Controllers\HomeController.php(27): view('userview/Booklist', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
