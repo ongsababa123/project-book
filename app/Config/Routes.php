@@ -6,8 +6,21 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'HomeController::index');
+$routes->get('/login', 'LoginController::index_Login');
+$routes->get('/register', 'LoginController::index_Register');
+$routes->get('/forgotpassword', 'LoginController::index_forgotpassword');
+$routes->get('/resetpassword', 'LoginController::index_resetpassword');
+
 $routes->group("/", function ($routes) {
-    $routes->match(['get', 'post'], 'book/booklist', 'HomeController::index_listbook');  
+    $routes->match(['get', 'post'], 'book/booklist', 'HomeController::index_listbook');
+
+    $routes->match(['get', 'post'], 'profile', 'HomeController::index_profile');
+
+    $routes->match(['get', 'post'], 'cart', 'HomeController::index_cart');
+
+
+    $routes->match(['get', 'post'], 'contact', 'HomeController::index_contact');  
+    $routes->match(['get', 'post'], '/contact/sendEmail', 'HomeController::sendMail');
 
 });
 

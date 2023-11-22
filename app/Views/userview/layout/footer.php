@@ -4,13 +4,13 @@
             <nav class="footer-nav">
                 <ul>
                     <li>
-                        <a href="<?= base_url('/')?>" target="_blank" style="color: white;">ร้านบางเล่ม</a>
+                        <a href="<?= base_url('/')?>"  style="color: white;">ร้านบางเล่ม</a>
                     </li>
                     <li>
-                        <a href="http://blog.creative-tim.com/" target="_blank" style="color: white;">รายการหนังสือ</a>
+                        <a href="http://blog.creative-tim.com/"  style="color: white;">รายการหนังสือ</a>
                     </li>
                     <li>
-                        <a href="https://www.creative-tim.com/license" target="_blank" style="color: white;">ติดต่อเรา</a>
+                        <a href="<?= site_url('/contact')?>"  style="color: white;">ติดต่อเรา</a>
                     </li>
                 </ul>
             </nav>

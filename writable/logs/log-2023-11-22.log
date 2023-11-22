@@ -1,0 +1,103 @@
+CRITICAL - 2023-11-22 02:51:34 --> preg_match(): Argument #2 ($subject) must be of type string, CodeIgniter\Email\Email given
+in SYSTEMPATH\Email\Email.php on line 480.
+ 1 SYSTEMPATH\Email\Email.php(480): preg_match('/\\<(.*)\\>/', Object(CodeIgniter\Email\Email), null)
+ 2 APPPATH\Controllers\HomeController.php(62): CodeIgniter\Email\Email->setFrom(Object(CodeIgniter\Email\Email))
+ 3 APPPATH\Controllers\HomeController.php(47): App\Controllers\HomeController->sendMail(Object(CodeIgniter\Email\Email), 'ฟหกฟห')
+ 4 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->sendEmail()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-11-22 02:53:04 --> Email: sendWithMail throwed ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Email\Email.php:1752
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mail(): Failed ...', 'C:\\xampp\\htdocs...', 1752)
+#1 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Email\Email.php(1752): mail('jailyootbandit@...', '=?UTF-8?Q?New=2...', '\xE0\xB8\x9F\xE0\xB8\xAB\xE0\xB8\x81\xE0\xB8\x9F\xE0\xB8\xAB...', 'Date: Wed, 22 N...', '-f s64060214211...')
+#2 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Email\Email.php(1684): CodeIgniter\Email\Email->sendWithMail()
+#3 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Email\Email.php(1578): CodeIgniter\Email\Email->spoolEmail()
+#4 C:\xampp\htdocs\project-book\app\Controllers\HomeController.php(66): CodeIgniter\Email\Email->send()
+#5 C:\xampp\htdocs\project-book\app\Controllers\HomeController.php(47): App\Controllers\HomeController->sendMail('s6406021421171@...', '\xE0\xB8\x9F\xE0\xB8\xAB\xE0\xB8\x81\xE0\xB8\x9F\xE0\xB8\xAB')
+#6 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(942): App\Controllers\HomeController->sendEmail()
+#7 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+#8 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\project-book\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2023-11-22 02:53:04 --> Email: Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.
+ERROR - 2023-11-22 02:53:04 --> 
+ERROR - 2023-11-22 03:09:24 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2023-11-22 03:09:24 --> 220 smtp.googlemail.com ESMTP d8-20020a170903230800b001cc0e3a29a8sm8617631plh.89 - gsmtp
+
+hello: 250-smtp.googlemail.com at your service, [1.10.184.93]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+Failed to authenticate password. Error: 534-5.7.9 Application-specific password required. Learn more at
+534 5.7.9  https://support.google.com/mail/?p=InvalidSecondFactor d8-20020a170903230800b001cc0e3a29a8sm8617631plh.89 - gsmtp
+
+ERROR - 2023-11-22 03:22:36 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2023-11-22 03:22:36 --> 220 smtp.googlemail.com ESMTP l14-20020a170902f68e00b001ca4ad86357sm8625740plg.227 - gsmtp
+
+hello: 250-smtp.googlemail.com at your service, [1.10.184.93]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+from: 250 2.1.0 OK l14-20020a170902f68e00b001ca4ad86357sm8625740plg.227 - gsmtp
+
+to: 555-5.5.2 Syntax error. Please visit
+555-5.5.2  https://support.google.com/a/answer/3221692 and review RFC 5321
+555 5.5.2 specifications for more information. l14-20020a170902f68e00b001ca4ad86357sm8625740plg.227 - gsmtp
+
+The following SMTP error was encountered: 555-5.5.2 Syntax error. Please visit
+555-5.5.2  https://support.google.com/a/answer/3221692 and review RFC 5321
+555 5.5.2 specifications for more information. l14-20020a170902f68e00b001ca4ad86357sm8625740plg.227 - gsmtp
+
+quit: 221 2.0.0 closing connection l14-20020a170902f68e00b001ca4ad86357sm8625740plg.227 - gsmtp
+
+ERROR - 2023-11-22 08:45:24 --> Error connecting to the database: mysqli_sql_exception: No connection could be made because the target machine actively refused it in C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:184
+Stack trace:
+#0 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(184): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'book_banglem', 3306, '', 0)
+#1 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Model.php(871): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\project-book\app\Controllers\HomeController.php(13): CodeIgniter\Model->__call('get', Array)
+#6 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(942): App\Controllers\HomeController->index()
+#7 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+#8 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\project-book\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No connection could be made because the target machine actively refused it in C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Model.php(871): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\project-book\app\Controllers\HomeController.php(13): CodeIgniter\Model->__call('get', Array)
+#5 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(942): App\Controllers\HomeController->index()
+#6 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+#7 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\project-book\index.php(79): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2023-11-22 08:45:24 --> Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+in SYSTEMPATH\Database\BaseConnection.php on line 428.
+ 1 SYSTEMPATH\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `book_table`
+ORDER BY RAND()
+ LIMIT 3', [], false)
+ 3 SYSTEMPATH\Model.php(871): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH\Controllers\HomeController.php(13): CodeIgniter\Model->__call('get', [])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()

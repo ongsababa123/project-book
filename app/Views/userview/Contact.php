@@ -1,0 +1,150 @@
+<title>Contact</title>
+<div class="main">
+    <br>
+    <div class="section mb-5">
+        <div class="container ">
+            <div class="row text-center">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <h2 class="title">ติดต่อเรา</h2>
+                    <hr>
+                    <h3 class="title">ส่งคำติชมหรือเสนอคำแนะนำเพิ่มเติม ทางเรารอข้อความจากคุณอยู่นะ <i
+                            class="fas fa-smile-wink" style="color: #eed21b;"></i></h3>
+                </div>
+            </div>
+            <!-- แสดงข้อความ error ถ้ามี -->
+            <?php if (session()->has('error')): ?>
+                <p>
+                    <?= session('error') ?>
+                </p>
+            <?php endif; ?>
+            <form id="form_sendemail" action="javascript:void(0)" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="name">ชื่อ</label>
+                            <input type="text" class="form-control" placeholder="ชื่อจริง" id="name" name="name">
+                        </div>
+                        <div class="col">
+                            <label for="lastname">นามสกุล</label>
+                            <input type="text" class="form-control" placeholder="นามสกุล" id="lastname" name="lastname">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">อีเมล์</label>
+                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                        placeholder="อีเมล์ของคุณ" required>
+                </div>
+                <div class="form-group">
+                    <label for="details">ส่งคำติชมหรือเสนอคำแนะนำเพิ่มเติม</label>
+                    <textarea class="form-control" id="details" rows="4" name="details"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" name="submit" value="Submit" id="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Your existing HTML code -->
+
+<script>
+    $(document).ready(function () {
+        $(".overlay").hide();
+    });
+
+    $("#form_sendemail").on('submit', function (e) {
+        e.preventDefault();
+        submitForm();
+    });
+
+    function submitForm() {
+        // Show the progress bar
+        const progressBar = Swal.fire({
+            title: 'Submitting...',
+            html: '<div class="progress"><div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>',
+            allowOutsideClick: false,
+            showCancelButton: false,
+            showConfirmButton: false,
+            closeOnEsc: false,
+            closeOnClickOutside: false,
+            didOpen: () => {
+                Swal.showLoading();
+                // Perform the form submission
+                action_('contact/sendEmail', 'form_sendemail', progressBar);
+            },
+        });
+    }
+
+    function action_(url, form, progressBar) {
+        var formData = new FormData(document.getElementById(form));
+        $.ajax({
+            url: '<?= base_url() ?>' + url,
+            type: "POST",
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                // Upload progress
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = (evt.loaded / evt.total) * 100;
+                        progressBar.updateProgressBar(percentComplete);
+                    }
+                }, false);
+                return xhr;
+            },
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "JSON",
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        title: response.message,
+                        icon: 'success',
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                    setTimeout(() => {
+                        if (response.reload) {
+                            window.location.reload();
+                        }
+                    }, 2000);
+                } else {
+                    Swal.fire({
+                        title: response.message,
+                        icon: 'error',
+                        showConfirmButton: true
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    title: "เกิดข้อผิดพลาด",
+                    icon: 'error',
+                    showConfirmButton: true
+                });
+            }
+        });
+    }
+
+    // Extend Swal with a method to update the progress bar
+    Swal.updateProgressBar = function (percent) {
+        this.getProgressBar().style.width = percent + '%';
+        this.getProgressBar().setAttribute('aria-valuenow', percent);
+    };
+
+    // Add a method to the progress bar
+    Swal.mixin({
+        input: 'range',
+        inputAttributes: {
+            min: 0,
+            max: 100,
+            step: 1
+        },
+        customClass: {
+            container: 'my-swal'
+        },
+        target: document.getElementById('range')
+    }).updateProgressBar(0);
+</script>

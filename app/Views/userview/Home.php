@@ -1,5 +1,18 @@
 <title>Home</title>
 
+<!-- End Navbar -->
+<div class="page-header" data-parallax="true"
+    style="background-image: url('<?= base_url('dist/img/background.png') ?>');">
+    <div class="filter"></div>
+    <div class="container">
+        <div class="motto text-center">
+            <h1>ร้านบางเล่ม</h1>
+            <h3>บริการเช่าหนังสือออนไลน์ สะดวก รวดเร็ว ใช้งานง่าย</h3>
+            <br />
+            <a href="" class="btn btn-outline-neutral btn-round"><i class="fas fa-cart-plus"></i> จองหนังสือเลย!</a>
+        </div>
+    </div>
+</div>
 <div class="main">
     <div class="section text-center">
         <div class="container">
@@ -16,7 +29,7 @@
                         ทำให้ผู้ใช้สามารถเพิ่มความคุ้มค่าในการใช้บริการนี้.
                     </h5>
                     <br>
-                    <a href="#paper-kit" class="btn btn-warning btn-round">ติดต่อเรา</a>
+                    <a href="<?= site_url('/contact') ?>" class="btn btn-warning btn-round">ติดต่อเรา</a>
                 </div>
             </div>
             <br />

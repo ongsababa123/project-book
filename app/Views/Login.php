@@ -16,17 +16,24 @@
     <link href="<?= base_url('assets/css/paper-kit.css') ?>" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="<?= base_url('assets/demo/demo.css') ?>" rel="stylesheet" />
+    <title>Login</title>
 
 </head>
 <style>
     * {
         font-family: 'Kanit', sans-serif;
     }
+
+    .card-register {
+        background-color: #86d9ab;
+    }
+
+
 </style>
 
-<body class="landing-page sidebar-collapse">
+<body class="register-page sidebar-collapse">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top bg-success">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-success" color-on-scroll="200">
         <div class="container">
             <div class="navbar-translate">
                 <a class="navbar-brand" href="<?= site_url('/') ?>" rel="tooltip" title="Coded by Creative Tim"
@@ -49,26 +56,36 @@
                     <li class="nav-item">
                         <a href="<?= site_url('/contact') ?>" class="nav-link"> ติดต่อเรา</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('/login') ?>" class="btn btn-warning btn-round">ล็อคอิน</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" class="btn btn-warning btn-round"><i
-                                class="fas fa-user-circle"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">ตระกร้าสินค้า <i class="fas fa-shopping-cart"></i></a>
-                            <a class="dropdown-item" href="<?= site_url('/profile') ?>">โปรไฟล์ <i
-                                    class="fas fa-id-card-alt"></i></a>
-                            <a class="dropdown-item" href="#">ประวัติเช่าหนังสือ <i class="fas fa-history"></i></a>
-                            <a class="dropdown-item" href="#">ออกจากระบบ <i class="fas fa-sign-out-alt"></i></a>
-                        </div>
-                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-
+    <div class="page-header" style="background-image: url('<?= base_url('dist/img/background2.jpg') ?>');">
+        <div class="filter"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 ml-auto mr-auto ">
+                    <div class="card card-register">
+                        <h1 class="title mx-auto">เข้าสู่ระบบ</h1>
+                        <div class="social-line text-center">
+                            <img src="<?= base_url('dist/img/logo11.png') ?>">
+                        </div>
+                        <form class="login-form">
+                            <label>อีเมล์</label>
+                            <input type="text" class="form-control" placeholder="อีเมล์">
+                            <label>รหัสผ่าน</label>
+                            <input type="password" class="form-control" placeholder="รหัสผ่าน">
+                            <button class="btn btn-warning btn-block btn-round bg-warning">ล็อคอิน</button>
+                        </form>
+                        <div class="forgot">
+                            <a href="<?= site_url('register') ?>" class="btn btn-link btn-default">สมัครสมาชิก</a>
+                            <a href="<?= site_url('forgotpassword') ?>" class="btn btn-link btn-default">ลืมรหัส?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--   Core JS Files   -->
     <script src="<?= base_url('assets/js/core/jquery.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/core/popper.min.js') ?>" type="text/javascript"></script>
@@ -83,7 +100,6 @@
     <!-- Control Center for Paper Kit: parallax effects, scripts for the example pages, etc -->
     <script src="<?= base_url('assets/js/paper-kit.js?v=2.2.0') ?>" type="text/javascript"></script>
     <script src="<?= base_url('dist/sweetalert/sweetalert2.js'); ?>"></script>
-
 </body>
 
 </html>
