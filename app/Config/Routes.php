@@ -13,10 +13,15 @@ $routes->get('/resetpassword', 'LoginController::index_resetpassword');
 
 $routes->group("/", function ($routes) {
     $routes->match(['get', 'post'], 'book/booklist', 'HomeController::index_listbook');
+    $routes->match(['get', 'post'], 'book/booklist/addcart/(:num)', 'HomeController::add_cart/$1');
+
+    $routes->match(['get', 'post'], 'book/details/(:num)', 'HomeController::index_bookdetails/$1');
 
     $routes->match(['get', 'post'], 'profile', 'HomeController::index_profile');
 
     $routes->match(['get', 'post'], 'cart', 'HomeController::index_cart');
+
+    $routes->match(['get', 'post'], 'history', 'HomeController::index_history');
 
 
     $routes->match(['get', 'post'], 'contact', 'HomeController::index_contact');  

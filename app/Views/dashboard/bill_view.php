@@ -139,7 +139,6 @@ $pice_total = 0;
                 <!-- /.col -->
                 <div class="col-6">
                     <p class="lead">รายละเอียดชำระเงิน</p>
-
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
@@ -194,8 +193,6 @@ $pice_total = 0;
     var data_user = <?php echo json_encode($data_user); ?>;
     var data_book = <?php echo json_encode($data_book); ?>;
     var data_category = <?php echo json_encode($data_category); ?>;
-    console.log(data_history);
-    console.log(data_user);
 </script>
 
 </html>

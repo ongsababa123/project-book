@@ -1,6 +1,9 @@
 <title>Late Price Table</title>
 
 <body class="hold-transition sidebar-mini">
+    <div class="alert alert-success" role="alert">
+        This is a success alert—check it out!
+    </div>
     <div class="content-wrapper">
         <section class="content-header">
             <div class="container-fluid">
@@ -67,10 +70,10 @@
             if (load_check == 1) {
                 U_Pricelate.style.display = "block";
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
-                $(".modal-body #late_price").val(rowData.price_fees );
+                $(".modal-body #late_price").val(rowData.price_fees);
                 $(".modal-header #title_modal").text("แก้ไขข้อมูลค่าปรับ");
                 $(".modal-footer #submit").text("แก้ไขข้อมูลค่าปรับ");
-                $(".modal-body #url_route").val("dashboard/late-price/edit/" + rowData.id_late_fees );
+                $(".modal-body #url_route").val("dashboard/late-price/edit/" + rowData.id_late_fees);
             }
         }
     </script>

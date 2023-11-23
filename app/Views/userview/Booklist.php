@@ -105,17 +105,6 @@ if (isset($_GET['sort'])) {
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="form_search" style="color: white;">ค้นหา</label>
-                        <div class="input-group" id="form_search">
-                            <input type="text" placeholder="ค้นหา" class="form-control">
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
                         <div class="input-group mt-4" id="form_search">
                             <a href="#" onclick="sortItems('newest')">
                                 <button class="btn btn-success btn-round" onclick="sortItems()">
@@ -150,7 +139,7 @@ if (isset($_GET['sort'])) {
                     $shortenedDetails = strlen($details_book) > 450 ? htmlspecialchars(mb_substr($details_book, 0, 450) . '...', ENT_QUOTES, 'UTF-8') : htmlspecialchars($details_book, ENT_QUOTES, 'UTF-8');
 
                     ?>
-                    <div class="col-md-4">
+                    <div class="col-md-4" id="book_<?= $book['id_book'] ?>">
                         <div class="card mb-4" style="width: 20rem; height: 50rem;">
                             <img class="card-img-top" src="<?= $imageSrc ?>" alt="Card image cap" style="height: 25rem;">
                             <div class="card-body">
@@ -162,8 +151,10 @@ if (isset($_GET['sort'])) {
                                 </p>
                             </div>
                             <div class="card-footer">
-                                <button class="btn btn-info btn-round">เพิ่มเติม</button>
-                                <button class="btn btn-danger btn-round"><i class="fas fa-cart-arrow-down"></i>
+                                <a href="<?= site_url('/book/details/') . $book['id_book'] ?>"
+                                    class="btn btn-info btn-round">เพิ่มเติม</a>
+                                <button class="btn btn-danger btn-round" onclick="alert_(<?= $book['id_book'] ?>)"><i
+                                        class="fas fa-cart-arrow-down"></i>
                                     ใส่ตระกร้าเลย</button>
                             </div>
                         </div>
@@ -179,25 +170,6 @@ if (isset($_GET['sort'])) {
                 endforeach;
                 ?>
 
-            </div>
-        </div>
-    </div>
-    <div class="pt-3" style="background-color: #bddce5;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 ml-auto mr-auto">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="#" tabindex="-1">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#"></a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
             </div>
         </div>
     </div>
@@ -227,5 +199,43 @@ if (isset($_GET['sort'])) {
     function sortItems() {
         var id_category = document.getElementById("form_category").value;
         window.location.href = `?sort=${id_category}`;
+    }
+</script>
+<script>
+    function alert_(id_book) {
+        $.ajax({
+            url: '<?= base_url('book/booklist/addcart/') ?>' + id_book,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: "JSON",
+            success: function (response) {
+                var bookDiv = document.getElementById('book_' + id_book);
+                bookDiv.style.display = 'none';
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: response.message
+                });
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    title: "เกิดข้อผิดพลาด",
+                    icon: 'error',
+                    showConfirmButton: true
+                });
+            }
+        });
     }
 </script>

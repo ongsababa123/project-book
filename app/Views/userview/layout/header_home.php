@@ -56,10 +56,10 @@
                             aria-expanded="false" class="btn btn-warning btn-round"><i
                                 class="fas fa-user-circle"></i></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">ตระกร้าสินค้า <i class="fas fa-shopping-cart"></i></a>
+                            <a class="dropdown-item" href="<?= site_url('/cart') ?>">ตระกร้าสินค้า <i class="fas fa-shopping-cart"></i></a>
                             <a class="dropdown-item" href="<?= site_url('/profile') ?>">โปรไฟล์ <i
                                     class="fas fa-id-card-alt"></i></a>
-                            <a class="dropdown-item" href="#">ประวัติเช่าหนังสือ <i class="fas fa-history"></i></a>
+                            <a class="dropdown-item" href="<?= site_url('/history') ?>">ประวัติเช่าหนังสือ <i class="fas fa-history"></i></a>
                             <a class="dropdown-item" href="#">ออกจากระบบ <i class="fas fa-sign-out-alt"></i></a>
                         </div>
                     </li>
