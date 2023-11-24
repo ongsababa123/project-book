@@ -75,12 +75,9 @@
                         </div>
                     </div>
                 </div>
-                <input type="text" class="form-control" id="price_book_create"
-                    name="price_book_create" hidden>
-                <input type="text" class="form-control" id="sumid_promotion"
-                    name="sumid_promotion" hidden>
-                    <input type="text" class="form-control" id="sum_price_promotion"
-                    name="sum_price_promotion" hidden>
+                <input type="text" class="form-control" id="price_book_create" name="price_book_create" hidden>
+                <input type="text" class="form-control" id="sumid_promotion" name="sumid_promotion" hidden>
+                <input type="text" class="form-control" id="sum_price_promotion" name="sum_price_promotion" hidden>
                 <input type="text" id="url_route" name="url_route" hidden>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"></button>
@@ -141,7 +138,6 @@
         }
 
         check_promotion(id_user, selectedid_book, price__, function (result) {
-            console.log(result);
             $(".modal-body #details_promotion").html(result.text);
             $(".modal-body #promotion_book").val(result.price_promotion);
             $(".modal-body #sum_price_promotion").val(result.price_promotion);

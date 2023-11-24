@@ -1,0 +1,56 @@
+ERROR - 2023-11-24 09:45:01 --> mysqli_sql_exception: Column 'id_user' cannot be null in C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `hi...', 0)
+#1 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `hi...')
+#2 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `hi...')
+#3 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2308): CodeIgniter\Database\BaseConnection->query('INSERT INTO `hi...', Array, false)
+#4 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Model.php(319): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\BaseModel.php(788): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Model.php(715): CodeIgniter\BaseModel->insert(Array, false)
+#7 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\BaseModel.php(698): CodeIgniter\Model->insert(Array, false)
+#8 C:\xampp\htdocs\project-book\app\Controllers\HistoryController.php(51): CodeIgniter\BaseModel->save(Array)
+#9 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(942): App\Controllers\HistoryController->create_history()
+#10 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HistoryController))
+#11 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\project-book\index.php(79): CodeIgniter\CodeIgniter->run()
+#13 {main}
+CRITICAL - 2023-11-24 09:45:01 --> Column 'id_user' cannot be null
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2308): CodeIgniter\Database\BaseConnection->query('INSERT INTO `history_book_table` (`id_user`, `id_book`, `rental_date`, `return_date`, `submit_date`, `sum_price`, `late_price`, `id_promotion`, `sum_price_promotion`) VALUES (:id_user:, :id_book:, :rental_date:, :return_date:, :submit_date:, :sum_price:, :late_price:, :id_promotion:, :sum_price_promotion:)', [...], false)
+ 2 SYSTEMPATH\Model.php(319): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(788): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(715): CodeIgniter\BaseModel->insert([...], false)
+ 5 SYSTEMPATH\BaseModel.php(698): CodeIgniter\Model->insert([...], false)
+ 6 APPPATH\Controllers\HistoryController.php(51): CodeIgniter\BaseModel->save([...])
+ 7 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HistoryController->create_history()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HistoryController))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-11-24 09:45:04 --> mysqli_sql_exception: Column 'id_user' cannot be null in C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `hi...', 0)
+#1 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `hi...')
+#2 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `hi...')
+#3 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2308): CodeIgniter\Database\BaseConnection->query('INSERT INTO `hi...', Array, false)
+#4 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Model.php(319): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\BaseModel.php(788): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Model.php(715): CodeIgniter\BaseModel->insert(Array, false)
+#7 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\BaseModel.php(698): CodeIgniter\Model->insert(Array, false)
+#8 C:\xampp\htdocs\project-book\app\Controllers\HistoryController.php(51): CodeIgniter\BaseModel->save(Array)
+#9 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(942): App\Controllers\HistoryController->create_history()
+#10 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HistoryController))
+#11 C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\project-book\index.php(79): CodeIgniter\CodeIgniter->run()
+#13 {main}
+CRITICAL - 2023-11-24 09:45:04 --> Column 'id_user' cannot be null
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2308): CodeIgniter\Database\BaseConnection->query('INSERT INTO `history_book_table` (`id_user`, `id_book`, `rental_date`, `return_date`, `submit_date`, `sum_price`, `late_price`, `id_promotion`, `sum_price_promotion`) VALUES (:id_user:, :id_book:, :rental_date:, :return_date:, :submit_date:, :sum_price:, :late_price:, :id_promotion:, :sum_price_promotion:)', [...], false)
+ 2 SYSTEMPATH\Model.php(319): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(788): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(715): CodeIgniter\BaseModel->insert([...], false)
+ 5 SYSTEMPATH\BaseModel.php(698): CodeIgniter\Model->insert([...], false)
+ 6 APPPATH\Controllers\HistoryController.php(51): CodeIgniter\BaseModel->save([...])
+ 7 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HistoryController->create_history()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HistoryController))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()

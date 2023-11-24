@@ -371,10 +371,10 @@
                         'render': function (data, type, row, meta) {
                             const matchingUser = data_user.find(element => data.id_user === element.id_user);
                             const encodedRowData = encodeURIComponent(JSON.stringify(row));
-                            var today = new Date(); 
+                            var today = new Date();
                             today.setHours(0, 0, 0, 0)
                             var returnDate = new Date(data.return_date);
-                            returnDate.setHours(0, 0, 0, 0); 
+                            returnDate.setHours(0, 0, 0, 0);
                             if (data.submit_date == null) {
                                 if (today > returnDate) {
                                     var returnDate = new Date(data.return_date);
@@ -384,7 +384,7 @@
                                     var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
                                     var price_fees = data_latefees[0]['price_fees'];
                                     var price_fess_totel = daysDifference * price_fees;
-                                } else{
+                                } else {
                                     var price_fess_totel = 0;
                                 }
                                 return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>
@@ -428,34 +428,6 @@
                                 window.location.reload();
                             }
                         }, 2000);
-                    } else {
-                        if (response.validator) {
-                            var mes = "";
-                            if (response.validator.email) {
-                                mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้องหรือมีอีเมล์ซ้ำในระบบ.' + '<br><hr/>'
-                            }
-                            if (response.validator.name) {
-                                mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
-                            }
-                            if (response.validator.last) {
-                                mes += 'นามสกุลต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
-                            }
-                            if (response.validator.phone) {
-                                mes += 'เบอร์ติดต่อต้องมี 10 หลัก.' + '<br>';
-                            }
-                            Swal.fire({
-                                title: mes,
-                                icon: 'error',
-                                showConfirmButton: true,
-                                width: '55%'
-                            });
-                        } else {
-                            Swal.fire({
-                                title: response.message,
-                                icon: 'error',
-                                showConfirmButton: true
-                            });
-                        }
                     }
                 },
                 error: function (xhr, status, error) {

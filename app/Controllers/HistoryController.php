@@ -8,6 +8,7 @@ use App\Models\BookModels;
 use App\Models\CategoryModels;
 use App\Models\LateFeesModels;
 use App\Models\PromotionModels;
+use App\Models\CartModels;
 
 
 class HistoryController extends BaseController
@@ -36,7 +37,11 @@ class HistoryController extends BaseController
 
         $rental_formattedDate = date('Y/m/d', strtotime($rental_date));
         $return_formattedDate = date('Y/m/d', strtotime($return_date));
+        $bookIds = explode(',', $this->request->getVar('name_book_create__'));
+        $cart_id = explode(',', $this->request->getVar('cart_id'));
 
+        $this->chage_status_book($bookIds, 2);
+        $this->delete_cart($cart_id);
         $data = [
             'id_user' => $this->request->getVar('name_user_create'),
             'id_book' => $this->request->getVar('name_book_create__'),
@@ -64,8 +69,29 @@ class HistoryController extends BaseController
         }
 
         return $this->response->setJSON($response);
-
     }
+
+    function chage_status_book($bookIds = [], $numberstatus = null)
+    {
+        $BookModels = new BookModels();
+        foreach ($bookIds as $id_book) {
+            $bookData = [
+                'status_book' => $numberstatus,
+            ];
+
+            $BookModels->update($id_book, $bookData);
+        }
+    }
+
+    function delete_cart($cartIds = [])
+    {
+        $CartModels = new CartModels();
+        foreach ($cartIds as $id_cart) {
+            $CartModels->where('id_cart', $id_cart)->delete($id_cart);
+        }
+    }
+
+
     public function edit_retrun_date($id_history = null)
     {
         $HistoryModels = new HistoryModels();
@@ -205,4 +231,6 @@ class HistoryController extends BaseController
 
         return $this->response->setJSON($response);
     }
+
+
 }

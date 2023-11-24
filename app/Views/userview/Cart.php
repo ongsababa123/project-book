@@ -116,32 +116,25 @@
                 </div>
             </div>
             <div class="modal-body">
-                <form>
+                <form class="mb-3" id="form_create_history_cart" action="javascript:void(0)" method="post"
+                    enctype="multipart/form-data">
                     <div class="form-group">
                         <table class="table" id="cartTable">
                         </table>
-                        <table class="table">
+                        <table class="table" id="promotionTable">
                             <tr>
-                                <th></th>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
                                 <th>โปรโมชั่น :</th>
-                                <td>
-                                    10 บาท
-                                </td>
+                                <td id="details_promotion"></td>
+                                <td></td>
+                                <th>ส่วนลด :</th>
+                                <td id="sum_price_promotion"></td>
                             </tr>
                             <tr>
                                 <th></th>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
+                                <td></td>
+                                <td></td>
                                 <th>ราคารวม :</th>
-                                <td>
-                                    10 บาท
-                                </td>
+                                <td id="sum_price"></td>
                             </tr>
                         </table>
                     </div>
@@ -149,26 +142,41 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="label-control">เลิอกวันที่รับหนังสือ</label>
-                                <input type="text" class="form-control datetimepicker" required />
+                                <input type="text" class="form-control datetimepicker" required id="rental_date_create" name="rental_date_create"/>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label class="label-control">เลิอกวันที่คืน</label>
-                                <input type="text" class="form-control datetimepicker" required />
+                                <input type="text" class="form-control datetimepicker" required id="return_date_create" name="return_date_create"/>
                             </div>
                         </div>
                     </div>
+                    <input type="text" class="form-control" id="name_user_create" name="name_user_create" value="1" hidden>
+                    <input type="text" class="form-control" id="price_book_create" name="price_book_create" hidden>
+                    <input type="text" class="form-control" id="sumid_promotion" name="sumid_promotion" hidden>
+                    <input type="text" class="form-control" id="sum_price_promotion" name="sum_price_promotion" hidden>
+                    <input type="text" class="form-control" id="cart_id" name="cart_id" hidden>
+                    <input type="text" id="url_route" name="url_route" hidden>
                     <button class="btn btn-block btn-round"> จอง</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<?= $this->include("Check_pro"); ?>
+<script>
+
+    $("#form_create_history_cart").on('submit', function (e) {
+        e.preventDefault();
+        const urlRouteInput = document.getElementById("url_route");
+        action_(urlRouteInput.value, 'form_create_history_cart');
+    });
+</script>
 <script>
     $('.datetimepicker').datetimepicker({
+        format: 'L', // Display only the date
         icons: {
-            time: "fa fa-clock-o",
             date: "fa fa-calendar",
             up: "fa fa-chevron-up",
             down: "fa fa-chevron-down",
@@ -180,14 +188,9 @@
         }
     });
 </script>
-
-<script>
-    var categoryData = <?php echo json_encode($cartData); ?>;
-
-</script>
 <!-- Add this at the end of your HTML file, after including jQuery -->
 <script>
-    // Initialize cart_check as an empty array
+    var categoryData = <?php echo json_encode($cartData); ?>;
     var cart_check = [];
     var price_sum = 0;
     if (cart_check.length === 0) {
@@ -239,19 +242,20 @@
     function loadmodal() {
         var count = 0;
         $("#cartTable").empty();
-
+        var selectedid_book = cart_check;
+        var price__ = price_sum;
+        var id_user = 1;
         cart_check.forEach(element => {
             count++;
             categoryData.forEach(element_cat => {
                 if (element_cat.id_cart == element) {
-                    price_sum = price_sum - parseInt(element_cat.bookData[0].price);
                     var row1 = `
                         <tr>
                             <th>ลำดับ : ${count}</th>
                             <th>ชื่อหนังสือ : </th>
                             <td>${element_cat.bookData[0].name_book}</td>
                             <th>ราคา :</th>
-                            <td>${element_cat.bookData[0].price}</td>
+                            <td>${element_cat.bookData[0].price} บาท</td>
                         </tr>
                         `;
                     $("#cartTable").append(row1);
@@ -264,9 +268,66 @@
                             <th></th>
                             <td></td>
                             <th>ราคารวม :</th>
-                            <td>${price_sum}</td>
+                            <td>${price_sum} บาท</td>
                         </tr>
                         `;
         $("#cartTable").append(row2);
+        check_promotion(id_user, selectedid_book, price__, function (result) {
+            console.log(result);
+            if (result.text == null) {
+                $("#details_promotion").html("ไม่มีส่วนลดโปรโมชั่น");
+            } else {
+                $("#details_promotion").html(result.text);
+            }
+            $("#sum_price_promotion").html(result.price_promotion + ' ' + 'บาท');
+            $("#sum_price").html(result.price_result + ' ' + 'บาท');
+            $(".modal-body #price_book_create").val(result.price_result);
+            $(".modal-body #sumid_promotion").val(result.sumid_promotion);
+            $(".modal-body #sum_price_promotion").val(result.price_promotion);
+
+        });
+        $(".modal-body #cart_id").val(cart_check);
+        $(".modal-body #url_route").val("dashboard/history/create");
     }
 </script>
+<script>
+        function action_(url, form) {
+            var formData = new FormData(document.getElementById(form));
+            if (form == 'form_create_history_cart') {
+                formData.append('name_book_create__', cart_check);
+                formData.append('sumid_promotion', $('#sumid_promotion').val());
+                formData.append('cart_id', $('#cart_id').val());
+            }
+            $.ajax({
+                url: '<?= base_url() ?>' + url,
+                type: "POST",
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "JSON",
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            allowOutsideClick: false
+                        });
+                        setTimeout(() => {
+                            if (response.reload) {
+                                window.location.reload();
+                            }
+                        }, 2000);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        title: "เกิดข้อผิดพลาด",
+                        icon: 'error',
+                        showConfirmButton: true
+                    });
+                }
+            });
+        }
+    </script>
