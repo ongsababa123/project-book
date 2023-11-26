@@ -25,81 +25,89 @@
     </div>
     <div class="section mb-6" style="background-color: #bddce5;">
         <div class="container ">
-            <?php foreach ($cartData as $cartItem): ?>
-                <div class="p-4 border mb-3" style="background-color: white;">
-                    <div class="row">
-                        <div class="center">
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value="<?= $cartItem['id_cart'] ?>">
-                                        <span class="form-check-sign">
-                                            <span class="check"></span>
-                                        </span>
-                                    </label>
+            <?php if (!empty($cartData)): ?>
+                <?php foreach ($cartData as $cartItem): ?>
+                    <div class="p-4 border mb-3" style="background-color: white;">
+                        <div class="row">
+                            <div class="center">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" value="<?= $cartItem['id_cart'] ?>">
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <?php foreach ($cartItem['bookData'] as $book): ?>
-                            <?php
-                            $imageSrc = base_url('dist/img/image-preview.png');
+                            <?php foreach ($cartItem['bookData'] as $book): ?>
+                                <?php
+                                $imageSrc = base_url('dist/img/image-preview.png');
 
-                            if ($book['pic_book'] !== null) {
-                                $base64Data = $book['pic_book'];
-                                $decodedData = base64_decode($base64Data);
-                                $imageSrc = 'data:image/png;base64,' . base64_encode($decodedData);
-                            }
-                            ?>
-                        <?php endforeach; ?>
-                        <div class="col-lg-5 col-md-12 text-center">
-                            <img src="<?= $imageSrc ?>" class="img-rounded img-responsive" alt="Rounded Image"
-                                style="height: 25rem;">
+                                if ($book['pic_book'] !== null) {
+                                    $base64Data = $book['pic_book'];
+                                    $decodedData = base64_decode($base64Data);
+                                    $imageSrc = 'data:image/png;base64,' . base64_encode($decodedData);
+                                }
+                                ?>
+                            <?php endforeach; ?>
+                            <div class="col-lg-5 col-md-12 text-center">
+                                <img src="<?= $imageSrc ?>" class="img-rounded img-responsive" alt="Rounded Image"
+                                    style="height: 25rem;">
+                            </div>
+                            <div class="col-lg-6">
+                                <p style="font-size: 2vw;">
+                                    <?= $book['name_book'] ?>
+                                </p>
+                                <h6 class="description">ผู้เขียน</h6>
+                                <p class="description">
+                                    <?= $book['book_author'] ?>
+                                </p>
+                                <h6 class="description">ประเภท</h6>
+                                <p class="description">
+                                    <?php foreach ($cartItem['categoryData'] as $category): ?>
+                                        <?php
+                                        echo $category['name_category'];
+                                        ?>
+                                    <?php endforeach; ?>
+                                </p>
+                                <h6 class="description">รายละเอียด</h6>
+                                <p class="description">
+                                    <?= $book['details'] ?>
+                                </p>
+                                <h6 ราคา class="description">ราคา</h6>
+                                <?= $book['price'] ?>
+                            </div>
                         </div>
-                        <div class="col-lg-6">
-                            <p style="font-size: 2vw;">
-                                <?= $book['name_book'] ?>
-                            </p>
-                            <h6 class="description">ผู้เขียน</h6>
-                            <p class="description">
-                                <?= $book['book_author'] ?>
-                            </p>
-                            <h6 class="description">ประเภท</h6>
-                            <p class="description">
-                                <?php foreach ($cartItem['categoryData'] as $category): ?>
-                                    <?php
-                                    echo $category['name_category'];
-                                    ?>
-                                <?php endforeach; ?>
-                            </p>
-                            <h6 class="description">รายละเอียด</h6>
-                            <p class="description">
-                                <?= $book['details'] ?>
-                            </p>
-                            <h6 ราคา class="description">ราคา</h6>
-                            <?= $book['price'] ?>
+                    </div>
+                <?php endforeach; ?>
+                <div class="p-4 border mb-3" style="background-color: white;">
+                    <div class="row">
+                        <div class="col-lg-4 mt-2">
+                            <h6>จำนวน : </h6>
+                            <p id="quantity"></p>
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <h6>ราคารวม : </h6>
+                            <p id="price"></p>
+                        </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-primary btn-round" data-toggle="modal" data-target="#Payment"
+                                onclick="loadmodal()" id="button_modal" name="button_modal">ดำเนินการจอง</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-danger btn-round" onclick="confirm_Alert()">ยกเลิก</button>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
-            <div class="p-4 border mb-3" style="background-color: white;">
-                <div class="row">
-                    <div class="col-lg-4 mt-2">
-                        <h6>จำนวน : </h6>
-                        <p id="quantity"></p>
-                    </div>
-                    <div class="col-lg-4 mt-2">
-                        <h6>ราคารวม : </h6>
-                        <p id="price"></p>
-                    </div>
-                    <div class="col-lg-2">
-                        <button class="btn btn-primary btn-round" data-toggle="modal" data-target="#Payment"
-                            onclick="loadmodal()" id="button_modal" name="button_modal">ดำเนินการจอง</button>
-                    </div>
-                    <div class="col-lg-2">
-                        <button class="btn btn-danger btn-round">ยกเลิก</button>
+            <?php else: ?>
+                <div class="section mb-6" style="background-color: #bddce5; padding-bottom: 10rem;">
+                    <div class="container ">
+                        <h1 class="text-center">ไม่มีประวัติการเช่า</h1>
                     </div>
                 </div>
-            </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -142,18 +150,22 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="label-control">เลิอกวันที่รับหนังสือ</label>
-                                <input type="text" class="form-control datetimepicker" required id="rental_date_create" name="rental_date_create"/>
+                                <input type="text" class="form-control datetimepicker" required id="rental_date_create"
+                                    name="rental_date_create" />
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label class="label-control">เลิอกวันที่คืน</label>
-                                <input type="text" class="form-control datetimepicker" required id="return_date_create" name="return_date_create"/>
+                                <input type="text" class="form-control datetimepicker" required id="return_date_create"
+                                    name="return_date_create" />
                             </div>
                         </div>
                     </div>
-                    <input type="text" class="form-control" id="name_user_create" name="name_user_create" value="1" hidden>
+                    <input type="text" class="form-control" id="name_user_create" name="name_user_create" value="1"
+                        hidden>
                     <input type="text" class="form-control" id="price_book_create" name="price_book_create" hidden>
+                    <input type="text" class="form-control" id="id_book_create" name="id_book_create">
                     <input type="text" class="form-control" id="sumid_promotion" name="sumid_promotion" hidden>
                     <input type="text" class="form-control" id="sum_price_promotion" name="sum_price_promotion" hidden>
                     <input type="text" class="form-control" id="cart_id" name="cart_id" hidden>
@@ -192,6 +204,7 @@
 <script>
     var categoryData = <?php echo json_encode($cartData); ?>;
     var cart_check = [];
+    var id_book_check = '';
     var price_sum = 0;
     if (cart_check.length === 0) {
         $("#button_modal").prop("disabled", true);
@@ -207,26 +220,25 @@
             cart_check.forEach((element, index) => {
                 if (element == value) {
                     if_check = true;
-                    // Assuming you want to remove the duplicate element
                     cart_check.splice(index, 1);
                     categoryData.forEach(element_cat => {
                         if (element_cat.id_cart == element) {
                             price_sum = price_sum - parseInt(element_cat.bookData[0].price);
-
+                            id_book_check = id_book_check.replace(element_cat.bookData[0].id_book + ',', '');
                         }
                     });
                 }
             });
-
-            // Add the value to the cart_check array if it's not already present
             if (!if_check) {
                 cart_check.push(value);
                 categoryData.forEach(element_cat => {
                     if (element_cat.id_cart == value) {
                         price_sum = price_sum + parseInt(element_cat.bookData[0].price);
+                        id_book_check += element_cat.bookData[0].id_book + ',';
                     }
                 });
             }
+
             $("#price").text(price_sum);
             $("#quantity").text(cart_check.length);
             if (cart_check.length === 0) {
@@ -273,7 +285,6 @@
                         `;
         $("#cartTable").append(row2);
         check_promotion(id_user, selectedid_book, price__, function (result) {
-            console.log(result);
             if (result.text == null) {
                 $("#details_promotion").html("ไม่มีส่วนลดโปรโมชั่น");
             } else {
@@ -291,43 +302,97 @@
     }
 </script>
 <script>
-        function action_(url, form) {
-            var formData = new FormData(document.getElementById(form));
-            if (form == 'form_create_history_cart') {
-                formData.append('name_book_create__', cart_check);
-                formData.append('sumid_promotion', $('#sumid_promotion').val());
-                formData.append('cart_id', $('#cart_id').val());
+    function action_(url, form) {
+        var formData = new FormData(document.getElementById(form));
+        if (id_book_check.endsWith(',')) {
+            id_book_check = id_book_check.slice(0, -1);
+        }
+        if (form == 'form_create_history_cart') {
+            formData.append('name_book_create__', id_book_check);
+            formData.append('sumid_promotion', $('#sumid_promotion').val());
+            formData.append('cart_id', $('#cart_id').val());
+        }
+        $.ajax({
+            url: '<?= base_url() ?>' + url,
+            type: "POST",
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "JSON",
+            success: function (response) {
+                console.log(response);
+                if (response.success) {
+                    Swal.fire({
+                        title: response.message,
+                        icon: 'success',
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                    setTimeout(() => {
+                        if (response.reload) {
+                            window.location.reload();
+                        }
+                    }, 2000);
+                }
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    title: "เกิดข้อผิดพลาด",
+                    icon: 'error',
+                    showConfirmButton: true
+                });
             }
-            $.ajax({
-                url: '<?= base_url() ?>' + url,
-                type: "POST",
-                cache: false,
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: "JSON",
-                success: function (response) {
+        });
+    }
+</script>
+<script>
+    function confirm_Alert() {
+        Swal.fire({
+            title: 'ต้องการยกเลิกตระกร้าหรือไม่?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            confirmButtonText: "submit",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var formData = new FormData();
+                formData.append('name_book_create__', id_book_check);
+                formData.append('cart_id', cart_check);
+
+                $.ajax({
+                    url: '<?= base_url('dashboard/history/cartcancel') ?>',
+                    type: "POST",
+                    cache: false,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: "JSON",
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).done(function (response) {
+                    console.log(response);
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
                             icon: 'success',
-                            showConfirmButton: false,
-                            allowOutsideClick: false
+                            showConfirmButton: false
                         });
                         setTimeout(() => {
                             if (response.reload) {
                                 window.location.reload();
                             }
                         }, 2000);
+                    } else {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'error',
+                            showConfirmButton: true
+                        });
                     }
-                },
-                error: function (xhr, status, error) {
-                    Swal.fire({
-                        title: "เกิดข้อผิดพลาด",
-                        icon: 'error',
-                        showConfirmButton: true
-                    });
-                }
-            });
-        }
-    </script>
+                });
+            }
+        });
+    }
+</script>

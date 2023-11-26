@@ -4,7 +4,7 @@
     <div class="filter"></div>
 </div>
 <div class="main">
-    <div class="section profile-content mb-3">
+    <div class="section profile-content mb-3" style="padding-bottom: 8rem;">
         <div class="container">
             <div class="owner">
                 <div class="avatar">
@@ -12,14 +12,23 @@
                         class="img-circle img-no-padding img-responsive">
                 </div>
                 <div class="name">
-                    <h4 class="title">Jane Faker</h4>
+                    <h4 class="title">
+                        <?= $user_data[0]['name'] ?>
+                        <?= $user_data[0]['lastname'] ?>
+                    </h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 ml-auto mr-auto text-center">
-                    <p>อีเมล์ : </p>
-                    <p>เบอร์โทรศัพท์ : </p>
-                    <p>จำนวนครั้งที่ยืม : </p>
+                    <p>อีเมล์ :
+                        <?= $user_data[0]['email_user'] ?>
+                    </p>
+                    <p>เบอร์โทรศัพท์ :
+                        <?= $user_data[0]['phone'] ?>
+                    </p>
+                    <p>จำนวนครั้งที่ยืม :
+                        <?= $count_data ?>
+                    </p>
                     <br />
                     <btn class="btn btn-outline-default btn-round" data-toggle="modal" data-target="#loginModal"><i
                             class="fa fa-cog"></i> แก้ไขข้อมูล</btn>
@@ -42,11 +51,11 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
-                        <label>ชื่อ</label>
+                            <label>ชื่อ</label>
                             <input type="text" class="form-control" placeholder="กรอกชื่อของคุณ">
                         </div>
                         <div class="col">
-                        <label>นามสกุล</label>
+                            <label>นามสกุล</label>
                             <input type="text" class="form-control" placeholder="กรอกนามสกุลของคุณ">
                         </div>
                     </div>
@@ -57,7 +66,8 @@
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" value="" placeholder="กรอกรหัสผ่านของคุณ (กรณีเปลี่ยนรหัสผ่าน)" class="form-control" />
+                    <input type="password" value="" placeholder="กรอกรหัสผ่านของคุณ (กรณีเปลี่ยนรหัสผ่าน)"
+                        class="form-control" />
                 </div>
                 <button class="btn btn-block btn-round"> บันทึกข้อมูล</button>
             </div>

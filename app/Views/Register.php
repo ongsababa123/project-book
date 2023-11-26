@@ -68,24 +68,31 @@
                         <div class="social-line text-center">
                             <img src="<?= base_url('dist/img/logo11.png') ?>">
                         </div>
-                        <form class="register-form">
+                        <form class="mb-3" id="register_form" action="javascript:void(0)" method="post"
+                            enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col">
                                     <label>ชื่อ</label>
-                                    <input type="text" class="form-control" placeholder="ชื่อ">
+                                    <input type="text" class="form-control" placeholder="ชื่อ" id="name" name="name"
+                                        required>
                                 </div>
                                 <div class="col">
                                     <label>นามสกุล</label>
-                                    <input type="text" class="form-control" placeholder="นามสกุล">
+                                    <input type="text" class="form-control" placeholder="นามสกุล" id="last" name="last"
+                                        required>
                                 </div>
                             </div>
                             <label>อีเมล์</label>
-                            <input type="text" class="form-control" placeholder="อีเมล์">
+                            <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email"
+                                required>
                             <label>เบอร์โทรศัพท์</label>
-                            <input type="number" class="form-control" placeholder="เบอร์โทรศัพท์">
+                            <input type="number" class="form-control" placeholder="เบอร์โทรศัพท์" id="phone"
+                                name="phone" required>
                             <label>รหัสผ่าน</label>
-                            <input type="password" class="form-control" placeholder="รหัสผ่าน">
-                            <button class="btn btn-warning btn-block btn-round bg-warning">สมัครสมาชิก</button>
+                            <input type="password" class="form-control" placeholder="รหัสผ่าน" name="password"
+                                id="password" required>
+                            <button type="submit" class="btn btn-warning btn-block btn-round bg-warning" name="submit"
+                                value="Submit" id="submit">สมัครสมาชิก</button>
                         </form>
                         <div class="forgot">
                             <a href="<?= site_url('login') ?>" class="btn btn-link btn-default">ล็อคอิน</a>
@@ -109,6 +116,84 @@
     <!-- Control Center for Paper Kit: parallax effects, scripts for the example pages, etc -->
     <script src="<?= base_url('assets/js/paper-kit.js?v=2.2.0') ?>" type="text/javascript"></script>
     <script src="<?= base_url('dist/sweetalert/sweetalert2.js'); ?>"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".overlay").hide();
+        });
+
+        $("#register_form").on('submit', function (e) {
+            e.preventDefault();
+            action_('dashboard/customer/create/4', 'register_form');
+        });
+    </script>
+    <script>
+        function action_(url, form) {
+            var formData = new FormData(document.getElementById(form));
+            $.ajax({
+                url: '<?= base_url() ?>' + url,
+                type: "POST",
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "JSON",
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            allowOutsideClick: false
+                        }).then((result) => {
+                            // Check if the user clicked the confirm button
+                            if (result.isConfirmed) {
+                                // Redirect to the login page, you may need to adjust the URL
+                                window.location.href = '<?=site_url('login')?>';
+                            }
+                        });
+
+                    } else {
+                        if (response.validator) {
+                            var mes = "";
+                            if (response.validator.email) {
+                                mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้องหรือมีอีเมล์ซ้ำในระบบ.' + '<br><hr/>'
+                            }
+                            if (response.validator.name) {
+                                mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
+                            }
+                            if (response.validator.last) {
+                                mes += 'นามสกุลต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
+                            }
+                            if (response.validator.phone) {
+                                mes += 'เบอร์ติดต่อต้องมี 10 หลัก.' + '<br>';
+                            }
+                            Swal.fire({
+                                title: mes,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                width: '55%'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: response.message,
+                                icon: 'error',
+                                showConfirmButton: true
+                            });
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        title: "เกิดข้อผิดพลาด",
+                        icon: 'error',
+                        showConfirmButton: true
+                    });
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

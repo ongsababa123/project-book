@@ -5,6 +5,9 @@ namespace App\Controllers;
 use App\Models\BookModels;
 use App\Models\CategoryModels;
 use App\Models\CartModels;
+use App\Models\HistoryModels;
+use App\Models\PromotionModels;
+use App\Models\UserModels;
 
 class HomeController extends BaseController
 {
@@ -80,27 +83,27 @@ class HomeController extends BaseController
         $CartModels = new CartModels();
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
-        
-        $data['categoryData'] = $CategoryModels->where('id_category', 1)->findAll();
-        $data['cartData'] = $CartModels->where('id_user', 1)->findAll();
-    
+
+        $data['categoryData'] = $CategoryModels->where('id_category', session()->get('id'))->findAll();
+        $data['cartData'] = $CartModels->where('id_user', session()->get('id'))->findAll();
+
         foreach ($data['cartData'] as $key => $value) {
             // Retrieve book data for the current cart item
             $bookData = $BookModels->where('id_book', $value['id_book'])->findAll();
             $data['cartData'][$key]['bookData'] = $bookData;
-    
+
             // Assuming each cart item is associated with a specific book, you can directly fetch its category
             if (!empty($bookData)) {
                 $categoryId = $bookData[0]['category_id'];
                 $data['cartData'][$key]['categoryData'] = $CategoryModels->where('id_category', $categoryId)->findAll();
             }
         }
-    
+
         echo view('userview/layout/header_base');
         echo view('userview/Cart', $data);
         echo view('userview/layout/footer');
     }
-    
+
 
     public function index_contact()
     {
@@ -141,15 +144,59 @@ class HomeController extends BaseController
 
     public function index_profile()
     {
+        $userModels = new UserModels();
+        $HistoryModels = new HistoryModels();
+        $data['user_data'] = $userModels->where('id_user', session()->get('id'))->findAll();
+        $data['count_data'] = $HistoryModels->where('id_user', session()->get('id'))->countAllResults();
+
         echo view('userview/layout/header_home');
-        echo view('userview/Profile');
+        echo view('userview/Profile', $data);
         echo view('userview/layout/footer');
     }
 
     public function index_history()
     {
+        $HistoryModels = new HistoryModels();
+        $BookModels = new BookModels();
+        $CategoryModels = new CategoryModels();
+        $PromotionModels = new PromotionModels();
+    
+        // Fetch history data for user with id session()->get('id')
+        $data['HistoryData'] = $HistoryModels->where('id_user', session()->get('id'))->findAll();
+        $data['PromotionData'] = $PromotionModels->findAll();
+    
+        // Create an array to store book data with associated category and promotion data
+        $data['bookData'] = [];
+    
+        foreach ($data['HistoryData'] as $key => $value) {
+            // Split the comma-separated ids
+            $id_books = explode(',', $value['id_book']);
+    
+            // Create an array to store promotion data
+
+            // Fetch book data for each id
+            foreach ($id_books as $id) {
+                // Check if the book id is not already in the array
+                $bookData = $BookModels->where('id_book', $id)->findAll();
+    
+                // Fetch category data for the book
+                $categoryData = $CategoryModels->where('id_category', $bookData[0]['category_id'])->findAll();
+    
+                // Associate promotion, category, and book data
+                $bookData[0]['categoryData'] = $categoryData[0];
+    
+                // Check if the book data is not already in the array
+                if (!in_array($bookData[0], $data['bookData'])) {
+                    // Add the fetched book data with associated category and promotion data to the array
+                    $data['bookData'][] = $bookData[0];
+                }
+            }
+        }
+    
+        // Load views
         echo view('userview/layout/header_base');
-        echo view('userview/History');
+        echo view('userview/History', $data);
         echo view('userview/layout/footer');
     }
+
 }

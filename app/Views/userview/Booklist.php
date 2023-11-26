@@ -60,23 +60,14 @@ if (isset($_GET['sort'])) {
                         <div class="carousel-item active">
                             <img class="d-block img-fluid" src="<?= base_url('dist/img/promotion1.jpg') ?>"
                                 alt="First slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                <p>Somewhere</p>
-                            </div>
                         </div>
                         <div class="carousel-item">
                             <img class="d-block img-fluid" src="<?= base_url('dist/img/promotion2.jpg') ?>"
                                 alt="Second slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                <p>Somewhere else</p>
-                            </div>
                         </div>
                         <div class="carousel-item">
                             <img class="d-block img-fluid" src="<?= base_url('dist/img/promotion3.jpg') ?>"
                                 alt="Third slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                <p>Here it is</p>
-                            </div>
                         </div>
                     </div>
                     <a class="left carousel-control carousel-control-prev" href="#carouselExampleIndicators"
@@ -140,7 +131,7 @@ if (isset($_GET['sort'])) {
 
                     ?>
                     <div class="col-md-4" id="book_<?= $book['id_book'] ?>">
-                        <div class="card mb-4" style="width: 20rem; height: 50rem;">
+                        <div class="card mb-4">
                             <img class="card-img-top" src="<?= $imageSrc ?>" alt="Card image cap" style="height: 25rem;">
                             <div class="card-body">
                                 <h5 class="card-title">
@@ -161,15 +152,27 @@ if (isset($_GET['sort'])) {
                     </div>
                     <?php
                 }
-
+                if(!empty($bookData)):
                 foreach ($bookData as $key => $value):
                     if ($sortOrder === '0' || $value['category_id'] === $sortOrder):
                         generateBookCard($value);
                         $count++;
                     endif;
                 endforeach;
+                else:
                 ?>
-
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                ไม่พบข้อมูล
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                endif;
+                ?>
             </div>
         </div>
     </div>

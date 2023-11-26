@@ -54,3 +54,36 @@ in SYSTEMPATH\Database\BaseConnection.php on line 647.
  8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HistoryController))
  9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
 10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-24 11:50:44 --> Undefined variable $cartData
+in APPPATH\Views\userview\Cart.php on line 28.
+ 1 APPPATH\Views\userview\Cart.php(28): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $cartData', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Cart.php', 28)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Cart.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Cart', [], true)
+ 5 APPPATH\Controllers\HomeController.php(90): view('userview/Cart', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_cart()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-24 11:50:53 --> Undefined variable $cartData
+in APPPATH\Views\userview\Cart.php on line 28.
+ 1 APPPATH\Views\userview\Cart.php(28): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $cartData', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Cart.php', 28)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Cart.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Cart', [], true)
+ 5 APPPATH\Controllers\HomeController.php(90): view('userview/Cart', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_cart()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-24 11:52:00 --> Undefined variable $cartData
+in APPPATH\Views\userview\Cart.php on line 28.
+ 1 APPPATH\Views\userview\Cart.php(28): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $cartData', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Cart.php', 28)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Cart.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Cart', [], true)
+ 5 APPPATH\Controllers\HomeController.php(90): view('userview/Cart', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_cart()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()

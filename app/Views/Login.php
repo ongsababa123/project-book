@@ -27,8 +27,6 @@
     .card-register {
         background-color: #86d9ab;
     }
-
-
 </style>
 
 <body class="register-page sidebar-collapse">
@@ -70,12 +68,16 @@
                         <div class="social-line text-center">
                             <img src="<?= base_url('dist/img/logo11.png') ?>">
                         </div>
-                        <form class="login-form">
+                        <form class="mb-3" id="login_form" action="javascript:void(0)" method="post"
+                            enctype="multipart/form-data">
                             <label>อีเมล์</label>
-                            <input type="text" class="form-control" placeholder="อีเมล์">
+                            <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email"
+                                required>
                             <label>รหัสผ่าน</label>
-                            <input type="password" class="form-control" placeholder="รหัสผ่าน">
-                            <button class="btn btn-warning btn-block btn-round bg-warning">ล็อคอิน</button>
+                            <input type="password" class="form-control" placeholder="รหัสผ่าน" id="password"
+                                name="password" required>
+                            <button type="submit" class="btn btn-warning btn-block btn-round bg-warning" name="submit"
+                                value="Submit" id="submit">ล็อคอิน</button>
                         </form>
                         <div class="forgot">
                             <a href="<?= site_url('register') ?>" class="btn btn-link btn-default">สมัครสมาชิก</a>
@@ -100,6 +102,52 @@
     <!-- Control Center for Paper Kit: parallax effects, scripts for the example pages, etc -->
     <script src="<?= base_url('assets/js/paper-kit.js?v=2.2.0') ?>" type="text/javascript"></script>
     <script src="<?= base_url('dist/sweetalert/sweetalert2.js'); ?>"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".overlay").hide();
+        });
+
+        $("#login_form").on('submit', function (e) {
+            e.preventDefault();
+            action_('login/auth', 'login_form');
+        });
+    </script>
+    <script>
+        function action_(url, form) {
+            var formData = new FormData(document.getElementById(form));
+            $.ajax({
+                url: '<?= base_url() ?>' + url,
+                type: "POST",
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "JSON",
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            allowOutsideClick: false
+                        });
+                        setTimeout(() => {
+                            if (response.reload) {
+                                window.location.href = '<?= site_url() ?>'+ response.type;
+                            }
+                        }, 2000);
+                    } else {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'error',
+                            showConfirmButton: true
+                        });
+                    }
+                },
+            });
+        }
+    </script>
 </body>
 
 </html>

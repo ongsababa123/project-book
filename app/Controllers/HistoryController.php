@@ -37,10 +37,7 @@ class HistoryController extends BaseController
 
         $rental_formattedDate = date('Y/m/d', strtotime($rental_date));
         $return_formattedDate = date('Y/m/d', strtotime($return_date));
-        $bookIds = explode(',', $this->request->getVar('name_book_create__'));
         $cart_id = explode(',', $this->request->getVar('cart_id'));
-
-        $this->chage_status_book($bookIds, 2);
         $this->delete_cart($cart_id);
         $data = [
             'id_user' => $this->request->getVar('name_user_create'),
@@ -58,7 +55,9 @@ class HistoryController extends BaseController
             $response = [
                 'success' => true,
                 'message' => 'สร้างข้อมูลเช่าสำเร็จ!',
-                'reload' => true,
+                'reload' => false,
+                'data1' => $this->request->getVar('name_book_create__'),
+                'data2' => $this->request->getVar('cart_id'),
             ];
         } else {
             $response = [
@@ -71,6 +70,25 @@ class HistoryController extends BaseController
         return $this->response->setJSON($response);
     }
 
+
+    public function delete_create_history()
+    {
+        $bookIds = explode(',', $this->request->getVar('name_book_create__'));
+        $cart_id = explode(',', $this->request->getVar('cart_id'));
+
+        $this->chage_status_book($bookIds, 1);
+        $this->delete_cart($cart_id);
+
+        $response = [
+            'success' => true,
+            'message' => 'ยกเลิกการตระกร้าสำเร็จ!',
+            'reload' => false,
+            'data1' => $this->request->getVar('name_book_create__'),
+            'data2' => $this->request->getVar('cart_id'),
+        ];
+
+        return $this->response->setJSON($response);
+    }
     function chage_status_book($bookIds = [], $numberstatus = null)
     {
         $BookModels = new BookModels();

@@ -1,5 +1,4 @@
 <title>Details Book</title>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <style>
     .center {
         padding: 100px 0;
@@ -9,7 +8,7 @@
 </style>
 <div class="main" style="background-color: #bddce5;">
     <br>
-    <div class="section mb-6 px-3" style="background-color: #bddce5;">
+    <div class="section mb-6 px-3" style="background-color: #bddce5; padding-bottom: 14rem;">
         <div class="p-4 border mb-3" style="background-color: white;">
             <div class="row">
                 <div class="col-lg-5 col-md-12 text-center">
@@ -21,8 +20,8 @@
                         $imageSrc = 'data:image/png;base64,' . base64_encode($decodedData);
                     }
                     ?>
-                    <img src="<?= $imageSrc ?>" class="img-rounded img-responsive"
-                        alt="Rounded Image" style="height: 30rem;">
+                    <img src="<?= $imageSrc ?>" class="img-rounded img-responsive" alt="Rounded Image"
+                        style="height: 30rem;">
                 </div>
                 <div class="col-lg-7">
                     <p style="font-size: 2vw;">
@@ -48,14 +47,50 @@
                     <p class="description">
                         <?= $bookData[0]['price'] ?> บาท
                     </p>
-                    <button class="btn btn-danger btn-round mt-5"><i class="fas fa-cart-arrow-down"></i>
-                        ใส่ตระกร้าเลย</button>
+                    <button class="btn btn-danger btn-round" onclick="alert_(<?= $bookData[0]['id_book'] ?>)"
+                        id="button_book">
+                        <i class="fas fa-cart-arrow-down"></i> ใส่ตระกร้าเลย
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="pb-5" style="background-color: #bddce5;">
-        <div class="container ">
-        </div>
-    </div>
 </div>
+<script>
+    function alert_(id_book) {
+        $.ajax({
+            url: '<?= base_url('book/booklist/addcart/') ?>' + id_book,
+            type: "POST",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: "JSON",
+            success: function (response) {
+                document.getElementById('button_book').disabled = true;
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: response.message
+                });
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    title: "เกิดข้อผิดพลาด",
+                    icon: 'error',
+                    showConfirmButton: true
+                });
+            }
+        });
+    }
+</script>

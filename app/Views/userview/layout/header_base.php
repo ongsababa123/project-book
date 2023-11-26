@@ -49,9 +49,11 @@
                     <li class="nav-item">
                         <a href="<?= site_url('/contact') ?>" class="nav-link"> ติดต่อเรา</a>
                     </li>
+                    <?php if(!session()->get('isLoggedIn')) :?>
                     <li class="nav-item">
                         <a href="<?= site_url('/login') ?>" class="btn btn-warning btn-round">ล็อคอิน</a>
                     </li>
+                    <?php else:?>
                     <li class="nav-item dropdown">
                         <a href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" class="btn btn-warning btn-round"><i
@@ -61,9 +63,10 @@
                             <a class="dropdown-item" href="<?= site_url('/profile') ?>">โปรไฟล์ <i
                                     class="fas fa-id-card-alt"></i></a>
                             <a class="dropdown-item" href="<?= site_url('/history') ?>">ประวัติเช่าหนังสือ <i class="fas fa-history"></i></a>
-                            <a class="dropdown-item" href="#">ออกจากระบบ <i class="fas fa-sign-out-alt"></i></a>
+                            <a class="dropdown-item" href="<?= site_url('/logout'); ?>">ออกจากระบบ <i class="fas fa-sign-out-alt"></i></a>
                         </div>
                     </li>
+                    <?php endif;?>
                 </ul>
             </div>
         </div>

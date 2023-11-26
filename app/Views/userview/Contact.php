@@ -1,7 +1,7 @@
 <title>Contact</title>
 <div class="main">
     <br>
-    <div class="section mb-5">
+    <div class="section mb-5" style="padding-bottom: 10rem;">
         <div class="container ">
             <div class="row text-center">
                 <div class="col-md-8 ml-auto mr-auto">
@@ -43,6 +43,10 @@
             </form>
         </div>
     </div>
+    <!-- <div class="section mb-5">
+        <div class="container ">
+            
+    </div> -->
 </div>
 
 
@@ -130,9 +134,10 @@
 
     // Extend Swal with a method to update the progress bar
     Swal.updateProgressBar = function (percent) {
-        this.getProgressBar().style.width = percent + '%';
-        this.getProgressBar().setAttribute('aria-valuenow', percent);
+        $('.swal2-progress-bar').css('width', percent + '%');
+        $('.swal2-progress-bar').attr('aria-valuenow', percent);
     };
+
 
     // Add a method to the progress bar
     Swal.mixin({
