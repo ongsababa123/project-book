@@ -78,6 +78,8 @@
                                 </p>
                                 <h6 ราคา class="description">ราคา</h6>
                                 <?= $book['price'] ?>
+                                <h6 ราคา class="description">วันที่กดเข้าตระกร้า</h6>
+                                <?= $cartItem['cart_date'] ?>
                             </div>
                         </div>
                     </div>
@@ -97,7 +99,7 @@
                                 onclick="loadmodal()" id="button_modal" name="button_modal">ดำเนินการจอง</button>
                         </div>
                         <div class="col-lg-2">
-                            <button class="btn btn-danger btn-round" onclick="confirm_Alert()">ยกเลิก</button>
+                            <button class="btn btn-danger btn-round" onclick="confirm_Alert()" id="button_cancel" name="button_cancel">ยกเลิก</button>
                         </div>
                     </div>
                 </div>
@@ -207,8 +209,10 @@
     var id_book_check = '';
     var price_sum = 0;
     if (cart_check.length === 0) {
+        $("#button_cancel").prop("disabled", true);
         $("#button_modal").prop("disabled", true);
     } else {
+        $("#button_cancel").prop("disabled", false);
         $("#button_modal").prop("disabled", false);
     }
     $(document).ready(function () {
@@ -242,8 +246,10 @@
             $("#price").text(price_sum);
             $("#quantity").text(cart_check.length);
             if (cart_check.length === 0) {
+                $("#button_cancel").prop("disabled", true);
                 $("#button_modal").prop("disabled", true);
             } else {
+                $("#button_cancel").prop("disabled", false);
                 $("#button_modal").prop("disabled", false);
             }
         });
@@ -321,7 +327,6 @@
             contentType: false,
             dataType: "JSON",
             success: function (response) {
-                console.log(response);
                 if (response.success) {
                     Swal.fire({
                         title: response.message,
@@ -372,7 +377,6 @@
                         'X-Requested-With': 'XMLHttpRequest'
                     }
                 }).done(function (response) {
-                    console.log(response);
                     if (response.success) {
                         Swal.fire({
                             title: response.message,

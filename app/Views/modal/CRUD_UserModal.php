@@ -37,7 +37,7 @@
                     <label>รหัสผ่าน</label>
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="form-control" id="password"
-                            placeholder="กรอกรหัสผ่าน" required>
+                            placeholder="กรอกรหัสผ่าน">
                     </div>
                 </div>
                 <input type="text" id="url_route" name="url_route" hidden>

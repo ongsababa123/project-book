@@ -55,9 +55,8 @@ class HistoryController extends BaseController
             $response = [
                 'success' => true,
                 'message' => 'สร้างข้อมูลเช่าสำเร็จ!',
-                'reload' => false,
-                'data1' => $this->request->getVar('name_book_create__'),
-                'data2' => $this->request->getVar('cart_id'),
+                'reload' => true,
+
             ];
         } else {
             $response = [
@@ -249,6 +248,4 @@ class HistoryController extends BaseController
 
         return $this->response->setJSON($response);
     }
-
-
 }

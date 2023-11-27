@@ -7,6 +7,7 @@ use App\Models\UserModels;
 use App\Models\BookModels;
 use App\Models\CategoryModels;
 use App\Models\LateFeesModels;
+
 class UserController extends BaseController
 {
     public function customer_index()
@@ -21,7 +22,7 @@ class UserController extends BaseController
         $data['data_history'] = $HistoryModels->findAll();
 
         echo view('dashboard/layout/header');
-        echo view('dashboard/customer' , $data);
+        echo view('dashboard/customer', $data);
     }
 
     public function employee_index()
@@ -68,7 +69,7 @@ class UserController extends BaseController
             if ($check) {
                 $response = [
                     'success' => true,
-                    'message' => 'สร้างข้อมูลสำเร็จ รหัส 6 หลักคุณคือ '. $number_random . ' ใช้ในกรณีลืมรหัสผ่าน',
+                    'message' => 'สร้างข้อมูลสำเร็จ รหัส 6 หลักคุณคือ ' . $number_random . ' ใช้ในกรณีลืมรหัสผ่าน',
                     'reload' => true,
                 ];
             } else {
@@ -100,6 +101,7 @@ class UserController extends BaseController
             'phone' => 'required|min_length[10]|max_length[10]',
             'email' => 'required|min_length[4]|max_length[100]|valid_email|is_unique[user_table.email_user,id_user,' . $id_user . ']',
         ];
+        $password = $this->request->getVar('password');
 
         if ($this->validate($rules)) {
             $userModels = new UserModels();
@@ -108,8 +110,13 @@ class UserController extends BaseController
                 'name' => $this->request->getVar('name'),
                 'lastname' => $this->request->getVar('last'),
                 'phone' => $this->request->getVar('phone'),
-                'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
             ];
+            if ($password !== '') {
+                $passdata = [
+                    'password' => password_hash($password, PASSWORD_DEFAULT),
+                ];
+                $data = array_merge($data, $passdata);
+            }
             $check = $userModels->update($id_user, $data);
             if ($check) {
                 $response = [

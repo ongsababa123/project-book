@@ -26,6 +26,9 @@
         <div class="container ">
             <?php if (!empty($HistoryData)): ?>
                 <?php foreach ($HistoryData as $key => $value): ?>
+                    <div class="bg-warning">
+                        sadasdas
+                    </div>
                     <div class="p-4 border mb-3" style="background-color: white;">
                         <?php $id_books = explode(',', $value['id_book']); ?>
                         <?php foreach ($bookData as $keybookData => $valuebookData): ?>
@@ -63,6 +66,7 @@
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
+                        <br>
                         <div class="row mt-2">
                             <div class="col-lg-12">
                                 <h6>รายละเอียดโปรโมชั่นที่ได้</h6>
@@ -80,7 +84,9 @@
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 <?php else: ?>
-                                    <h6>ไม่มีโปรโมชั่น</h6>
+                                    <p class="description">
+                                        ไม่มีโปรโมชั่น
+                                    </p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -122,7 +128,7 @@
             <?php else: ?>
                 <div class="section mb-6" style="background-color: #bddce5; padding-bottom: 10rem;">
                     <div class="container ">
-                    <h1 class="text-center">ไม่มีประวัติการเช่า</h1>
+                        <h1 class="text-center">ไม่มีประวัติการเช่า</h1>
 
                     </div>
                 </div>

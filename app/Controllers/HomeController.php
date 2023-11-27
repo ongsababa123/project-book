@@ -51,7 +51,7 @@ class HomeController extends BaseController
         date_default_timezone_set('Asia/Bangkok');
 
         $data = [
-            'id_user' => 1,
+            'id_user' => session()->get('id'),
             'id_book' => $id_book,
             'cart_date' => date('Y-m-d H:i:s')
         ];
