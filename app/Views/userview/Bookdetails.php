@@ -47,10 +47,16 @@
                     <p class="description">
                         <?= $bookData[0]['price'] ?> บาท
                     </p>
-                    <button class="btn btn-danger btn-round" onclick="alert_(<?= $bookData[0]['id_book'] ?>)"
-                        id="button_book">
-                        <i class="fas fa-cart-arrow-down"></i> ใส่ตระกร้าเลย
-                    </button>
+                    <?php if (session()->get('isLoggedIn')): ?>
+                        <button class="btn btn-danger btn-round" onclick="alert_(<?= $bookData[0]['id_book'] ?>)"
+                            id="button_book">
+                            <i class="fas fa-cart-arrow-down"></i> ใส่ตระกร้าเลย
+                        </button>
+                    <?php else: ?>
+                        <button class="btn btn-danger btn-round" onclick="showAlert('กรุณาล็อคอินก่อนเลือกสินค้า')"><i
+                                class="fas fa-cart-arrow-down"></i>
+                            ใส่ตระกร้าเลย</button>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -91,6 +97,17 @@
                     showConfirmButton: true
                 });
             }
+        });
+    }
+</script>
+<script>
+    function showAlert(text) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'แจ้งเตือน',
+            text: text,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'ตกลง'
         });
     }
 </script>

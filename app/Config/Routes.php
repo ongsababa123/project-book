@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'HomeController::index');
+$routes->get('/', 'HomeController::index', ['filter' => 'CartCheck']);
 
 $routes->get('/login', 'LoginController::index_Login');
 $routes->match(['get', 'post'], '/login/auth', 'LoginController::loginAuth');

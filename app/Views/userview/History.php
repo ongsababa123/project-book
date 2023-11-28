@@ -26,9 +26,41 @@
         <div class="container ">
             <?php if (!empty($HistoryData)): ?>
                 <?php foreach ($HistoryData as $key => $value): ?>
-                    <div class="bg-warning">
-                        sadasdas
-                    </div>
+                    <?php
+                    $today = new DateTime(); // Get the current date
+                    $today->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+            
+                    if ($value['submit_date'] === null) {
+                        $returnDate = new DateTime($value['return_date']);
+                        $returnDate->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+            
+                        if ($today > $returnDate) {
+                            echo '<div class="bg-danger pb-3 text-center">
+                            <div class="row mt-2">
+                                <div class="col-lg-12 mt-4">
+                                    <h6 class="text-white">เกินกำหนด</h6>
+                                </div>
+                            </div>
+                        </div>';
+                        } else {
+                            echo '<div class="bg-warning pb-3 text-center">
+                                        <div class="row mt-2">
+                                            <div class="col-lg-12 mt-4">
+                                                <h6 class="text-white">กำลังยืม</h6>
+                                            </div>
+                                        </div>
+                                    </div>';
+                        }
+                    } else {
+                        echo '<div class="bg-success pb-3 text-center">
+                                <div class="row mt-2">
+                                    <div class="col-lg-12 mt-4">
+                                        <h6 class="text-white">คืนแล้ว</h6>
+                                    </div>
+                                </div>
+                            </div>';
+                    }
+                    ?>
                     <div class="p-4 border mb-3" style="background-color: white;">
                         <?php $id_books = explode(',', $value['id_book']); ?>
                         <?php foreach ($bookData as $keybookData => $valuebookData): ?>
@@ -107,20 +139,56 @@
                                 </h6>
                             </div>
                             <div class="col-lg-2 mt-2">
-                                <h6>ค่าปรับ :
-                                    <?= $value['late_price'] ?? 0 ?> บาท
-                                </h6>
+                                <?php
+                                $today = new DateTime(); // Get the current date
+                                $today->setTime(0, 0, 0, 0);
+                                $returnDate = new DateTime($value['return_date']);
+                                $returnDate->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+                                if ($value['submit_date'] === null) {
+                                    if ($today > $returnDate) {
+                                        $returnDate = new DateTime($value['return_date']);
+                                        $currentDate = new DateTime();
+
+                                        // Calculate the difference in days
+                                        $timeDifference = $currentDate->getTimestamp() - $returnDate->getTimestamp();
+                                        $daysDifference = ceil(($timeDifference / (60 * 60 * 24)) - 1);
+                                        $priceFees = $data_latefees[0]['price_fees'];
+                                        echo "<h6>ค่าปรับ : " . $daysDifference * $priceFees . " บาท</h6>";
+                                    } else {
+                                        echo " <h6>ไม่มีค่าปรับ</h6>";
+                                    }
+                                } else {
+                                    echo "<h6>ค่าปรับ : " . ($value['late_price'] ?? 0) . " บาท</h6>";
+                                }
+                                ?>
                             </div>
                             <div class="col-lg-3 mt-2">
                                 <h6>ราคารวม :
                                     <?= $value['sum_price'] ?? 0 ?>
                                 </h6>
                             </div>
-                            <div class="col-lg-2">
-                                <a href="<?= site_url('dashboard/history/billview/' . $value['id_history']) ?>" target="_blank"
-                                    class="btn btn-danger btn-round">
-                                    <i class="fas fa-print"></i> พิมพ์ใบเสร็จ
-                                </a>
+                            <div class="col-lg-2 text-white">
+                                <?php
+                                date_default_timezone_set('Asia/Bangkok'); // Set the time zone
+                                $today = strtotime(date("Y-m-d")); // Get the current date and convert it to a timestamp
+                                $today = strtotime("midnight", $today); // Set the time to midnight
+                        
+                                if ($value['submit_date'] === null) {
+                                    $returnDate = strtotime($value['return_date']); // Get the return date and convert it to a timestamp
+                                    $returnDate = strtotime("midnight", $returnDate); // Set the time to midnight
+                        
+                                    if ($today > $returnDate) {
+                                        echo '<a class="btn btn-danger btn-round mt-3" onclick="showAlert()">';
+                                        echo '<i class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>';
+                                    } else {
+                                        echo '<a class="btn btn-danger btn-round mt-3" onclick="showAlert()">';
+                                        echo '<i class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>';
+                                    }
+                                } else {
+                                    echo '<a class="btn btn-danger btn-round mt-3" href="' . site_url('dashboard/history/billview/' . $value['id_history']) . '" target="_blank">';
+                                    echo '<i class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>';
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -136,3 +204,14 @@
         </div>
     </div>
 </div>
+<script>
+    function showAlert() {
+        Swal.fire({
+            icon: 'warning',
+            title: 'แจ้งเตือน',
+            text: 'กรุณาคืนหนังสือก่อนพิมพ์ใบเสร็จ',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'ตกลง'
+        });
+    }
+</script>

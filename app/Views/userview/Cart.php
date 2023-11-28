@@ -164,8 +164,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="text" class="form-control" id="name_user_create" name="name_user_create" value="1"
-                        hidden>
+                    <input type="text" class="form-control" id="name_user_create" name="name_user_create" value="<?= session()->get('id')?>" hidden>
                     <input type="text" class="form-control" id="price_book_create" name="price_book_create" hidden>
                     <input type="text" class="form-control" id="id_book_create" name="id_book_create">
                     <input type="text" class="form-control" id="sumid_promotion" name="sumid_promotion" hidden>
@@ -202,7 +201,6 @@
         }
     });
 </script>
-<!-- Add this at the end of your HTML file, after including jQuery -->
 <script>
     var categoryData = <?php echo json_encode($cartData); ?>;
     var cart_check = [];

@@ -142,35 +142,44 @@ if (isset($_GET['sort'])) {
                                 </p>
                             </div>
                             <div class="card-footer">
-                                <a href="<?= site_url('/book/details/') . $book['id_book'] ?>"
-                                    class="btn btn-info btn-round">เพิ่มเติม</a>
-                                <button class="btn btn-danger btn-round" onclick="alert_(<?= $book['id_book'] ?>)"><i
-                                        class="fas fa-cart-arrow-down"></i>
-                                    ใส่ตระกร้าเลย</button>
+                                <?php if (session()->get('isLoggedIn')): ?>
+                                    <a href="<?= site_url('/book/details/') . $book['id_book'] ?>"
+                                        class="btn btn-info btn-round">เพิ่มเติม</a>
+                                    <button class="btn btn-danger btn-round" onclick="alert_(<?= $book['id_book'] ?>)"><i
+                                            class="fas fa-cart-arrow-down"></i>
+                                        ใส่ตระกร้าเลย</button>
+                                <?php else: ?>
+                                    <a href="<?= site_url('/book/details/') . $book['id_book'] ?>"
+                                        class="btn btn-info btn-round">เพิ่มเติม</a>
+                                    <button class="btn btn-danger btn-round"
+                                        onclick="showAlert('กรุณาล็อคอินก่อนเลือกสินค้า')"><i
+                                            class="fas fa-cart-arrow-down"></i>
+                                        ใส่ตระกร้าเลย</button>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
                     <?php
                 }
-                if(!empty($bookData)):
-                foreach ($bookData as $key => $value):
-                    if ($sortOrder === '0' || $value['category_id'] === $sortOrder):
-                        generateBookCard($value);
-                        $count++;
-                    endif;
-                endforeach;
+                if (!empty($bookData)):
+                    foreach ($bookData as $key => $value):
+                        if ($sortOrder === '0' || $value['category_id'] === $sortOrder):
+                            generateBookCard($value);
+                            $count++;
+                        endif;
+                    endforeach;
                 else:
-                ?>
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                ไม่พบข้อมูล
-                            </h5>
+                    ?>
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    ไม่พบข้อมูล
+                                </h5>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php
+                    <?php
                 endif;
                 ?>
             </div>
@@ -239,6 +248,17 @@ if (isset($_GET['sort'])) {
                     showConfirmButton: true
                 });
             }
+        });
+    }
+</script>
+<script>
+    function showAlert(text) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'แจ้งเตือน',
+            text: text,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'ตกลง'
         });
     }
 </script>

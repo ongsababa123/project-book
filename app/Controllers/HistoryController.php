@@ -215,10 +215,12 @@ class HistoryController extends BaseController
         $UserModels = new UserModels();
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
+        $LateFeesModels = new LateFeesModels();
         $data['data_history'] = $HistoryModels->where('id_user', $id_user)->findAll();
         $data['data_user'] = $UserModels->where('id_user', $id_user)->findAll();
         $data['data_book'] = $BookModels->findAll();
         $data['data_category'] = $CategoryModels->findAll();
+        $data['data_latefees'] = $LateFeesModels->findAll();
 
         echo view('dashboard/layout/header');
         echo view('dashboard/user_history', $data);

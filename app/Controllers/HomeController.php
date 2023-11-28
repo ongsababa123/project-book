@@ -8,6 +8,7 @@ use App\Models\CartModels;
 use App\Models\HistoryModels;
 use App\Models\PromotionModels;
 use App\Models\UserModels;
+use App\Models\LateFeesModels;
 
 class HomeController extends BaseController
 {
@@ -53,7 +54,8 @@ class HomeController extends BaseController
         $data = [
             'id_user' => session()->get('id'),
             'id_book' => $id_book,
-            'cart_date' => date('Y-m-d H:i:s')
+            'cart_date' => date('Y-m-d H:i:s'),
+            'status_cart' => 1,
         ];
 
         $data_book = [
@@ -160,11 +162,13 @@ class HomeController extends BaseController
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
         $PromotionModels = new PromotionModels();
-    
+        $LateFeesModels = new LateFeesModels();
+
         // Fetch history data for user with id session()->get('id')
         $data['HistoryData'] = $HistoryModels->where('id_user', session()->get('id'))->findAll();
         $data['PromotionData'] = $PromotionModels->findAll();
-    
+        $data['data_latefees'] = $LateFeesModels->findAll();
+
         // Create an array to store book data with associated category and promotion data
         $data['bookData'] = [];
     

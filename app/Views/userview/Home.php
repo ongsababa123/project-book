@@ -1,6 +1,7 @@
 <title>Home</title>
 
 <!-- End Navbar -->
+
 <div class="page-header" data-parallax="true"
     style="background-image: url('<?= base_url('dist/img/background.png') ?>');">
     <div class="filter"></div>
@@ -9,7 +10,8 @@
             <h1>ร้านบางเล่ม</h1>
             <h3>บริการเช่าหนังสือออนไลน์ สะดวก รวดเร็ว ใช้งานง่าย</h3>
             <br />
-            <a href="<?= site_url('/book/booklist') ?>" class="btn btn-outline-neutral btn-round"><i class="fas fa-cart-plus"></i> จองหนังสือเลย!</a>
+            <a href="<?= site_url('/book/booklist') ?>" class="btn btn-outline-neutral btn-round"><i
+                    class="fas fa-cart-plus"></i> จองหนังสือเลย!</a>
         </div>
     </div>
 </div>

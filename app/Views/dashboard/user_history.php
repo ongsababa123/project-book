@@ -146,13 +146,28 @@
                                                                 <div class="col-sm-2 mt-3">
                                                                     <div class="form-group">
                                                                         <label>ค่าปรับ</label>
-                                                                        <?php if ($value['late_price'] === null): ?>
-                                                                            <p>ไม่มีค่าปรับ</p>
-                                                                        <?php else: ?>
-                                                                            <p>
-                                                                                <?= $value['late_price'] ?> บาท
-                                                                            </p>
-                                                                        <?php endif; ?>
+                                                                        <?php
+                                                                        $today = new DateTime(); // Get the current date
+                                                                        $today->setTime(0, 0, 0, 0);
+                                                                        $returnDate = new DateTime($value['return_date']);
+                                                                        $returnDate->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+                                                                        if ($value['submit_date'] === null) {
+                                                                            if ($today > $returnDate) {
+                                                                                $returnDate = new DateTime($value['return_date']);
+                                                                                $currentDate = new DateTime();
+
+                                                                                // Calculate the difference in days
+                                                                                $timeDifference = $currentDate->getTimestamp() - $returnDate->getTimestamp();
+                                                                                $daysDifference = ceil(($timeDifference / (60 * 60 * 24)) - 1);
+                                                                                $priceFees = $data_latefees[0]['price_fees'];
+                                                                                echo "<p>".$daysDifference * $priceFees."</p>";
+                                                                            } else {
+                                                                                echo " <p>ไม่มีค่าปรับ</p>";
+                                                                            }
+                                                                        } else {
+                                                                            echo "<p>" . $value['late_price'] . "</p>";
+                                                                        }
+                                                                        ?>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-2 mt-3">
