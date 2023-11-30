@@ -16,7 +16,7 @@
     <link href="<?= base_url('assets/css/paper-kit.css') ?>" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="<?= base_url('assets/demo/demo.css') ?>" rel="stylesheet" />
-    <title>Register</title>
+    <title>Forgot Password</title>
 
 </head>
 <style>
@@ -68,10 +68,15 @@
                         <div class="social-line text-center">
                             <img src="<?= base_url('dist/img/logo11.png') ?>">
                         </div>
-                        <form class="forgotpassword-form">
+                        <form id="forgot_password" action="javascript:void(0)" method="post"
+                            enctype="multipart/form-data">
+                            <label>อีเมล์</label>
+                            <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email"
+                                required>
                             <label>ยืนยันรหัส 6 หลัก</label>
-                            <input type="number" class="form-control" placeholder="รหัส 6 หลัก">
-                            <button class="btn btn-warning btn-block btn-round bg-warning">ยืนยัน</button>
+                            <input type="number" class="form-control" placeholder="รหัส 6 หลัก" id="pin" name="pin">
+                            <button type="submit" class="btn btn-warning btn-block btn-round bg-warning" name="submit"
+                                value="Submit" id="submit">ยืนยัน</button>
                         </form>
                         <div class="forgot">
                             <a href="<?= site_url('login') ?>" class="btn btn-link btn-default">ล็อคอิน</a>
@@ -96,6 +101,53 @@
     <!-- Control Center for Paper Kit: parallax effects, scripts for the example pages, etc -->
     <script src="<?= base_url('assets/js/paper-kit.js?v=2.2.0') ?>" type="text/javascript"></script>
     <script src="<?= base_url('dist/sweetalert/sweetalert2.js'); ?>"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".overlay").hide();
+        });
+
+        $("#forgot_password").on('submit', function (e) {
+            e.preventDefault();
+            action_('checkpin', 'forgot_password');
+        });
+    </script>
+    <script>
+        function action_(url, form) {
+            var formData = new FormData(document.getElementById(form));
+            $.ajax({
+                url: '<?= base_url('checkpin') ?>',
+                type: "POST",
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "JSON",
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            allowOutsideClick: false
+                        });
+                        setTimeout(() => {
+                            if (response.reload) {
+                                window.location.href = '<?= site_url('resetpassword/') ?>' + response.data;
+                            }
+                        }, 2000);
+                    } else {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'error',
+                            showConfirmButton: true
+                        });
+                    }
+                },
+            });
+        }
+    </script>
 </body>
 
 </html>

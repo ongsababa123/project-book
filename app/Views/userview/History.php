@@ -29,36 +29,53 @@
                     <?php
                     $today = new DateTime(); // Get the current date
                     $today->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
-            
-                    if ($value['submit_date'] === null) {
-                        $returnDate = new DateTime($value['return_date']);
-                        $returnDate->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
-            
-                        if ($today > $returnDate) {
-                            echo '<div class="bg-danger pb-3 text-center">
-                            <div class="row mt-2">
-                                <div class="col-lg-12 mt-4">
-                                    <h6 class="text-white">เกินกำหนด</h6>
-                                </div>
-                            </div>
-                        </div>';
-                        } else {
-                            echo '<div class="bg-warning pb-3 text-center">
-                                        <div class="row mt-2">
-                                            <div class="col-lg-12 mt-4">
-                                                <h6 class="text-white">กำลังยืม</h6>
-                                            </div>
-                                        </div>
-                                    </div>';
-                        }
-                    } else {
-                        echo '<div class="bg-success pb-3 text-center">
+                    if ($value['status_his'] === '1') {
+                        echo '<div class="bg-info pb-3 text-center">
                                 <div class="row mt-2">
                                     <div class="col-lg-12 mt-4">
-                                        <h6 class="text-white">คืนแล้ว</h6>
+                                        <h6 class="text-white">รอเข้ารับหนังสือ</h6>
                                     </div>
                                 </div>
                             </div>';
+                    } else if ($value['status_his'] === '2') {
+                        if ($value['submit_date'] === null) {
+                            $returnDate = new DateTime($value['return_date']);
+                            $returnDate->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+            
+                            if ($today > $returnDate) {
+                                echo '<div class="bg-danger pb-3 text-center">
+                                <div class="row mt-2">
+                                    <div class="col-lg-12 mt-4">
+                                        <h6 class="text-white">เกินกำหนด</h6>
+                                    </div>
+                                </div>
+                            </div>';
+                            } else {
+                                echo '<div class="bg-warning pb-3 text-center">
+                                    <div class="row mt-2">
+                                        <div class="col-lg-12 mt-4">
+                                            <h6 class="text-white">กำลังยืม</h6>
+                                        </div>
+                                    </div>
+                                </div>';
+                            }
+                        } else {
+                            echo '<div class="bg-success pb-3 text-center">
+                                    <div class="row mt-2">
+                                        <div class="col-lg-12 mt-4">
+                                            <h6 class="text-white">คืนแล้ว</h6>
+                                        </div>
+                                    </div>
+                                </div>';
+                        }
+                    }else{
+                        echo '<div class="bg-danger pb-3 text-center">
+                        <div class="row mt-2">
+                            <div class="col-lg-12 mt-4">
+                                <h6 class="text-white">เกินกำหนดวันรับ</h6>
+                            </div>
+                        </div>
+                    </div>';
                     }
                     ?>
                     <div class="p-4 border mb-3" style="background-color: white;">

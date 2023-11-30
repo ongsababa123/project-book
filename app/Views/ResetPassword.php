@@ -68,10 +68,15 @@
                         <div class="social-line text-center">
                             <img src="<?= base_url('dist/img/logo11.png') ?>">
                         </div>
-                        <form class="forgotpassword-form">
-                            <label>รหัสผ่านใหม่</label>
-                            <input type="number" class="form-control" placeholder="รหัสผ่านใหม่">
-                            <button class="btn btn-warning btn-block btn-round bg-warning">ยืนยัน</button>
+                        <form class="mb-3" id="forgotpassword_form" action="javascript:void(0)" method="post"
+                            enctype="multipart/form-data">
+                            <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email" value="<?= $email ?>" hidden>
+                            <input type="textarea" class="form-control" placeholder="อีเมล์" id="pin" name="pin" value="<?= $pin ?>" hidden>
+                            <label>รหัสผ่าน</label>
+                            <input type="password" class="form-control" placeholder="รหัสผ่าน" id="password"
+                                name="password" required>
+                            <button type="submit" class="btn btn-warning btn-block btn-round bg-warning" name="submit"
+                                value="Submit" id="submit">ยืนยัน</button>
                         </form>
                     </div>
                 </div>
@@ -92,6 +97,54 @@
     <!-- Control Center for Paper Kit: parallax effects, scripts for the example pages, etc -->
     <script src="<?= base_url('assets/js/paper-kit.js?v=2.2.0') ?>" type="text/javascript"></script>
     <script src="<?= base_url('dist/sweetalert/sweetalert2.js'); ?>"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".overlay").hide();
+        });
+
+        $("#forgotpassword_form").on('submit', function (e) {
+            e.preventDefault();
+            action_('update/resetpassword', 'forgotpassword_form');
+        });
+    </script>
+    <script>
+        function action_(url, form) {
+            var formData = new FormData(document.getElementById(form));
+            $.ajax({
+                url: '<?= base_url('update/resetpassword') ?>',
+                type: "POST",
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "JSON",
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            allowOutsideClick: false
+                        }).then((result) => {
+                            // Check if the user clicked the confirm button
+                            if (result.isConfirmed) {
+                                // Redirect to the login page, you may need to adjust the URL
+                                window.location.href = '<?=site_url('login')?>';
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'error',
+                            showConfirmButton: true
+                        });
+                    }
+                },
+            });
+        }
+    </script>
 </body>
 
 </html>

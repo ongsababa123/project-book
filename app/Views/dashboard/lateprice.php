@@ -1,9 +1,6 @@
 <title>Late Price Table</title>
 
-<body class="hold-transition sidebar-mini">
-    <div class="alert alert-success" role="alert">
-        This is a success alert—check it out!
-    </div>
+<body class="hold-transition sidebar-mini"> 
     <div class="content-wrapper">
         <section class="content-header">
             <div class="container-fluid">
@@ -134,8 +131,13 @@
                         'data': null,
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
-                            const encodedRowData = encodeURIComponent(JSON.stringify(row));
+                            <?php if (session()->get('type') == '2'): ?>
+                                const encodedRowData = encodeURIComponent(JSON.stringify(row));
                             return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(1,'${encodedRowData}')"> แก้ไขข้อมูล</button>`;
+                            <?php else: ?>
+                                return ``;
+                            <?php endif; ?>
+                            
                         }
                     },
                 ]

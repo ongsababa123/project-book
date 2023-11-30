@@ -1,0 +1,565 @@
+CRITICAL - 2023-11-29 01:33:51 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 118.
+ 1 APPPATH\Controllers\LoginController.php(118): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 118)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:34:37 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 118.
+ 1 APPPATH\Controllers\LoginController.php(118): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 118)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:38:44 --> Unclosed '{' on line 10
+in APPPATH\Controllers\LoginController.php on line 121.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(291): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(269): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\LoginController')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\LoginController')
+ 4 SYSTEMPATH\CodeIgniter.php(900): class_exists('\\App\\Controllers\\LoginController', true)
+ 5 SYSTEMPATH\CodeIgniter.php(489): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:38:58 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 118.
+ 1 APPPATH\Controllers\LoginController.php(118): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 118)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:42:41 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:43:00 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:43:07 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:43:25 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:43:36 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:50:34 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:52:28 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:52:33 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:52:51 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:54:10 --> Undefined array key "pin"
+in APPPATH\Controllers\LoginController.php on line 100.
+ 1 APPPATH\Controllers\LoginController.php(100): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "pin"', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 100)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:54:11 --> Undefined array key "pin"
+in APPPATH\Controllers\LoginController.php on line 100.
+ 1 APPPATH\Controllers\LoginController.php(100): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "pin"', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 100)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:54:11 --> Undefined array key "pin"
+in APPPATH\Controllers\LoginController.php on line 100.
+ 1 APPPATH\Controllers\LoginController.php(100): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "pin"', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 100)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:54:11 --> Undefined array key "pin"
+in APPPATH\Controllers\LoginController.php on line 100.
+ 1 APPPATH\Controllers\LoginController.php(100): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "pin"', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 100)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin__()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:55:10 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:55:10 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:55:11 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:55:11 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:55:11 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:55:11 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:55:11 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:55:12 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:55:12 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 01:59:00 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:07 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:08 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:08 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:08 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:09 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:09 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:09 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:09 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:09 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:09 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:10 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:10 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:10 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:00:10 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 119.
+ 1 APPPATH\Controllers\LoginController.php(119): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 119)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:01:01 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 112.
+ 1 APPPATH\Controllers\LoginController.php(112): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 112)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:01:03 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 112.
+ 1 APPPATH\Controllers\LoginController.php(112): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 112)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:01:03 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 112.
+ 1 APPPATH\Controllers\LoginController.php(112): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 112)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:01:03 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 112.
+ 1 APPPATH\Controllers\LoginController.php(112): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 112)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:30:49 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 120.
+ 1 APPPATH\Controllers\LoginController.php(120): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 120)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:31:20 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 120.
+ 1 APPPATH\Controllers\LoginController.php(120): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 120)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:32:24 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 120.
+ 1 APPPATH\Controllers\LoginController.php(120): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 120)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:32:39 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 120.
+ 1 APPPATH\Controllers\LoginController.php(120): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 120)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:32:40 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 120.
+ 1 APPPATH\Controllers\LoginController.php(120): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 120)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:32:41 --> Undefined variable $response
+in APPPATH\Controllers\LoginController.php on line 120.
+ 1 APPPATH\Controllers\LoginController.php(120): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $response', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 120)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->checkpin()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:53:41 --> Undefined array key "id_user"
+in APPPATH\Controllers\LoginController.php on line 113.
+ 1 APPPATH\Controllers\LoginController.php(113): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id_user"', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 113)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->update_resetpassword()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:54:13 --> Undefined array key "id_user"
+in APPPATH\Controllers\LoginController.php on line 112.
+ 1 APPPATH\Controllers\LoginController.php(112): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id_user"', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 112)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->update_resetpassword()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:54:33 --> Undefined array key "id_user"
+in APPPATH\Controllers\LoginController.php on line 112.
+ 1 APPPATH\Controllers\LoginController.php(112): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id_user"', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 112)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->update_resetpassword()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:54:59 --> Undefined array key "id_user"
+in APPPATH\Controllers\LoginController.php on line 112.
+ 1 APPPATH\Controllers\LoginController.php(112): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id_user"', 'C:\\xampp\\htdocs\\project-book\\app\\Controllers\\LoginController.php', 112)
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->update_resetpassword()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:55:49 --> There is no data to update.
+in SYSTEMPATH\BaseModel.php on line 1726.
+ 1 SYSTEMPATH\BaseModel.php(1726): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+ 2 SYSTEMPATH\BaseModel.php(916): CodeIgniter\BaseModel->transformDataToArray(null, 'update')
+ 3 SYSTEMPATH\Model.php(776): CodeIgniter\BaseModel->update(null, null)
+ 4 APPPATH\Controllers\LoginController.php(113): CodeIgniter\Model->update()
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->update_resetpassword()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 02:56:06 --> There is no data to update.
+in SYSTEMPATH\BaseModel.php on line 1726.
+ 1 SYSTEMPATH\BaseModel.php(1726): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+ 2 SYSTEMPATH\BaseModel.php(916): CodeIgniter\BaseModel->transformDataToArray(null, 'update')
+ 3 SYSTEMPATH\Model.php(776): CodeIgniter\BaseModel->update(null, null)
+ 4 APPPATH\Controllers\LoginController.php(113): CodeIgniter\Model->update()
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\LoginController->update_resetpassword()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:26:34 --> "CartCheck|HistoryCheck" filter must have a matching alias defined.
+in SYSTEMPATH\Filters\Filters.php on line 354.
+ 1 SYSTEMPATH\Filters\Filters.php(354): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('CartCheck|HistoryCheck')
+ 2 SYSTEMPATH\CodeIgniter.php(467): CodeIgniter\Filters\Filters->enableFilter('CartCheck|HistoryCheck', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:26:53 --> "CartCheck|HistoryCheck" filter must have a matching alias defined.
+in SYSTEMPATH\Filters\Filters.php on line 354.
+ 1 SYSTEMPATH\Filters\Filters.php(354): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('CartCheck|HistoryCheck')
+ 2 SYSTEMPATH\CodeIgniter.php(467): CodeIgniter\Filters\Filters->enableFilter('CartCheck|HistoryCheck', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:26:54 --> "CartCheck|HistoryCheck" filter must have a matching alias defined.
+in SYSTEMPATH\Filters\Filters.php on line 354.
+ 1 SYSTEMPATH\Filters\Filters.php(354): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('CartCheck|HistoryCheck')
+ 2 SYSTEMPATH\CodeIgniter.php(467): CodeIgniter\Filters\Filters->enableFilter('CartCheck|HistoryCheck', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:27:01 --> "CartCheck|HistoryCheck" filter must have a matching alias defined.
+in SYSTEMPATH\Filters\Filters.php on line 354.
+ 1 SYSTEMPATH\Filters\Filters.php(354): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('CartCheck|HistoryCheck')
+ 2 SYSTEMPATH\CodeIgniter.php(467): CodeIgniter\Filters\Filters->enableFilter('CartCheck|HistoryCheck', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:27:02 --> "CartCheck|HistoryCheck" filter must have a matching alias defined.
+in SYSTEMPATH\Filters\Filters.php on line 354.
+ 1 SYSTEMPATH\Filters\Filters.php(354): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('CartCheck|HistoryCheck')
+ 2 SYSTEMPATH\CodeIgniter.php(467): CodeIgniter\Filters\Filters->enableFilter('CartCheck|HistoryCheck', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:28:27 --> "Y-m-d H:i:s" is not a valid datetime format
+in SYSTEMPATH\I18n\TimeTrait.php on line 243.
+ 1 SYSTEMPATH\I18n\TimeTrait.php(243): CodeIgniter\I18n\Exceptions\I18nException::forInvalidFormat('Y-m-d H:i:s')
+ 2 APPPATH\Filters\HistoryCheck.php(22): CodeIgniter\I18n\Time::createFromFormat('Y-m-d H:i:s', '2023-11-28', 'Asia/Bangkok')
+ 3 SYSTEMPATH\Filters\Filters.php(184): App\Filters\HistoryCheck->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 4 SYSTEMPATH\CodeIgniter.php(474): CodeIgniter\Filters\Filters->run('', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 13:29:12 --> "Y-m-d H:i:s" is not a valid datetime format
+in SYSTEMPATH\I18n\TimeTrait.php on line 243.
+ 1 SYSTEMPATH\I18n\TimeTrait.php(243): CodeIgniter\I18n\Exceptions\I18nException::forInvalidFormat('Y-m-d H:i:s')
+ 2 APPPATH\Filters\HistoryCheck.php(23): CodeIgniter\I18n\Time::createFromFormat('Y-m-d H:i:s', '2023-11-28', 'Asia/Bangkok')
+ 3 SYSTEMPATH\Filters\Filters.php(184): App\Filters\HistoryCheck->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 4 SYSTEMPATH\CodeIgniter.php(474): CodeIgniter\Filters\Filters->run('', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 13:29:13 --> "Y-m-d H:i:s" is not a valid datetime format
+in SYSTEMPATH\I18n\TimeTrait.php on line 243.
+ 1 SYSTEMPATH\I18n\TimeTrait.php(243): CodeIgniter\I18n\Exceptions\I18nException::forInvalidFormat('Y-m-d H:i:s')
+ 2 APPPATH\Filters\HistoryCheck.php(23): CodeIgniter\I18n\Time::createFromFormat('Y-m-d H:i:s', '2023-11-28', 'Asia/Bangkok')
+ 3 SYSTEMPATH\Filters\Filters.php(184): App\Filters\HistoryCheck->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 4 SYSTEMPATH\CodeIgniter.php(474): CodeIgniter\Filters\Filters->run('', 'before')
+ 5 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:29:39 --> "CartCheck|HistoryCheck" filter must have a matching alias defined.
+in SYSTEMPATH\Filters\Filters.php on line 354.
+ 1 SYSTEMPATH\Filters\Filters.php(354): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('CartCheck|HistoryCheck')
+ 2 SYSTEMPATH\CodeIgniter.php(467): CodeIgniter\Filters\Filters->enableFilter('CartCheck|HistoryCheck', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:30:26 --> "CartCheck|HistoryCheck" filter must have a matching alias defined.
+in SYSTEMPATH\Filters\Filters.php on line 354.
+ 1 SYSTEMPATH\Filters\Filters.php(354): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('CartCheck|HistoryCheck')
+ 2 SYSTEMPATH\CodeIgniter.php(467): CodeIgniter\Filters\Filters->enableFilter('CartCheck|HistoryCheck', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:30:38 --> "CartCheck|HistoryCheck" filter must have a matching alias defined.
+in SYSTEMPATH\Filters\Filters.php on line 354.
+ 1 SYSTEMPATH\Filters\Filters.php(354): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('CartCheck|HistoryCheck')
+ 2 SYSTEMPATH\CodeIgniter.php(467): CodeIgniter\Filters\Filters->enableFilter('CartCheck|HistoryCheck', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:30:43 --> "CartCheck|HistoryCheck" filter must have a matching alias defined.
+in SYSTEMPATH\Filters\Filters.php on line 354.
+ 1 SYSTEMPATH\Filters\Filters.php(354): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('CartCheck|HistoryCheck')
+ 2 SYSTEMPATH\CodeIgniter.php(467): CodeIgniter\Filters\Filters->enableFilter('CartCheck|HistoryCheck', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 06:35:40 --> CodeIgniter\Router\RouteCollection::getFilterForRoute(): Return value must be of type string, array returned
+in SYSTEMPATH\Router\RouteCollection.php on line 1255.
+ 1 SYSTEMPATH\Router\Router.php(193): CodeIgniter\Router\RouteCollection->getFilterForRoute('/')
+ 2 SYSTEMPATH\CodeIgniter.php(823): CodeIgniter\Router\Router->handle('/')
+ 3 SYSTEMPATH\CodeIgniter.php(450): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 13:46:09 --> Too few arguments to function App\Filters\HistoryCheck::__construct(), 0 passed in C:\xampp\htdocs\project-book\vendor\codeigniter4\framework\system\Filters\Filters.php on line 177 and exactly 2 expected
+in APPPATH\Filters\HistoryCheck.php on line 17.
+ 1 SYSTEMPATH\Filters\Filters.php(177): App\Filters\HistoryCheck->__construct()
+ 2 SYSTEMPATH\CodeIgniter.php(474): CodeIgniter\Filters\Filters->run('', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 13:56:01 --> Call to undefined method CodeIgniter\I18n\Time::setToStartOfDay()
+in APPPATH\Filters\HistoryCheck.php on line 29.
+ 1 SYSTEMPATH\Filters\Filters.php(184): App\Filters\HistoryCheck->before(Object(CodeIgniter\HTTP\IncomingRequest), null)
+ 2 SYSTEMPATH\CodeIgniter.php(474): CodeIgniter\Filters\Filters->run('', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 15:16:46 --> Undefined variable $data
+in APPPATH\Views\dashboard\profile.php on line 48.
+ 1 APPPATH\Views\dashboard\profile.php(48): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $data', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\profile.php', 48)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\profile.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/profile', [], true)
+ 5 APPPATH\Controllers\UserController.php(51): view('dashboard/profile', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\UserController->profile_index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 15:16:53 --> Undefined variable $data
+in APPPATH\Views\dashboard\profile.php on line 48.
+ 1 APPPATH\Views\dashboard\profile.php(48): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $data', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\profile.php', 48)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\profile.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/profile', [], true)
+ 5 APPPATH\Controllers\UserController.php(51): view('dashboard/profile', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\UserController->profile_index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 15:17:02 --> Undefined array key "name"
+in APPPATH\Views\dashboard\profile.php on line 48.
+ 1 APPPATH\Views\dashboard\profile.php(48): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "name"', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\profile.php', 48)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\profile.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/profile', [], true)
+ 5 APPPATH\Controllers\UserController.php(51): view('dashboard/profile', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\UserController->profile_index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 15:17:25 --> Unsupported operand types: string + string
+in APPPATH\Views\dashboard\profile.php on line 48.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/profile', [], true)
+ 4 APPPATH\Controllers\UserController.php(51): view('dashboard/profile', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\UserController->profile_index()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 15:21:16 --> "AuthGuard" filter must have a matching alias defined.
+in SYSTEMPATH\Filters\Filters.php on line 354.
+ 1 SYSTEMPATH\Filters\Filters.php(354): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('AuthGuard')
+ 2 SYSTEMPATH\Filters\Filters.php(409): CodeIgniter\Filters\Filters->enableFilter('AuthGuard', 'before')
+ 3 SYSTEMPATH\CodeIgniter.php(463): CodeIgniter\Filters\Filters->enableFilters([...], 'before')
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-11-29 15:41:49 --> Undefined variable $load_check
+in APPPATH\Views\dashboard\profile.php on line 105.
+ 1 APPPATH\Views\dashboard\profile.php(105): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $load_check', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\profile.php', 105)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\profile.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/profile', [], true)
+ 5 APPPATH\Controllers\UserController.php(51): view('dashboard/profile', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\UserController->profile_index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()

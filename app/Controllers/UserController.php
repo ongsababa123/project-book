@@ -43,6 +43,14 @@ class UserController extends BaseController
         echo view('dashboard/admin');
     }
 
+    public function profile_index()
+    {
+        $UserModels = new UserModels();
+        $data['data_user'] = $UserModels->find(session()->get('id_user'));
+        echo view('dashboard/layout/header');
+        echo view('dashboard/profile' , $data);
+    }
+
     public function create_user($type = null)
     {
         helper(['form']);
@@ -61,7 +69,7 @@ class UserController extends BaseController
                 'lastname' => $this->request->getVar('last'),
                 'phone' => $this->request->getVar('phone'),
                 'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
-                'key_pass' => $number_random,
+                'key_pass' => password_hash($number_random, PASSWORD_DEFAULT),
                 'status_user' => 1,
                 'type_user' => $type,
             ];

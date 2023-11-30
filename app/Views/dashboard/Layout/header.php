@@ -66,11 +66,18 @@
                             aria-haspopup="true" aria-expanded="false">
                             <img class="img-circle" src="<?= base_url('dist/img/avatar6.png'); ?>" alt="User Image">
                             <span class="username">จิลายุทธ บัณฑิค </span>
+                            <?php if (session()->get('type') == '1'): ?>
+                            <span class="description">ผู้จัดการระบบ</span>
+                            <?php elseif (session()->get('type') == '2'): ?>
+                            <span class="description">เจ้าของร้าน</span>
+                            <?php elseif (session()->get('type') == '3'): ?>
                             <span class="description">พนักงาน</span>
+                            <?php endif; ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="userDropdown">
                             <!-- Dropdown items go here -->
-                            <a class="dropdown-item" href="<?= site_url('/profile'); ?>"> <i class="fas fa-id-card"></i>
+                            <a class="dropdown-item" href="<?= site_url('dashboard/profile/index'); ?>"> <i
+                                    class="fas fa-id-card"></i>
                                 Profile
                             </a>
                             <div class="dropdown-divider"></div>
@@ -114,89 +121,102 @@
                             <hr>
                         </div>
                         <li class="nav-header">ระบบการจัดการสมาชิก</li>
-                        <li class="nav-item">
-                            <a href="<?= site_url('/dashboard/customer/index'); ?>" class="nav-link">
-                                <i class="nav-icon fas fa-user-cog"></i>
-                                <p>
-                                    ข้อมูลสมาชิก
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= site_url('/dashboard/employee/index'); ?>" class="nav-link">
-                                <i class="nav-icon fas fa-user-tie"></i>
-                                <p>
-                                    ข้อมูลพนักงาน
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= site_url('/dashboard/owner/index'); ?>" class="nav-link">
-                                <i class="nav-icon fas fa-user-secret"></i>
-                                <p>
-                                    ข้อมูลเจ้าของร้าน
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= site_url('/dashboard/admin/index'); ?>" class="nav-link">
-                                <i class="nav-icon fas fa-user-shield"></i>
-                                <p>
-                                    ข้อมูลผู้ดูแลระบบ
-                                </p>
-                            </a>
-                        </li>
+                        <?php if (session()->get('type') == '2' || session()->get('type') == '3'): ?>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/customer/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-user-cog"></i>
+                                    <p>
+                                        ข้อมูลสมาชิก
+                                    </p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (session()->get('type') == '2' || session()->get('type') == '3' || session()->get('type') == '1'): ?>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/employee/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-user-tie"></i>
+                                    <p>
+                                        ข้อมูลพนักงาน
+                                    </p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (session()->get('type') == '2'): ?>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/owner/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-user-secret"></i>
+                                    <p>
+                                        ข้อมูลเจ้าของร้าน
+                                    </p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (session()->get('type') == '2'): ?>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/admin/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-user-shield"></i>
+                                    <p>
+                                        ข้อมูลผู้ดูแลระบบ
+                                    </p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                         <div>
                             <hr>
                         </div>
-                        <li class="nav-header">ระบบการจัดการหนังสือ</li>
-                        <li class="nav-item">
-                            <a href="<?= site_url('/dashboard/book/index'); ?>" class="nav-link">
-                                <i class="nav-icon fas fa-book"></i>
-                                <p>
-                                    ข้อมูลหนังสือ
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= site_url('/dashboard/history/index'); ?>" class="nav-link">
-                                <i class="nav-icon fas fa-history"></i>
-                                <p>
-                                    ประวัติการเช่า
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= site_url('/dashboard/category/index'); ?>" class="nav-link">
-                                <i class="nav-icon fas fa-bookmark"></i>
-                                <p>
-                                    หมวดหมู่หนังสือ
-                                </p>
-                            </a>
-                        </li>
-                        <div>
-                            <hr>
-                        </div>
-                        <li class="nav-header">ระบบการจัดการระบบ</li>
-                        <li class="nav-item">
-                        <a href="<?= site_url('/dashboard/late-price/index'); ?>" class="nav-link">
-                                <i class="nav-icon fas fa-cash-register"></i>
-                                <p>
-                                    ข้อมูลค่าปรับ
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href="<?= site_url('/dashboard/promotion/index'); ?>" class="nav-link">
-                                <i class="nav-icon fas fa-ad"></i>
-                                <p>
-                                    ข้อมูลโปรโมชั่น
-                                </p>
-                            </a>
-                        </li>
-                        <div>
-                            <hr>
-                        </div>
+                        <?php if (session()->get('type') == '2' || session()->get('type') == '3'): ?>
+                            <li class="nav-header">ระบบการจัดการหนังสือ</li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/book/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-book"></i>
+                                    <p>
+                                        ข้อมูลหนังสือ
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/history/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-history"></i>
+                                    <p>
+                                        ประวัติการเช่า
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/category/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-bookmark"></i>
+                                    <p>
+                                        หมวดหมู่หนังสือ
+                                    </p>
+                                </a>
+                            </li>
+                            <div>
+                                <hr>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (session()->get('type') == '2' || session()->get('type') == '3'): ?>
+                            <li class="nav-header">ระบบการจัดการระบบ</li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/late-price/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-cash-register"></i>
+                                    <p>
+                                        ข้อมูลค่าปรับ
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/promotion/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-ad"></i>
+                                    <p>
+                                        ข้อมูลโปรโมชั่น
+                                    </p>
+                                </a>
+                            </li>
+                            <div>
+                                <hr>
+                            </div>
+                        <?php endif; ?>
+
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

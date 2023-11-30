@@ -7,6 +7,14 @@
             <h4 class="modal-title" id="title_modal" name="title_modal"></h4>
         </div>
         <div class="modal-body">
+        <?php if (session()->get('type') == '3') { 
+                    $type_hideen = 'hidden';
+                    $type_disable = 'disabled';
+                }else{
+                    $type_hideen = '';
+                    $type_disable = '';
+                }
+                ?>
             <form class="mb-3" id="form_book" action="javascript:void(0)" method="post" enctype="multipart/form-data">
                 <div class="container">
                     <div class="row">
@@ -20,12 +28,12 @@
                     </div>
                 </div>
 
-                <div class="text-center mt-2">
+                <div class="text-center mt-2" <?= $type_hideen ?>>
                     <label for="uploadImage" class="btn btn-block-tool btn-success btn-sm mb-2">อัปโหลดรูป</label>
                     <input type="file" id="uploadImage" name="uploadImage" style="display: none;" accept="image/*"
                         onchange="previewImage(this);">
                 </div>
-                <div class="form-group" id="customSwitch">
+                <div class="form-group" id="customSwitch" <?= $type_hideen ?>>
                     <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                         <input type="checkbox" class="custom-control-input" id="customSwitch3" name="customSwitch3"
                             onclick="change_status()">
@@ -35,31 +43,32 @@
                 <div class="form-group">
                     <label>ชื่อหนังสือ</label>
                     <input type="text" class="form-control" placeholder="กรอกชื่อหนังสือ" id="name_book"
-                        name="name_book" required>
+                        name="name_book" required <?= $type_disable ?>>
                 </div>
                 <div class="form-group">
                     <label>ชื่อผู้แต่ง</label>
                     <input type="text" class="form-control" placeholder="กรอกชื่อผู้แต่ง" id="name_book_author"
-                        name="name_book_author" required>
+                        name="name_book_author" required <?= $type_disable ?>>
                 </div>
                 <div class="form-group">
                     <label>รายละเอียด</label>
                     <textarea class="form-control" rows="3" placeholder="กรอกรายละเอียด" id="detail_category"
-                        name="detail_category" required></textarea>
+                        name="detail_category" required <?= $type_disable ?>></textarea>
                 </div>
                 <div class="form-group">
                     <label>ราคา</label>
                     <input type="number" class="form-control" placeholder="ราคาหนังสือ" id="price_book"
-                        name="price_book" required>
+                        name="price_book" required <?= $type_disable ?>>
                 </div>
                 <div class="form-group">
                     <label>หมวดหมู่</label>
-                    <select class="form-control gray-text" name="categorySelect" id="categorySelect">
+                    <select class="form-control gray-text" name="categorySelect" id="categorySelect" <?= $type_disable ?>>
                     </select>
                 </div>
                 <input type="text" id="url_route" name="url_route" hidden>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"></button>
+
+                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit" <?= $type_hideen ?>></button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                 </div>
             </form>

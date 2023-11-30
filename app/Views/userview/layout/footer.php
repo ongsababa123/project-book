@@ -37,24 +37,34 @@
 </footer>
 <script>
     $(document).ready(function () {
-        var check = <?php echo session()->get('check') ?>;
-        console.log(<?php echo session()->get('time') ?>);
-        if (check == 1) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: true,
-                timer: 5000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
+        var check_cart = <?php echo session()->get('check') ?>;
+        var check_his = <?php echo session()->get('check_his') ?>;
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: true,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+
+        var text = null;
+        if (check_cart == '1') {
+            text += '<?php echo session()->get('message_cart') ?>' + '<br><hr>';
+        }
+        if (check_his == '1') {
+            text += '<?php echo session()->get('message_his') ?>';
+        }
+        console.log(text);
+        if (text !== null) {
             Toast.fire({
                 icon: "warning",
-                title: '<?php echo session()->get('message_cart') ?>',
-            });
+                title: text,
+            })
         }
     });
 </script>

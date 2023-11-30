@@ -17,6 +17,14 @@
 
     }
 </style>
+<?php if (session()->get('type') == '3') {
+    $type_hideen = 'hidden';
+    $type_disable = 'disabled';
+} else {
+    $type_hideen = '';
+    $type_disable = '';
+}
+?>
 
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
@@ -109,6 +117,7 @@
             var data_category = <?php echo json_encode($data_category); ?>;
             var data_user = <?php echo json_encode($data_user); ?>;
             var data_latefees = <?php echo json_encode($data_latefees); ?>;
+            var data_promotion = <?php echo json_encode($data_promotion); ?>;
 
             Read_History = document.getElementById("Read_History");
             Create_History = document.getElementById("Create_History");
@@ -177,12 +186,34 @@
                     $("#formContainer").append(clonedForm);
                     clonedForm.show();
                 });
+                var text_promotion = '';
+
+                if (rowData.id_promotion == null) {
+                    text_promotion = 'ไม่มีโปรโมชั่น';
+                } else {
+                    let id_promotion = rowData.id_promotion.split(',');
+                    data_promotion.forEach(element_promotion => {
+                        id_promotion.forEach(function (id_pro) {
+                            if (element_promotion.id_promotion == id_pro) {
+                                text_promotion += element_promotion.details + '<br>';
+                            }
+                        });
+                    });
+                }
+                $("#text_promotion").html(text_promotion);
+
+                if (rowData.sum_price_promotion) {
+                    $(".modal-body #pice_promotion").val(rowData.sum_price_promotion);
+                } else {
+                    $(".modal-body #pice_promotion").val('ไม่มีส่วนลด');
+                }
 
                 var matuser = data_user.find(element_user => element_user.id_user === rowData.id_user);
                 $(".modal-body #name_user").val(matuser.name + ' ' + matuser.lastname);
                 $(".modal-body #rental_date").val(rowData.rental_date);
                 $(".modal-body #return_date").val(rowData.return_date);
                 $(".modal-body #price_book").val(rowData.sum_price);
+
                 var today = new Date(); // Get the current date
                 today.setHours(0, 0, 0, 0)
                 var returnDate = new Date(rowData.return_date);
@@ -352,16 +383,22 @@
                         'render': function (data, type, row, meta) {
                             var today = new Date(); // Get the current date
                             today.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
-                            if (data.submit_date === null) {
-                                var returnDate = new Date(data.return_date);
-                                returnDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
-                                if (today > returnDate) {
-                                    return "<span class='badge bg-danger'>เกินกำหนด</span>";
+                            if (data.status_his === '1') {
+                                return "<span class='badge bg-info'>รอเข้ารับ</span>"
+                            } else if (data.status_his === '2') {
+                                if (data.submit_date === null) {
+                                    var returnDate = new Date(data.return_date);
+                                    returnDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+                                    if (today > returnDate) {
+                                        return "<span class='badge bg-danger'>เกินกำหนด</span>";
+                                    } else {
+                                        return "<span class='badge bg-warning'>กำลังยืม</span>";
+                                    }
                                 } else {
-                                    return "<span class='badge bg-warning'>กำลังยืม</span>";
+                                    return "<span class='badge bg-success'>คืนแล้ว</span>";
                                 }
                             } else {
-                                return "<span class='badge bg-success'>คืนแล้ว</span>";
+                                return "<span class='badge bg-danger'>เกินกำหนดวันรับ</span>";
                             }
                         }
                     },
@@ -375,23 +412,39 @@
                             today.setHours(0, 0, 0, 0)
                             var returnDate = new Date(data.return_date);
                             returnDate.setHours(0, 0, 0, 0);
-                            if (data.submit_date == null) {
-                                if (today > returnDate) {
-                                    var returnDate = new Date(data.return_date);
-                                    var currentDate = new Date();
-                                    // หาความแตกต่างในวัน
-                                    var timeDifference = currentDate.getTime() - returnDate.getTime();
-                                    var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
-                                    var price_fees = data_latefees[0]['price_fees'];
-                                    var price_fess_totel = daysDifference * price_fees;
-                                } else {
-                                    var price_fess_totel = 0;
-                                }
-                                return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>
+                            if (data.status_his === '1') {
+                                return `
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')">
+                                            <i class="fas fa-info-circle"></i> ประวัติการเช่า
+                                        </button>
+                                        <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการเข้าหนังสือรับใช่หรือไม่', 'dashboard/history/update_status_his/${data.id_history}')">
+                                            <i class="far fa-calendar-check"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" <?= $type_hideen ?>>
+                                            <i class="fas fa-store-slash"></i>
+                                        </button>
+                                    `;
+                            } else if (data.status_his === '2') {
+                                if (data.submit_date == null) {
+                                    if (today > returnDate) {
+                                        var returnDate = new Date(data.return_date);
+                                        var currentDate = new Date();
+                                        // หาความแตกต่างในวัน
+                                        var timeDifference = currentDate.getTime() - returnDate.getTime();
+                                        var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
+                                        var price_fees = data_latefees[0]['price_fees'];
+                                        var price_fess_totel = daysDifference * price_fees;
+                                    } else {
+                                        var price_fess_totel = 0;
+                                    }
+                                    return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>
                                 <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการคืนใช่หรือไม่', 'dashboard/history/submit/${data.id_history}/${price_fess_totel}')" ><i class="fas fa-check"></i></button>
-                            <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" ><i class="fas fa-store-slash"></i></button>`;
+                            <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" <?= $type_hideen ?>><i class="fas fa-store-slash"></i></button>`;
+                                } else {
+                                    return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>`;
+                                }
                             } else {
-                                return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>`;
+                                return ``;
                             }
                         }
                     },

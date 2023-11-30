@@ -50,19 +50,25 @@
                                                         date_default_timezone_set('Asia/Bangkok'); // ตั้งค่าโซนเวลา
                                                         $today = strtotime(date("Y-m-d")); // รับวันที่ปัจจุบันและแปลงเป็น timestamp
                                                         $today = strtotime("midnight", $today); // ตั้งค่าเวลาเป็นเที่ยงคืน
-                                                    
-                                                        if ($value['submit_date'] === null) {
-                                                            $returnDate = strtotime($value['return_date']); // รับวันที่คืนและแปลงเป็น timestamp
-                                                            $returnDate = strtotime("midnight", $returnDate); // ตั้งค่าเวลาเป็นเที่ยงคืน
-                                                    
-                                                            if ($today > $returnDate) {
-                                                                echo "<span class='badge bg-danger'>เกินกำหนด</span>";
+                                                        if ($value['status_his'] == '1') {
+                                                            echo "<span class='badge bg-info'>รอเข้ารับหนังสือ</span>";
+                                                        }else if ($value['status_his'] == '2') {
+                                                            if ($value['submit_date'] === null) {
+                                                                $returnDate = strtotime($value['return_date']); // รับวันที่คืนและแปลงเป็น timestamp
+                                                                $returnDate = strtotime("midnight", $returnDate); // ตั้งค่าเวลาเป็นเที่ยงคืน
+                                                        
+                                                                if ($today > $returnDate) {
+                                                                    echo "<span class='badge bg-danger'>เกินกำหนด</span>";
+                                                                } else {
+                                                                    echo "<span class='badge bg-warning'>กำลังยืม</span>";
+                                                                }
                                                             } else {
-                                                                echo "<span class='badge bg-warning'>กำลังยืม</span>";
+                                                                echo "<span class='badge bg-success'>คืนแล้ว</span>";
                                                             }
-                                                        } else {
-                                                            echo "<span class='badge bg-success'>คืนแล้ว</span>";
+                                                        }else{
+                                                            echo "<span class='badge bg-danger'>เกินกำหนดเข้ารับหนังสือ</span>";
                                                         }
+                                                        
                                                         ?>
                                                     </div>
                                                     <div>

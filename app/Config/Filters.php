@@ -27,6 +27,7 @@ class Filters extends BaseConfig
         'secureheaders' => SecureHeaders::class,
         'authGuard' => \App\Filters\AuthGuard::class,
         'CartCheck' => \App\Filters\CartCheck::class,
+        'HistoryCheck' => \App\Filters\HistoryCheck::class,
     ];
 
     /**

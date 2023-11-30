@@ -20,10 +20,12 @@ class HistoryController extends BaseController
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
         $LateFeesModels = new LateFeesModels();
+        $PromotionModels = new PromotionModels();
         $data['data_user'] = $UserModels->findAll();
         $data['data_book'] = $BookModels->findAll();
         $data['data_category'] = $CategoryModels->findAll();
         $data['data_latefees'] = $LateFeesModels->findAll();
+        $data['data_promotion'] = $PromotionModels->findAll();
 
         echo view('dashboard/layout/header');
         echo view('dashboard/history', $data);
@@ -34,7 +36,10 @@ class HistoryController extends BaseController
         $HistoryModels = new HistoryModels();
         $rental_date = $this->request->getVar('rental_date_create');
         $return_date = $this->request->getVar('return_date_create');
-
+        $id_promotion = $this->request->getVar('sumid_promotion');
+        if ($id_promotion == null) {
+            $id_promotion = null;
+        }
         $rental_formattedDate = date('Y/m/d', strtotime($rental_date));
         $return_formattedDate = date('Y/m/d', strtotime($return_date));
         $cart_id = explode(',', $this->request->getVar('cart_id'));
@@ -47,8 +52,9 @@ class HistoryController extends BaseController
             'submit_date' => null,
             'sum_price' => $this->request->getVar('price_book_create'),
             'late_price' => null,
-            'id_promotion' => $this->request->getVar('sumid_promotion'),
+            'id_promotion' => $id_promotion,
             'sum_price_promotion' => $this->request->getVar('sum_price_promotion'),
+            'status_his' => 1,
         ];
         $check = $HistoryModels->save($data);
         if ($check) {
@@ -136,7 +142,31 @@ class HistoryController extends BaseController
         }
 
         return $this->response->setJSON($response);
+    }
 
+    public function update_status_his($id_history = null)
+    {
+        $HistoryModels = new HistoryModels();
+
+        $data = [
+            'status_his' => 2,
+        ];
+        $check = $HistoryModels->update($id_history, $data);
+        if ($check) {
+            $response = [
+                'success' => true,
+                'message' => 'อัปเดตข้อมูลสำเร็จ',
+                'reload' => true,
+            ];
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'error',
+                'reload' => false,
+            ];
+        }
+
+        return $this->response->setJSON($response);
     }
 
     public function cancel_his($id_history = null)

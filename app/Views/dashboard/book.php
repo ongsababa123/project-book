@@ -26,9 +26,11 @@
                             <div class="card-header">
                                 <h4 class="card-title"></h4>
                                 <div class="card-tools">
-                                    <button type="button" class="btn btn-block-tool btn-success btn-sm"
-                                        data-toggle="modal" data-target="#modal-default"
-                                        onclick="load_modal(1)">สร้างหนังสือ</button>
+                                    <?php if (session()->get('type') == '2'): ?>
+                                        <button type="button" class="btn btn-block-tool btn-success btn-sm"
+                                            data-toggle="modal" data-target="#modal-default"
+                                            onclick="load_modal(1)">สร้างหนังสือ</button>
+                                    <?php endif; ?>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
                                     </button>
@@ -61,7 +63,7 @@
                                                     } elseif ($book['status_book'] == 1) {
                                                         echo "<span class='badge bg-success'>พร้อมใช้งาน</span>";
                                                     } elseif ($book['status_book'] == 2) {
-                                                        echo "<span class='badge bg-warnning'>กำลังเช่า</span>";
+                                                        echo "<span class='badge bg-info'>กำลังเช่า</span>";
                                                     } ?>
                                                     <br>
                                                     <a>ชื่อหนังสือ :
@@ -76,13 +78,14 @@
                                                     <button type="button" class="btn btn-block-tool btn-info btn-sm mb-2"
                                                         data-toggle="modal" data-target="#modal-default"
                                                         onclick="load_modal(2, <?= $index ?>)">รายละเอียด</button>
-                                                    <button type="button" class="btn btn-block-tool btn-danger btn-sm mb-2"
-                                                        onclick="confirm_Alert('ต้องการลบข้อมูลใช่หรือไม่ ?' , 'dashboard/book/delete/<?= $book['id_book'] ?>')">ลบข้อมูล</button>
+                                                    <?php if (session()->get('type') == '2'): ?>
+                                                        <button type="button" class="btn btn-block-tool btn-danger btn-sm mb-2"
+                                                            onclick="confirm_Alert('ต้องการลบข้อมูลใช่หรือไม่ ?' , 'dashboard/book/delete/<?= $book['id_book'] ?>')">ลบข้อมูล</button>
+                                                    <?php endif; ?>
                                                 </a>
                                             </div>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
-
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,3 @@
-
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="overlay preloader">
@@ -8,7 +7,16 @@
             <h4 class="modal-title" id="title_modal" name="title_modal"></h4>
         </div>
         <div class="modal-body">
-            <form class="mb-3" id="form_read_history" action="javascript:void(0)" method="post" enctype="multipart/form-data">
+            <?php if (session()->get('type') == '3') {
+                $type_hideen = 'hidden';
+                $type_disable = 'disabled';
+            } else {
+                $type_hideen = '';
+                $type_disable = '';
+            }
+            ?>
+            <form class="mb-3" id="form_read_history" action="javascript:void(0)" method="post"
+                enctype="multipart/form-data">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-2 mx-auto text-center border" id="image_thebook">
@@ -90,6 +98,21 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>ราคาหนังสือ(ยอดรวม)</label>
+                            <p id="text_promotion" name="text_promotion"></p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>ราคาโปรโมชั่น</label>
+                            <input type="text" class="form-control" id="pice_promotion"
+                                name="pice_promotion" <?= $type_disable ?>>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>ราคาหนังสือ(ยอดรวม)</label>
                             <input type="text" class="form-control" placeholder="กรอกวันที่ยืม" id="price_book"
                                 name="price_book" disabled>
                         </div>
@@ -98,7 +121,7 @@
                         <div class="form-group">
                             <label>ค่าปรับ</label>
                             <input type="text" class="form-control" placeholder="กรอกวันที่คืน" id="price_late"
-                                name="price_late" disabled>
+                                name="price_late" <?= $type_disable ?>>
                         </div>
                     </div>
                 </div>

@@ -134,7 +134,7 @@
                         });
                         setTimeout(() => {
                             if (response.reload) {
-                                window.location.href = '<?= site_url() ?>'+ response.type;
+                                window.location.href = '<?= site_url() ?>' + response.type;
                             }
                         }, 2000);
                     } else {

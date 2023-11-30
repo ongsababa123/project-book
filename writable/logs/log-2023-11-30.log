@@ -1,0 +1,15 @@
+CRITICAL - 2023-11-30 09:33:47 --> Undefined variable $type_hideen
+in APPPATH\Views\modal\CRUD_Book.php on line 27.
+ 1 APPPATH\Views\modal\CRUD_Book.php(27): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $type_hideen', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\modal\\CRUD_Book.php', 27)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\modal\\CRUD_Book.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(469): CodeIgniter\View\View->render('modal/CRUD_Book', null, true)
+ 5 APPPATH\Views\dashboard\book.php(97): CodeIgniter\View\View->include('modal/CRUD_Book')
+ 6 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\book.php')
+ 7 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/book', [], true)
+ 9 APPPATH\Controllers\BookController.php(19): view('dashboard/book', [...])
+10 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\BookController->index()
+11 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BookController))
+12 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
