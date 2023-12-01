@@ -1,5 +1,12 @@
 <title>Book Data</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
+<?php
+$searchTerm = isset($_GET['searchBook']) ? $_GET['searchBook'] : '';
+
+$filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
+    return stripos($book['name_book'], $searchTerm) !== false || empty($searchTerm);
+});
+?>
 
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
@@ -24,7 +31,21 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title"></h4>
+                                <h4 class="card-title">
+                                    <form action="<?= base_url('dashboard/book/index/') ?>" method="get">
+                                        <div class="row">
+                                            <div class="col-10 text-center">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="searchBook"
+                                                        name="searchBook" placeholder="ค้นหาหนังสือ" value="<?= $searchTerm ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-2 text-center">
+                                                <button type="submit" class="btn btn-primary">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </h4>
                                 <div class="card-tools">
                                     <?php if (session()->get('type') == '2'): ?>
                                         <button type="button" class="btn btn-block-tool btn-success btn-sm"
@@ -36,15 +57,15 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body text-center">
                                 <div class="row">
-                                    <?php if (!$bookData): ?>
+                                    <?php if (!$filteredBooks): ?>
                                         <div class="col-12 text-center">
                                             <h1 class="text-center">ไม่พบข้อมูล</h1>
                                         </div>
                                     <?php else: ?>
-                                        <?php foreach ($bookData as $index => $book): ?>
-                                            <div class="col-sm-2 text-center border ml-5 mb-3">
+                                        <?php foreach ($filteredBooks as $index => $book): ?>
+                                            <div class="col-sm-2 text-center border m-3">
                                                 <?php
                                                 // Assuming $book['pic_book'] contains the base64-encoded image data
                                                 if ($book['pic_book'] === null) {

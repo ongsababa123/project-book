@@ -128,12 +128,16 @@
                         'data': null,
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
-                            var status = data.status;
-                            if (status == 1) {
-                                return `<button type="button" class="btn btn-warning" onclick="confirm_Alert('ต้องการปิดใช้งานใช้หรือไม่','dashboard/promotion/edit/${data.id_promotion}/0')">แก้ไขสถานะ</button>`;
-                            } else if (status == 0) {
-                                return `<button type="button" class="btn btn-warning" onclick="confirm_Alert('ต้องการเปิดใช้งานใช้หรือไม่','dashboard/promotion/edit/${data.id_promotion}/1')">แก้ไขสถานะ</button>`;
-                            }
+                            <?php if (session()->get('type') == '2'): ?>
+                                var status = data.status;
+                                if (status == 1) {
+                                    return `<button type="button" class="btn btn-warning" onclick="confirm_Alert('ต้องการปิดใช้งานใช้หรือไม่','dashboard/promotion/edit/${data.id_promotion}/0')">แก้ไขสถานะ</button>`;
+                                } else if (status == 0) {
+                                    return `<button type="button" class="btn btn-warning" onclick="confirm_Alert('ต้องการเปิดใช้งานใช้หรือไม่','dashboard/promotion/edit/${data.id_promotion}/1')">แก้ไขสถานะ</button>`;
+                                }
+                            <?php else: ?>
+                                return ``;
+                            <?php endif; ?>
                         }
 
                     },

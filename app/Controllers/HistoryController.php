@@ -34,6 +34,7 @@ class HistoryController extends BaseController
     public function create_history()
     {
         $HistoryModels = new HistoryModels();
+        $UserModels = new UserModels();
         $rental_date = $this->request->getVar('rental_date_create');
         $return_date = $this->request->getVar('return_date_create');
         $id_promotion = $this->request->getVar('sumid_promotion');
@@ -58,6 +59,7 @@ class HistoryController extends BaseController
         ];
         $check = $HistoryModels->save($data);
         if ($check) {
+            $UserModels->update($this->request->getVar('name_user_create'), ['status_user' => 2]);
             $response = [
                 'success' => true,
                 'message' => 'สร้างข้อมูลเช่าสำเร็จ!',
@@ -87,9 +89,7 @@ class HistoryController extends BaseController
         $response = [
             'success' => true,
             'message' => 'ยกเลิกการตระกร้าสำเร็จ!',
-            'reload' => false,
-            'data1' => $this->request->getVar('name_book_create__'),
-            'data2' => $this->request->getVar('cart_id'),
+            'reload' => true,
         ];
 
         return $this->response->setJSON($response);
@@ -190,15 +190,19 @@ class HistoryController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    public function submit_his($id_history = null, $price_fess_totel = null)
+    public function submit_his($id_history = null, $price_fess_totel = null , $id_user = null)
     {
         helper(['form']);
         $HistoryModels = new HistoryModels();
+        $UserModels = new UserModels();
+
         $price = ($price_fess_totel === '0') ? null : $price_fess_totel;
         $data = [
             'submit_date' => date('Y/m/d'),
             'late_price' => $price,
         ];
+        $UserModels->update($id_user, ['status_user' => 1]);
+
         $check = $HistoryModels->update($id_history, $data);
         if ($check) {
             $response = [

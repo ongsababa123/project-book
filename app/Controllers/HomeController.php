@@ -24,15 +24,36 @@ class HomeController extends BaseController
 
     public function index_listbook()
     {
+        // Instantiate models
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
-        $data['bookData'] = $BookModels->where('status_book', 1)->findAll();
+        $UserModels = new UserModels();
+        $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
+
+        // Retrieve all categories with status 1
         $data['categoryData'] = $CategoryModels->where('status', 1)->findAll();
 
+        // Loop through categories and retrieve books for each category with status 1
+        $data['bookData'] = [];
+
+        foreach ($data['categoryData'] as $Category) {
+            // Retrieve books for a specific category with status_book 1
+            $booksForCategory = $BookModels
+                ->where('category_id', $Category['id_category'])
+                ->where('status_book', 1)
+                ->findAll();
+        
+            // Merge the books for the current category into the main array
+            $data['bookData'] = array_merge($data['bookData'], $booksForCategory);
+        }
+        
+
+        // Load views
         echo view('userview/layout/header_base');
         echo view('userview/Booklist', $data);
         echo view('userview/layout/footer');
     }
+
 
     public function index_bookdetails($id_book = null)
     {
@@ -85,9 +106,11 @@ class HomeController extends BaseController
         $CartModels = new CartModels();
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
+        $UserModels = new UserModels();
 
         $data['categoryData'] = $CategoryModels->where('id_category', session()->get('id'))->findAll();
         $data['cartData'] = $CartModels->where('id_user', session()->get('id'))->findAll();
+        $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
 
         foreach ($data['cartData'] as $key => $value) {
             // Retrieve book data for the current cart item
@@ -171,24 +194,24 @@ class HomeController extends BaseController
 
         // Create an array to store book data with associated category and promotion data
         $data['bookData'] = [];
-    
+
         foreach ($data['HistoryData'] as $key => $value) {
             // Split the comma-separated ids
             $id_books = explode(',', $value['id_book']);
-    
+
             // Create an array to store promotion data
 
             // Fetch book data for each id
             foreach ($id_books as $id) {
                 // Check if the book id is not already in the array
                 $bookData = $BookModels->where('id_book', $id)->findAll();
-    
+
                 // Fetch category data for the book
                 $categoryData = $CategoryModels->where('id_category', $bookData[0]['category_id'])->findAll();
-    
+
                 // Associate promotion, category, and book data
                 $bookData[0]['categoryData'] = $categoryData[0];
-    
+
                 // Check if the book data is not already in the array
                 if (!in_array($bookData[0], $data['bookData'])) {
                     // Add the fetched book data with associated category and promotion data to the array
@@ -196,7 +219,7 @@ class HomeController extends BaseController
                 }
             }
         }
-    
+
         // Load views
         echo view('userview/layout/header_base');
         echo view('userview/History', $data);

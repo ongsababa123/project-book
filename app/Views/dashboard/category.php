@@ -1,5 +1,12 @@
 <title>Category Table</title>
-
+<?php if (session()->get('type') == '3') {
+    $type_hideen = 'hidden';
+    $type_disable = 'disabled';
+} else {
+    $type_hideen = '';
+    $type_disable = '';
+}
+?>
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
         <section class="content-header">
@@ -27,7 +34,7 @@
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-block-tool btn-success btn-sm"
                                         data-toggle="modal" data-target="#modal-default"
-                                        onclick="load_modal(1)">สร้างหมวดหมู่</button>
+                                        onclick="load_modal(1)" <?= $type_hideen ?>>สร้างหมวดหมู่</button>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
                                     </button>
@@ -183,8 +190,8 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             const encodedRowData = encodeURIComponent(JSON.stringify(row));
-                            return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-tools"></i> แก้ไขข้อมูล</button>
-                            <button type="button" class="btn btn-danger" onclick="confirm_Alert('ต้องการลบข้อมูลใช่หรือไม่ ?' , 'dashboard/category/delete/${data.id_category}')"><i class="fas fa-trash"></i> ลบข้อมูล</button>`;
+                            return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')" <?= $type_hideen ?>><i class="fas fa-tools"></i> แก้ไขข้อมูล</button>
+                            <button type="button" class="btn btn-danger" onclick="confirm_Alert('ต้องการลบข้อมูลใช่หรือไม่ ?' , 'dashboard/category/delete/${data.id_category}')" <?= $type_hideen ?>><i class="fas fa-trash"></i> ลบข้อมูล</button>`;
                         }
                     },
                 ]

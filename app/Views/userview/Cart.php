@@ -99,7 +99,8 @@
                                 onclick="loadmodal()" id="button_modal" name="button_modal">ดำเนินการจอง</button>
                         </div>
                         <div class="col-lg-2">
-                            <button class="btn btn-danger btn-round" onclick="confirm_Alert()" id="button_cancel" name="button_cancel">ยกเลิก</button>
+                            <button class="btn btn-danger btn-round" onclick="confirm_Alert()" id="button_cancel"
+                                name="button_cancel">ยกเลิก</button>
                         </div>
                     </div>
                 </div>
@@ -164,7 +165,8 @@
                             </div>
                         </div>
                     </div>
-                    <input type="text" class="form-control" id="name_user_create" name="name_user_create" value="<?= session()->get('id')?>" hidden>
+                    <input type="text" class="form-control" id="name_user_create" name="name_user_create"
+                        value="<?= session()->get('id') ?>" hidden>
                     <input type="text" class="form-control" id="price_book_create" name="price_book_create" hidden>
                     <input type="text" class="form-control" id="id_book_create" name="id_book_create" hidden>
                     <input type="text" class="form-control" id="sumid_promotion" name="sumid_promotion" hidden>
@@ -203,9 +205,12 @@
 </script>
 <script>
     var categoryData = <?php echo json_encode($cartData); ?>;
+    var userData = <?php echo json_encode($userData); ?>;
+    console.log(userData[0].status_user);
     var cart_check = [];
     var id_book_check = '';
     var price_sum = 0;
+
     if (cart_check.length === 0) {
         $("#button_cancel").prop("disabled", true);
         $("#button_modal").prop("disabled", true);
@@ -243,12 +248,18 @@
 
             $("#price").text(price_sum);
             $("#quantity").text(cart_check.length);
+
             if (cart_check.length === 0) {
                 $("#button_cancel").prop("disabled", true);
                 $("#button_modal").prop("disabled", true);
             } else {
-                $("#button_cancel").prop("disabled", false);
-                $("#button_modal").prop("disabled", false);
+                if (userData[0].status_user == 2 || userData[0].status_user == 3) {
+                    $("#button_modal").prop("disabled", true);
+                    $("#button_cancel").prop("disabled", false);
+                } else {
+                    $("#button_cancel").prop("disabled", false);
+                    $("#button_modal").prop("disabled", false);
+                }
             }
         });
     });

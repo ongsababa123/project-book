@@ -215,40 +215,50 @@ if (isset($_GET['sort'])) {
 </script>
 <script>
     function alert_(id_book) {
-        $.ajax({
-            url: '<?= base_url('book/booklist/addcart/') ?>' + id_book,
-            type: "POST",
-            cache: false,
-            processData: false,
-            contentType: false,
-            dataType: "JSON",
-            success: function (response) {
-                var bookDiv = document.getElementById('book_' + id_book);
-                bookDiv.style.display = 'none';
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: response.message
-                });
-            },
-            error: function (xhr, status, error) {
-                Swal.fire({
-                    title: "เกิดข้อผิดพลาด",
-                    icon: 'error',
-                    showConfirmButton: true
-                });
-            }
-        });
+        var userData = <?php echo json_encode($userData); ?>;
+        if (userData[0]['status_user'] == 3) {
+            Swal.fire({
+                title: "คุณมีรายการเกินกำหนด โปรดคืนหนังสือก่อน",
+                icon: 'warning',
+                showConfirmButton: true
+            });
+        } else {
+            $.ajax({
+                url: '<?= base_url('book/booklist/addcart/') ?>' + id_book,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: "JSON",
+                success: function (response) {
+                    var bookDiv = document.getElementById('book_' + id_book);
+                    bookDiv.style.display = 'none';
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: response.message
+                    });
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        title: "เกิดข้อผิดพลาด",
+                        icon: 'error',
+                        showConfirmButton: true
+                    });
+                }
+            });
+        }
+
     }
 </script>
 <script>

@@ -8,6 +8,7 @@ use CodeIgniter\Filters\FilterInterface;
 use App\Models\HistoryModels;
 use App\Models\BookModels;
 use CodeIgniter\I18n\Time;
+use App\Models\UserModels;
 
 class HistoryCheck implements FilterInterface
 {
@@ -16,6 +17,7 @@ class HistoryCheck implements FilterInterface
     {
         $HistoryModels = new HistoryModels();
         $BookModels = new BookModels();
+        $UserModels = new UserModels();
         $session = session();
         $data['data_History'] = $HistoryModels->findAll();
         $ses_data = [
@@ -74,10 +76,40 @@ class HistoryCheck implements FilterInterface
                     $session->set($ses_data);
                 }
             } else {
-                $ses_data = [
-                    'check_his' => 0,
-                ];
-                $session->set($ses_data);
+                date_default_timezone_set('Asia/Bangkok'); // ตั้งค่าโซนเวลา
+                $today = strtotime(date("Y-m-d")); // รับวันที่ปัจจุบันและแปลงเป็น timestamp
+                $today = strtotime("midnight", $today); // ตั้งค่าเวลาเป็นเที่ยงคืน
+
+                $returnDate = strtotime($value['return_date']); // รับวันที่คืนและแปลงเป็น timestamp
+                $returnDate = strtotime("midnight", $returnDate); // ตั้งค่าเวลาเป็นเที่ยงคืน
+                if ($value['submit_date'] === null) {
+                    if ($today > $returnDate) {
+                        $UserModels->update($value['id_user'], ['status_user' => 3]);
+                        if (session()->get('id') === $value['id_user']) {
+                            $ses_data = [
+                                'message_his' => 'กรุณาคืนหนังสือ และชำระเงิน!!',
+                                'check_his' => 1,
+                            ];
+                            $session->set($ses_data);
+                        } else {
+                            $ses_data = [
+                                'check_his' => 0,
+                            ];
+                            $session->set($ses_data);
+                        }
+                    } else {
+                        $ses_data = [
+                            'check_his' => 0,
+                        ];
+                        $session->set($ses_data);
+                    }
+                }else{
+                    $ses_data = [
+                        'check_his' => 0,
+                    ];
+                    $session->set($ses_data);
+                }
+
             }
         }
     }

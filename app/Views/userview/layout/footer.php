@@ -12,16 +12,6 @@
                     <li>
                         <a href="<?= site_url('/contact') ?>" style="color: white;">ติดต่อเรา</a>
                     </li>
-                    <li>
-                        <a href="<?= site_url('/contact') ?>" style="color: white;">
-                            <?= session()->get('today') ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= site_url('/contact') ?>" style="color: white;">
-                            <?= session()->get('check') ?>
-                        </a>
-                    </li>
                 </ul>
             </nav>
             <div class="credits ml-auto">
@@ -39,7 +29,6 @@
     $(document).ready(function () {
         var check_cart = <?php echo session()->get('check') ?>;
         var check_his = <?php echo session()->get('check_his') ?>;
-
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -52,15 +41,14 @@
             }
         });
 
-        var text = null;
+        var text = '';
         if (check_cart == '1') {
             text += '<?php echo session()->get('message_cart') ?>' + '<br><hr>';
         }
         if (check_his == '1') {
             text += '<?php echo session()->get('message_his') ?>';
         }
-        console.log(text);
-        if (text !== null) {
+        if (text !== '') {
             Toast.fire({
                 icon: "warning",
                 title: text,
