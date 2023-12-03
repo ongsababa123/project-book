@@ -25,6 +25,11 @@
                             <div class="card-header">
                                 <h2 class="card-title"></h2>
                                 <div class="card-tools">
+                                    <?php if (session()->get('type') == '2'): ?>
+                                        <button type="button" class="btn btn-block-tool btn-success btn-sm"
+                                            data-toggle="modal" data-target="#modal-default"
+                                            onclick="load_modal(1)">สร้างโปรโมชั่น</button>
+                                    <?php endif; ?>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
                                     </button>
@@ -37,6 +42,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>ลำดับ</th>
+                                                    <th>ภาพโปรโมชั่น</th>
                                                     <th>รายละเอียดโปรโมชั่น</th>
                                                     <th>สถานะ</th>
                                                     <th>action</th>
@@ -57,6 +63,40 @@
             </div>
         </section>
     </div>
+    <div class="modal fade" id="modal-default">
+        <div id="Create_Promotion">
+            <?= $this->include("modal/Create_Promotion"); ?>
+        </div>
+    </div>
+    <script src="<?= base_url('plugins/filterizr/jquery.filterizr.min.js') ?>"></script>
+    <script src="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.min.js') ?>"></script>
+    <script>
+        $(function () {
+            $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+                event.preventDefault();
+                $(this).ekkoLightbox({
+                    alwaysShowClose: true
+                });
+            });
+
+            $('.btn[data-filter]').on('click', function () {
+                $('.btn[data-filter]').removeClass('active');
+                $(this).addClass('active');
+            });
+        })
+    </script>
+    <script>
+        function load_modal(load_check) {
+            Create_Promotion = document.getElementById("Create_Promotion");
+
+            if (load_check == 1) {
+                Create_Promotion.style.display = "block";
+                $(".modal-header #title_modal").text("สร้างข้อมูลโปรโมชั่น");
+                $(".modal-footer #submit").text("สร้างข้อมูลโปรโมชั่น");
+                $(".modal-body #url_route").val("dashboard/promotion/create");
+            }
+        }
+    </script>
     <script>
         $(document).ready(function () {
             getTableData();
@@ -103,6 +143,18 @@
                             return meta.settings.oAjaxData.start += 1;
                         }
                     },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            var imageSrc = 'data:image/png;base64,' + data.image_promotion;
+                            return '<a href="' + imageSrc + '" data-toggle="lightbox" id="image-preview-extra">' +
+                                '<img class="img-fluid" style="width: 15rem;" src="' + imageSrc + '" alt="white sample" id="image-preview" />' +
+                                '</a>';
+                        }
+                    },
+
+
                     {
                         'data': null,
                         'class': 'text-center',
@@ -181,6 +233,50 @@
                                 showConfirmButton: true
                             });
                         }
+                    });
+                }
+            });
+        }
+    </script>
+    <script>
+        function action_(url, form) {
+            var formData = new FormData(document.getElementById(form));
+            $.ajax({
+                url: '<?= base_url() ?>' + url,
+                type: "POST",
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "JSON",
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            allowOutsideClick: false
+                        });
+                        setTimeout(() => {
+                            if (response.reload) {
+                                window.location.reload();
+                            }
+                        }, 2000);
+                    } else {
+                        Swal.fire({
+                            title: response.image_error,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            width: '55%'
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        title: "เกิดข้อผิดพลาด",
+                        icon: 'error',
+                        showConfirmButton: true
                     });
                 }
             });

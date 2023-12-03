@@ -42,8 +42,15 @@ $sortOrder = '0'; // Set a default value
 
 if (isset($_GET['sort'])) {
     $sortOrder = $_GET['sort'];
-
 }
+
+$searchTerm = isset($_GET['searchBook']) ? $_GET['searchBook'] : '';
+
+// Assuming $bookData is an array of books and $categories is an array of categories
+$filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
+    return stripos($book['name_book'], $searchTerm) !== false || empty($searchTerm);
+});
+
 ?>
 <div class="main">
     <br>
@@ -86,26 +93,39 @@ if (isset($_GET['sort'])) {
     </div>
     <div class="pt-2" style="background-color: #bddce5;">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="form_category" style="color: white;">หมวดหมู่</label>
-                        <select class="form-control" id="form_category">
-                        </select>
+            <form action="<?= base_url('book/booklist') ?>" method="get" name="bookForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="form_category" style="color: white;">หมวดหมู่</label>
+                            <select class="form-control" id="form_category" name="category">
+                                <?php foreach ($categories as $category): ?>
+                                    <option value="<?= $category['id'] ?>">
+                                        <?= $category['name'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <div class="input-group mt-4" id="form_search">
-                            <a href="#" onclick="sortItems('newest')">
-                                <button class="btn btn-success btn-round" onclick="sortItems()">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="searchBook" style="color: white;">ค้นหาชื่อหนังสือ</label>
+                            <input type="text" class="form-control" id="searchBook" name="searchBook"
+                                placeholder="ค้นหาหนังสือ" value="<?= $searchTerm ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group mt-4" id="form_search">
+                                <button type="button" class="btn btn-success btn-round" onclick="sortItems()">
                                     ค้นหา
                                 </button>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+
         </div>
     </div>
     <div class="section bg-info text-center">
@@ -127,7 +147,7 @@ if (isset($_GET['sort'])) {
                     $details_book = $book['details'];
                     $encoding = mb_detect_encoding($details_book, 'UTF-8,ISO-8859-1');
                     $details_book = mb_convert_encoding($details_book, 'UTF-8', $encoding);
-                    $shortenedDetails = strlen($details_book) > 450 ? htmlspecialchars(mb_substr($details_book, 0, 450) . '...', ENT_QUOTES, 'UTF-8') : htmlspecialchars($details_book, ENT_QUOTES, 'UTF-8');
+                    $shortenedDetails = strlen($details_book) > 50 ? htmlspecialchars(mb_substr($details_book, 0, 50) . '...', ENT_QUOTES, 'UTF-8') : htmlspecialchars($details_book, ENT_QUOTES, 'UTF-8');
 
                     ?>
                     <div class="col-md-4" id="book_<?= $book['id_book'] ?>">
@@ -161,8 +181,8 @@ if (isset($_GET['sort'])) {
                     </div>
                     <?php
                 }
-                if (!empty($bookData)):
-                    foreach ($bookData as $key => $value):
+                if (!empty($filteredBooks)):
+                    foreach ($filteredBooks as $key => $value):
                         if ($sortOrder === '0' || $value['category_id'] === $sortOrder):
                             generateBookCard($value);
                             $count++;
@@ -210,7 +230,10 @@ if (isset($_GET['sort'])) {
 <script>
     function sortItems() {
         var id_category = document.getElementById("form_category").value;
-        window.location.href = `?sort=${id_category}`;
+        var searchTerm = document.getElementById("searchBook").value;
+
+        // Adjust the URL based on your requirements
+        window.location.href = `?sort=${id_category}&searchBook=${searchTerm}`;
     }
 </script>
 <script>

@@ -107,6 +107,7 @@ $routes->group("dashboard/late-price/", ['filter' => ['CartCheck', 'HistoryCheck
 
 $routes->group("dashboard/promotion/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {
     $routes->match(['get', 'post'], 'index', 'PromotionController::index', ['filter' => 'authGuard']);  //display
+    $routes->match(['get', 'post'], 'create', 'PromotionController::create_promotion');  //getData
     $routes->match(['get', 'post'], 'getdata', 'PromotionController::get_data_table');  //getData
     $routes->match(['get', 'post'], 'edit/(:num)/(:num)', 'PromotionController::edit_promotion/$1/$2');  //edit
     $routes->match(['get', 'post'], 'calculate', 'PromotionController::cal_promotion');  //promotion1

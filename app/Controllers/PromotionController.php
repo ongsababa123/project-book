@@ -108,5 +108,62 @@ class PromotionController extends BaseController
     
         return $this->response->setJSON($response);
     }
+
+    public function create_promotion()
+    {
+        $PromotionModels = new PromotionModels();
+        $profile_picture = $this->request->getFile('uploadImage');
+        $data = [
+            'status' => 0,
+            'details' => $this->request->getVar('detail_promotion'),
+        ];
+        if ($profile_picture->isValid() && !$profile_picture->hasMoved()) {
+            $validationRules = [
+                'uploadImage' => 'max_size[uploadImage,10240]', // 10MB in kilobytes
+            ];
+            // Validate the input
+            if (!$this->validate($validationRules)) {
+                $response = [
+                    'success' => false,
+                    'message' => 'ผิดพลาด',
+                    'reload' => false,
+                    'image_error' => 'ไฟล์จะต้องมีขนาดต่ำกว่า 10MB'
+                ];
+                return $this->response->setJSON($response);
+            }
+            $minFileSize = 1024; // 1MB in kilobytes
+            if ($profile_picture->getSize() >= $minFileSize) {
+                if ($profile_picture->isValid() && !$profile_picture->hasMoved()) {
+                    $imageData = file_get_contents($profile_picture->getTempName()); // Read image file data
+                    $base64ImageData = base64_encode($imageData);
+                    $data['image_promotion'] = $base64ImageData;
+                }
+            } else {
+                $response = [
+                    'success' => false,
+                    'message' => 'ผิดพลาด',
+                    'reload' => false,
+                    'image_error' => 'ไฟล์จะต้องมีขนาดอย่างน้อย 1MB'
+                ];
+                return $this->response->setJSON($response);
+            }
+        }
+        $check = $PromotionModels->save($data);
+        if ($check) {
+            $response = [
+                'success' => true,
+                'message' => 'สร้างข้อมูลสำเร็จ',
+                'reload' => true,
+            ];
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'error',
+                'reload' => false,
+            ];
+        }
+
+        return $this->response->setJSON($response);
+    }
     
 }
