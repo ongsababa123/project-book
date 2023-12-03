@@ -40,7 +40,7 @@ class HomeController extends BaseController
             // Retrieve books for a specific category with status_book 1
             $booksForCategory = $BookModels
                 ->where('category_id', $Category['id_category'])
-                ->where('status_book', 1)
+                ->whereIn('status_book', [1, 2])
                 ->findAll();
         
             // Merge the books for the current category into the main array

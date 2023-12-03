@@ -98,12 +98,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="form_category" style="color: white;">หมวดหมู่</label>
-                            <select class="form-control" id="form_category" name="category">
-                                <?php foreach ($categories as $category): ?>
-                                    <option value="<?= $category['id'] ?>">
-                                        <?= $category['name'] ?>
-                                    </option>
-                                <?php endforeach; ?>
+                            <select class="form-control" id="form_category" name="form_category">
                             </select>
                         </div>
                     </div>
@@ -133,22 +128,31 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
             <div class="row">
                 <?php $count = 0; ?>
                 <?php
+
                 function generateBookCard($book)
                 {
-                    // Assuming $book['pic_book'] contains the base64-encoded image data
+                    // Set default image source
                     $imageSrc = base_url('dist/img/image-preview.png');
 
+                    // Check if the book has an image
                     if ($book['pic_book'] !== null) {
                         $base64Data = $book['pic_book'];
                         $decodedData = base64_decode($base64Data);
                         $imageSrc = 'data:image/png;base64,' . base64_encode($decodedData);
                     }
 
+                    // Set status and details_book
+                    $status = ($book['status_book'] == 2) ? 'disabled' : '';
                     $details_book = $book['details'];
                     $encoding = mb_detect_encoding($details_book, 'UTF-8,ISO-8859-1');
                     $details_book = mb_convert_encoding($details_book, 'UTF-8', $encoding);
-                    $shortenedDetails = strlen($details_book) > 50 ? htmlspecialchars(mb_substr($details_book, 0, 50) . '...', ENT_QUOTES, 'UTF-8') : htmlspecialchars($details_book, ENT_QUOTES, 'UTF-8');
 
+                    // Shorten details_book
+                    $shortenedDetails = strlen($details_book) > 50 ?
+                        htmlspecialchars(mb_substr($details_book, 0, 50) . '...', ENT_QUOTES, 'UTF-8') :
+                        htmlspecialchars($details_book, ENT_QUOTES, 'UTF-8');
+
+                    // Render the HTML card
                     ?>
                     <div class="col-md-4" id="book_<?= $book['id_book'] ?>">
                         <div class="card mb-4">
@@ -160,27 +164,34 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                                 <p class="card-text">
                                     <?= $shortenedDetails ?>
                                 </p>
+                                <?php if ($book['status_book'] == 1): ?>
+                                    <span class="badge badge-pill badge-success">พร้อมเช่า</span>
+                                <?php else: ?>
+                                    <span class="badge badge-pill badge-danger">กำลังเช่าอยู่</span>
+                                <?php endif; ?>
                             </div>
                             <div class="card-footer">
                                 <?php if (session()->get('isLoggedIn')): ?>
                                     <a href="<?= site_url('/book/details/') . $book['id_book'] ?>"
                                         class="btn btn-info btn-round">เพิ่มเติม</a>
-                                    <button class="btn btn-danger btn-round" onclick="alert_(<?= $book['id_book'] ?>)"><i
-                                            class="fas fa-cart-arrow-down"></i>
-                                        ใส่ตระกร้าเลย</button>
+                                    <button class="btn btn-danger btn-round" onclick="alert_(<?= $book['id_book'] ?>)"
+                                        <?= $status ?>>
+                                        <i class="fas fa-cart-arrow-down"></i> ใส่ตระกร้าเลย
+                                    </button>
                                 <?php else: ?>
                                     <a href="<?= site_url('/book/details/') . $book['id_book'] ?>"
                                         class="btn btn-info btn-round">เพิ่มเติม</a>
-                                    <button class="btn btn-danger btn-round"
-                                        onclick="showAlert('กรุณาล็อคอินก่อนเลือกสินค้า')"><i
-                                            class="fas fa-cart-arrow-down"></i>
-                                        ใส่ตระกร้าเลย</button>
+                                    <button class="btn btn-danger btn-round" onclick="showAlert('กรุณาล็อคอินก่อนเลือกสินค้า')" <?= $status ?>>
+                                        <i class="fas fa-cart-arrow-down" ></i> ใส่ตระกร้าเลย
+                                    </button>
                                 <?php endif; ?>
                             </div>
                         </div>
                     </div>
                     <?php
                 }
+
+
                 if (!empty($filteredBooks)):
                     foreach ($filteredBooks as $key => $value):
                         if ($sortOrder === '0' || $value['category_id'] === $sortOrder):

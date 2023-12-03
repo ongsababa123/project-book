@@ -19,14 +19,20 @@
                         $decodedData = base64_decode($base64Data);
                         $imageSrc = 'data:image/png;base64,' . base64_encode($decodedData);
                     }
+                    $status = ($bookData[0]['status_book'] == 2) ? 'disabled' : '';
                     ?>
-                    <img src="<?= $imageSrc ?>" class="img-rounded img-responsive" alt="Rounded Image"
-                        style="height: 30rem;">
+                    <img src="<?= $imageSrc ?>" class="img-rounded img-responsive" alt="Rounded Image" style="height: 30rem;">
                 </div>
                 <div class="col-lg-7">
                     <p style="font-size: 2vw;">
                         <?= $bookData[0]['name_book'] ?>
                     </p>
+                    <?php if ($bookData[0]['status_book'] == 1) : ?>
+                        <span class="badge badge-pill badge-success">พร้อมเช่า</span>
+                    <?php else : ?>
+                        <span class="badge badge-pill badge-danger">กำลังเช่าอยู่</span>
+                    <?php endif; ?>
+                    <br>
                     <br>
                     <h6 class="description">ชื่อผู้แต่ง</h6>
                     <p class="description">
@@ -47,14 +53,13 @@
                     <p class="description">
                         <?= $bookData[0]['price'] ?> บาท
                     </p>
-                    <?php if (session()->get('isLoggedIn')): ?>
-                        <button class="btn btn-danger btn-round" onclick="alert_(<?= $bookData[0]['id_book'] ?>)"
-                            id="button_book">
+                    <br>    
+                    <?php if (session()->get('isLoggedIn')) : ?>
+                        <button class="btn btn-danger btn-round" onclick="alert_(<?= $bookData[0]['id_book'] ?>)" id="button_book" <?= $status ?>>
                             <i class="fas fa-cart-arrow-down"></i> ใส่ตระกร้าเลย
                         </button>
-                    <?php else: ?>
-                        <button class="btn btn-danger btn-round" onclick="showAlert('กรุณาล็อคอินก่อนเลือกสินค้า')"><i
-                                class="fas fa-cart-arrow-down"></i>
+                    <?php else : ?>
+                        <button class="btn btn-danger btn-round" onclick="showAlert('กรุณาล็อคอินก่อนเลือกสินค้า')" <?= $status ?>><i class="fas fa-cart-arrow-down"></i>
                             ใส่ตระกร้าเลย</button>
                     <?php endif; ?>
                 </div>
@@ -71,7 +76,7 @@
             processData: false,
             contentType: false,
             dataType: "JSON",
-            success: function (response) {
+            success: function(response) {
                 document.getElementById('button_book').disabled = true;
 
                 const Toast = Swal.mixin({
@@ -90,7 +95,7 @@
                     title: response.message
                 });
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 Swal.fire({
                     title: "เกิดข้อผิดพลาด",
                     icon: 'error',

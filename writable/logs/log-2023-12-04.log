@@ -1,0 +1,33 @@
+CRITICAL - 2023-12-04 00:37:00 --> Undefined variable $categories
+in APPPATH\Views\userview\Booklist.php on line 102.
+ 1 APPPATH\Views\userview\Booklist.php(102): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $categories', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php', 102)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 5 APPPATH\Controllers\HomeController.php(53): view('userview/Booklist', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-04 00:37:38 --> Undefined array key "id"
+in APPPATH\Views\userview\Booklist.php on line 103.
+ 1 APPPATH\Views\userview\Booklist.php(103): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id"', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php', 103)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Booklist.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Booklist', [], true)
+ 5 APPPATH\Controllers\HomeController.php(53): view('userview/Booklist', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_listbook()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-04 00:58:34 --> Undefined variable $book
+in APPPATH\Views\userview\Bookdetails.php on line 22.
+ 1 APPPATH\Views\userview\Bookdetails.php(22): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $book', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Bookdetails.php', 22)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Bookdetails.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Bookdetails', [], true)
+ 5 APPPATH\Controllers\HomeController.php(65): view('userview/Bookdetails', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_bookdetails('2')
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
