@@ -96,7 +96,7 @@
     </div>
     <div class="section section-dark text-center">
         <div class="container">
-            <h2 class="title"><i class="fas fa-star" style="color: #d3cd22;"></i> หนังสือเด่นประจำสัปดาห์ <i
+            <h2 class="title"><i class="fas fa-star" style="color: #d3cd22;"></i> หนังสือแนะนำประจำสัปดาห์ <i
                     class="fas fa-star" style="color: #d3cd22;"></i></h2>
             <div class="row">
                 <?php foreach ($bookData as $key => $value): ?>
@@ -113,7 +113,7 @@
                                     $imageSrc = 'data:image/png;base64,' . base64_encode($decodedData);
                                 }
                                 ?>
-                                <img src="<?= $imageSrc ?>" class="img-fluid mb-2" alt="white sample" />
+                                <img src="<?= $imageSrc ?>" class="img-fluid mb-2" alt="white sample" style="height: 30rem;" />
                             </div>
                             <div class="card-body">
                                 <a>
@@ -136,12 +136,8 @@
                                 </p>
                             </div>
                             <div class="card-footer text-center">
-                                <a href="#pablo" class="btn btn-link btn-just-icon btn-neutral"><i
-                                        class="fa fa-twitter"></i></a>
-                                <a href="#pablo" class="btn btn-link btn-just-icon btn-neutral"><i
-                                        class="fa fa-google-plus"></i></a>
-                                <a href="#pablo" class="btn btn-link btn-just-icon btn-neutral"><i
-                                        class="fa fa-linkedin"></i></a>
+                            <a href="<?= site_url('/book/details/') . $value['id_book'] ?>"
+                                        class="btn btn-info btn-round">เพิ่มเติม</a>
                             </div>
                         </div>
                     </div>

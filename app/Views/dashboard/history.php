@@ -222,6 +222,8 @@
                     $(".modal-footer #submit").prop("disabled", false);
                     $(".modal-body #return_date").prop("disabled", false);
                     $(".modal-body #submit_date").val("ยังไม่มีการคืน");
+                    $(".modal-body #pice_promotion").prop("disabled", false);
+                    $(".modal-body #price_late").prop("disabled", false);
                     if (today > returnDate) {
                         var returnDate = new Date(rowData.return_date);
                         var currentDate = new Date();
@@ -236,6 +238,8 @@
                 } else {
                     $(".modal-footer #submit").prop("disabled", true);
                     $(".modal-body #return_date").prop("disabled", true);
+                    $(".modal-body #pice_promotion").prop("disabled", true);
+                    $(".modal-body #price_late").prop("disabled", true);
                     $(".modal-body #submit_date").val(rowData.submit_date);
                     if (rowData.late_price == null) {
                         $(".modal-body #price_late").val("ไม่มีค่าปรับ");
@@ -246,6 +250,7 @@
                 $(".modal-header #title_modal").text("แก้ไขข้อมูลประวัติ");
                 $(".modal-footer #submit").text("แก้ไขข้อมูลประวัติ");
                 $(".modal-body #url_route").val("dashboard/history/edit/return_date/" + rowData.id_history);
+                $(".modal-body #print").prop("href", "billview/" + rowData.id_history);
             }
         }
     </script>

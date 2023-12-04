@@ -15,6 +15,7 @@ class HomeController extends BaseController
     public function index()
     {
         $BookModels = new BookModels();
+        $HistoryModels = new HistoryModels();
         $data['bookData'] = $BookModels->orderBy('RAND()')->limit(3)->get()->getResultArray();
 
         echo view('userview/layout/header_home');
@@ -28,10 +29,12 @@ class HomeController extends BaseController
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
         $UserModels = new UserModels();
+        $PromotionModels = new PromotionModels();
         $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
 
         // Retrieve all categories with status 1
         $data['categoryData'] = $CategoryModels->where('status', 1)->findAll();
+        $data['promotionData'] = $PromotionModels->where('status', 1)->findAll();
 
         // Loop through categories and retrieve books for each category with status 1
         $data['bookData'] = [];

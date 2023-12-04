@@ -7,7 +7,7 @@
                         <a href="<?= base_url('/') ?>" style="color: white;">ร้านบางเล่ม</a>
                     </li>
                     <li>
-                        <a href="http://blog.creative-tim.com/" style="color: white;">รายการหนังสือ</a>
+                        <a href="<?= site_url('/book/booklist') ?>" style="color: white;">รายการหนังสือ</a>
                     </li>
                     <li>
                         <a href="<?= site_url('/contact') ?>" style="color: white;">ติดต่อเรา</a>

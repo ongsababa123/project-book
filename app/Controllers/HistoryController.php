@@ -21,7 +21,7 @@ class HistoryController extends BaseController
         $CategoryModels = new CategoryModels();
         $LateFeesModels = new LateFeesModels();
         $PromotionModels = new PromotionModels();
-        $data['data_user'] = $UserModels->findAll();
+        $data['data_user'] = $UserModels->where('type_user', 4)->findAll();
         $data['data_book'] = $BookModels->findAll();
         $data['data_category'] = $CategoryModels->findAll();
         $data['data_latefees'] = $LateFeesModels->findAll();

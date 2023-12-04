@@ -32,7 +32,6 @@
                     <div class="row" id="formImageContainer">
                     </div>
                 </div>
-
                 <div class="form-group" id="form_thebook">
                     <label id="labelbook"></label>
                     <div class="row">
@@ -104,8 +103,8 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>ราคาโปรโมชั่น</label>
-                            <input type="text" class="form-control" id="pice_promotion"
-                                name="pice_promotion" <?= $type_disable ?>>
+                            <input type="text" class="form-control" id="pice_promotion" name="pice_promotion"
+                                <?= $type_disable ?>>
                         </div>
                     </div>
                 </div>
@@ -130,6 +129,8 @@
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"></button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                    <a class="btn btn-app bg-danger mt-3" target="_blank" id="print" name="print"><i
+                            class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>
                 </div>
             </form>
         </div>

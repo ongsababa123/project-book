@@ -52,6 +52,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
 });
 
 ?>
+
 <div class="main">
     <br>
     <div class="section text-center ">
@@ -59,39 +60,42 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
             <div class="card page-carousel">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <?php foreach ($promotionData as $index => $promotion): ?>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="<?= $index ?>"
+                                class="<?= $index === 0 ? 'active' : '' ?>"></li>
+                        <?php endforeach; ?>
                     </ol>
                     <div class="carousel-inner" role="listbox">
-                        <div class="carousel-item active">
-                            <img class="d-block img-fluid" src="<?= base_url('dist/img/promotion1.jpg') ?>"
-                                alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block img-fluid" src="<?= base_url('dist/img/promotion2.jpg') ?>"
-                                alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block img-fluid" src="<?= base_url('dist/img/promotion3.jpg') ?>"
-                                alt="Third slide">
-                        </div>
+                        <?php foreach ($promotionData as $index => $promotion): ?>
+                            <?php
+                            $imagepromotionSrc = base_url('dist/img/image-preview.png');
+
+                            // Check if the promotion has an image
+                            if ($promotion['image_promotion'] !== null) {
+                                $base64Data = $promotion['image_promotion'];
+                                $decodedData = base64_decode($base64Data);
+                                $imagepromotionSrc = 'data:image/png;base64,' . base64_encode($decodedData);
+                            }
+                            ?>
+                            <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                <img class="d-block img-fluid" src="<?= $imagepromotionSrc ?>"
+                                    alt="Slide <?= $index + 1 ?>">
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                    <a class="left carousel-control carousel-control-prev" href="#carouselExampleIndicators"
-                        role="button" data-slide="prev">
-                        <span class="fa fa-angle-left"></span>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="right carousel-control carousel-control-next" href="#carouselExampleIndicators"
-                        role="button" data-slide="next">
-                        <span class="fa fa-angle-right"></span>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="pt-2" style="background-color: #bddce5;">
+    <div class="py-2" style="background-color: #bddce5;">
         <div class="container">
             <form action="<?= base_url('book/booklist') ?>" method="get" name="bookForm">
                 <div class="row">
@@ -181,8 +185,9 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                                 <?php else: ?>
                                     <a href="<?= site_url('/book/details/') . $book['id_book'] ?>"
                                         class="btn btn-info btn-round">เพิ่มเติม</a>
-                                    <button class="btn btn-danger btn-round" onclick="showAlert('กรุณาล็อคอินก่อนเลือกสินค้า')" <?= $status ?>>
-                                        <i class="fas fa-cart-arrow-down" ></i> ใส่ตระกร้าเลย
+                                    <button class="btn btn-danger btn-round" onclick="showAlert('กรุณาล็อคอินก่อนเลือกสินค้า')"
+                                        <?= $status ?>>
+                                        <i class="fas fa-cart-arrow-down"></i> ใส่ตระกร้าเลย
                                     </button>
                                 <?php endif; ?>
                             </div>
