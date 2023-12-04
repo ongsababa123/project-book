@@ -53,7 +53,6 @@
                                                     <th>เบอร์ติดต่อ</th>
                                                     <th>อีเมล</th>
                                                     <th>จำนวนครั้งที่ยืม</th>
-                                                    <th>รหัสหกหลัก</th>
                                                     <th>สถานะ</th>
                                                     <th>action</th>
                                                 </tr>
@@ -180,13 +179,6 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             return data.counthis;
-                        }
-                    },
-                    {
-                        'data': null,
-                        'class': 'text-center',
-                        'render': function (data, type, row, meta) {
-                            return data.key_pass;
                         }
                     },
                     {

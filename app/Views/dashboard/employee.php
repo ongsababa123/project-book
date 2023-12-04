@@ -43,7 +43,6 @@
                                                     <th>ชื่อ - นามสกุล</th>
                                                     <th>เบอร์ติดต่อ</th>
                                                     <th>อีเมล</th>
-                                                    <th>รหัสหกหลัก</th>
                                                     <th>action</th>
                                                 </tr>
                                             </thead>
@@ -160,13 +159,6 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             return data.email_user;
-                        }
-                    },
-                    {
-                        'data': null,
-                        'class': 'text-center',
-                        'render': function (data, type, row, meta) {
-                            return data.key_pass;
                         }
                     },
                     {
