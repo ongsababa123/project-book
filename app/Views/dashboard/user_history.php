@@ -52,11 +52,11 @@
                                                         $today = strtotime("midnight", $today); // ตั้งค่าเวลาเป็นเที่ยงคืน
                                                         if ($value['status_his'] == '1') {
                                                             echo "<span class='badge bg-info'>รอเข้ารับหนังสือ</span>";
-                                                        }else if ($value['status_his'] == '2') {
+                                                        } else if ($value['status_his'] == '2') {
                                                             if ($value['submit_date'] === null) {
                                                                 $returnDate = strtotime($value['return_date']); // รับวันที่คืนและแปลงเป็น timestamp
                                                                 $returnDate = strtotime("midnight", $returnDate); // ตั้งค่าเวลาเป็นเที่ยงคืน
-                                                        
+                                                    
                                                                 if ($today > $returnDate) {
                                                                     echo "<span class='badge bg-danger'>เกินกำหนด</span>";
                                                                 } else {
@@ -65,10 +65,10 @@
                                                             } else {
                                                                 echo "<span class='badge bg-success'>คืนแล้ว</span>";
                                                             }
-                                                        }else{
+                                                        } else {
                                                             echo "<span class='badge bg-danger'>เกินกำหนดเข้ารับหนังสือ</span>";
                                                         }
-                                                        
+
                                                         ?>
                                                     </div>
                                                     <div>
@@ -158,20 +158,30 @@
                                                                         $returnDate = new DateTime($value['return_date']);
                                                                         $returnDate->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
                                                                         if ($value['submit_date'] === null) {
-                                                                            if ($today > $returnDate) {
-                                                                                $returnDate = new DateTime($value['return_date']);
-                                                                                $currentDate = new DateTime();
+                                                                            if ($value['late_price'] !== null || $value['late_price'] !== '0') {
+                                                                                echo "<p>" . $value['late_price'] . "</p>";
 
-                                                                                // Calculate the difference in days
-                                                                                $timeDifference = $currentDate->getTimestamp() - $returnDate->getTimestamp();
-                                                                                $daysDifference = ceil(($timeDifference / (60 * 60 * 24)) - 1);
-                                                                                $priceFees = $data_latefees[0]['price_fees'];
-                                                                                echo "<p>".$daysDifference * $priceFees."</p>";
                                                                             } else {
-                                                                                echo " <p>ไม่มีค่าปรับ</p>";
+                                                                                if ($today > $returnDate) {
+                                                                                    $returnDate = new DateTime($value['return_date']);
+                                                                                    $currentDate = new DateTime();
+
+                                                                                    // Calculate the difference in days
+                                                                                    $timeDifference = $currentDate->getTimestamp() - $returnDate->getTimestamp();
+                                                                                    $daysDifference = ceil(($timeDifference / (60 * 60 * 24)) - 1);
+                                                                                    $priceFees = $data_latefees[0]['price_fees'];
+                                                                                    echo "<p>" . $daysDifference * $priceFees . "</p>";
+                                                                                } else {
+                                                                                    echo " <p>ไม่มีค่าปรับ</p>";
+                                                                                }
                                                                             }
                                                                         } else {
-                                                                            echo "<p>" . $value['late_price'] . "</p>";
+                                                                            if ($value['late_price'] === '0' || $value['late_price'] == null) {
+                                                                                echo "<p>ไม่มีค่าปรับ</p>";
+                                                                            } else {
+                                                                                echo "<p>" . $value['late_price'] . "</p>";
+
+                                                                            }
                                                                         }
                                                                         ?>
                                                                     </div>

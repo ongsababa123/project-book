@@ -279,14 +279,20 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                         timer: 3000,
                         timerProgressBar: true,
                         didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
                             toast.onmouseleave = Swal.resumeTimer;
+
+                            toast.addEventListener('click', () => {
+                                // Navigate to the desired URL
+                                window.location.href = "<?= site_url('/cart') ?>";
+                            });
                         }
                     });
+
                     Toast.fire({
                         icon: "success",
                         title: response.message
                     });
+
                 },
                 error: function (xhr, status, error) {
                     Swal.fire({

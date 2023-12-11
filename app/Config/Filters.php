@@ -28,6 +28,7 @@ class Filters extends BaseConfig
         'authGuard' => \App\Filters\AuthGuard::class,
         'CartCheck' => \App\Filters\CartCheck::class,
         'HistoryCheck' => \App\Filters\HistoryCheck::class,
+        'ISLogin' => \App\Filters\ISLogin::class,
     ];
 
     /**

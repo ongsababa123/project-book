@@ -1,0 +1,22 @@
+CRITICAL - 2023-12-11 16:48:17 --> Undefined array key 0
+in APPPATH\Views\userview\Profile.php on line 16.
+ 1 APPPATH\Views\userview\Profile.php(16): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key 0', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Profile.php', 16)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\Profile.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/Profile', [], true)
+ 5 APPPATH\Controllers\HomeController.php(212): view('userview/Profile', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_profile()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-11 20:30:31 --> Undefined variable $data_history
+in APPPATH\Views\dashboard\home.php on line 100.
+ 1 APPPATH\Views\dashboard\home.php(100): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $data_history', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\home.php', 100)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\home.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/home', [], true)
+ 5 APPPATH\Controllers\DashboardController.php(48): view('dashboard/home', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\DashboardController->index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DashboardController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()

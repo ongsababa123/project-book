@@ -181,7 +181,7 @@
                             </div>
                             <div class="col-lg-3 mt-2">
                                 <h6>ราคารวม :
-                                    <?= $value['sum_price'] ?? 0 ?>
+                                    <?= ($value['sum_price'] - $value['sum_price_promotion']) + ($value['late_price'] ?? 0) ?? 0 ?>
                                 </h6>
                             </div>
                             <div class="col-lg-2 text-white">
