@@ -151,6 +151,8 @@
                 $(".modal-footer #submit").text("สร้างข้อมูลเช่าหนังสือ");
                 $(".modal-body #url_route").val("dashboard/history/create");
             } else if (load_check == 2) {
+                $(".modal-header #title_modal").text("แก้ไขข้อมูลประวัติ");
+                $(".modal-footer #submit").text("แก้ไขข้อมูลประวัติ");
                 $("#formContainer").empty();
                 $("#formImageContainer").empty();
                 Read_History.style.display = "block";
@@ -219,22 +221,27 @@
                 var returnDate = new Date(rowData.return_date);
                 returnDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
                 if (rowData.submit_date == null) {
-                    $(".modal-footer #submit").prop("disabled", false);
-                    $(".modal-body #return_date").prop("disabled", false);
-                    $(".modal-body #submit_date").val("ยังไม่มีการคืน");
-                    $(".modal-body #pice_promotion").prop("disabled", false);
-                    $(".modal-body #price_late").prop("disabled", false);
-                    if (today > returnDate) {
-                        var returnDate = new Date(rowData.return_date);
-                        var currentDate = new Date();
-                        // หาความแตกต่างในวัน
-                        var timeDifference = currentDate.getTime() - returnDate.getTime();
-                        var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
-                        var price_fees = data_latefees[0]['price_fees'];
-                        $(".modal-body #price_late").val(daysDifference * price_fees);
+                    if (rowData.late_price === '0' || rowData.late_price == null) {
+                        $(".modal-footer #submit").prop("disabled", false);
+                        $(".modal-body #return_date").prop("disabled", false);
+                        $(".modal-body #submit_date").val("ยังไม่มีการคืน");
+                        $(".modal-body #pice_promotion").prop("disabled", false);
+                        $(".modal-body #price_late").prop("disabled", false);
+                        if (today > returnDate) {
+                            var returnDate = new Date(rowData.return_date);
+                            var currentDate = new Date();
+                            // หาความแตกต่างในวัน
+                            var timeDifference = currentDate.getTime() - returnDate.getTime();
+                            var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
+                            var price_fees = data_latefees[0]['price_fees'];
+                            $(".modal-body #price_late").val(daysDifference * price_fees);
+                        } else {
+                            $(".modal-body #price_late").val("ไม่มีค่าปรับ");
+                        }
                     } else {
-                        $(".modal-body #price_late").val("ไม่มีค่าปรับ");
+                        $(".modal-body #price_late").val(rowData.late_price);
                     }
+
                 } else {
                     $(".modal-footer #submit").prop("disabled", true);
                     $(".modal-body #return_date").prop("disabled", true);
@@ -247,9 +254,8 @@
                         $(".modal-body #price_late").val(rowData.late_price);
                     }
                 }
-                $(".modal-header #title_modal").text("แก้ไขข้อมูลประวัติ");
-                $(".modal-footer #submit").text("แก้ไขข้อมูลประวัติ");
-                $(".modal-body #url_route").val("dashboard/history/edit/return_date/" + rowData.id_history);
+
+                $(".modal-body #url_route").val("dashboard/history/edit/edit_history/" + rowData.id_history);
                 $(".modal-body #print").prop("href", "billview/" + rowData.id_history);
             }
         }
@@ -431,16 +437,20 @@
                                     `;
                             } else if (data.status_his === '2') {
                                 if (data.submit_date == null) {
-                                    if (today > returnDate) {
-                                        var returnDate = new Date(data.return_date);
-                                        var currentDate = new Date();
-                                        // หาความแตกต่างในวัน
-                                        var timeDifference = currentDate.getTime() - returnDate.getTime();
-                                        var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
-                                        var price_fees = data_latefees[0]['price_fees'];
-                                        var price_fess_totel = daysDifference * price_fees;
+                                    if (data.late_price != null) {
+                                        var price_fess_totel = data.late_price;
                                     } else {
-                                        var price_fess_totel = 0;
+                                        if (today > returnDate) {
+                                            var returnDate = new Date(data.return_date);
+                                            var currentDate = new Date();
+                                            // หาความแตกต่างในวัน
+                                            var timeDifference = currentDate.getTime() - returnDate.getTime();
+                                            var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
+                                            var price_fees = data_latefees[0]['price_fees'];
+                                            var price_fess_totel = daysDifference * price_fees;
+                                        } else {
+                                            var price_fess_totel = 0;
+                                        }
                                     }
                                     return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>
                                 <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการคืนใช่หรือไม่', 'dashboard/history/submit/${data.id_history}/${price_fess_totel}/${data.id_user}')" ><i class="fas fa-check"></i></button>

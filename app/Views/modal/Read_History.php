@@ -112,14 +112,14 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>ราคาหนังสือ(ยอดรวม)</label>
-                            <input type="text" class="form-control" placeholder="กรอกวันที่ยืม" id="price_book"
+                            <input type="text" class="form-control" placeholder="ราคาหนังสือรวม" id="price_book"
                                 name="price_book" disabled>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>ค่าปรับ</label>
-                            <input type="text" class="form-control" placeholder="กรอกวันที่คืน" id="price_late"
+                            <input type="text" class="form-control" placeholder="กรอกค่าปรับ" id="price_late"
                                 name="price_late" <?= $type_disable ?>>
                         </div>
                     </div>

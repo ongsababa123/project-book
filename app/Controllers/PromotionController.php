@@ -81,7 +81,7 @@ class PromotionController extends BaseController
     
         if (count($sum_id_book_array) >= 3) {
             if ($data['promotion'][0]['status'] == '1') {
-                $sum_price -= 10;
+                // $sum_price -= 10;
                 $text .= $data['promotion'][0]['details'] . '<br>';
                 $sumid_promotion .= $data['promotion'][0]['id_promotion']. ',';
                 $price_promotion += 10;
@@ -90,15 +90,13 @@ class PromotionController extends BaseController
     
         if ($countHis >= 3) {
             if ($data['promotion'][1]['status'] == '1') {
-                $sum_price -= 20;
+                // $sum_price -= 20;
                 $text .= $data['promotion'][1]['details'] . '<br>';
                 $sumid_promotion .= $data['promotion'][1]['id_promotion'];
                 $price_promotion += 20;
             }
         }
-        if ($sum_price < 0) {
-            $sum_price = 0;
-        }
+
         $response = [
             'price_result' => $sum_price,
             'price_promotion' => $price_promotion,
