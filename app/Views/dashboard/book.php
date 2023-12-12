@@ -1,4 +1,4 @@
-<title>Book Data</title>
+<title>ข้อมูลหนังสือ</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
 <?php
 $searchTerm = isset($_GET['searchBook']) ? $_GET['searchBook'] : '';
@@ -18,7 +18,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="<?= site_url('/'); ?>">หน้าหลัก</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
                             <li class="breadcrumb-item active">ข้อมูลหนังสือ</li>
                         </ol>
                     </div>

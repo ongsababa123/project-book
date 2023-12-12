@@ -1,4 +1,4 @@
-<title>History Table</title>
+<title>ประวัติการเช่า</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
 <!-- daterange picker -->
 <link rel="stylesheet" href="<?= base_url('plugins/daterangepicker/daterangepicker.css'); ?>">
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="<?= site_url('/'); ?>">หน้าหลัก</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
                             <li class="breadcrumb-item active">ประวัติการเช่า</li>
                         </ol>
                     </div>
@@ -141,7 +141,7 @@
                 });
 
                 data_user.forEach(element_user_cr => {
-                    if (element_user_cr.status_user == 1) {
+                    if (element_user_cr.status_user == 1 && element_user_cr.type_user == 4) {
                         var newOption = $('<option>').val(element_user_cr.id_user).text(element_user_cr.name + ' ' + element_user_cr.lastname);
                         $(".modal-body #name_user_create").append(newOption);
                     }

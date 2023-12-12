@@ -4,13 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Invoice Print</title>
+    <title>ใบเสร็จ</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="<?= base_url('dist/css/fontsgoogle.css'); ?>">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= base_url('plugins/fontawesome-free/css/all.min.css'); ?>">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url('dist/css/adminlte.min.css'); ?>">
+    <link rel="icon" href="<?=base_url('dist/img/icon/favicon.ico')?>" type="image/gif">
+
 </head>
 <style>
     * {

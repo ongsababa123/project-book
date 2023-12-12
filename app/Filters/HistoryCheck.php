@@ -48,6 +48,8 @@ class HistoryCheck implements FilterInterface
                     foreach ($idUserArray as $id) {
                         $BookModels->update($id, ['status_book' => 1]);
                     }
+                    $UserModels->update($value['id_user'], ['status_user' => 1]);
+
                     if (session()->get('id') === $value['id_user']) {
                         $ses_data = [
                             'message_his' => 'รายการสินค้าในประวัติการเช่าเกินกำหนด!!',

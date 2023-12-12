@@ -45,6 +45,9 @@ class HistoryController extends BaseController
         $return_formattedDate = date('Y/m/d', strtotime($return_date));
         $cart_id = explode(',', $this->request->getVar('cart_id'));
         $this->delete_cart($cart_id);
+
+        $id_book = explode(',', $this->request->getVar('name_book_create__'));
+        $this->chage_status_book($id_book, 2);
         $data = [
             'id_user' => $this->request->getVar('name_user_create'),
             'id_book' => $this->request->getVar('name_book_create__'),

@@ -1,4 +1,4 @@
-<title>Category Table</title>
+<title>ข้อมูลหมวดหมู่</title>
 <?php if (session()->get('type') == '3') {
     $type_hideen = 'hidden';
     $type_disable = 'disabled';
@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="<?= site_url('/'); ?>">หน้าหลัก</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
                             <li class="breadcrumb-item active">ข้อมูลหมวดหมู่</li>
                         </ol>
                     </div>

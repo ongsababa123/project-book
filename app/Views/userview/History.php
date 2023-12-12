@@ -68,7 +68,7 @@
                                     </div>
                                 </div>';
                         }
-                    }else{
+                    } else {
                         echo '<div class="bg-danger pb-3 text-center">
                         <div class="row mt-2">
                             <div class="col-lg-12 mt-4">
@@ -147,10 +147,10 @@
                                 $count_books = count($id_books);
                                 ?>
                                 <h6>จำนวน :
-                                    <?= $count_books ?>
+                                    <?= $count_books ?> เล่ม
                                 </h6>
                             </div>
-                            <div class="col-lg-3 mt-2">
+                            <div class="col-lg-2 mt-2">
                                 <h6>ส่วนลดโปรโมชั่น :
                                     <?= $value['sum_price_promotion'] ?> บาท
                                 </h6>
@@ -163,25 +163,52 @@
                                 $returnDate->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
                                 if ($value['submit_date'] === null) {
                                     if ($today > $returnDate) {
-                                        $returnDate = new DateTime($value['return_date']);
-                                        $currentDate = new DateTime();
+                                        if ($value['late_price'] == null || $value['late_price'] == 0) {
+                                            $returnDate = new DateTime($value['return_date']);
+                                            $currentDate = new DateTime();
 
-                                        // Calculate the difference in days
-                                        $timeDifference = $currentDate->getTimestamp() - $returnDate->getTimestamp();
-                                        $daysDifference = ceil(($timeDifference / (60 * 60 * 24)) - 1);
-                                        $priceFees = $data_latefees[0]['price_fees'];
-                                        echo "<h6>ค่าปรับ : " . $daysDifference * $priceFees . " บาท</h6>";
+                                            // Calculate the difference in days
+                                            $timeDifference = $currentDate->getTimestamp() - $returnDate->getTimestamp();
+                                            $daysDifference = ceil(($timeDifference / (60 * 60 * 24)) - 1);
+                                            $priceFees = $data_latefees[0]['price_fees'];
+                                            $sum = ($daysDifference * $priceFees) + ($priceFees * $count_books);
+
+                                            echo "<h6>ค่าปรับ : " . $sum . " บาท</h6>";
+                                        } else {
+                                            echo "<h6>ค่าปรับ : " . $value['late_price'] . " บาท</h6>";
+                                        }
                                     } else {
-                                        echo " <h6>ไม่มีค่าปรับ</h6>";
+                                        echo " <h6>ค่าปรับ : ไม่มีค่าปรับ</h6>";
                                     }
                                 } else {
                                     echo "<h6>ค่าปรับ : " . ($value['late_price'] ?? 0) . " บาท</h6>";
                                 }
                                 ?>
                             </div>
-                            <div class="col-lg-3 mt-2">
+                            <div class="col-lg-2 mt-2">
                                 <h6>ราคารวม :
+                                    <?= $value['sum_price'] ?> บาท
+                                </h6>
+                            </div>
+                            <div class="col-lg-4 mt-2">
+                                <h6>ราคารวม (หักส่วนลดและเพิ่มค่าปรับ) :
                                     <?= ($value['sum_price'] - $value['sum_price_promotion']) + ($value['late_price'] ?? 0) ?? 0 ?>
+                                    บาท
+                                </h6>
+                            </div>
+                            <div class="col-lg-3 mt-2">
+                                <h6>วันที่เข้ารับหนังสือ :
+                                    <?= $value['rental_date'] ?>
+                                </h6>
+                            </div>
+                            <div class="col-lg-3 mt-2">
+                                <h6>วันที่ต้องคืนหนังสือ :
+                                    <?= $value['return_date'] ?>
+                                </h6>
+                            </div>
+                            <div class="col-lg-4 mt-2">
+                                <h6>วันที่มาคืนหนังสือ :
+                                    <?= $value['submit_date'] ?>
                                 </h6>
                             </div>
                             <div class="col-lg-2 text-white">
@@ -214,7 +241,6 @@
                 <div class="section mb-6" style="background-color: #bddce5; padding-bottom: 10rem;">
                     <div class="container ">
                         <h1 class="text-center">ไม่มีประวัติการเช่า</h1>
-
                     </div>
                 </div>
             <?php endif; ?>

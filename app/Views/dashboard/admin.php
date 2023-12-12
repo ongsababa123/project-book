@@ -1,4 +1,4 @@
-<title>Admin Table</title>
+<title>ข้อมูลผู้ดูแลระบบ</title>
 
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="<?= site_url('/'); ?>">หน้าหลัก</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
                             <li class="breadcrumb-item active">ข้อมูลผู้ดูแลระบบ</li>
                         </ol>
                     </div>

@@ -1,4 +1,4 @@
-<title>Customer Table</title>
+<title>ข้อมูลลูกค้า</title>
 <style>
     #form_details_history {
         display: none;
@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="<?= site_url('/'); ?>">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
                             <li class="breadcrumb-item active">ข้อมูลลูกค้า</li>
                         </ol>
                     </div>

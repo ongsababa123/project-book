@@ -1,4 +1,4 @@
-<title>User History</title>
+<title>ประวัติการเช่า</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
 
 
@@ -14,7 +14,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="<?= site_url('/'); ?>">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item active"><?= $data_user[0]['name'] . ' ' . $data_user[0]['lastname'] ?></li>
                             <li class="breadcrumb-item active">ประวัติการเช่า</li>
                         </ol>
                     </div>
@@ -158,11 +159,8 @@
                                                                         $returnDate = new DateTime($value['return_date']);
                                                                         $returnDate->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
                                                                         if ($value['submit_date'] === null) {
-                                                                            if ($value['late_price'] !== null || $value['late_price'] !== '0') {
-                                                                                echo "<p>" . $value['late_price'] . "</p>";
-
-                                                                            } else {
-                                                                                if ($today > $returnDate) {
+                                                                            if ($today > $returnDate) {
+                                                                                if ($value['late_price'] === null || $value['late_price'] === '0') {
                                                                                     $returnDate = new DateTime($value['return_date']);
                                                                                     $currentDate = new DateTime();
 
@@ -172,9 +170,12 @@
                                                                                     $priceFees = $data_latefees[0]['price_fees'];
                                                                                     echo "<p>" . $daysDifference * $priceFees . "</p>";
                                                                                 } else {
-                                                                                    echo " <p>ไม่มีค่าปรับ</p>";
+                                                                                    echo "<p>" . $value['late_price'] . "</p>";
                                                                                 }
+                                                                            } else {
+                                                                                echo " <p>ไม่มีค่าปรับ</p>";
                                                                             }
+
                                                                         } else {
                                                                             if ($value['late_price'] === '0' || $value['late_price'] == null) {
                                                                                 echo "<p>ไม่มีค่าปรับ</p>";
@@ -189,7 +190,7 @@
                                                                 <div class="col-sm-2 mt-3">
                                                                     <div class="form-group">
                                                                         <label>ส่วนลด</label>
-                                                                        <?php if ($value['sum_price_promotion'] === null): ?>
+                                                                        <?php if ($value['sum_price_promotion'] === null || $value['sum_price_promotion'] === '0'): ?>
                                                                             <p>ไม่มีมีส่วนลด</p>
                                                                         <?php else: ?>
                                                                             <p>
@@ -200,9 +201,9 @@
                                                                 </div>
                                                                 <div class="col-sm-4 mt-3">
                                                                     <div class="form-group">
-                                                                        <label>ยอดรวม(ทั้งหมด)</label>
+                                                                        <label>ยอดรวม (หักส่วนลดและเพิ่มค่าปรับ)</label>
                                                                         <p>
-                                                                            <?= $value['sum_price'] ?> บาท
+                                                                            <?= ($value['sum_price'] - $value['sum_price_promotion']) + ($value['late_price'] ?? 0) ?? 0 ?>
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -229,6 +230,32 @@
                                                                             echo '<i class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>';
                                                                         }
                                                                         ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row ml-3">
+                                                                <div class="col-sm-2">
+                                                                    <div class="form-group">
+                                                                        <label>วันที่เข้ารับหนังสือ</label>
+                                                                        <p>
+                                                                            <?= $value['rental_date'] ?>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <div class="form-group">
+                                                                        <label>วันที่ต้องคืนหนังสือ</label>
+                                                                        <p>
+                                                                            <?= $value['return_date'] ?>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <div class="form-group">
+                                                                        <label>วันที่มาคืนหนังสือ</label>
+                                                                        <p>
+                                                                            <?= $value['submit_date'] ?>
+                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -278,111 +305,6 @@
         $(document).ready(function () {
             $("#history_user .overlay").hide();
         });
-    </script>
-    <script>
-        function action_(url, form) {
-            var formData = new FormData(document.getElementById(form));
-            $.ajax({
-                url: '<?= base_url() ?>' + url,
-                type: "POST",
-                cache: false,
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: "JSON",
-                success: function (response) {
-                    console.log(response);
-                    if (response.success) {
-                        Swal.fire({
-                            title: response.message,
-                            icon: 'success',
-                            showConfirmButton: false,
-                            allowOutsideClick: false
-                        });
-                        setTimeout(() => {
-                            if (response.reload) {
-                                window.location.reload();
-                            }
-                        }, 2000);
-                    } else {
-                        if (response.validator) {
-                            var mes = "";
-                            if (response.validator.email) {
-                                mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้องหรือมีอีเมล์ซ้ำในระบบ.' + '<br><hr/>'
-                            }
-                            if (response.validator.name) {
-                                mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
-                            }
-                            if (response.validator.last) {
-                                mes += 'นามสกุลต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
-                            }
-                            if (response.validator.phone) {
-                                mes += 'เบอร์ติดต่อต้องมี 10 หลัก.' + '<br>';
-                            }
-                            Swal.fire({
-                                title: mes,
-                                icon: 'error',
-                                showConfirmButton: true,
-                                width: '55%'
-                            });
-                        } else {
-                            Swal.fire({
-                                title: response.message,
-                                icon: 'error',
-                                showConfirmButton: true
-                            });
-                        }
-                    }
-                },
-                error: function (xhr, status, error) {
-                    Swal.fire({
-                        title: "เกิดข้อผิดพลาด",
-                        icon: 'error',
-                        showConfirmButton: true
-                    });
-                }
-            });
-        }
-    </script>
-    <script>
-        function confirm_Alert(text, url) {
-            Swal.fire({
-                title: text,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: "#28a745",
-                confirmButtonText: "submit",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '<?= base_url() ?>' + url,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    }).done(function (response) {
-                        // console.log(response);
-                        if (response.success) {
-                            Swal.fire({
-                                title: response.message,
-                                icon: 'success',
-                                showConfirmButton: false
-                            });
-                            setTimeout(() => {
-                                if (response.reload) {
-                                    window.location.reload();
-                                }
-                            }, 2000);
-                        } else {
-                            Swal.fire({
-                                title: response.message,
-                                icon: 'error',
-                                showConfirmButton: true
-                            });
-                        }
-                    });
-                }
-            });
-        }
     </script>
     <script>
         function showAlert() {

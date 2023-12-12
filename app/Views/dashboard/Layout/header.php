@@ -66,7 +66,7 @@
                         <a class="nav-link " href="#" id="userDropdown" role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <img class="img-circle" src="<?= base_url('dist/img/avatar6.png'); ?>" alt="User Image">
-                            <span class="username">จิลายุทธ บัณฑิค </span>
+                            <span class="username"><?= session()->get('name') . ' ' . session()->get('lastname') ?> </span>
                             <?php if (session()->get('type') == '1'): ?>
                             <span class="description">ผู้จัดการระบบ</span>
                             <?php elseif (session()->get('type') == '2'): ?>

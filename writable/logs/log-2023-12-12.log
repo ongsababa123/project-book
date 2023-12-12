@@ -82,3 +82,49 @@ WHERE `type_user` = :type_user:', [...], false)
  7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HistoryController))
  8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
  9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-12 21:29:11 --> explode(): Argument #2 ($string) must be of type string, array given
+in APPPATH\Controllers\HistoryController.php on line 50.
+ 1 APPPATH\Controllers\HistoryController.php(50): explode(',', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HistoryController->create_history()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HistoryController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-12 21:29:14 --> explode(): Argument #2 ($string) must be of type string, array given
+in APPPATH\Controllers\HistoryController.php on line 50.
+ 1 APPPATH\Controllers\HistoryController.php(50): explode(',', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HistoryController->create_history()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HistoryController))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-12 21:44:01 --> Undefined array key "retal_date"
+in APPPATH\Views\userview\History.php on line 191.
+ 1 APPPATH\Views\userview\History.php(191): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "retal_date"', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\History.php', 191)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\userview\\History.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('userview/History', [], true)
+ 5 APPPATH\Controllers\HomeController.php(259): view('userview/History', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HomeController->index_history()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomeController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-12 22:18:40 --> Undefined array key "renter_date"
+in APPPATH\Views\dashboard\user_history.php on line 240.
+ 1 APPPATH\Views\dashboard\user_history.php(240): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "renter_date"', 'C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\user_history.php', 240)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\project-book\\app\\Views\\dashboard\\user_history.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/user_history', [], true)
+ 5 APPPATH\Controllers\HistoryController.php(277): view('dashboard/user_history', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\HistoryController->history_user('18')
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HistoryController))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-12-12 15:42:30 --> Unsupported operand types: string + string
+in APPPATH\Views\dashboard\Layout\header.php on line 69.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1190): CodeIgniter\View\View->render('dashboard/layout/header', [], true)
+ 4 APPPATH\Controllers\UserController.php(50): view('dashboard/layout/header')
+ 5 SYSTEMPATH\CodeIgniter.php(942): App\Controllers\UserController->profile_index()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserController))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
