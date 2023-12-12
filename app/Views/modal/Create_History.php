@@ -44,11 +44,11 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>วันที่ต้องคืน</label>
-                            <div class="input-group date" id="return_date__crate" data-target-input="nearest">
+                            <div class="input-group date" id="return_date_create" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input gray-text"
-                                    data-target="#return_date__crate" name="return_date_create" id="return_date_create"
+                                    data-target="#return_date_create" name="return_date_create" id="return_date_create"
                                     required />
-                                <div class="input-group-append" data-target="#return_date__crate"
+                                <div class="input-group-append" data-target="#return_date_create"
                                     data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -101,12 +101,30 @@
 </script>
 <script>
     $(function () {
-        //Date picker
-        $('#return_date__crate').datetimepicker({
+        var today = moment();
+        var formattedReturnDate = null;
+        $('#return_date_create').datetimepicker({
             format: 'YYYY-MM-DD',
+            minDate: formattedReturnDate,
         });
         $('#rental_date__create').datetimepicker({
             format: 'YYYY-MM-DD',
+            minDate: today,
+        });
+
+        $('#rental_date__create').on('change.datetimepicker', function (e) {
+            var rentalDate = e.date;
+            var returnDate = rentalDate.clone().add(7, 'days');
+            formattedReturnDate = returnDate.format('YYYY-MM-DD');
+
+            // Destroy and reinitialize datetimepicker for return_date_create
+            $('#return_date_create').datetimepicker('destroy');
+            $('#return_date_create').datetimepicker({
+                format: 'YYYY-MM-DD',
+                minDate: formattedReturnDate,
+            });
+
+            $(".modal-body #return_date_create").val(formattedReturnDate);
         });
     })
 </script>

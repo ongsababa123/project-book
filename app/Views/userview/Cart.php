@@ -161,7 +161,7 @@
                             <div class="form-group">
                                 <label class="label-control">เลิอกวันที่คืน</label>
                                 <input type="text" class="form-control datetimepicker" required id="return_date_create"
-                                    name="return_date_create" disabled />
+                                    name="return_date_create" />
                             </div>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
         </div>
     </div>
 </div>
-<?= $this->include("Check_pro"); ?>
+<?= $this->include("calculate"); ?>
 <script>
 
     $("#form_create_history_cart").on('submit', function (e) {
@@ -202,8 +202,13 @@
             clear: 'fa fa-trash',
             close: 'fa fa-remove'
         },
-        minDate: moment()// กำหนดให้เลือกวันที่ปัจจุบันเป็นต่ำสุด
+        minDate: moment() // กำหนดให้เลือกวันที่ปัจจุบันเป็นต่ำสุด
     });
+
+    // ตั้งค่า flag ในการตรวจสอบว่ามีการเลือก rental_date_create แล้วหรือไม่
+    var rentalDateSelected = false;
+    $('#return_date_create').data('DateTimePicker').disable();
+
     $('#rental_date_create').on('dp.change', function (e) {
         // ดึงข้อมูลวันที่รับหนังสือ
         var rentalDate = e.date;
@@ -213,8 +218,17 @@
 
         // กำหนดค่าวันที่คืนไปยัง input ของวันที่คืน
         $('#return_date_create').val(returnDate.format('L'));
+
+        // กำหนด minDate ของ return_date_create เป็น returnDate
+        $('#return_date_create').data('DateTimePicker').minDate(returnDate);
+
+        // ตั้งค่า flag เมื่อมีการเลือก rental_date_create
+        rentalDateSelected = true;
+        $('#return_date_create').data('DateTimePicker').enable();
+
     });
 </script>
+
 <script>
     var categoryData = <?php echo json_encode($cartData); ?>;
     var userData = <?php echo json_encode($userData); ?>;

@@ -177,6 +177,14 @@ class HistoryController extends BaseController
     {
         helper(['form']);
         $HistoryModels = new HistoryModels();
+        $UserModels = new UserModels();
+        $id_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_book'];
+        $bookIds = explode(',', $id_book);
+        $this->chage_status_book($bookIds, 1);
+
+        $id_user = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_user'];
+        $UserModels->update($id_user, ['status_user' => 1]);
+
         $check = $HistoryModels->where('id_history', $id_history)->delete($id_history);
         if ($check) {
             $response = [

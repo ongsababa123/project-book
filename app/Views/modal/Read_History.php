@@ -96,7 +96,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>ราคาหนังสือ(ยอดรวม)</label>
+                            <label>รายละเอียดโปรโมชั่น</label>
                             <p id="text_promotion" name="text_promotion"></p>
                         </div>
                     </div>
@@ -121,6 +121,15 @@
                             <label>ค่าปรับ</label>
                             <input type="text" class="form-control" placeholder="กรอกค่าปรับ" id="price_late"
                                 name="price_late" <?= $type_disable ?>>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>ราคารวม(หักส่วนลดและเพิ่มค่าปรับ)</label>
+                            <input type="text" class="form-control" placeholder="ราคาหนังสือรวม" id="sum_price_all"
+                                name="sum_price_all" disabled>
                         </div>
                     </div>
                 </div>
@@ -149,11 +158,3 @@
     });
 </script>
 
-<script>
-    $(function () {
-        //Date picker
-        $('#return_date__').datetimepicker({
-            format: 'YYYY-MM-DD',
-        });
-    })
-</script>

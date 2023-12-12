@@ -144,7 +144,7 @@ $pice_total = 0;
                             <tr>
                                 <th style="width:50%">ราคารวม:</th>
                                 <td>
-                                    <?= $pice_total ?>
+                                    <?= $data_history[0]['sum_price'] ?>
                                 </td>
                             </tr>
                             <tr>
@@ -160,10 +160,12 @@ $pice_total = 0;
                             <tr>
                                 <th>ส่วนลดโปรโมชั่น</th>
                                 <td>
-                                    <?php if ($data_history[0]['sum_price_promotion'] !== null): ?>
-                                        <?= $data_history[0]['sum_price_promotion'] ?>
-                                    <?php elseif ($data_history[0]['id_promotion'] === null): ?>
-                                        ไม่มีส่วนลด
+                                    <?php if ($data_history[0]['id_promotion'] === null): ?>
+                                        <?php if ($data_history[0]['sum_price_promotion'] === null || $data_history[0]['sum_price_promotion'] === '0'): ?>
+                                            ไม่มีส่วนลด
+                                        <?php else: ?>
+                                            <?= $data_history[0]['sum_price_promotion'] ?>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         <?= $data_history[0]['sum_price_promotion'] ?>
                                     <?php endif; ?>
@@ -173,13 +175,7 @@ $pice_total = 0;
                             <tr>
                                 <th>ยอดรวม:</th>
                                 <td>
-                                    <?php if ($data_history[0]['id_promotion'] === null): ?>
-                                        <?php if ($data_history[0]['sum_price_promotion'] !== null): ?>
-                                            <?= ($data_history[0]['sum_price'] + $data_history[0]['late_price']) - $data_history[0]['sum_price_promotion'] ?>
-                                        <?php endif; ?>
-                                    <?php else: ?>
-                                        <?= $data_history[0]['sum_price'] + $data_history[0]['late_price'] ?>
-                                    <?php endif; ?>
+                                    <?= ($data_history[0]['sum_price'] + $data_history[0]['late_price']) - $data_history[0]['sum_price_promotion'] ?>
                                 </td>
                             </tr>
                         </table>

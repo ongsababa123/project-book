@@ -100,7 +100,7 @@
             <?= $this->include("modal/Create_History"); ?>
         </div>
     </div>
-    <?= $this->include("Check_pro"); ?>
+    <?= $this->include("calculate"); ?>
     <!-- InputMask -->
     <script src="<?= base_url('plugins/moment/moment.min.js'); ?>"></script>
     <!-- date-range-picker -->
@@ -151,6 +151,7 @@
                 $(".modal-footer #submit").text("สร้างข้อมูลเช่าหนังสือ");
                 $(".modal-body #url_route").val("dashboard/history/create");
             } else if (load_check == 2) {
+
                 $(".modal-header #title_modal").text("แก้ไขข้อมูลประวัติ");
                 $(".modal-footer #submit").text("แก้ไขข้อมูลประวัติ");
                 $("#formContainer").empty();
@@ -215,12 +216,19 @@
                 $(".modal-body #rental_date").val(rowData.rental_date);
                 $(".modal-body #return_date").val(rowData.return_date);
                 $(".modal-body #price_book").val(rowData.sum_price);
-
+                var rental_date = moment(rowData.rental_date, 'YYYY-MM-DD');
+                var minDate = rental_date.add(7, 'days');
+                $('#return_date__').datetimepicker({
+                    format: 'YYYY-MM-DD',
+                    minDate: minDate,
+                });
                 var today = new Date(); // Get the current date
                 today.setHours(0, 0, 0, 0)
                 var returnDate = new Date(rowData.return_date);
                 returnDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
                 if (rowData.submit_date == null) {
+                    $(".modal-body #print").hide();
+
                     if (rowData.late_price === '0' || rowData.late_price == null) {
                         $(".modal-footer #submit").prop("disabled", false);
                         $(".modal-body #return_date").prop("disabled", false);
@@ -228,13 +236,11 @@
                         $(".modal-body #pice_promotion").prop("disabled", false);
                         $(".modal-body #price_late").prop("disabled", false);
                         if (today > returnDate) {
-                            var returnDate = new Date(rowData.return_date);
-                            var currentDate = new Date();
-                            // หาความแตกต่างในวัน
-                            var timeDifference = currentDate.getTime() - returnDate.getTime();
-                            var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
+
                             var price_fees = data_latefees[0]['price_fees'];
-                            $(".modal-body #price_late").val(daysDifference * price_fees);
+                            calculate_price_late(idbook.length, price_fees, returnDate, function (result_price) {
+                                $(".modal-body #price_late").val(result_price);
+                            });
                         } else {
                             $(".modal-body #price_late").val("ไม่มีค่าปรับ");
                         }
@@ -243,6 +249,7 @@
                     }
 
                 } else {
+                    $(".modal-body #print").show();
                     $(".modal-footer #submit").prop("disabled", true);
                     $(".modal-body #return_date").prop("disabled", true);
                     $(".modal-body #pice_promotion").prop("disabled", true);
@@ -254,10 +261,17 @@
                         $(".modal-body #price_late").val(rowData.late_price);
                     }
                 }
-
+                var priceBook = parseInt($(".modal-body #price_book").val()) || 0;
+                var priceLate = parseInt($(".modal-body #price_late").val()) || 0;
+                var promotionPrice = parseInt($(".modal-body #pice_promotion").val()) || 0;
+                var sumPriceAll = priceBook + priceLate - promotionPrice;
+                $(".modal-body #sum_price_all").val(sumPriceAll);
+                
                 $(".modal-body #url_route").val("dashboard/history/edit/edit_history/" + rowData.id_history);
                 $(".modal-body #print").prop("href", "billview/" + rowData.id_history);
+
             }
+
         }
     </script>
     <script>

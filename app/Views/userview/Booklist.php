@@ -261,6 +261,13 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                 icon: 'warning',
                 showConfirmButton: true
             });
+        
+        }else if(userData[0]['status_user'] == 2){
+            Swal.fire({
+                title: "คุณกำลังเช่าหนังสืออยู่ โปรดคืนหนังสือก่อนเช่าใหม่อีกครั้ง",
+                icon: 'warning',
+                showConfirmButton: true
+            });
         } else {
             $.ajax({
                 url: '<?= base_url('book/booklist/addcart/') ?>' + id_book,
