@@ -16,7 +16,7 @@ $routes->get('/register', 'LoginController::index_Register', ['filter' => ['Cart
 $routes->get('/forgotpassword', 'LoginController::index_forgotpassword');
 $routes->match(['get', 'post'], '/checkpin', 'LoginController::checkpin');
 
-$routes->get('/resetpassword/(:any)/(:any)', 'LoginController::index_resetpassword/$1/$2');
+$routes->match(['get', 'post'], '/resetpassword/(:any)/(:any)', 'LoginController::index_resetpassword/$1/$2');
 $routes->match(['get', 'post'], '/update/resetpassword', 'LoginController::update_resetpassword');
 
 $routes->group("/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {

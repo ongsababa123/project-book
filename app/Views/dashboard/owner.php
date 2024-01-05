@@ -76,12 +76,16 @@
 
             if (load_check == 1) {
                 CRUD_UserModal.style.display = "block";
+                $("#password").prop("disabled", false);
+                $('.form-check').hide();
                 $(".modal-header #title_modal").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-body #url_route").val("dashboard/owner/create/2");
             } else if (load_check == 2) {
                 CRUD_UserModal.style.display = "block";
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
+                $("#password").prop("disabled", true);
+                $('.form-check').show();
 
                 $(".modal-body #name").val(rowData.name);
                 $(".modal-body #last").val(rowData.lastname);
@@ -187,13 +191,12 @@
                 contentType: false,
                 dataType: "JSON",
                 success: function (response) {
-                    console.log(response);
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
                             icon: 'success',
                             showConfirmButton: false,
-                            allowOutsideClick: false
+                            allowOutsideClick: true
                         });
                         setTimeout(() => {
                             if (response.reload) {

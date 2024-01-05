@@ -16,6 +16,8 @@
     <link href="<?= base_url('assets/css/paper-kit.css') ?>" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="<?= base_url('assets/demo/demo.css') ?>" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+
     <title>Register</title>
 
 </head>
@@ -24,7 +26,7 @@
         font-family: 'Kanit', sans-serif;
     }
 
-    .card-register {
+    .card {
         background-color: #86d9ab;
     }
 </style>
@@ -77,10 +79,10 @@
         <div class="filter"></div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 ml-auto mr-auto ">
-                    <div class="card card-register">
+                <div class="col-lg-6 ml-auto mr-auto ">
+                    <div class="card p-3">
                         <h1 class="title mx-auto">สมัครสมาชิก</h1>
-                        <div class="social-line text-center">
+                        <div class="social-line text-center ml-5">
                             <img src="<?= base_url('dist/img/logo11.png') ?>">
                         </div>
                         <form class="mb-3" id="register_form" action="javascript:void(0)" method="post"
@@ -105,7 +107,25 @@
                                 required>
                             <label>รหัสผ่าน</label>
                             <input type="password" class="form-control" placeholder="รหัสผ่าน" name="password"
-                                id="password" required>
+                                id="password" required oninput="checkPassword()">
+                            <br>
+                            <div class="alert alert-danger" role="alert" id="lengthAlert" style="display: none;">
+                                รหัสผ่านต้องมีความยาวอย่างน้อย 5 ตัวอักษร
+                            </div>
+
+                            <div class="alert alert-danger" role="alert" id="symbolAlert" style="display: none;">
+                                รหัสผ่านห้ามใช้เครื่องหมายพิเศษ
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="" id="check" name="check">
+                                    ข้อมูลสำหรับการสมัครสมาชิกนี้จะใช้เพื่อวัตถุประสงค์ในการบริการและการติดต่อเกี่ยวกับโปรโมชั่น
+                                    โปรดตรวจสอบนโยบายความเป็นส่วนตัวของเราสำหรับข้อมูลเพิ่มเติม.
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
                             <button type="submit" class="btn btn-warning btn-block btn-round bg-warning" name="submit"
                                 value="Submit" id="submit">สมัครสมาชิก</button>
                         </form>
@@ -136,7 +156,7 @@
         $(document).ready(function () {
             $(".overlay").hide();
         });
-
+        $('#submit').prop('disabled', true);
         $("#register_form").on('submit', function (e) {
             e.preventDefault();
             action_('dashboard/customer/create/4', 'register_form');
@@ -218,7 +238,49 @@
         function hideDropdown() {
             $('#dropdown').removeClass('show');
         }
+
+
     </script>
+    <script>
+        $('#check').on('change', function () {
+            updateSubmitButton();
+        });
+
+        function checkPassword() {
+            var passwordInput = document.getElementById("password");
+            var lengthAlert = document.getElementById("lengthAlert");
+            var symbolAlert = document.getElementById("symbolAlert");
+
+            // Check ความยาว
+            if (passwordInput.value.length >= 5) {
+                lengthAlert.style.display = "none";
+            } else {
+                lengthAlert.style.display = "block";
+            }
+
+            // Check เครื่องหมายพิเศษ
+            if (!/[^\w\s]/.test(passwordInput.value)) {
+                symbolAlert.style.display = "none";
+            } else {
+                symbolAlert.style.display = "block";
+            }
+
+            updateSubmitButton();
+        }
+
+        function updateSubmitButton() {
+            var checkCheckbox = $('#check').is(':checked');
+            var passwordInput = document.getElementById("password");
+
+            // Check ว่า checkbox ถูกติ๊ก และรหัสผ่านตรงตามเงื่อนไขหรือไม่
+            if (checkCheckbox && passwordInput.value.length >= 5 && !/[^\w\s]/.test(passwordInput.value)) {
+                $('#submit').prop('disabled', false);
+            } else {
+                $('#submit').prop('disabled', true);
+            }
+        }
+    </script>
+
 </body>
 
 </html>

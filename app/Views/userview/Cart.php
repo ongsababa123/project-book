@@ -199,13 +199,15 @@
 
         // คำนวณวันที่คืน 7 วันหลัง
         var returnDate = rentalDate.clone().add(7, 'days');
+        var today = moment();
+        var maxDate = today.clone().add(14, 'days');
 
         // กำหนดค่าวันที่คืนไปยัง input ของวันที่คืน
         $('#return_date_create').val(returnDate.format('L'));
 
         // กำหนด minDate ของ return_date_create เป็น returnDate
         $('#return_date_create').data('DateTimePicker').minDate(returnDate);
-
+        $('#rental_date_create').data('DateTimePicker').maxDate(maxDate);
         // ตั้งค่า flag เมื่อมีการเลือก rental_date_create
         rentalDateSelected = true;
         $('#return_date_create').data('DateTimePicker').enable();

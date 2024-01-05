@@ -69,7 +69,7 @@ class UserController extends BaseController
                 'lastname' => $this->request->getVar('last'),
                 'phone' => $this->request->getVar('phone'),
                 'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
-                'key_pass' => password_hash($number_random, PASSWORD_DEFAULT),
+                'key_pass' => password_hash(str_replace(['.', '/'], '', $number_random), PASSWORD_DEFAULT),
                 'status_user' => 1,
                 'type_user' => $type,
             ];
@@ -119,27 +119,34 @@ class UserController extends BaseController
                 'lastname' => $this->request->getVar('last'),
                 'phone' => $this->request->getVar('phone'),
             ];
-            if ($password !== '') {
-                $passdata = [
-                    'password' => password_hash($password, PASSWORD_DEFAULT),
-                ];
-                $data = array_merge($data, $passdata);
-            }
-            $check = $userModels->update($id_user, $data);
-            if ($check) {
+            if ($password === '' || $password === null) {
                 $response = [
                     'success' => true,
                     'message' => 'อัปเดตข้อมูลสำเร็จ',
                     'reload' => true,
                 ];
             } else {
+                $number_random = mt_rand(100000, 999999);
+                $passdata = [
+                    'password' => password_hash($password, PASSWORD_DEFAULT),
+                    'key_pass' => password_hash(str_replace(['.', '/'], '', $number_random), PASSWORD_DEFAULT),
+                ];
+                $data = array_merge($data, $passdata);
+                $response = [
+                    'success' => true,
+                    'message' => 'อัปเดตข้อมูลสำเร็จ รหัส 6 หลักใหม่คือ ' . $number_random . ' ใช้ในกรณีลืมรหัสผ่าน',
+                    'reload' => false,
+                    'pass' => $password
+                ];
+            }
+            $check = $userModels->update($id_user, $data);
+            if (!$check) {
                 $response = [
                     'success' => false,
                     'message' => 'error',
                     'reload' => false,
                 ];
             }
-
         } else {
             $data['validation'] = $this->validator;
             $response = [

@@ -33,8 +33,13 @@
                     <input type="number" class="form-control" placeholder="กรอกเบอร์โทรศัพท์" id="phone" name="phone"
                         required>
                 </div>
+
                 <div class="form-group" id="password_group">
                     <label>รหัสผ่าน</label>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">เปลี่ยนรหัสผ่าน</label>
+                    </div>
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="form-control" id="password"
                             placeholder="กรอกรหัสผ่าน">
@@ -60,4 +65,13 @@
         const urlRouteInput = document.getElementById("url_route");
         action_(urlRouteInput.value, 'form_user');
     });
+</script>
+<script>
+    $("#exampleCheck1").on('click', function () {
+        if ($(this).is(':checked')) {
+            $("#password").prop("disabled", false);
+        }else{
+            $("#password").prop("disabled", true);
+        }
+    })
 </script>

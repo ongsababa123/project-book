@@ -65,6 +65,9 @@ class HomeController extends BaseController
 
         // Retrieve all categories with status 1
         $data['categoryData'] = $CategoryModels->where('status', 1)->findAll();
+        usort($data['categoryData'], function ($a, $b) {
+            return strcmp($a['name_category'], $b['name_category']);
+        });
         $data['promotionData'] = $PromotionModels->where('status', 1)->findAll();
 
         // Loop through categories and retrieve books for each category with status 1
@@ -80,7 +83,10 @@ class HomeController extends BaseController
             // Merge the books for the current category into the main array
             $data['bookData'] = array_merge($data['bookData'], $booksForCategory);
         }
-
+        // เรียงลำดับอาร์เรย์ bookData ตามชื่อหนังสือ (คาดว่าชื่อหนังสือถูกเก็บไว้ในฟิลด์ที่ชื่อ 'name' ในฐานข้อมูล)
+        usort($data['bookData'], function ($a, $b) {
+            return strcmp($a['name_book'], $b['name_book']);
+        });
 
         // Load views
         echo view('userview/layout/header_base');

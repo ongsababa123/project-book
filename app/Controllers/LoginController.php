@@ -108,7 +108,7 @@ class LoginController extends BaseController
                 $number_random = mt_rand(100000, 999999);
                 $data = [
                     'password' => password_hash($password, PASSWORD_DEFAULT),
-                    'key_pass' => password_hash($number_random, PASSWORD_DEFAULT),
+                    'key_pass' => password_hash(str_replace(['.', '/'], '', $number_random), PASSWORD_DEFAULT),
                 ];
                 $userModels->set($data);
                 $updated = $userModels->where('email_user', $email)->update();
