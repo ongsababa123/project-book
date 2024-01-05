@@ -39,6 +39,8 @@ $routes->group("/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($rout
 
 $routes->group("dashboard/", ['filter' => ['CartCheck', 'HistoryCheck' , 'ISLogin']], function ($routes) {
     $routes->match(['get', 'post'], 'index', 'DashboardController::index');
+    $routes->match(['get', 'post'], 'edit/user/profile/(:num)', 'UserController::edit_user_profile/$1');  //edit
+
 });
 $routes->group("dashboard/customer/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {
     $routes->match(['get', 'post'], 'index', 'UserController::customer_index', ['filter' => ['authGuard' , 'ISLogin']]); //display

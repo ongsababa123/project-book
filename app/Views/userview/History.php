@@ -211,29 +211,6 @@
                                     <?= $value['submit_date'] ?>
                                 </h6>
                             </div>
-                            <div class="col-lg-2 text-white">
-                                <?php
-                                date_default_timezone_set('Asia/Bangkok'); // Set the time zone
-                                $today = strtotime(date("Y-m-d")); // Get the current date and convert it to a timestamp
-                                $today = strtotime("midnight", $today); // Set the time to midnight
-                        
-                                if ($value['submit_date'] === null) {
-                                    $returnDate = strtotime($value['return_date']); // Get the return date and convert it to a timestamp
-                                    $returnDate = strtotime("midnight", $returnDate); // Set the time to midnight
-                        
-                                    if ($today > $returnDate) {
-                                        echo '<a class="btn btn-danger btn-round mt-3" onclick="showAlert()">';
-                                        echo '<i class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>';
-                                    } else {
-                                        echo '<a class="btn btn-danger btn-round mt-3" onclick="showAlert()">';
-                                        echo '<i class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>';
-                                    }
-                                } else {
-                                    echo '<a class="btn btn-danger btn-round mt-3" href="' . site_url('dashboard/history/billview/' . $value['id_history']) . '" target="_blank">';
-                                    echo '<i class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>';
-                                }
-                                ?>
-                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>

@@ -2,9 +2,9 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <style>
     .center {
-        padding: 100px 0;
-        padding-left: 30px;
-        padding-top: 10rem;
+        padding: 5px 0;
+        padding-left: 20px;
+        padding-top: rem;
         text-align: center;
     }
 </style>
@@ -29,57 +29,41 @@
                 <?php foreach ($cartData as $cartItem): ?>
                     <div class="p-4 border mb-3" style="background-color: white;">
                         <div class="row">
-                            <div class="center">
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="<?= $cartItem['id_cart'] ?>">
-                                            <span class="form-check-sign">
-                                                <span class="check"></span>
-                                            </span>
-                                        </label>
+                            <div class="col-lg-1">
+                                <div class="center">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="<?= $cartItem['id_cart'] ?>">
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <?php foreach ($cartItem['bookData'] as $book): ?>
-                                <?php
-                                $imageSrc = base_url('dist/img/image-preview.png');
 
-                                if ($book['pic_book'] !== null) {
-                                    $base64Data = $book['pic_book'];
-                                    $decodedData = base64_decode($base64Data);
-                                    $imageSrc = 'data:image/png;base64,' . base64_encode($decodedData);
-                                }
-                                ?>
                             <?php endforeach; ?>
-                            <div class="col-lg-5 col-md-12 text-center">
-                                <img src="<?= $imageSrc ?>" class="img-rounded img-responsive" alt="Rounded Image"
-                                    style="height: 25rem;">
-                            </div>
-                            <div class="col-lg-6">
-                                <p style="font-size: 2vw;">
-                                    <?= $book['name_book'] ?>
-                                </p>
-                                <h6 class="description">ผู้เขียน</h6>
-                                <p class="description">
-                                    <?= $book['book_author'] ?>
-                                </p>
-                                <h6 class="description">ประเภท</h6>
-                                <p class="description">
-                                    <?php foreach ($cartItem['categoryData'] as $category): ?>
-                                        <?php
-                                        echo $category['name_category'];
-                                        ?>
-                                    <?php endforeach; ?>
-                                </p>
-                                <h6 class="description">รายละเอียด</h6>
-                                <p class="description">
-                                    <?= $book['details'] ?>
-                                </p>
-                                <h6 ราคา class="description">ราคา</h6>
-                                <?= $book['price'] ?>
-                                <h6 ราคา class="description">วันที่กดเข้าตระกร้า</h6>
-                                <?= $cartItem['cart_date'] ?>
+                            <div class="col-lg-11">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <h6 class="description">ชื่อหนังสือ</h6>
+                                        <p class="description">
+                                            <?= $book['name_book'] ?>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <h6 ราคา class="description">ราคา</h6>
+                                        <?= $book['price'] ?>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h6 ราคา class="description">วันที่กดเข้าตระกร้า</h6>
+                                        <?= $cartItem['cart_date'] ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

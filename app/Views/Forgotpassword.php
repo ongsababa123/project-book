@@ -48,6 +48,21 @@
             </div>
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
                 <ul class="navbar-nav">
+                    <li class="nav-item dropdown" onmouseover="showDropdown()" onmouseout="hideDropdown()"
+                        id="dropdown">
+                        <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" class="nav-link"><i class="fas fa-info-circle"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                            <a class="dropdown-item">1. ข้อจำกัดในการเช่าหนังสือ 7 เล่ม / ครั้ง </a>
+                            <a class="dropdown-item">2. หากลูกค้าทำหนังสือหายปรับตามราคาหนังสือเป็น 5 เท่า</a>
+                            <a class="dropdown-item">3. หากเลยกำหนดจะถูกปรับ 20 บาท / เล่ม / วัน </a>
+                            <a class="dropdown-item">4. ค่ามัดจำเล่มละ 100 บาท </a>
+                            <a class="dropdown-item">5. หากจองแล้วไม่เข้ามารับภายใน 2วัน
+                                ที่ทำการจองจะต้องทำการจองใหม่เท่านั้น</a>
+                            <a class="dropdown-item">6. ให้สิทธ์ในการเช่าเพียง 1ครั้ง สูงสุด 7 เล่ม
+                                หากยังไม่คืนจะไม่มารถยืมต่อได้</a>
+                        </div>
+                    </li>
                     <li class="nav-item">
                         <a href="<?= site_url('/book/booklist') ?>" class="nav-link"> รายการหนังสือ</a>
                     </li>
@@ -74,7 +89,7 @@
                             <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email"
                                 required>
                             <label>ยืนยันรหัส 6 หลัก</label>
-                            <input type="number" class="form-control" placeholder="รหัส 6 หลัก" id="pin" name="pin">
+                            <input type="text" class="form-control" placeholder="รหัส 6 หลัก" id="pin" name="pin">
                             <button type="submit" class="btn btn-warning btn-block btn-round bg-warning" name="submit"
                                 value="Submit" id="submit">ยืนยัน</button>
                         </form>
@@ -146,6 +161,16 @@
                     }
                 },
             });
+        }
+    </script>
+    <script>
+        // JavaScript functions to show and hide the dropdown menu
+        function showDropdown() {
+            $('#dropdown').toggleClass('show');
+        }
+
+        function hideDropdown() {
+            $('#dropdown').removeClass('show');
         }
     </script>
 </body>

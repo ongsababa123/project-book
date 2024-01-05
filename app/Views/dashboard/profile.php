@@ -112,7 +112,7 @@
 
                 $(".modal-header #title_modal").text("แก้ไขข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("แก้ไขข้อมูลผู้ใช้");
-                $(".modal-body #url_route").val("dashboard/customer/edit/" + <?= $data_user[0]['id_user'] ?>);
+                $(".modal-body #url_route").val("dashboard/edit/user/profile/" + <?= $data_user[0]['id_user'] ?>);
             }
         }
     </script>

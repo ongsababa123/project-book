@@ -48,7 +48,7 @@ class UserController extends BaseController
         $UserModels = new UserModels();
         $data['data_user'] = $UserModels->find(session()->get('id_user'));
         echo view('dashboard/layout/header');
-        echo view('dashboard/profile' , $data);
+        echo view('dashboard/profile', $data);
     }
 
     public function create_user($type = null)
@@ -126,6 +126,68 @@ class UserController extends BaseController
                 $data = array_merge($data, $passdata);
             }
             $check = $userModels->update($id_user, $data);
+            if ($check) {
+                $response = [
+                    'success' => true,
+                    'message' => 'อัปเดตข้อมูลสำเร็จ',
+                    'reload' => true,
+                ];
+            } else {
+                $response = [
+                    'success' => false,
+                    'message' => 'error',
+                    'reload' => false,
+                ];
+            }
+
+        } else {
+            $data['validation'] = $this->validator;
+            $response = [
+                'success' => false,
+                'message' => 'ผิดพลาด',
+                'validator' => $this->validator->getErrors(), // Get validation errors
+                'reload' => false,
+            ];
+        }
+        return $this->response->setJSON($response);
+    }
+
+    public function edit_user_profile($id_user = null)
+    {
+        helper(['form']);
+        $rules = [
+            'name' => 'required|min_length[2]|max_length[200]',
+            'last' => 'required|min_length[2]|max_length[200]',
+            'phone' => 'required|min_length[10]|max_length[10]',
+            'email' => 'required|min_length[4]|max_length[100]|valid_email|is_unique[user_table.email_user,id_user,' . $id_user . ']',
+        ];
+        $password = $this->request->getVar('password');
+
+        if ($this->validate($rules)) {
+            $userModels = new UserModels();
+            $data = [
+                'email_user' => $this->request->getVar('email'),
+                'name' => $this->request->getVar('name'),
+                'lastname' => $this->request->getVar('last'),
+                'phone' => $this->request->getVar('phone'),
+            ];
+            if ($password !== '') {
+                $passdata = [
+                    'password' => password_hash($password, PASSWORD_DEFAULT),
+                ];
+                $data = array_merge($data, $passdata);
+            }
+            $check = $userModels->update($id_user, $data);
+            $session = session();
+            $data_update = $userModels->where('email_user', $this->request->getVar('email'))->first();
+            $ses_data = [
+                'id' => $data_update['id_user'],
+                'name' => $data_update['name'],
+                'lastname' => $data_update['lastname'],
+                'type' => $data_update['type_user'],
+                'isLoggedIn' => TRUE
+            ];
+            $session->set($ses_data);
             if ($check) {
                 $response = [
                     'success' => true,
