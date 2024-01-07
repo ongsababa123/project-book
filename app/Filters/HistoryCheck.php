@@ -48,7 +48,7 @@ class HistoryCheck implements FilterInterface
                     foreach ($idUserArray as $id) {
                         $BookModels->update($id, ['status_book' => 1]);
                     }
-                    $UserModels->update($value['id_user'], ['status_user' => 1]);
+                    // $UserModels->update($value['id_user'], ['status_user' => 1]);
 
                     if (session()->get('id') === $value['id_user']) {
                         $ses_data = [
@@ -86,7 +86,7 @@ class HistoryCheck implements FilterInterface
                 $returnDate = strtotime("midnight", $returnDate); // ตั้งค่าเวลาเป็นเที่ยงคืน
                 if ($value['submit_date'] === null) {
                     if ($today > $returnDate) {
-                        $UserModels->update($value['id_user'], ['status_user' => 3]);
+                        // $UserModels->update($value['id_user'], ['status_user' => 3]);
                         if (session()->get('id') === $value['id_user']) {
                             $ses_data = [
                                 'message_his' => 'กรุณาคืนหนังสือ และชำระเงิน!!',

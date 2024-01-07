@@ -21,7 +21,7 @@ class HistoryController extends BaseController
         $CategoryModels = new CategoryModels();
         $LateFeesModels = new LateFeesModels();
         $PromotionModels = new PromotionModels();
-        $data['data_user'] = $UserModels->where('type_user', 4)->findAll();
+        $data['data_user'] = $UserModels->where('type_user', 4)->where('status_user', 1)->findAll();
         $data['data_book'] = $BookModels->findAll();
         $data['data_category'] = $CategoryModels->findAll();
         $data['data_latefees'] = $LateFeesModels->findAll();
@@ -62,7 +62,7 @@ class HistoryController extends BaseController
         ];
         $check = $HistoryModels->save($data);
         if ($check) {
-            $UserModels->update($this->request->getVar('name_user_create'), ['status_user' => 2]);
+            $UserModels->update($this->request->getVar('name_user_create'), ['status_rental' => 2]);
             $response = [
                 'success' => true,
                 'message' => 'สร้างข้อมูลเช่าสำเร็จ!',
@@ -154,11 +154,14 @@ class HistoryController extends BaseController
     public function update_status_his($id_history = null)
     {
         $HistoryModels = new HistoryModels();
-
+        $UserModels = new UserModels();
+        $id_user = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_user'];
+        $UserModels->update($id_user, ['status_rental' => 3]);
         $data = [
             'status_his' => 2,
         ];
         $check = $HistoryModels->update($id_history, $data);
+
         if ($check) {
             $response = [
                 'success' => true,
@@ -186,7 +189,7 @@ class HistoryController extends BaseController
         $this->chage_status_book($bookIds, 1);
 
         $id_user = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_user'];
-        $UserModels->update($id_user, ['status_user' => 1]);
+        $UserModels->update($id_user, ['status_rental' => 1]);
 
         $check = $HistoryModels->where('id_history', $id_history)->delete($id_history);
         if ($check) {
@@ -215,8 +218,9 @@ class HistoryController extends BaseController
         $data = [
             'submit_date' => date('Y/m/d'),
             'late_price' => $price,
+            'status_his' => 3,
         ];
-        $UserModels->update($id_user, ['status_user' => 1]);
+        $UserModels->update($id_user, ['status_rental' => 1]);
         $id_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_book'];
         $bookIds = explode(',', $id_book);
         $this->chage_status_book($bookIds, 1);
@@ -277,10 +281,10 @@ class HistoryController extends BaseController
         echo view('dashboard/user_history', $data);
     }
 
-    public function get_data_table()
+    public function get_data_table($status_his = null)
     {
         $HistoryModels = new HistoryModels();
-        $totalRecords = $HistoryModels->countAllResults();
+        $totalRecords = $HistoryModels->where('status_his', $status_his)->countAllResults();
 
         $limit = $this->request->getVar('length');
         $start = $this->request->getVar('start');
@@ -289,7 +293,7 @@ class HistoryController extends BaseController
         $recordsFiltered = $totalRecords;
         $recordsFiltered = $totalRecords;
 
-        $data = $HistoryModels->findAll($limit, $start);
+        $data = $HistoryModels->where('status_his', $status_his)->findAll($limit, $start);
 
         $response = [
             'draw' => intval($draw),

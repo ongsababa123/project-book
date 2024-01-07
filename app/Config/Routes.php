@@ -91,7 +91,7 @@ $routes->group("dashboard/category/", ['filter' => ['CartCheck', 'HistoryCheck']
 $routes->group("dashboard/history/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {
     $routes->match(['get', 'post'], 'index', 'HistoryController::history_index', ['filter' => ['authGuard' , 'ISLogin']]); //display
     $routes->match(['get', 'post'], 'create', 'HistoryController::create_history');   //create
-    $routes->match(['get', 'post'], 'getdata', 'HistoryController::get_data_table');  //getData
+    $routes->match(['get', 'post'], 'getdata/(:num)', 'HistoryController::get_data_table/$1');  //getData
     $routes->match(['get', 'post'], 'edit/edit_history/(:num)', 'HistoryController::edit_history/$1');  //edit
     $routes->match(['get', 'post'], 'cancel/(:num)', 'HistoryController::cancel_his/$1');  //cancel
     $routes->match(['get', 'post'], 'submit/(:num)/(:num)/(:num)', 'HistoryController::submit_his/$1/$2/$3');  //submit

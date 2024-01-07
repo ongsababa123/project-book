@@ -255,14 +255,14 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
 <script>
     function alert_(id_book) {
         var userData = <?php echo json_encode($userData); ?>;
-        if (userData[0]['status_user'] == 3) {
+        if (userData[0]['status_rental'] == 2) {
             Swal.fire({
-                title: "คุณมีรายการเกินกำหนด โปรดคืนหนังสือก่อน",
+                title: "คุณมีรายการเข้ารับหนังสืออยู่ โปรดคืนหนังสือก่อนเช่าใหม่อีกครั้ง",
                 icon: 'warning',
                 showConfirmButton: true
             });
         
-        }else if(userData[0]['status_user'] == 2){
+        }else if(userData[0]['status_rental'] == 3){
             Swal.fire({
                 title: "คุณกำลังเช่าหนังสืออยู่ โปรดคืนหนังสือก่อนเช่าใหม่อีกครั้ง",
                 icon: 'warning',

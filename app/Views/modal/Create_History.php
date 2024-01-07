@@ -133,6 +133,7 @@
         $('#rental_date__create').datetimepicker({
             format: 'YYYY-MM-DD',
             minDate: today,
+            maxDate: moment(today).add(2, 'days').format('YYYY-MM-DD'),
         });
         $('.modal-body #return_date_create').prop("disabled", true);
 

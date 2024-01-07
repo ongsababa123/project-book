@@ -8,6 +8,17 @@
         </div>
         <div class="modal-body">
             <form class="mb-3" id="form_user" action="javascript:void(0)" method="post" enctype="multipart/form-data">
+                <div class="row" id="customSwitch_status">
+                    <div class="col-sm-12">
+                        <div class="form-group" id="customSwitch">
+                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch3"
+                                    name="customSwitch3" onclick="change_status()">
+                                <label class="custom-control-label" for="customSwitch3" id="LabelcustomSwitch3"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -54,6 +65,7 @@
         </div>
     </div>
 </div>
+<script src="<?= base_url('plugins/bs-custom-file-input/bs-custom-file-input.min.js'); ?>"></script>
 
 <script>
     $(document).ready(function () {
@@ -70,8 +82,18 @@
     $("#exampleCheck1").on('click', function () {
         if ($(this).is(':checked')) {
             $("#password").prop("disabled", false);
-        }else{
+        } else {
             $("#password").prop("disabled", true);
         }
     })
+</script>
+<script>
+    function change_status() {
+        const isChecked = document.getElementById("customSwitch3").checked;
+        if (isChecked) {
+            $(".modal-body #LabelcustomSwitch3").text("เปิดใช้งาน");
+        } else {
+            $(".modal-body #LabelcustomSwitch3").text("แบล็คลิส");
+        }
+    }
 </script>

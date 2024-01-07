@@ -71,6 +71,7 @@ class UserController extends BaseController
                 'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
                 'key_pass' => password_hash(str_replace(['.', '/'], '', $number_random), PASSWORD_DEFAULT),
                 'status_user' => 1,
+                'status_rental' => 1,
                 'type_user' => $type,
             ];
             $check = $userModels->save($data);
@@ -103,6 +104,7 @@ class UserController extends BaseController
     public function edit_user($id_user = null)
     {
         helper(['form']);
+        $status = $this->request->getVar('customSwitch3') === 'on' ? 1 : 0;
         $rules = [
             'name' => 'required|min_length[2]|max_length[200]',
             'last' => 'required|min_length[2]|max_length[200]',
@@ -118,6 +120,7 @@ class UserController extends BaseController
                 'name' => $this->request->getVar('name'),
                 'lastname' => $this->request->getVar('last'),
                 'phone' => $this->request->getVar('phone'),
+                'status_user' => $status
             ];
             if ($password === '' || $password === null) {
                 $response = [
@@ -285,6 +288,5 @@ class UserController extends BaseController
 
         return $this->response->setJSON($response);
     }
-
 
 }

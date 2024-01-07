@@ -53,7 +53,8 @@
                                                     <th>เบอร์ติดต่อ</th>
                                                     <th>อีเมล</th>
                                                     <th>จำนวนครั้งที่ยืม</th>
-                                                    <th>สถานะ</th>
+                                                    <th>สถานะแอคเคาท์</th>
+                                                    <th>สถานะการเช่า</th>
                                                     <th>action</th>
                                                 </tr>
                                             </thead>
@@ -92,13 +93,24 @@
                 $(".modal-body #url_route").val("dashboard/customer/create/4");
                 $("#password").prop("disabled", false);
                 $('.form-check').hide();
-
+                $('#customSwitch_status').hide();
+                
             } else if (load_check == 2) {
+                $('#customSwitch_status').show();
                 CRUD_UserModal.style.display = "block";
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
                 $("#password").prop("disabled", true);
                 $('.form-check').show();
+                const customSwitch3 = $(".modal-body #customSwitch3");
+                const labelCustomSwitch3 = $(".modal-body #LabelcustomSwitch3");
 
+                labelCustomSwitch3.text(rowData.status_user == 1 ? "เปิดใช้งาน" : "แบล็คลิส");
+
+                if (rowData.status_user == '1') {
+                    customSwitch3.prop('checked', true);
+                } else {
+                    customSwitch3.prop('checked', false);
+                }
                 $(".modal-body #name").val(rowData.name);
                 $(".modal-body #last").val(rowData.lastname);
                 $(".modal-body #email").val(rowData.email_user);
@@ -117,7 +129,6 @@
     </script>
     <script>
         function getTableData() {
-
             if ($.fn.DataTable.isDataTable('#table_customer')) {
                 $('#table_customer').DataTable().destroy();
             }
@@ -193,13 +204,25 @@
                             var status = data.status_user;
                             if (status == 1) {
                                 return `<span class='badge bg-success'>ใช้งาน</span>`;
-                            } else if (status == 2) {
-                                return `<span class='badge bg-warning'>เช่าหนังสือ</span>`;
-                            } else if (status == 3) {
-                                return `<span class='badge bg-danger'>ค้างชำระ</span>`;
-                            } else {
-                                return status;
-                            }
+                            } else if (status == 0) {
+                                return `<span class='badge bg-danger'>แบล็คลิส</span>`;
+                            } 
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            var status_rental = data.status_rental;
+                            if (status_rental == 1) {
+                                return `<span class='badge bg-primary'>ยังไม่มีการเช่า</span>`;
+                            } else if (status_rental == 2) {
+                                return `<span class='badge bg-info'>รอเข้ารับหนังสือ</span>`;
+                            } else if (status_rental == 3) {
+                                return `<span class='badge bg-warning'>กำลังเช่า</span>`;
+                            } else if (status_rental == 4) {
+                                return `<span class='badge bg-success'>คืนแล้ว</span>`;
+                            } 
                         }
                     },
                     {

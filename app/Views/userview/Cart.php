@@ -200,7 +200,7 @@
         // คำนวณวันที่คืน 7 วันหลัง
         var returnDate = rentalDate.clone().add(7, 'days');
         var today = moment();
-        var maxDate = today.clone().add(14, 'days');
+        var maxDate = moment(today).add(2, 'days');
 
         // กำหนดค่าวันที่คืนไปยัง input ของวันที่คืน
         $('#return_date_create').val(returnDate.format('L'));

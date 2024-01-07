@@ -66,7 +66,9 @@
                                                             } else {
                                                                 echo "<span class='badge bg-success'>คืนแล้ว</span>";
                                                             }
-                                                        } else {
+                                                        } else if($value['status_his'] == '3'){
+                                                            echo "<span class='badge bg-success'>คืนแล้ว</span>";
+                                                        }else {
                                                             echo "<span class='badge bg-danger'>เกินกำหนดเข้ารับหนังสือ</span>";
                                                         }
 

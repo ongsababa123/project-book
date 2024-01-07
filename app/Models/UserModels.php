@@ -10,6 +10,6 @@ class UserModels extends Model
 
     protected $primaryKey = 'id_user';
 
-    protected $allowedFields = ['email_user' , 'name' , 'lastname' , 'phone' , 'password' , 'key_pass' , 'status_user' , 'type_user'];
+    protected $allowedFields = ['email_user' , 'name' , 'lastname' , 'phone' , 'password' , 'key_pass' , 'status_user' ,'status_rental', 'type_user'];
 
 }
