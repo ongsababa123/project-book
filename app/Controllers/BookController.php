@@ -29,6 +29,7 @@ class BookController extends BaseController
             'details' => $this->request->getVar('detail_category'),
             'status_book' => 0,
             'price' => $this->request->getVar('price_book'),
+            'price_book' => $this->request->getVar('price_book_book'),
             'category_id' => $this->request->getVar('categorySelect'),
         ];
         if ($profile_picture->isValid() && !$profile_picture->hasMoved()) {
@@ -92,6 +93,7 @@ class BookController extends BaseController
             'details' => $this->request->getVar('detail_category'),
             'status_book' => $status,
             'price' => $this->request->getVar('price_book'),
+            'price_book' => $this->request->getVar('price_book_book'),
             'category_id' => $this->request->getVar('categorySelect'),
         ];
         if ($profile_picture->isValid() && !$profile_picture->hasMoved()) {

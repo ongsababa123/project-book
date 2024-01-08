@@ -56,9 +56,14 @@
                         name="detail_category" required <?= $type_disable ?>></textarea>
                 </div>
                 <div class="form-group">
-                    <label>ราคา</label>
+                    <label>ราคาเช่า</label>
                     <input type="number" class="form-control" placeholder="ราคาหนังสือ" id="price_book"
                         name="price_book" required <?= $type_disable ?>>
+                </div>
+                <div class="form-group">
+                    <label>ราคาหนังสือ</label>
+                    <input type="number" class="form-control" placeholder="ราคาหนังสือ" id="price_book_book"
+                        name="price_book_book" required <?= $type_disable ?>>
                 </div>
                 <div class="form-group">
                     <label>หมวดหมู่</label>

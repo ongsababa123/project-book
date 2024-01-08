@@ -93,8 +93,11 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                                                     <a>ชื่อผู้แต่ง :
                                                         <?= $book['book_author'] ?>
                                                     </a><br>
-                                                    <a>ราคา :
+                                                    <a>ราคาเช่า :
                                                         <?= $book['price'] ?>
+                                                    </a><br>
+                                                    <a>ราคาหนังสือ :
+                                                        <?= $book['price_book'] ?>
                                                     </a><br>
                                                     <button type="button" class="btn btn-block-tool btn-info btn-sm mb-2"
                                                         data-toggle="modal" data-target="#modal-default"
@@ -148,6 +151,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
             $(".modal-body #name_book_author").val('');
             $(".modal-body #detail_category").val('');
             $(".modal-body #price_book").val('');
+            $(".modal-body #price_book_book").val('');
             $(".modal-body #uploadImage").val('');
             $(".modal-body #image-preview").attr("src", '<?= base_url("dist/img/image-preview.png"); ?>');
             $(".modal-body #image-preview-extra").attr("href", '<?= base_url("dist/img/image-preview.png"); ?>');
@@ -188,6 +192,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                 $(".modal-body #name_book_author").val(rowData.book_author);
                 $(".modal-body #detail_category").val(rowData.details);
                 $(".modal-body #price_book").val(rowData.price);
+                $(".modal-body #price_book_book").val(rowData.price_book);
                 if (rowData.pic_book == null) {
                     var imageSrc = '<?= base_url("dist/img/image-preview.png"); ?>';
                 } else {

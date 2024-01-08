@@ -10,7 +10,7 @@ class BookModels extends Model
 
     protected $primaryKey = 'id_book';
 
-    protected $allowedFields = ['name_book' , 'book_author' , 'details' , 'pic_book' , 'status_book' , 'price' , 'category_id'];
+    protected $allowedFields = ['name_book' , 'book_author' , 'details' , 'pic_book' , 'status_book' , 'price' , 'price_book' , 'category_id'];
 
     public function searchProducts($search, $perPage, $offset)
     {

@@ -50,9 +50,13 @@
                         <?= $bookData[0]['details'] ?>
                     </p>
                     <br>
-                    <h6 class="description">ราคา</h6>
+                    <h6 class="description">ราคาเช่า</h6>
                     <p class="description">
                         <?= $bookData[0]['price'] ?> บาท
+                    </p>
+                    <h6 class="description">ราคาหนังสือ</h6>
+                    <p class="description">
+                        <?= $bookData[0]['price_book'] ?> บาท
                     </p>
                     <br>
                     <?php if (session()->get('isLoggedIn')): ?>

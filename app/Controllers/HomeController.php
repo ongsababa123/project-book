@@ -228,14 +228,31 @@ class HomeController extends BaseController
         $LateFeesModels = new LateFeesModels();
 
         // Fetch history data for user with id session()->get('id')
-        $data['HistoryData'] = $HistoryModels->where('id_user', session()->get('id'))->findAll();
+        $data['HistoryData_1'] = $HistoryModels->where('status_his', 1)
+            ->where('id_user', session()->get('id'))
+            ->orderBy('id_history', 'desc')
+            ->findAll();
+
+        $data['HistoryData_2'] = $HistoryModels->where('status_his', 2)
+            ->where('id_user', session()->get('id'))
+            ->orderBy('id_history', 'desc')
+            ->findAll();
+
+        $data['HistoryData_3'] = $HistoryModels->where('status_his', 3)
+            ->where('id_user', session()->get('id'))
+            ->orderBy('id_history', 'desc')
+            ->findAll();
+
+        // ตรงนี้คือส่วนที่อาจจะมีการโยนข้อมูลไปยัง view หรือทำอย่างอื่นต่อไป
+// เช่น return view('your_view', $data);
+
         $data['PromotionData'] = $PromotionModels->findAll();
         $data['data_latefees'] = $LateFeesModels->findAll();
 
         // Create an array to store book data with associated category and promotion data
         $data['bookData'] = [];
 
-        foreach ($data['HistoryData'] as $key => $value) {
+        foreach ($data['HistoryData_1'] as $key => $value) {
             // Split the comma-separated ids
             $id_books = explode(',', $value['id_book']);
 
@@ -259,7 +276,54 @@ class HomeController extends BaseController
                 }
             }
         }
+        foreach ($data['HistoryData_2'] as $key => $value) {
+            // Split the comma-separated ids
+            $id_books = explode(',', $value['id_book']);
 
+            // Create an array to store promotion data
+
+            // Fetch book data for each id
+            foreach ($id_books as $id) {
+                // Check if the book id is not already in the array
+                $bookData = $BookModels->where('id_book', $id)->findAll();
+
+                // Fetch category data for the book
+                $categoryData = $CategoryModels->where('id_category', $bookData[0]['category_id'])->findAll();
+
+                // Associate promotion, category, and book data
+                $bookData[0]['categoryData'] = $categoryData[0];
+
+                // Check if the book data is not already in the array
+                if (!in_array($bookData[0], $data['bookData'])) {
+                    // Add the fetched book data with associated category and promotion data to the array
+                    $data['bookData'][] = $bookData[0];
+                }
+            }
+        }
+        foreach ($data['HistoryData_3'] as $key => $value) {
+            // Split the comma-separated ids
+            $id_books = explode(',', $value['id_book']);
+
+            // Create an array to store promotion data
+
+            // Fetch book data for each id
+            foreach ($id_books as $id) {
+                // Check if the book id is not already in the array
+                $bookData = $BookModels->where('id_book', $id)->findAll();
+
+                // Fetch category data for the book
+                $categoryData = $CategoryModels->where('id_category', $bookData[0]['category_id'])->findAll();
+
+                // Associate promotion, category, and book data
+                $bookData[0]['categoryData'] = $categoryData[0];
+
+                // Check if the book data is not already in the array
+                if (!in_array($bookData[0], $data['bookData'])) {
+                    // Add the fetched book data with associated category and promotion data to the array
+                    $data['bookData'][] = $bookData[0];
+                }
+            }
+        }
         // Load views
         echo view('userview/layout/header_base');
         echo view('userview/History', $data);

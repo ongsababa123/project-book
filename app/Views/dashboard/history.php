@@ -748,9 +748,10 @@
                                         </button>
                                     `;
                                 } else if (data.status_his === '2') {
+                                    var price_fess_totel = null;
                                     if (data.submit_date == null) {
                                         if (data.late_price != null) {
-                                            var price_fess_totel = data.late_price;
+                                                price_fess_totel = data.late_price;
                                         } else {
                                             if (today > returnDate) {
                                                 var returnDate = new Date(data.return_date);
@@ -759,11 +760,16 @@
                                                 var timeDifference = currentDate.getTime() - returnDate.getTime();
                                                 var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
                                                 var price_fees = data_latefees[0]['price_fees'];
-                                                var price_fess_totel = daysDifference * price_fees;
+                                                var idbook = data.id_book.split(',');
+                                                calculate_price_late(idbook.length, price_fees, returnDate, function (result_price) {
+                                                    price_fess_totel = result_price;
+                                                });
                                             } else {
-                                                var price_fess_totel = 0;
+                                                    price_fess_totel = 0;
                                             }
                                         }
+                                        console.log(price_fess_totel);
+
                                         return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>
                                 <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการคืนใช่หรือไม่', 'dashboard/history/submit/${data.id_history}/${price_fess_totel}/${data.id_user}')" ><i class="fas fa-check"></i></button>
                             <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" <?= $type_hideen ?>><i class="fas fa-store-slash"></i></button>`;
@@ -973,6 +979,7 @@
                                                 var price_fess_totel = daysDifference * price_fees;
                                             } else {
                                                 var price_fess_totel = 0;
+
                                             }
                                         }
                                         return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>

@@ -75,8 +75,7 @@
                             <p id="quantity"></p>
                         </div>
                         <div class="col-lg-4 mt-2">
-                            <h6>ราคารวม : </h6>
-                            <p id="price"></p>
+
                         </div>
                         <div class="col-lg-2">
                             <button class="btn btn-primary btn-round" data-toggle="modal" data-target="#Payment"
@@ -128,7 +127,14 @@
                                 <th></th>
                                 <td></td>
                                 <td></td>
-                                <th>ราคารวม(หักส่วนลด) :</th>
+                                <th>ค่ามัดจำ :</th>
+                                <td id="sum_price_deposit"></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td></td>
+                                <td></td>
+                                <th>ราคารวม(ค่ามัดจำและหักส่วนลด) :</th>
                                 <td id="sum_price"></td>
                             </tr>
                         </table>
@@ -292,7 +298,7 @@
                             <th>ลำดับ : ${count}</th>
                             <th>ชื่อหนังสือ : </th>
                             <td>${element_cat.bookData[0].name_book}</td>
-                            <th>ราคา :</th>
+                            <th>ราคาเช่า :</th>
                             <td>${element_cat.bookData[0].price} บาท</td>
                         </tr>
                         `;
@@ -300,12 +306,14 @@
                 }
             });
         });
+        var price_deposit = count * 100;
+        $("#sum_price_deposit").html(price_deposit + ' ' + 'บาท');
         var row2 = `
                         <tr>
                             <th></th>
                             <th></th>
                             <td></td>
-                            <th>ราคารวม :</th>
+                            <th>ราคาเช่ารวม :</th>
                             <td>${price_sum} บาท</td>
                         </tr>
                         `;
@@ -317,7 +325,7 @@
                 $("#details_promotion").html(result.text);
             }
             $("#sum_price_promotion").html(result.price_promotion + ' ' + 'บาท');
-            $("#sum_price").html(result.price_result - result.price_promotion + ' ' + 'บาท');
+            $("#sum_price").html(((result.price_result - result.price_promotion) + price_deposit) + ' ' + 'บาท');
             $(".modal-body #price_book_create").val(result.price_result);
             $(".modal-body #sumid_promotion").val(result.sumid_promotion);
             $(".modal-body #sum_price_promotion").val(result.price_promotion);
