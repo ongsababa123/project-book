@@ -63,32 +63,48 @@ class UserController extends BaseController
         $number_random = mt_rand(100000, 999999);
         if ($this->validate($rules)) {
             $userModels = new UserModels();
-            $data = [
-                'email_user' => $this->request->getVar('email'),
-                'name' => $this->request->getVar('name'),
-                'lastname' => $this->request->getVar('last'),
-                'phone' => $this->request->getVar('phone'),
-                'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
-                'key_pass' => password_hash(str_replace(['.', '/'], '', $number_random), PASSWORD_DEFAULT),
-                'status_user' => 1,
-                'status_rental' => 1,
-                'type_user' => $type,
-            ];
-            $check = $userModels->save($data);
-            if ($check) {
-                $response = [
-                    'success' => true,
-                    'message' => 'สร้างข้อมูลสำเร็จ รหัส 6 หลักคุณคือ ' . $number_random . ' ใช้ในกรณีลืมรหัสผ่าน',
-                    'reload' => true,
+            $data_check = $userModels->findAll();
+            $name_create = $this->request->getVar('name');
+            $lastname_create = $this->request->getVar('last');
+            $check_Data = true;
+            foreach ($data_check as $value) {
+                if ($value['name'] == $name_create && $value['lastname'] == $lastname_create) {
+                    $check_Data = false;
+                }
+            }
+            if ($check_Data) {
+                $data = [
+                    'email_user' => $this->request->getVar('email'),
+                    'name' => $this->request->getVar('name'),
+                    'lastname' => $this->request->getVar('last'),
+                    'phone' => $this->request->getVar('phone'),
+                    'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
+                    'key_pass' => password_hash(str_replace(['.', '/'], '', $number_random), PASSWORD_DEFAULT),
+                    'status_user' => 1,
+                    'status_rental' => 1,
+                    'type_user' => $type,
                 ];
-            } else {
+                $check = $userModels->save($data);
+                if ($check) {
+                    $response = [
+                        'success' => true,
+                        'message' => 'สร้างข้อมูลสำเร็จ รหัส 6 หลักคุณคือ ' . $number_random . ' ใช้ในกรณีลืมรหัสผ่าน',
+                        'reload' => true,
+                    ];
+                } else {
+                    $response = [
+                        'success' => false,
+                        'message' => 'error',
+                        'reload' => false,
+                    ];
+                }
+            }else{
                 $response = [
                     'success' => false,
-                    'message' => 'error',
+                    'message' => 'ชื่อและนามสกุลซ้ำกันในระบบ',
                     'reload' => false,
                 ];
             }
-
         } else {
             $data['validation'] = $this->validator;
             $response = [

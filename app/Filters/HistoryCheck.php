@@ -27,12 +27,12 @@ class HistoryCheck implements FilterInterface
         foreach ($data['data_History'] as $key => $value) {
             $rental_date = Time::createFromFormat('Y-m-d', $value['rental_date'], 'Asia/Bangkok');
             $now = Time::now('Asia/Bangkok');
-
+            $diff = $rental_date->diff($now);
             if ($value['status_his'] === '1') {
                 if ($now->equals($rental_date)) {
                     if (session()->get('id') === $value['id_user']) {
                         $ses_data = [
-                            'message_his' => 'รายการสินค้าในประวัติการเช่ากำลังจะเกินกำหนด!!',
+                            'message_his' => 'หนังสือที่เช่าถึงกำหนดเข้ารับหนังสือแล้ว!',
                             'check_his' => 1,
                         ];
                         $session->set($ses_data);
@@ -48,11 +48,24 @@ class HistoryCheck implements FilterInterface
                     foreach ($idUserArray as $id) {
                         $BookModels->update($id, ['status_book' => 1]);
                     }
-                    // $UserModels->update($value['id_user'], ['status_user' => 1]);
+                    $UserModels->update($value['id_user'], ['status_rental' => 1]);
 
                     if (session()->get('id') === $value['id_user']) {
                         $ses_data = [
-                            'message_his' => 'รายการสินค้าในประวัติการเช่าเกินกำหนด!!',
+                            'message_his' => 'หนังสือที่เช่าเกินกำหนดเข้ารับหนังสือแล้ว!',
+                            'check_his' => 1,
+                        ];
+                        $session->set($ses_data);
+                    } else {
+                        $ses_data = [
+                            'check_his' => 0,
+                        ];
+                        $session->set($ses_data);
+                    }
+                } else if ($diff->days <= 1) {
+                    if (session()->get('id') === $value['id_user']) {
+                        $ses_data = [
+                            'message_his' => 'หนังสือที่เช่าใกล้ถึงกำหนดเข้ารับหนังสือแล้ว!',
                             'check_his' => 1,
                         ];
                         $session->set($ses_data);
@@ -67,7 +80,7 @@ class HistoryCheck implements FilterInterface
                 if (session()->get('id') === $value['id_user']) {
                     $HistoryModels->delete($value['id_history']);
                     $ses_data = [
-                        'message_his' => 'รายการสินค้าในประวัติการเช่าเกินกำหนด!!',
+                        'message_his' => 'หนังสือที่เช่าเกินกำหนดเข้ารับหนังสือแล้ว!',
                         'check_his' => 1,
                     ];
                     $session->set($ses_data);
@@ -77,19 +90,19 @@ class HistoryCheck implements FilterInterface
                     ];
                     $session->set($ses_data);
                 }
-            } else {
+            } else if ($value['status_his'] === '2') {
                 date_default_timezone_set('Asia/Bangkok'); // ตั้งค่าโซนเวลา
                 $today = strtotime(date("Y-m-d")); // รับวันที่ปัจจุบันและแปลงเป็น timestamp
                 $today = strtotime("midnight", $today); // ตั้งค่าเวลาเป็นเที่ยงคืน
 
                 $returnDate = strtotime($value['return_date']); // รับวันที่คืนและแปลงเป็น timestamp
                 $returnDate = strtotime("midnight", $returnDate); // ตั้งค่าเวลาเป็นเที่ยงคืน
+                $daysDifference = floor(($returnDate - $today) / (60 * 60 * 24)); // หาความแตกต่างในวัน
                 if ($value['submit_date'] === null) {
-                    if ($today > $returnDate) {
-                        // $UserModels->update($value['id_user'], ['status_user' => 3]);
+                    if ($today == $returnDate) {
                         if (session()->get('id') === $value['id_user']) {
                             $ses_data = [
-                                'message_his' => 'กรุณาคืนหนังสือ และชำระเงิน!!',
+                                'message_his' => 'หนังสือที่เช่ากำลังถึงกำหนดคืนแล้ว!',
                                 'check_his' => 1,
                             ];
                             $session->set($ses_data);
@@ -99,19 +112,39 @@ class HistoryCheck implements FilterInterface
                             ];
                             $session->set($ses_data);
                         }
-                    } else {
-                        $ses_data = [
-                            'check_his' => 0,
-                        ];
-                        $session->set($ses_data);
+                    } else if ($today > $returnDate) {
+                        if (session()->get('id') === $value['id_user']) {
+                            $ses_data = [
+                                'message_his' => 'หนังสือที่เช่าเกินกำหนดคืนแล้ว!',
+                                'check_his' => 1,
+                            ];
+                            $session->set($ses_data);
+                        } else {
+                            $ses_data = [
+                                'check_his' => 0,
+                            ];
+                            $session->set($ses_data);
+                        }
+                    } else if ($daysDifference <= 2) {
+                        if (session()->get('id') === $value['id_user']) {
+                            $ses_data = [
+                                'message_his' => 'หนังสือที่เช่ากำลังใกล้ถึงกำหนดคืน!',
+                                'check_his' => 1,
+                            ];
+                            $session->set($ses_data);
+                        } else {
+                            $ses_data = [
+                                'check_his' => 0,
+                            ];
+                            $session->set($ses_data);
+                        }
                     }
-                }else{
+                } else {
                     $ses_data = [
                         'check_his' => 0,
                     ];
                     $session->set($ses_data);
                 }
-
             }
         }
     }

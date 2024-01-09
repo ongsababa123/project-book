@@ -62,7 +62,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>รายละเอียดโปรโมชั่น</label>
-                            <p id="details_promotion"></p>
+                            <p id="details_promotion" name="details_promotion"></p>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -75,17 +75,29 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label>ราคาหนังสือ(ยอดรวม)</label>
-                            <input type="text" class="form-control" placeholder="ราคาเช่า(รวม)" id="price_book_"
+                            <label>ค่ามัดจำ</label>
+                            <input type="text" class="form-control" placeholder="ค่ามัดจำต่อเล่ม" id="price_deposit"
+                                name="price_deposit" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>ราคาเช่าหนังสือ(ยอดรวม)</label>
+                            <input type="text" class="form-control" placeholder="ราคาเช่า(ยอดรวม)" id="price_book_"
                                 name="price_book_" disabled>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>ราคาหนังสือ(หักส่วนลด)</label>
-                            <input type="text" class="form-control" placeholder="ราคาหักส่วนลด"
-                                id="price_book_promotion" name="price_book_promotion" disabled>
+                            <label>ราคาเช่าหนังสือทั้งหมด(ค่ามัดจำและหักโปรโมชั่น)</label>
+                            <input type="text" class="form-control"
+                                placeholder="ราคาเช่าหนังสือ(ค่ามัดจำและหักโปรโมชั่น)" id="price_book_promotion"
+                                name="price_book_promotion" disabled>
                         </div>
                     </div>
                 </div>
@@ -167,11 +179,10 @@
 </script>
 <script>
     var data_book = <?php echo json_encode($data_book); ?>;
-    $(".modal-body #price_book_promotion").val("ไม่มีโปรโมชั่น");
     $(".modal-body #details_promotion").val("ไม่มีโปรโมชั่น");
     $(".modal-body #promotion_book").val("ไม่มีโปรโมชั่น");
     function change() {
-    
+
         var selectedid_book = [];
         let price__ = 0;
         var selectElement = document.getElementById("name_book_create");
@@ -184,6 +195,8 @@
             }
         }
         $(".modal-body #count_book").html("จำนวน " + selectedid_book.length + " เล่ม");
+        var price_deposit = selectedid_book.length * 100;
+        $(".modal-body #price_deposit").val(price_deposit);
         check_promotion(id_user, selectedid_book, price__, function (result) {
             $(".modal-body #sum_price_promotion").val(result.price_promotion);
 
@@ -191,12 +204,14 @@
 
             $(".modal-body #price_book_create").val(result.price_result);
             $(".modal-body #price_book_").val(result.price_result);
+            console.log(result.price_promotion == 0);
             if (result.price_promotion == 0) {
-                $(".modal-body #price_book_promotion").val("ไม่มีโปรโมชั่น");
-                $(".modal-body #details_promotion").val("ไม่มีโปรโมชั่น");
+
+                $(".modal-body #price_book_promotion").val(parseInt(result.price_result) + parseInt(price_deposit));
+                $(".modal-body #details_promotion").html("ไม่มีโปรโมชั่น");
                 $(".modal-body #promotion_book").val("ไม่มีโปรโมชั่น");
             } else {
-                $(".modal-body #price_book_promotion").val(parseInt(result.price_result) - parseInt(result.price_promotion));
+                $(".modal-body #price_book_promotion").val(parseInt(result.price_result) - parseInt(result.price_promotion) + parseInt(price_deposit));
                 $(".modal-body #details_promotion").html(result.text);
                 $(".modal-body #promotion_book").val(result.price_promotion);
             }

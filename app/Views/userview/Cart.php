@@ -8,6 +8,7 @@
         text-align: center;
     }
 </style>
+
 <div class="main" style="background-color: #bddce5;">
     <br>
     <div class="page-header page-header-xs" data-parallax="true"
@@ -56,7 +57,7 @@
                                         </p>
                                     </div>
                                     <div class="col-sm-3">
-                                        <h6 ราคา class="description">ราคา</h6>
+                                        <h6 ราคา class="description">ราคาเช่า</h6>
                                         <?= $book['price'] ?>
                                     </div>
                                     <div class="col-sm-2">
@@ -270,7 +271,7 @@
                 $("#button_cancel").prop("disabled", true);
                 $("#button_modal").prop("disabled", true);
             } else {
-                if (userData[0].status_user == 2 || userData[0].status_user == 3) {
+                if (userData[0].status_rental == 2 || userData[0].status_rental == 3) {
                     $("#button_modal").prop("disabled", true);
                     $("#button_cancel").prop("disabled", false);
                 } else {
@@ -338,20 +339,33 @@
 <script>
     function action_(url, form) {
         var formData = new FormData(document.getElementById(form));
+
+        // Show loading indicator
+        Swal.fire({
+            title: "กำลังโหลด...",
+            allowOutsideClick: false,
+            onBeforeOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
         if (id_book_check.endsWith(',')) {
             id_book_check = id_book_check.slice(0, -1);
         }
+
         if (form == 'form_create_history_cart') {
             formData.append('name_book_create__', id_book_check);
             formData.append('sumid_promotion', $('#sumid_promotion').val());
             formData.append('cart_id', $('#cart_id').val());
         }
+
         if (cart_check.length > '7') {
             Swal.fire({
                 title: "การเช่าหนังสือสามารถเช่าได้แค่ 7 เล่มต่อครั้ง",
                 icon: 'error',
                 showConfirmButton: true
             });
+            // Hide loading indicator
         } else {
             $.ajax({
                 url: '<?= base_url() ?>' + url,
@@ -361,6 +375,10 @@
                 processData: false,
                 contentType: false,
                 dataType: "JSON",
+                beforeSend: function () {
+                    // Show loading indicator
+                    Swal.showLoading();
+                },
                 success: function (response) {
                     if (response.success) {
                         Swal.fire({
@@ -382,11 +400,15 @@
                         icon: 'error',
                         showConfirmButton: true
                     });
+                },
+                complete: function () {
+                    // Hide loading indicator
+                    // Swal.close();
                 }
             });
         }
-
     }
+
 </script>
 <script>
     function confirm_Alert() {
@@ -402,6 +424,15 @@
                 formData.append('name_book_create__', id_book_check);
                 formData.append('cart_id', cart_check);
 
+                // เพิ่มกำลังโหลด
+                var loading = Swal.fire({
+                    title: 'กำลังโหลด...',
+                    allowOutsideClick: false,
+                    onBeforeOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
                 $.ajax({
                     url: '<?= base_url('dashboard/history/cartcancel') ?>',
                     type: "POST",
@@ -414,6 +445,9 @@
                         'X-Requested-With': 'XMLHttpRequest'
                     }
                 }).done(function (response) {
+                    // ปิดกำลังโหลดหลังจากทำเสร็จสิ้น
+                    loading.close();
+
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
@@ -436,4 +470,5 @@
             }
         });
     }
+
 </script>

@@ -15,7 +15,9 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
-                            <li class="breadcrumb-item active"><?= $data_user[0]['name'] . ' ' . $data_user[0]['lastname'] ?></li>
+                            <li class="breadcrumb-item active">
+                                <?= $data_user[0]['name'] . ' ' . $data_user[0]['lastname'] ?>
+                            </li>
                             <li class="breadcrumb-item active">ประวัติการเช่า</li>
                         </ol>
                     </div>
@@ -66,9 +68,9 @@
                                                             } else {
                                                                 echo "<span class='badge bg-success'>คืนแล้ว</span>";
                                                             }
-                                                        } else if($value['status_his'] == '3'){
+                                                        } else if ($value['status_his'] == '3') {
                                                             echo "<span class='badge bg-success'>คืนแล้ว</span>";
-                                                        }else {
+                                                        } else {
                                                             echo "<span class='badge bg-danger'>เกินกำหนดเข้ารับหนังสือ</span>";
                                                         }
 
@@ -112,7 +114,7 @@
                                                                                     </p>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-sm-12">
+                                                                            <div class="col-sm-6">
                                                                                 <div class="form-group">
                                                                                     <label>หมวดหมู่</label>
                                                                                     <p type="text" id="price_late"
@@ -131,11 +133,19 @@
                                                                             </p>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-sm-2">
+                                                                    <div class="col-sm-1">
+                                                                        <div class="form-group">
+                                                                            <label>ราคาเช่า</label>
+                                                                            <p>
+                                                                                <?= $matching_book['price'] ?> บาท
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
                                                                         <div class="form-group">
                                                                             <label>ราคาหนังสือ</label>
                                                                             <p>
-                                                                                <?= $matching_book['price'] ?> บาท
+                                                                                <?= $matching_book['price_book'] ?> บาท
                                                                             </p>
                                                                         </div>
                                                                     </div>
@@ -144,11 +154,41 @@
                                                         </div>
                                                         <div class="col-sm-12" style="background-color:#f0f0f0;">
                                                             <div class="row ml-3">
-                                                                <div class="col-sm-2 mt-3">
+                                                                <div class="col-sm-1 mt-3">
                                                                     <div class="form-group">
                                                                         <label>ยอดรวม</label>
                                                                         <p>
                                                                             <?= $pice_total ?> บาท
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-1 mt-3">
+                                                                    <div class="form-group">
+                                                                        <label>ส่วนลด</label>
+                                                                        <?php if ($value['sum_price_promotion'] === null || $value['sum_price_promotion'] === '0'): ?>
+                                                                            <p>ไม่มีมีส่วนลด</p>
+                                                                        <?php else: ?>
+                                                                            <p>
+                                                                                <?= $value['sum_price_promotion'] ?> บาท
+                                                                            </p>
+                                                                        <?php endif; ?>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-1 mt-3">
+                                                                    <div class="form-group">
+                                                                        <label>ค่ามัดจำ</label>
+                                                                        <?php $id_book = $value['id_book'];
+                                                                        $split_array = explode(',', $id_book);
+                                                                        $length_book = count($split_array) * 100;
+                                                                        echo "<p>" . $length_book . "</p>";
+                                                                        ?>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 mt-3">
+                                                                    <div class="form-group">
+                                                                        <label>ราคาเช่าหนังสือทั้งหมด(ค่ามัดจำและหักโปรโมชั่น)</label>
+                                                                        <p>
+                                                                            <?= ($value['sum_price'] + $length_book) - $value['sum_price_promotion'] ?? 0 ?>
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -170,10 +210,17 @@
                                                                                     $timeDifference = $currentDate->getTimestamp() - $returnDate->getTimestamp();
                                                                                     $daysDifference = ceil(($timeDifference / (60 * 60 * 24)) - 1);
                                                                                     $priceFees = $data_latefees[0]['price_fees'];
-                                                                                    echo "<p>" . $daysDifference * $priceFees . "</p>";
+                                                                                    $id_book = $value['id_book'];
+                                                                                    $split_array = explode(',', $id_book);
+                                                                                    $length_book = count($split_array) * 100;
+                                                                                    $sum = ($daysDifference * $priceFees) + ($priceFees * $length_book);
+
+                                                                                    echo "<p>" . $sum . "</p>";
                                                                                 } else {
                                                                                     echo "<p>" . $value['late_price'] . "</p>";
                                                                                 }
+                                                                            } else if ($value['late_price'] !== null || $value['late_price'] !== '0') {
+                                                                                echo "<p>" . $value['late_price'] . "</p>";
                                                                             } else {
                                                                                 echo " <p>ไม่มีค่าปรับ</p>";
                                                                             }
@@ -187,26 +234,6 @@
                                                                             }
                                                                         }
                                                                         ?>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-2 mt-3">
-                                                                    <div class="form-group">
-                                                                        <label>ส่วนลด</label>
-                                                                        <?php if ($value['sum_price_promotion'] === null || $value['sum_price_promotion'] === '0'): ?>
-                                                                            <p>ไม่มีมีส่วนลด</p>
-                                                                        <?php else: ?>
-                                                                            <p>
-                                                                                <?= $value['sum_price_promotion'] ?> บาท
-                                                                            </p>
-                                                                        <?php endif; ?>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4 mt-3">
-                                                                    <div class="form-group">
-                                                                        <label>ยอดรวม (หักส่วนลดและเพิ่มค่าปรับ)</label>
-                                                                        <p>
-                                                                            <?= ($value['sum_price'] - $value['sum_price_promotion']) + ($value['late_price'] ?? 0) ?? 0 ?>
-                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-2">
@@ -256,7 +283,7 @@
                                                                     <div class="form-group">
                                                                         <label>วันที่มาคืนหนังสือ</label>
                                                                         <p>
-                                                                            <?= $value['submit_date'] ?>
+                                                                            <?= $value['submit_date'] ?? '-' ?>
                                                                         </p>
                                                                     </div>
                                                                 </div>

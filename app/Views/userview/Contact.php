@@ -1,7 +1,21 @@
 <title>Contact</title>
+<style>
+    .main {
+        display: flex;
+        flex-direction: column;
+        height: 91vh;
+        /* ความสูงเต็มหน้าจอ */
+        margin: 0;
+    }
+
+    .section {
+        flex: 1;
+        /* ให้เต็มพื้นที่ที่เหลือ */
+    }
+</style>
 <div class="main">
     <br>
-    <div class="section mb-5" style="padding-bottom: 10rem;">
+    <div class="section">
         <div class="container ">
             <div class="row text-center">
                 <div class="col-md-8 ml-auto mr-auto">

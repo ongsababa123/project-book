@@ -76,43 +76,87 @@
 </div>
 <script>
     function alert_(id_book) {
-        $.ajax({
-            url: '<?= base_url('book/booklist/addcart/') ?>' + id_book,
-            type: "POST",
-            cache: false,
-            processData: false,
-            contentType: false,
-            dataType: "JSON",
-            success: function (response) {
-                document.getElementById('button_book').disabled = true;
+        var userData = <?php echo json_encode($userData); ?>;
+        if (userData[0]['status_rental'] == 2) {
+            Swal.fire({
+                title: "คุณมีรายการเข้ารับหนังสืออยู่ โปรดคืนหนังสือก่อนเช่าใหม่อีกครั้ง",
+                icon: 'warning',
+                showConfirmButton: true
+            });
 
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseleave = Swal.resumeTimer;
-                        toast.addEventListener('click', () => {
-                            // Navigate to the desired URL
-                            window.location.href = "<?= site_url('/cart') ?>";
+        } else if (userData[0]['status_rental'] == 3) {
+            Swal.fire({
+                title: "คุณกำลังเช่าหนังสืออยู่ โปรดคืนหนังสือก่อนเช่าใหม่อีกครั้ง",
+                icon: 'warning',
+                showConfirmButton: true
+            });
+        } else {
+            $.ajax({
+                url: '<?= base_url('book/booklist/addcart/') ?>' + id_book,
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: "JSON",
+                beforeSend: function () {
+                    // แสดงกำลังโหลด
+                    Swal.fire({
+                        title: "กำลังโหลด...",
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                success: function (response) {
+                    // ซ่อนกำลังโหลดหลังจากที่เสร็จสิ้น
+                    Swal.close();
+
+
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseleave = Swal.resumeTimer;
+
+                            toast.addEventListener('click', () => {
+                                // Navigate to the desired URL
+                                window.location.href = "<?= site_url('/cart') ?>";
+                            });
+                        }
+                    });
+                    if (response.success) {
+                        Toast.fire({
+                            icon: "success",
+                            title: response.message
+                        });
+                        var bookDiv = document.getElementById('book_' + id_book);
+                        bookDiv.style.display = 'none';
+                    } else {
+                        Toast.fire({
+                            icon: "error",
+                            title: response.message
                         });
                     }
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: response.message
-                });
-            },
-            error: function (xhr, status, error) {
-                Swal.fire({
-                    title: "เกิดข้อผิดพลาด",
-                    icon: 'error',
-                    showConfirmButton: true
-                });
-            }
-        });
+
+
+                },
+                error: function (xhr, status, error) {
+                    // ซ่อนกำลังโหลดหลังจากที่เกิดข้อผิดพลาด
+                    Swal.close();
+
+                    Swal.fire({
+                        title: "เกิดข้อผิดพลาด",
+                        icon: 'error',
+                        showConfirmButton: true
+                    });
+                }
+            });
+
+        }
     }
 </script>
 <script>

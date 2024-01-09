@@ -203,7 +203,7 @@
     <script src="<?= base_url('plugins/filterizr/jquery.filterizr.min.js') ?>"></script>
     <script src="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.min.js') ?>"></script>
     <script>
-        function load_modal(load_check, data_encode) {
+        function load_modal(load_check, data_encode, type) {
             var data_book = <?php echo json_encode($data_book); ?>;
             var data_category = <?php echo json_encode($data_category); ?>;
             var data_user = <?php echo json_encode($data_user); ?>;
@@ -254,6 +254,10 @@
 
                 let count = 0;
                 let idbook = rowData.id_book.split(',');
+                var price_deposit = idbook.length * 100;
+                $(".modal-body #price_deposit").val(price_deposit);
+                $(".modal-body #price_deposit").val(price_deposit);
+
                 idbook.forEach(function (id) {
                     count += 1;
                     let matbook = data_book.find(element_book => element_book.id_book === id.trim());
@@ -352,11 +356,17 @@
                         $(".modal-body #price_late").val(rowData.late_price);
                     }
                 }
+                if (type == 1) {
+                    $(".modal-footer #submit").prop("disabled", true);
+                    $(".modal-body #return_date").prop("disabled", true);
+                    $(".modal-body #pice_promotion").prop("disabled", true);
+                    $(".modal-body #price_late").prop("disabled", true);
+                }
                 var priceBook = parseInt($(".modal-body #price_book").val()) || 0;
                 var priceLate = parseInt($(".modal-body #price_late").val()) || 0;
                 var promotionPrice = parseInt($(".modal-body #pice_promotion").val()) || 0;
                 var sumPriceAll = priceBook + priceLate - promotionPrice;
-                $(".modal-body #sum_price_all").val(sumPriceAll);
+                $(".modal-body #price_all").val((price_deposit + priceBook) - promotionPrice);
 
                 $(".modal-body #url_route").val("dashboard/history/edit/edit_history/" + rowData.id_history);
                 $(".modal-body #print").prop("href", "billview/" + rowData.id_history);
@@ -530,7 +540,7 @@
                             returnDate.setHours(0, 0, 0, 0);
                             if (data.status_his === '1') {
                                 return `
-                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')">
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}',1)">
                                             <i class="fas fa-info-circle"></i> ประวัติการเช่า
                                         </button>
                                         <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการเข้าหนังสือรับใช่หรือไม่', 'dashboard/history/update_status_his/${data.id_history}')">
@@ -751,7 +761,7 @@
                                     var price_fess_totel = null;
                                     if (data.submit_date == null) {
                                         if (data.late_price != null) {
-                                                price_fess_totel = data.late_price;
+                                            price_fess_totel = data.late_price;
                                         } else {
                                             if (today > returnDate) {
                                                 var returnDate = new Date(data.return_date);
@@ -765,7 +775,7 @@
                                                     price_fess_totel = result_price;
                                                 });
                                             } else {
-                                                    price_fess_totel = 0;
+                                                price_fess_totel = 0;
                                             }
                                         }
                                         console.log(price_fess_totel);

@@ -99,8 +99,10 @@ class HomeController extends BaseController
     {
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
+        $UserModels = new UserModels();
         $data['bookData'] = $BookModels->where('id_book', $id_book)->findAll();
         $data['categoryData'] = $CategoryModels->where('id_category', $data['bookData'][0]['category_id'])->findAll();
+        $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
         echo view('userview/layout/header_base');
         echo view('userview/Bookdetails', $data);
         echo view('userview/layout/footer');
@@ -111,33 +113,43 @@ class HomeController extends BaseController
         $CartModels = new CartModels();
         $BookModels = new BookModels();
         date_default_timezone_set('Asia/Bangkok');
-
-        $data = [
-            'id_user' => session()->get('id'),
-            'id_book' => $id_book,
-            'cart_date' => date('Y-m-d H:i:s'),
-            'status_cart' => 1,
-        ];
-
-        $data_book = [
-            'status_book' => 2,
-        ];
-        $BookModels->update($id_book, $data_book);
-
-        $check = $CartModels->save($data);
-        if ($check) {
-            $response = [
-                'success' => true,
-                'message' => 'เพิ่มเข้าตระกร้าแล้ว!',
-                'reload' => true,
-            ];
-        } else {
+        $check_status = $BookModels->where('id_book', $id_book)->findAll();
+        if ($check_status[0]['status_book'] == 2) {
             $response = [
                 'success' => false,
-                'message' => 'error!',
+                'message' => 'หนังสือ ' . $check_status[0]['name_book'] . ' ถูกจองไปแล้ว',
                 'reload' => false,
             ];
+            return $this->response->setJSON($response);
+        } else {
+            $data = [
+                'id_user' => session()->get('id'),
+                'id_book' => $id_book,
+                'cart_date' => date('Y-m-d H:i:s'),
+                'status_cart' => 1,
+            ];
+
+            $data_book = [
+                'status_book' => 2,
+            ];
+            $BookModels->update($id_book, $data_book);
+
+            $check = $CartModels->save($data);
+            if ($check) {
+                $response = [
+                    'success' => true,
+                    'message' => 'เพิ่มเข้าตระกร้าแล้ว!',
+                    'reload' => true,
+                ];
+            } else {
+                $response = [
+                    'success' => false,
+                    'message' => 'error!',
+                    'reload' => false,
+                ];
+            }
         }
+
         return $this->response->setJSON($response);
     }
 

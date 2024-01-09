@@ -111,29 +111,41 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>ราคาหนังสือ(ยอดรวม)</label>
-                            <input type="text" class="form-control" placeholder="ราคาหนังสือรวม" id="price_book"
-                                name="price_book" disabled>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
                             <label>ค่าปรับ</label>
                             <input type="text" class="form-control" placeholder="กรอกค่าปรับ" id="price_late"
                                 name="price_late" <?= $type_disable ?>>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>ราคารวม(หักส่วนลดและเพิ่มค่าปรับ)</label>
-                            <input type="text" class="form-control" placeholder="ราคาหนังสือรวม" id="sum_price_all"
-                                name="sum_price_all" disabled>
+                            <label>ราคาเช่าหนังสือ(ยอดรวม)</label>
+                            <input type="text" class="form-control" placeholder="ราคาหนังสือรวม" id="price_book"
+                                name="price_book" disabled>
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>ค่ามัดจำ</label>
+                            <input type="text" class="form-control" placeholder="ราคาหนังสือรวม" id="price_deposit"
+                                name="price_deposit" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>ราคาเช่าหนังสือทั้งหมด(ค่ามัดจำและหักโปรโมชั่น)</label>
+                            <input type="text" class="form-control" placeholder="ราคาหนังสือรวม" id="price_all"
+                                name="price_all" disabled>
+                        </div>
+                    </div>
+                </div>
                 <input type="text" id="url_route" name="url_route" hidden>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"></button>
@@ -157,4 +169,3 @@
         action_(urlRouteInput.value, 'form_read_history');
     });
 </script>
-

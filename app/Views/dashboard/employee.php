@@ -43,6 +43,7 @@
                                                     <th>ชื่อ - นามสกุล</th>
                                                     <th>เบอร์ติดต่อ</th>
                                                     <th>อีเมล</th>
+                                                    <th>สถานะแอคเคาท์</th>
                                                     <th>action</th>
                                                 </tr>
                                             </thead>
@@ -78,15 +79,28 @@
                 CRUD_UserModal.style.display = "block";
                 $("#password").prop("disabled", false);
                 $('.form-check').hide();
+                $("#password").prop("disabled", false);
+                $('#customSwitch_status').hide();
+
                 $(".modal-header #title_modal").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-body #url_route").val("dashboard/employee/create/3");
             } else if (load_check == 2) {
+                $('#customSwitch_status').show();
                 CRUD_UserModal.style.display = "block";
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
                 $("#password").prop("disabled", true);
                 $('.form-check').show();
+                const customSwitch3 = $(".modal-body #customSwitch3");
+                const labelCustomSwitch3 = $(".modal-body #LabelcustomSwitch3");
 
+                labelCustomSwitch3.text(rowData.status_user == 1 ? "เปิดใช้งาน" : "ปิดใช้งาน");
+
+                if (rowData.status_user == '1') {
+                    customSwitch3.prop('checked', true);
+                } else {
+                    customSwitch3.prop('checked', false);
+                }
                 $(".modal-body #name").val(rowData.name);
                 $(".modal-body #last").val(rowData.lastname);
                 $(".modal-body #email").val(rowData.email_user);
@@ -94,7 +108,7 @@
 
                 $(".modal-header #title_modal").text("แก้ไขข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("แก้ไขข้อมูลผู้ใช้");
-                $(".modal-body #url_route").val("dashboard/employee/edit/" + rowData.id_user);
+                $(".modal-body #url_route").val("dashboard/customer/edit/" + rowData.id_user);
             }
         }
     </script>
@@ -163,6 +177,18 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             return data.email_user;
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            var status = data.status_user;
+                            if (status == 1) {
+                                return `<span class='badge bg-success'>ใช้งาน</span>`;
+                            } else if (status == 0) {
+                                return `<span class='badge bg-danger'>ปิดใช้งาน</span>`;
+                            } 
                         }
                     },
                     {
