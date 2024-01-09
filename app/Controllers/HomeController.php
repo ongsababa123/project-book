@@ -84,16 +84,27 @@ class HomeController extends BaseController
             $data['bookData'] = array_merge($data['bookData'], $booksForCategory);
         }
         // เรียงลำดับอาร์เรย์ bookData ตามชื่อหนังสือ (คาดว่าชื่อหนังสือถูกเก็บไว้ในฟิลด์ที่ชื่อ 'name' ในฐานข้อมูล)
-        usort($data['bookData'], function ($a, $b) {
-            return strcmp($a['name_book'], $b['name_book']);
-        });
+        $this->sortBookData($data['bookData']);
+
 
         // Load views
         echo view('userview/layout/header_base');
         echo view('userview/Booklist', $data);
         echo view('userview/layout/footer');
     }
+    private function sortBookData(&$bookData)
+    {
+        // Create a Thai collator
+        $collator = collator_create('th_TH');
 
+        // Define the sorting function
+        $sortingFunction = function ($a, $b) use ($collator) {
+            return collator_compare($collator, $a['name_book'], $b['name_book']);
+        };
+
+        // Sort the array using the custom sorting function
+        usort($bookData, $sortingFunction);
+    }
 
     public function index_bookdetails($id_book = null)
     {

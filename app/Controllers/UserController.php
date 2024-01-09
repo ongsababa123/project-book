@@ -46,7 +46,7 @@ class UserController extends BaseController
     public function profile_index()
     {
         $UserModels = new UserModels();
-        $data['data_user'] = $UserModels->find(session()->get('id_user'));
+        $data['data_user'] = $UserModels->where('id_user', session()->get('id'))->find();
         echo view('dashboard/layout/header');
         echo view('dashboard/profile', $data);
     }
@@ -120,7 +120,13 @@ class UserController extends BaseController
     public function edit_user($id_user = null)
     {
         helper(['form']);
-        $status = $this->request->getVar('customSwitch3') === 'on' ? 1 : 0;
+        
+        if ($this->request->getVar('customSwitch3') === null){
+            $status = 1;
+        }else{
+            $status = $this->request->getVar('customSwitch3') === 'on' ? 1 : 0;
+
+        }
         $rules = [
             'name' => 'required|min_length[2]|max_length[200]',
             'last' => 'required|min_length[2]|max_length[200]',
@@ -197,7 +203,7 @@ class UserController extends BaseController
                 'lastname' => $this->request->getVar('last'),
                 'phone' => $this->request->getVar('phone'),
             ];
-            if ($password !== '') {
+            if ($password !== '' && $password !== null) {
                 $passdata = [
                     'password' => password_hash($password, PASSWORD_DEFAULT),
                 ];

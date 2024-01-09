@@ -82,8 +82,13 @@
     $("#exampleCheck1").on('click', function () {
         if ($(this).is(':checked')) {
             $("#password").prop("disabled", false);
+            $('#submit').prop('disabled', true);
         } else {
             $("#password").prop("disabled", true);
+            $('#submit').prop('disabled', false);
+            $("#password").val("");
+            removeAlert();
+
         }
     })
 </script>
@@ -94,6 +99,47 @@
             $(".modal-body #LabelcustomSwitch3").text("เปิดใช้งาน");
         } else {
             $(".modal-body #LabelcustomSwitch3").text("แบล็คลิส");
+        }
+    }
+</script>
+<script>
+    document.getElementById('password').addEventListener('input', function () {
+        // Remove any existing alert
+        removeAlert();
+
+        if (this.value.length < 5) {
+            // Create and append a danger alert
+            createAlert('danger', 'รหัสผ่านต้องมีความยาวอย่างน้อย 5 ตัวอักษร');
+            $('#submit').prop('disabled', true);
+        } else {
+            // Check for special characters
+            if (!/[^\w\s]/.test(this.value)) {
+                // Create and append a success alert
+                removeAlert();
+                $('#submit').prop('disabled', false);
+
+            } else {
+                createAlert('danger', 'รหัสผ่านห้ามใช้เครื่องหมายพิเศษ');
+                $('#submit').prop('disabled', true);
+            }
+        }
+    });
+
+    function createAlert(type, message) {
+        var alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-' + type + ' alert-dismissible';
+        alertDiv.innerHTML = '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+            '<h5><i class="icon fas fa-ban"></i> Alert!</h5>' +
+            message;
+
+        document.body.appendChild(alertDiv);
+        $('#password_group').append(alertDiv);
+    }
+
+    function removeAlert() {
+        var existingAlert = document.querySelector('.alert');
+        if (existingAlert) {
+            existingAlert.parentNode.removeChild(existingAlert);
         }
     }
 </script>

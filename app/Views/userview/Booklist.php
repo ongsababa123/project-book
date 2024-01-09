@@ -197,26 +197,38 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                     <?php
                 }
 
-
+                $check = false;
                 if (!empty($filteredBooks)):
                     foreach ($filteredBooks as $key => $value):
                         if ($sortOrder === '0' || $value['category_id'] === $sortOrder):
                             generateBookCard($value);
                             $count++;
+                            $check = true;
                         endif;
                     endforeach;
-                else:
                     ?>
-                    <div class="col-md-12">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    ไม่พบข้อมูล
-                                </h5>
+                    <?php if ($check === false): ?>
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        ไม่พบข้อมูล
+                                    </h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                     <?php
+                    else:
+                    echo '<div class="col-md-12">';
+                    echo '<div class="card mb-4">';
+                    echo '<div class="card-body">';
+                    echo '<h5 class="card-title">';
+                    echo 'ไม่พบข้อมูล';
+                    echo '</h5>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
                 endif;
                 ?>
             </div>

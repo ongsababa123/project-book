@@ -126,6 +126,11 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>รวมทั้งสิ้น</label>
+                            <input type="text" class="form-control" placeholder="ราคารวม" id="price_total"
+                                name="price_total" disabled>
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">

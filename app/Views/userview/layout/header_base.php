@@ -44,10 +44,9 @@
             </div>
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
                 <ul class="navbar-nav">
-                    <li class="nav-item dropdown" onmouseover="showDropdown()" onmouseout="hideDropdown()"
-                        id="dropdown">
+                    <li class="nav-item dropdown"id="dropdown">
                         <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" class="nav-link"><i class="fas fa-info-circle"></i></a>
+                            aria-expanded="false" class="nav-link">รายละเอียด</i></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
                             <a class="dropdown-item">1. ข้อจำกัดในการเช่าหนังสือ 7 เล่ม / ครั้ง </a>
                             <a class="dropdown-item">2. หากลูกค้าทำหนังสือหายปรับตามราคาหนังสือเป็น 5 เท่า</a>
@@ -109,14 +108,3 @@
 </body>
 
 </html>
-
-<script>
-    // JavaScript functions to show and hide the dropdown menu
-    function showDropdown() {
-        $('#dropdown').toggleClass('show');
-    }
-
-    function hideDropdown() {
-        $('#dropdown').removeClass('show');
-    }
-</script>

@@ -12,7 +12,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
                             <li class="breadcrumb-item active">โปรไฟล์</li>
                         </ol>
                     </div>
@@ -109,6 +109,8 @@
                 $(".modal-body #last").val('<?= $data_user[0]['lastname'] ?>');
                 $(".modal-body #email").val('<?= $data_user[0]['email_user'] ?>');
                 $(".modal-body #phone").val('<?= $data_user[0]['phone'] ?>');
+                $('#customSwitch_status').hide();
+                $("#password").prop("disabled", true);
 
                 $(".modal-header #title_modal").text("แก้ไขข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("แก้ไขข้อมูลผู้ใช้");
@@ -181,5 +183,6 @@
             });
         }
     </script>
+
     <script src="<?= base_url('plugins/filterizr/jquery.filterizr.min.js') ?>"></script>
     <script src="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.min.js') ?>"></script>
