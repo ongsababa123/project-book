@@ -67,6 +67,7 @@ $routes->group("dashboard/owner/", ['filter' => ['CartCheck', 'HistoryCheck']], 
 
 $routes->group("dashboard/admin/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {
     $routes->match(['get', 'post'], 'index', 'UserController::admin_index', ['filter' => ['authGuard' , 'ISLogin']]);  //display
+    $routes->match(['get', 'post'], 'getdata/(:num)', 'UserController::get_data_table/$1');  //getData
     $routes->match(['get', 'post'], 'create/(:num)', 'UserController::create_user/$1');  //create
     $routes->match(['get', 'post'], 'edit/(:num)', 'UserController::edit_user/$1');  //edit
     $routes->match(['get', 'post'], 'delete/(:num)', 'UserController::delete_user/$1');  //delete
