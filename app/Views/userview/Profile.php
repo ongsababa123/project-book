@@ -125,7 +125,7 @@
     $("#form_user").on('submit', function (e) {
         e.preventDefault();
         var url =
-            action_("dashboard/customer/edit/" + <?php echo session()->get('id'); ?>, 'form_user');
+            action_("dashboard/edit/user/profile/" + <?php echo session()->get('id'); ?>, 'form_user');
     });
 </script>
 <script>

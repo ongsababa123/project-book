@@ -121,12 +121,8 @@ class UserController extends BaseController
     {
         helper(['form']);
         
-        if ($this->request->getVar('customSwitch3') === null){
-            $status = 1;
-        }else{
-            $status = $this->request->getVar('customSwitch3') === 'on' ? 1 : 0;
-
-        }
+        $status = $this->request->getVar('customSwitch3') === 'on' ? 1 : 0;
+        
         $rules = [
             'name' => 'required|min_length[2]|max_length[200]',
             'last' => 'required|min_length[2]|max_length[200]',
