@@ -134,12 +134,23 @@ class HistoryController extends BaseController
             'sum_price_promotion' => $pice_promotion,
         ];
         $check = $HistoryModels->update($id_history, $data);
+        $status_his = $HistoryModels->where('id_history', $id_history)->findAll()[0]['status_his'];
         if ($check) {
-            $response = [
-                'success' => true,
-                'message' => 'อัปเดตข้อมูลสำเร็จ',
-                'reload' => true,
-            ];
+            if ($status_his == 2) {
+                $response = [
+                    'success' => true,
+                    'message' => 'อัปเดตข้อมูลasdsadสำเร็จ',
+                    'reload' => false,
+                    'button' => true,
+                ];
+            }else{
+                $response = [
+                    'success' => true,
+                    'message' => 'อัปเดตข้อมูลasdsadสำเร็จ',
+                    'reload' => true,
+                ];
+            }
+
         } else {
             $response = [
                 'success' => false,

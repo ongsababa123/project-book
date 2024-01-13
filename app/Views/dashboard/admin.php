@@ -80,7 +80,7 @@
                 $("#password").prop("disabled", false);
                 $("#password").prop("disabled", false);
                 $('.form-check').hide();
-                $('#customSwitch_status').hide(); 
+                $('#customSwitch_status').hide();
                 $(".modal-header #title_modal").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-body #url_route").val("dashboard/admin/create/1");
@@ -187,7 +187,7 @@
                                 return `<span class='badge bg-success'>ใช้งาน</span>`;
                             } else if (status == 0) {
                                 return `<span class='badge bg-danger'>แบล็คลิส</span>`;
-                            } 
+                            }
                         }
                     },
                     {
@@ -215,8 +215,17 @@
                 processData: false,
                 contentType: false,
                 dataType: "JSON",
+                beforeSend: function () {
+                    // Show loading indicator here
+                    var loadingIndicator = Swal.fire({
+                        title: 'กําลังดําเนินการ...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });
+                },
                 success: function (response) {
-                    console.log(response);
+                    Swal.close();
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
@@ -283,9 +292,18 @@
                         url: '<?= base_url() ?>' + url,
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
-                        }
+                        },
+                        beforeSend: function () {
+                            // Show loading indicator here
+                            var loadingIndicator = Swal.fire({
+                                title: 'กําลังดําเนินการ...',
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                showConfirmButton: false,
+                            });
+                        },
                     }).done(function (response) {
-                        // console.log(response);
+                        Swal.close();
                         if (response.success) {
                             Swal.fire({
                                 title: response.message,

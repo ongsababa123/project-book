@@ -18,7 +18,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
                             <li class="breadcrumb-item active">ข้อมูลหนังสือ</li>
                         </ol>
                     </div>
@@ -37,7 +37,8 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                                             <div class="col-10 text-center">
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" id="searchBook"
-                                                        name="searchBook" placeholder="ค้นหาหนังสือ" value="<?= $searchTerm ?>">
+                                                        name="searchBook" placeholder="ค้นหาหนังสือ"
+                                                        value="<?= $searchTerm ?>">
                                                 </div>
                                             </div>
                                             <div class="col-2 text-center">
@@ -217,8 +218,17 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                 processData: false,
                 contentType: false,
                 dataType: "JSON",
+                beforeSend: function () {
+                    // Show loading indicator here
+                    var loadingIndicator = Swal.fire({
+                        title: 'กําลังดําเนินการ...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });
+                },
                 success: function (response) {
-                    console.log(response);
+                    Swal.close();
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
@@ -264,9 +274,18 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                         url: '<?= base_url() ?>' + url,
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
-                        }
+                        },
+                        beforeSend: function () {
+                            // Show loading indicator here
+                            var loadingIndicator = Swal.fire({
+                                title: 'กําลังดําเนินการ...',
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                showConfirmButton: false,
+                            });
+                        },
                     }).done(function (response) {
-                        // console.log(response);
+                        Swal.close();
                         if (response.success) {
                             Swal.fire({
                                 title: response.message,

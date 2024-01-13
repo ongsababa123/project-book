@@ -173,8 +173,17 @@
                 processData: false,
                 contentType: false,
                 dataType: "JSON",
+                beforeSend: function () {
+                    // Show loading indicator here
+                    var loadingIndicator = Swal.fire({
+                        title: 'กําลังดําเนินการ...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });
+                },
                 success: function (response) {
-                    console.log(response);
+                    Swal.close();
                     if (response.success) {
                         Swal.fire({
                             title: response.message,

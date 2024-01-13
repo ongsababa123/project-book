@@ -132,7 +132,7 @@
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <?php if (session()->get('type') == '2' || session()->get('type') == '3' || session()->get('type') == '1'): ?>
+                        <?php if (session()->get('type') == '2' || session()->get('type') == '1'): ?>
                             <li class="nav-item">
                                 <a href="<?= site_url('/dashboard/employee/index'); ?>" class="nav-link">
                                     <i class="nav-icon fas fa-user-tie"></i>

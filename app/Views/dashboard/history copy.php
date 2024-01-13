@@ -76,13 +76,12 @@
                                                             data-toggle="pill" href="#custom-tabs-one-profile"
                                                             role="tab" aria-controls="custom-tabs-one-profile"
                                                             aria-selected="false"
-                                                            onclick="getTableData_('dashboard/history/getdata/2', 'table_history_two', '0')">กำลังเช่า</a>
+                                                            onclick="getTableData_two()">กำลังเช่า</a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link" id="custom-tabs-one-messages-tab"
                                                             data-toggle="pill" href="#custom-tabs-one-messages"
-                                                            role="tab"
-                                                            onclick="getTableData_('dashboard/history/getdata/3', 'table_history_three', '0')"
+                                                            role="tab" onclick="getTableData_three()"
                                                             aria-controls="custom-tabs-one-messages"
                                                             aria-selected="false">คืนแล้ว</a>
                                                     </li>
@@ -258,7 +257,7 @@
                 var price_deposit = idbook.length * 100;
                 $(".modal-body #price_deposit").val(price_deposit);
                 $(".modal-body #price_deposit").val(price_deposit);
-                (rowData.status_history == 2 || rowData.status_history == 3) ? $(".modal-body #print").show() : $(".modal-body #print").hide();
+                rowData.status_history == 2 || 3 ? $(".modal-body #print").show() : $(".modal-body #print").hide();
                 idbook.forEach(function (id) {
                     count += 1;
                     let matbook = data_book.find(element_book => element_book.id_book === id.trim());
@@ -335,6 +334,8 @@
                             var price_fees = data_latefees[0]['price_fees'];
                             calculate_price_late(idbook.length, price_fees, returnDate, function (result_price) {
                                 $(".modal-body #price_late").val(result_price);
+
+
                             });
                         } else {
                             $(".modal-body #price_late").val("ไม่มีค่าปรับ");
@@ -375,29 +376,200 @@
     </script>
     <script>
         $(document).ready(function () {
-            getTableData_('dashboard/history/getdata/1', 'table_history_one', '0');
+            getTableData_one();
         });
     </script>
     <script>
-        var check_table_ = 0;
-        function getTableData_(url, table_name, reloadtable) {
-            if (check_table_ == 0 || check_table_ == 1 || check_table_ == 2 || reloadtable == 1) {
-                check_table_++;
+        function getTableData_one() {
+            var data_user = <?php echo json_encode($data_user); ?>;
+            var data_book = <?php echo json_encode($data_book); ?>;
+            var data_latefees = <?php echo json_encode($data_latefees); ?>;
+
+            if ($.fn.DataTable.isDataTable('#table_history_one')) {
+                $('#table_history_one').DataTable().destroy();
+            }
+            $('#table_history_one').DataTable({
+                "processing": $("#history_Table .overlay").show(),
+                "pageLength": 10,
+                "pagingType": "full_numbers", // Display pagination as 1, 2, 3... instead of Previous, Next buttons
+                'serverSide': true,
+                'ajax': {
+                    'url': "<?php echo site_url('dashboard/history/getdata/1'); ?>",
+                    'type': 'GET',
+                    'dataSrc': 'data',
+                },
+                "responsive": true,
+                "ordering": false,
+                "lengthChange": false,
+                "autoWidth": false,
+                "searching": false,
+                "drawCallback": function (settings) {
+                    $("#history_Table .overlay").hide();
+                    var daData = settings.json.data;
+                    if (daData.length == 0) {
+                        $('#table_history_one tbody').html(`
+                        <tr>
+                            <td colspan="10" class="text-center">
+                                ยังไม่มีข้อมูล
+                            </td>
+                        </tr>`
+                        );
+                    }
+                },
+                'columns': [
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            return meta.settings.oAjaxData.start += 1;
+
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            const matchingUser = data_user.find(element => data.id_user === element.id_user);
+                            if (matchingUser) {
+                                return matchingUser.name + ' ' + matchingUser.lastname;
+                            } else {
+                                return 'ไม่มีชื่อ';
+                            }
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            const matchingUser = data_user.find(element => data.id_user === element.id_user);
+                            if (matchingUser) {
+                                return matchingUser.phone;
+                            } else {
+                                return 'ไม่มีชื่อ';
+                            }
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            const matchingUser = data_user.find(element => data.id_user === element.id_user);
+                            if (matchingUser) {
+                                return matchingUser.email_user;
+                            } else {
+                                return 'ไม่มีชื่อ';
+                            }
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            var text = '';
+                            data_book.forEach(element => {
+                                var idUserArray = data.id_book.split(',');
+                                idUserArray.forEach(function (id) {
+                                    if (element.id_book == id.trim()) {
+                                        text += element.name_book + ' , ' + '<br>'
+                                    }
+                                });
+                            });
+                            return text;
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            return data.rental_date;
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            return data.return_date;
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            if (data.submit_date == null) {
+                                return "ยังไม่คืน";
+                            } else {
+                                return data.submit_date;
+                            }
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            var today = new Date(); // Get the current date
+                            today.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+                            if (data.status_his === '1') {
+                                return "<span class='badge bg-info'>รอเข้ารับ</span>"
+                            } else if (data.status_his === '2') {
+                                if (data.submit_date === null) {
+                                    var returnDate = new Date(data.return_date);
+                                    returnDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+                                    if (today > returnDate) {
+                                        return "<span class='badge bg-danger'>เกินกำหนด</span>";
+                                    } else {
+                                        return "<span class='badge bg-warning'>กำลังยืม</span>";
+                                    }
+                                } else {
+                                    return "<span class='badge bg-success'>คืนแล้ว</span>";
+                                }
+                            } else {
+                                return "<span class='badge bg-danger'>เกินกำหนดวันรับ</span>";
+                            }
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            const encodedRowData = encodeURIComponent(JSON.stringify(row));
+                            return `
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}',1)">
+                                            <i class="fas fa-info-circle"></i> ประวัติการเช่า
+                                        </button>
+                                        <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการเข้าหนังสือรับใช่หรือไม่', 'dashboard/history/update_status_his/${data.id_history}')">
+                                            <i class="far fa-calendar-check"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" <?= $type_hideen ?>>
+                                            <i class="fas fa-store-slash"></i>
+                                        </button>
+                                    `;
+
+                        }
+                    },
+                ]
+            });
+            $('[data-toggle="tooltip"]').tooltip();
+        }
+    </script>
+    <script>
+        var check_table_two = 0;
+        function getTableData_two(check_table_three) {
+            if (check_table_two == 0 || check_table_three == 1) {
+                check_table_two = 1;
                 var data_user = <?php echo json_encode($data_user); ?>;
                 var data_book = <?php echo json_encode($data_book); ?>;
                 var data_latefees = <?php echo json_encode($data_latefees); ?>;
 
-                if ($.fn.DataTable.isDataTable('#' + table_name)) {
-                    $('#' + table_name).DataTable().destroy();
+                if ($.fn.DataTable.isDataTable('#table_history_two')) {
+                    $('#table_history_two').DataTable().destroy();
                 }
-                $("#history_Table .overlay").show()
-                $('#' + table_name).DataTable({
-                    "processing": true,
+                $('#table_history_two').DataTable({
+                    "processing": $("#history_Table .overlay").show(),
                     "pageLength": 10,
                     "pagingType": "full_numbers", // Display pagination as 1, 2, 3... instead of Previous, Next buttons
                     'serverSide': true,
                     'ajax': {
-                        'url': "<?php echo base_url(''); ?> " + url,
+                        'url': "<?php echo site_url('dashboard/history/getdata/2'); ?>",
                         'type': 'GET',
                         'dataSrc': 'data',
                     },
@@ -408,7 +580,220 @@
                     "searching": false,
                     "drawCallback": function (settings) {
                         $("#history_Table .overlay").hide();
+                        var daData = settings.json.data;
 
+                        if (daData.length == 0) {
+                            $('#table_history_two tbody').html(`
+                        <tr>
+                            <td colspan="10" class="text-center">
+                                ยังไม่มีข้อมูล
+                            </td>
+                        </tr>`
+                            );
+                        }
+                    },
+                    'columns': [
+                        {
+                            'data': null,
+                            'class': 'text-center',
+                            'render': function (data, type, row, meta) {
+                                return meta.settings.oAjaxData.start += 1;
+
+                            }
+                        },
+                        {
+                            'data': null,
+                            'class': 'text-center',
+                            'render': function (data, type, row, meta) {
+                                const matchingUser = data_user.find(element => data.id_user === element.id_user);
+                                if (matchingUser) {
+                                    return matchingUser.name + ' ' + matchingUser.lastname;
+                                } else {
+                                    return 'ไม่มีชื่อ';
+                                }
+                            }
+                        },
+                        {
+                            'data': null,
+                            'class': 'text-center',
+                            'render': function (data, type, row, meta) {
+                                const matchingUser = data_user.find(element => data.id_user === element.id_user);
+                                if (matchingUser) {
+                                    return matchingUser.phone;
+                                } else {
+                                    return 'ไม่มีชื่อ';
+                                }
+                            }
+                        },
+                        {
+                            'data': null,
+                            'class': 'text-center',
+                            'render': function (data, type, row, meta) {
+                                const matchingUser = data_user.find(element => data.id_user === element.id_user);
+                                if (matchingUser) {
+                                    return matchingUser.email_user;
+                                } else {
+                                    return 'ไม่มีชื่อ';
+                                }
+                            }
+                        },
+                        {
+                            'data': null,
+                            'class': 'text-center',
+                            'render': function (data, type, row, meta) {
+                                var text = '';
+                                data_book.forEach(element => {
+                                    var idUserArray = data.id_book.split(',');
+                                    idUserArray.forEach(function (id) {
+                                        if (element.id_book == id.trim()) {
+                                            text += element.name_book + ' , ' + '<br>'
+                                        }
+                                    });
+                                });
+                                return text;
+                            }
+                        },
+                        {
+                            'data': null,
+                            'class': 'text-center',
+                            'render': function (data, type, row, meta) {
+                                return data.rental_date;
+                            }
+                        },
+                        {
+                            'data': null,
+                            'class': 'text-center',
+                            'render': function (data, type, row, meta) {
+                                return data.return_date;
+                            }
+                        },
+                        {
+                            'data': null,
+                            'class': 'text-center',
+                            'render': function (data, type, row, meta) {
+                                if (data.submit_date == null) {
+                                    return "ยังไม่คืน";
+                                } else {
+                                    return data.submit_date;
+                                }
+                            }
+                        },
+                        {
+                            'data': null,
+                            'class': 'text-center',
+                            'render': function (data, type, row, meta) {
+                                var today = new Date(); // Get the current date
+                                today.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+                                if (data.status_his === '1') {
+                                    return "<span class='badge bg-info'>รอเข้ารับ</span>"
+                                } else if (data.status_his === '2') {
+                                    if (data.submit_date === null) {
+                                        var returnDate = new Date(data.return_date);
+                                        returnDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+                                        if (today > returnDate) {
+                                            return "<span class='badge bg-danger'>เกินกำหนด</span>";
+                                        } else {
+                                            return "<span class='badge bg-warning'>กำลังยืม</span>";
+                                        }
+                                    } else {
+                                        return "<span class='badge bg-success'>คืนแล้ว</span>";
+                                    }
+                                } else {
+                                    return "<span class='badge bg-danger'>เกินกำหนดวันรับ</span>";
+                                }
+                            }
+                        },
+                        {
+                            'data': null,
+                            'class': 'text-center',
+                            'render': function (data, type, row, meta) {
+                                const matchingUser = data_user.find(element => data.id_user === element.id_user);
+                                const encodedRowData = encodeURIComponent(JSON.stringify(row));
+                                var today = new Date();
+                                today.setHours(0, 0, 0, 0)
+                                var returnDate = new Date(data.return_date);
+                                returnDate.setHours(0, 0, 0, 0);
+                                if (data.status_his === '1') {
+                                    return `
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')">
+                                            <i class="fas fa-info-circle"></i> ประวัติการเช่า
+                                        </button>
+                                        <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการเข้าหนังสือรับใช่หรือไม่', 'dashboard/history/update_status_his/${data.id_history}')">
+                                            <i class="far fa-calendar-check"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" <?= $type_hideen ?>>
+                                            <i class="fas fa-store-slash"></i>
+                                        </button>
+                                    `;
+                                } else if (data.status_his === '2') {
+                                    var price_fess_totel = null;
+                                    if (data.submit_date == null) {
+                                        if (data.late_price != null) {
+                                            price_fess_totel = data.late_price;
+                                        } else {
+                                            if (today > returnDate) {
+                                                var returnDate = new Date(data.return_date);
+                                                var currentDate = new Date();
+                                                // หาความแตกต่างในวัน
+                                                var timeDifference = currentDate.getTime() - returnDate.getTime();
+                                                var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
+                                                var price_fees = data_latefees[0]['price_fees'];
+                                                var idbook = data.id_book.split(',');
+                                                calculate_price_late(idbook.length, price_fees, returnDate, function (result_price) {
+                                                    price_fess_totel = result_price;
+                                                });
+                                            } else {
+                                                price_fess_totel = 0;
+                                            }
+                                        }
+                                        console.log(price_fess_totel);
+
+                                        return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>
+                                <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการคืนใช่หรือไม่', 'dashboard/history/submit/${data.id_history}/${price_fess_totel}/${data.id_user}')" ><i class="fas fa-check"></i></button>
+                            <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" <?= $type_hideen ?>><i class="fas fa-store-slash"></i></button>`;
+                                    } else {
+                                        return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>`;
+                                    }
+                                } else {
+                                    return ``;
+                                }
+                            }
+                        },
+                    ]
+                });
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        }
+    </script>
+    <script>
+        var check_table_three = 0;
+        function getTableData_three() {
+            if (check_table_three == 0) {
+                check_table_three = 1;
+                var data_user = <?php echo json_encode($data_user); ?>;
+                var data_book = <?php echo json_encode($data_book); ?>;
+                var data_latefees = <?php echo json_encode($data_latefees); ?>;
+
+                if ($.fn.DataTable.isDataTable('#table_history_three')) {
+                    $('#table_history_three').DataTable().destroy();
+                }
+                $('#table_history_three').DataTable({
+                    "processing": $("#history_Table .overlay").show(),
+                    "pageLength": 10,
+                    "pagingType": "full_numbers", // Display pagination as 1, 2, 3... instead of Previous, Next buttons
+                    'serverSide': true,
+                    'ajax': {
+                        'url': "<?php echo site_url('dashboard/history/getdata/3'); ?>",
+                        'type': 'GET',
+                        'dataSrc': 'data',
+                    },
+                    "responsive": true,
+                    "ordering": false,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "searching": false,
+                    "drawCallback": function (settings) {
+                        $("#history_Table .overlay").hide();
                         var daData = settings.json.data;
 
                         if (daData.length == 0) {
@@ -421,7 +806,6 @@
                             );
                         }
                     },
-
                     'columns': [
                         {
                             'data': null,
@@ -570,12 +954,10 @@
                                                 var timeDifference = currentDate.getTime() - returnDate.getTime();
                                                 var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
                                                 var price_fees = data_latefees[0]['price_fees'];
-                                                var idbook = data.id_book.split(',');
-                                                calculate_price_late(idbook.length, price_fees, returnDate, function (result_price) {
-                                                    price_fess_totel = result_price;
-                                                });
+                                                var price_fess_totel = daysDifference * price_fees;
                                             } else {
-                                                price_fess_totel = 0;
+                                                var price_fess_totel = 0;
+
                                             }
                                         }
                                         return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>
@@ -596,16 +978,12 @@
         }
     </script>
     <script>
-
-    </script>
-    <script>
         function action_(url, form) {
             var formData = new FormData(document.getElementById(form));
             if (form == 'form_create_history') {
                 formData.append('name_book_create__', $('#name_book_create').val());
                 formData.append('sumid_promotion', $('#sumid_promotion').val());
             }
-
             $.ajax({
                 url: '<?= base_url() ?>' + url,
                 type: "POST",
@@ -614,17 +992,7 @@
                 processData: false,
                 contentType: false,
                 dataType: "JSON",
-                beforeSend: function () {
-                    // Show loading indicator here
-                    var loadingIndicator = Swal.fire({
-                        title: 'กําลังดําเนินการ...',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                    });
-                },
                 success: function (response) {
-                    Swal.close();
                     if (response.success) {
                         if (response.button) {
                             Swal.fire({
@@ -633,7 +1001,7 @@
                                 showConfirmButton: true,
                                 allowOutsideClick: true
                             });
-                            getTableData_('dashboard/history/getdata/2', 'table_history_two', '1')
+                            getTableData_two(1);
                         } else {
                             Swal.fire({
                                 title: response.message,
@@ -690,18 +1058,8 @@
                         url: '<?= base_url() ?>' + url,
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        beforeSend: function () {
-                            // Show loading indicator here
-                            var loadingIndicator = Swal.fire({
-                                title: 'กําลังดําเนินการ...',
-                                allowEscapeKey: false,
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                            });
-                        },
+                        }
                     }).done(function (response) {
-                        Swal.close();
                         if (response.success) {
                             Swal.fire({
                                 title: response.message,

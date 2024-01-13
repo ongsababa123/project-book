@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
                             <li class="breadcrumb-item active">ข้อมูลการจัดการโปรโมชั่น</li>
                         </ol>
                     </div>
@@ -212,9 +212,18 @@
                         url: '<?= base_url() ?>' + url,
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
-                        }
+                        },
+                        beforeSend: function () {
+                            // Show loading indicator here
+                            var loadingIndicator = Swal.fire({
+                                title: 'กําลังดําเนินการ...',
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                showConfirmButton: false,
+                            });
+                        },
                     }).done(function (response) {
-                        // console.log(response);
+                        Swal.close();
                         if (response.success) {
                             Swal.fire({
                                 title: response.message,
@@ -249,8 +258,17 @@
                 processData: false,
                 contentType: false,
                 dataType: "JSON",
+                beforeSend: function () {
+                    // Show loading indicator here
+                    var loadingIndicator = Swal.fire({
+                        title: 'กําลังดําเนินการ...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });
+                },
                 success: function (response) {
-                    console.log(response);
+                    Swal.close();
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
