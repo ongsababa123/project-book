@@ -405,7 +405,7 @@
                     "ordering": false,
                     "lengthChange": false,
                     "autoWidth": false,
-                    "searching": false,
+                    "searching": true,
                     "drawCallback": function (settings) {
                         $("#history_Table .overlay").hide();
 

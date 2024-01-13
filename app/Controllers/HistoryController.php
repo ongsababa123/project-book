@@ -143,7 +143,7 @@ class HistoryController extends BaseController
                     'reload' => false,
                     'button' => true,
                 ];
-            }else{
+            } else {
                 $response = [
                     'success' => true,
                     'message' => 'อัปเดตข้อมูลasdsadสำเร็จ',
@@ -219,7 +219,7 @@ class HistoryController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    public function submit_his($id_history = null, $price_fess_totel = null , $id_user = null)
+    public function submit_his($id_history = null, $price_fess_totel = null, $id_user = null)
     {
         helper(['form']);
         $HistoryModels = new HistoryModels();
@@ -295,25 +295,52 @@ class HistoryController extends BaseController
     public function get_data_table($status_his = null)
     {
         $HistoryModels = new HistoryModels();
+        $UserModels = new UserModels();
+
+        // Get search value
+        $searchValue = $this->request->getVar('search')['value'];
+
+        // Apply search filter
+        if (!empty($searchValue)) {
+            $HistoryModels->join('user_table', 'user_table.id_user = history_book_table.id_user');
+
+            $HistoryModels->groupStart();
+            $HistoryModels->like('user_table.name', $searchValue);
+            $HistoryModels->orLike('user_table.lastname', $searchValue);
+            $HistoryModels->groupEnd();
+        }
+
+        // Get total records after applying search
         $totalRecords = $HistoryModels->where('status_his', $status_his)->countAllResults();
 
+        // Get DataTable parameters
         $limit = $this->request->getVar('length');
         $start = $this->request->getVar('start');
         $draw = $this->request->getVar('draw');
 
-        $recordsFiltered = $totalRecords;
-        $recordsFiltered = $totalRecords;
+        // Get filtered data
+        if (!empty($searchValue)) {
+            $HistoryModels->join('user_table', 'user_table.id_user = history_book_table.id_user');
+
+            $HistoryModels->groupStart();
+            $HistoryModels->like('user_table.name', $searchValue);
+            $HistoryModels->orLike('user_table.lastname', $searchValue);
+            $HistoryModels->groupEnd();
+        }
 
         $data = $HistoryModels->where('status_his', $status_his)->findAll($limit, $start);
-
+        // Prepare response
         $response = [
             'draw' => intval($draw),
             'recordsTotal' => $totalRecords,
-            'recordsFiltered' => $recordsFiltered,
+            'recordsFiltered' => $totalRecords, // You may need to update this based on the actual filtered count
             'data' => $data,
-            // 'searchValue' => $searchValue,
+            'searchValue' => $searchValue,
         ];
 
         return $this->response->setJSON($response);
     }
+
+
+
 }

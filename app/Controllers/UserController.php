@@ -98,7 +98,7 @@ class UserController extends BaseController
                         'reload' => false,
                     ];
                 }
-            }else{
+            } else {
                 $response = [
                     'success' => false,
                     'message' => 'ชื่อและนามสกุลซ้ำกันในระบบ',
@@ -120,9 +120,9 @@ class UserController extends BaseController
     public function edit_user($id_user = null)
     {
         helper(['form']);
-        
+
         $status = $this->request->getVar('customSwitch3') === 'on' ? 1 : 0;
-        
+
         $rules = [
             'name' => 'required|min_length[2]|max_length[200]',
             'last' => 'required|min_length[2]|max_length[200]',
@@ -267,7 +267,6 @@ class UserController extends BaseController
     {
         $UserModels = new UserModels();
         $HistoryModels = new HistoryModels();
-        $totalRecords = $UserModels->where('type_user', $type)->countAllResults();
 
         $limit = $this->request->getVar('length');
         $start = $this->request->getVar('start');
@@ -283,10 +282,18 @@ class UserController extends BaseController
                 // เพิ่มคอลัมน์เพิ่มเติมตามที่ต้องการค้นหา
                 ->groupEnd();
         }
+        $totalRecords = $UserModels->where('type_user', $type)->countAllResults();
 
         $recordsFiltered = $totalRecords;
-        $recordsFiltered = $totalRecords;
-
+        if (!empty($searchValue)) {
+            $UserModels->groupStart()
+                ->like('email_user', $searchValue) // แทน 'column1', 'column2', ... ด้วยชื่อคอลัมน์ที่คุณต้องการค้นหา
+                ->orLike('name', $searchValue)
+                ->orLike('lastname', $searchValue)
+                ->orLike('phone', $searchValue)
+                // เพิ่มคอลัมน์เพิ่มเติมตามที่ต้องการค้นหา
+                ->groupEnd();
+        }
         $data = $UserModels->where('type_user', $type)->findAll($limit, $start);
 
         foreach ($data as $key => $value) {
