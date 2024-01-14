@@ -258,7 +258,11 @@
                 var price_deposit = idbook.length * 100;
                 $(".modal-body #price_deposit").val(price_deposit);
                 $(".modal-body #price_deposit").val(price_deposit);
-                (rowData.status_history == 2 || rowData.status_history == 3) ? $(".modal-body #print").show() : $(".modal-body #print").hide();
+                if (rowData.status_his == 2 || rowData.status_his == 3) {
+                    $(".modal-footer #print").show();
+                }else{
+                    $(".modal-footer #print").hide();
+                }
                 idbook.forEach(function (id) {
                     count += 1;
                     let matbook = data_book.find(element_book => element_book.id_book === id.trim());
@@ -596,9 +600,6 @@
         }
     </script>
     <script>
-
-    </script>
-    <script>
         function action_(url, form) {
             var formData = new FormData(document.getElementById(form));
             if (form == 'form_create_history') {
@@ -633,7 +634,11 @@
                                 showConfirmButton: true,
                                 allowOutsideClick: true
                             });
-                            getTableData_('dashboard/history/getdata/2', 'table_history_two', '1')
+                            if (response.status_his === '1') {
+                                getTableData_('dashboard/history/getdata/1', 'table_history_one', '1')
+                            }else if(response.status_his === '2'){
+                                getTableData_('dashboard/history/getdata/2', 'table_history_two', '1')
+                            }
                         } else {
                             Swal.fire({
                                 title: response.message,

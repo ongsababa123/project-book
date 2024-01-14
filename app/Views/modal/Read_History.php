@@ -165,3 +165,32 @@
         action_(urlRouteInput.value, 'form_read_history');
     });
 </script>
+<script>
+    // Common function to calculate total price
+    function updateTotalPrice() {
+        // Retrieve values as floats
+        const price_book = parseFloat($("#price_book").val()) || 0;
+        const price_deposit = parseFloat($("#price_deposit").val()) || 0;
+        const price_all = parseFloat($("#price_all").val()) || 0;
+        const lateFee = parseFloat($("#price_late").val()) || 0;
+        const pice_promotion = parseFloat($("#pice_promotion").val()) || 0;
+        
+        // Calculate the new values
+        const newPriceAll = (price_book + price_deposit) - pice_promotion;
+        const newPriceTotal = newPriceAll + lateFee;
+
+        // Update the values of the elements
+        $("#price_all").val(newPriceAll);
+        $("#price_total").val(newPriceTotal);
+    }
+
+    // Event handler for pice_promotion input
+    $("#pice_promotion").on('input', function () {
+        updateTotalPrice();
+    });
+
+    // Event handler for price_late input
+    $("#price_late").on('input', function () {
+        updateTotalPrice();
+    });
+</script>

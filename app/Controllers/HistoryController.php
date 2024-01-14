@@ -136,17 +136,18 @@ class HistoryController extends BaseController
         $check = $HistoryModels->update($id_history, $data);
         $status_his = $HistoryModels->where('id_history', $id_history)->findAll()[0]['status_his'];
         if ($check) {
-            if ($status_his == 2) {
+            if ($status_his == 2 || $status_his == 1) {
                 $response = [
                     'success' => true,
-                    'message' => 'อัปเดตข้อมูลasdsadสำเร็จ',
+                    'message' => 'อัปเดตข้อมูลสำเร็จ',
                     'reload' => false,
                     'button' => true,
+                    'status_his' => $status_his
                 ];
             } else {
                 $response = [
                     'success' => true,
-                    'message' => 'อัปเดตข้อมูลasdsadสำเร็จ',
+                    'message' => 'อัปเดตข้อมูลสำเร็จ',
                     'reload' => true,
                 ];
             }
