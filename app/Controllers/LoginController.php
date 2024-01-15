@@ -110,7 +110,6 @@ class LoginController extends BaseController
 
         $data = $userModels->where('email_user', $email)->first();
         if ($data) {
-
             if ($data['key_pass'] === $pin) {
                 $number_random = mt_rand(100000, 999999);
                 $data = [
