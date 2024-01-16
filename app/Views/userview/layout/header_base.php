@@ -47,15 +47,13 @@
                     <li class="nav-item dropdown"id="dropdown">
                         <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" class="nav-link">รายละเอียด</i></a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
-                            <a class="dropdown-item">1. ข้อจำกัดในการเช่าหนังสือ 7 เล่ม / ครั้ง </a>
-                            <a class="dropdown-item">2. หากลูกค้าทำหนังสือหายปรับตามราคาหนังสือเป็น 5 เท่า</a>
-                            <a class="dropdown-item">3. หากเลยกำหนดจะถูกปรับ 20 บาท / เล่ม / วัน </a>
-                            <a class="dropdown-item">4. ค่ามัดจำเล่มละ 100 บาท </a>
-                            <a class="dropdown-item">5. หากจองแล้วไม่เข้ามารับภายใน 2วัน
-                                ที่ทำการจองจะต้องทำการจองใหม่เท่านั้น</a>
-                            <a class="dropdown-item">6. ให้สิทธ์ในการเช่าเพียง 1ครั้ง สูงสุด 7 เล่ม
-                                หากยังไม่คืนจะไม่มารถยืมต่อได้</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                            <?php foreach ($details as $key => $value): ?>
+                                <a class="dropdown-item">
+                                    <?= $key + 1 ?> :
+                                    <?= $value['text_details'] ?>
+                                </a>
+                            <?php endforeach; ?>
                         </div>
                     </li>
                     <li class="nav-item">

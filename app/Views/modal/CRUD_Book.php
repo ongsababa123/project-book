@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="overlay preloader">
             <i class="fas fa-2x fa-sync fa-spin"></i>
@@ -7,14 +7,14 @@
             <h4 class="modal-title" id="title_modal" name="title_modal"></h4>
         </div>
         <div class="modal-body">
-        <?php if (session()->get('type') == '3') { 
-                    $type_hideen = 'hidden';
-                    $type_disable = 'disabled';
-                }else{
-                    $type_hideen = '';
-                    $type_disable = '';
-                }
-                ?>
+            <?php if (session()->get('type') == '3') {
+                $type_hideen = 'hidden';
+                $type_disable = 'disabled';
+            } else {
+                $type_hideen = '';
+                $type_disable = '';
+            }
+            ?>
             <form class="mb-3" id="form_book" action="javascript:void(0)" method="post" enctype="multipart/form-data">
                 <div class="container">
                     <div class="row">
@@ -40,30 +40,50 @@
                         <label class="custom-control-label" for="customSwitch3" id="LabelcustomSwitch3"></label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>ชื่อหนังสือ</label>
-                    <input type="text" class="form-control" placeholder="กรอกชื่อหนังสือ" id="name_book"
-                        name="name_book" required <?= $type_disable ?>>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>ชื่อหนังสือ</label>
+                            <input type="text" class="form-control" placeholder="กรอกชื่อหนังสือ" id="name_book"
+                                name="name_book" required <?= $type_disable ?>>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>ชื่อผู้แต่ง</label>
+                            <input type="text" class="form-control" placeholder="กรอกชื่อผู้แต่ง" id="name_book_author"
+                                name="name_book_author" required <?= $type_disable ?>>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>ชื่อผู้แต่ง</label>
-                    <input type="text" class="form-control" placeholder="กรอกชื่อผู้แต่ง" id="name_book_author"
-                        name="name_book_author" required <?= $type_disable ?>>
-                </div>
+
                 <div class="form-group">
                     <label>รายละเอียด</label>
-                    <textarea class="form-control" rows="3" placeholder="กรอกรายละเอียด" id="detail_category"
+                    <textarea class="form-control" placeholder="กรอกรายละเอียด" id="detail_category" cols="5" rows="5"
                         name="detail_category" required <?= $type_disable ?>></textarea>
                 </div>
-                <div class="form-group">
-                    <label>ราคาเช่า</label>
-                    <input type="number" class="form-control" placeholder="ราคาหนังสือ" id="price_book"
-                        name="price_book" required <?= $type_disable ?>>
-                </div>
-                <div class="form-group">
-                    <label>ราคาหนังสือ</label>
-                    <input type="number" class="form-control" placeholder="ราคาหนังสือ" id="price_book_book"
-                        name="price_book_book" required <?= $type_disable ?>>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>ราคาเช่า</label>
+                            <input type="number" class="form-control" placeholder="ราคาหนังสือ" id="price_book"
+                                name="price_book" required <?= $type_disable ?>>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>ราคาหนังสือ</label>
+                            <input type="number" class="form-control" placeholder="ราคาหนังสือ" id="price_book_book"
+                                name="price_book_book" required <?= $type_disable ?>>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>จำนวนในคลัง (พร้อมใช้งาน)</label>
+                            <input type="number" class="form-control" placeholder="จำนวนในคลัง" id="stock_book"
+                                name="stock_book" required disabled>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>หมวดหมู่</label>
@@ -73,7 +93,8 @@
                 <input type="text" id="url_route" name="url_route" hidden>
                 <div class="modal-footer">
 
-                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit" <?= $type_hideen ?>></button>
+                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"
+                        <?= $type_hideen ?>></button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                 </div>
             </form>

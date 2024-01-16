@@ -94,7 +94,7 @@
                 $("#password").prop("disabled", false);
                 $('.form-check').hide();
                 $('#customSwitch_status').hide();
-                
+
             } else if (load_check == 2) {
                 $('#customSwitch_status').show();
                 CRUD_UserModal.style.display = "block";
@@ -142,7 +142,7 @@
                     'type': 'GET',
                     'dataSrc': 'data',
                 },
-                "responsive": true,
+                "responsive": true, "lengthChange": false, "autoWidth": false,
                 "ordering": false,
                 "lengthChange": false,
                 "autoWidth": false,
@@ -166,7 +166,6 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             return meta.settings.oAjaxData.start += 1;
-
                         }
                     },
                     {
@@ -206,7 +205,7 @@
                                 return `<span class='badge bg-success'>ใช้งาน</span>`;
                             } else if (status == 0) {
                                 return `<span class='badge bg-danger'>แบล็คลิส</span>`;
-                            } 
+                            }
                         }
                     },
                     {
@@ -222,7 +221,7 @@
                                 return `<span class='badge bg-warning'>กำลังเช่า</span>`;
                             } else if (status_rental == 4) {
                                 return `<span class='badge bg-success'>คืนแล้ว</span>`;
-                            } 
+                            }
                         }
                     },
                     {
@@ -230,10 +229,15 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             const encodedRowData = encodeURIComponent(JSON.stringify(row));
+                            var check_count = '';
+                            if (data.counthis == 0) {
+                                check_count = 'disabled';
+                            }
                             return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-user-edit"></i> แก้ไขข้อมูล</button>
-                            <a href="<?= site_url('dashboard/history/history/user/') ?>${data.id_user}" target="_blank" class="btn btn-info"><i class="fas fa-info-circle"></i> ประวัติการเช่า</a>`;
+                            <a href="<?= site_url('dashboard/history/history/user/') ?>${data.id_user}" target="_blank" class="btn btn-info ${check_count}"><i class="fas fa-info-circle"></i> ประวัติการเช่า</a>`;
                         }
                     },
+
                 ]
             });
             $('[data-toggle="tooltip"]').tooltip();

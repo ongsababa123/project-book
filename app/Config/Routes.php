@@ -78,6 +78,14 @@ $routes->group("dashboard/book/", ['filter' => ['CartCheck', 'HistoryCheck']], f
     $routes->match(['get', 'post'], 'create', 'BookController::create_book');  //create
     $routes->match(['get', 'post'], 'edit/(:num)', 'BookController::edit_book/$1');  //edit
     $routes->match(['get', 'post'], 'delete/(:num)', 'BookController::delete_book/$1');  //delete
+    $routes->match(['get', 'post'], 'getdata/(:num)', 'BookController::get_data_table/$1');  //getData
+
+    $routes->match(['get', 'post'], 'stock_all/index', 'BookController::index_stock_all', ['filter' => ['authGuard' , 'ISLogin']]); //display
+    $routes->match(['get', 'post'], 'stock/index/(:num)', 'BookController::index_stock_id/$1', ['filter' => ['authGuard' , 'ISLogin']]); //display
+    $routes->match(['get', 'post'], 'stock/getdata/(:num)', 'BookController::get_data_table_stock/$1');  //getData
+    $routes->match(['get', 'post'], 'stock/create/(:num)', 'BookController::create_stock/$1');  //create
+    $routes->match(['get', 'post'], 'stock/changestatus/(:num)/(:num)', 'BookController::change_status_stock/$1/$2');  //edit
+
 });
 
 $routes->group("dashboard/category/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {
@@ -112,6 +120,7 @@ $routes->group("dashboard/setting/", ['filter' => ['CartCheck', 'HistoryCheck']]
 
     $routes->match(['get', 'post'], 'details/create', 'SettingController::crate_details');  //create details
     $routes->match(['get', 'post'], 'details/edit/(:num)', 'SettingController::edit_details/$1');  //create details
+    $routes->match(['get', 'post'], 'details/delete/(:num)', 'SettingController::delete_details/$1');  //create details
 });
 
 $routes->group("dashboard/promotion/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {

@@ -9,6 +9,7 @@ use App\Models\HistoryModels;
 use App\Models\PromotionModels;
 use App\Models\UserModels;
 use App\Models\LateFeesModels;
+use App\Models\DetailsModels;
 
 class HomeController extends BaseController
 {
@@ -17,6 +18,8 @@ class HomeController extends BaseController
         $BookModels = new BookModels();
         $HistoryModels = new HistoryModels();
 
+        $DetailsModels = new DetailsModels();
+        $data_details['details'] = $DetailsModels->findAll();
         // ดึงข้อมูล id_book จากฐานข้อมูล
         $results = $HistoryModels->findAll(); // ปรับตามโครงสร้าง Model ของคุณ
 
@@ -48,7 +51,7 @@ class HomeController extends BaseController
             // กรณีไม่มีไอดีที่ซ้ำกัน
             $data['bookData'] = $BookModels->orderBy('RAND()')->limit(3)->get()->getResultArray();
         }
-        echo view('userview/layout/header_home');
+        echo view('userview/layout/header_home',$data_details);
         echo view('userview/Home', $data);
         echo view('userview/layout/footer');
 
@@ -61,6 +64,8 @@ class HomeController extends BaseController
         $CategoryModels = new CategoryModels();
         $UserModels = new UserModels();
         $PromotionModels = new PromotionModels();
+        $DetailsModels = new DetailsModels();
+        $data_details['details'] = $DetailsModels->findAll();
         $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
 
         // Retrieve all categories with status 1
@@ -88,7 +93,7 @@ class HomeController extends BaseController
 
 
         // Load views
-        echo view('userview/layout/header_base');
+        echo view('userview/layout/header_base', $data_details);
         echo view('userview/Booklist', $data);
         echo view('userview/layout/footer');
     }
@@ -111,10 +116,12 @@ class HomeController extends BaseController
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
         $UserModels = new UserModels();
+        $DetailsModels = new DetailsModels();
+        $data_details['details'] = $DetailsModels->findAll();
         $data['bookData'] = $BookModels->where('id_book', $id_book)->findAll();
         $data['categoryData'] = $CategoryModels->where('id_category', $data['bookData'][0]['category_id'])->findAll();
         $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
-        echo view('userview/layout/header_base');
+        echo view('userview/layout/header_base', $data_details);
         echo view('userview/Bookdetails', $data);
         echo view('userview/layout/footer');
     }
@@ -170,7 +177,8 @@ class HomeController extends BaseController
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
         $UserModels = new UserModels();
-
+        $DetailsModels = new DetailsModels();
+        $data_details['details'] = $DetailsModels->findAll();
         $data['categoryData'] = $CategoryModels->where('id_category', session()->get('id'))->findAll();
         $data['cartData'] = $CartModels->where('id_user', session()->get('id'))->findAll();
         $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
@@ -187,7 +195,7 @@ class HomeController extends BaseController
             }
         }
 
-        echo view('userview/layout/header_base');
+        echo view('userview/layout/header_base', $data_details);
         echo view('userview/Cart', $data);
         echo view('userview/layout/footer');
     }
@@ -195,7 +203,10 @@ class HomeController extends BaseController
 
     public function index_contact()
     {
-        echo view('userview/layout/header_base');
+        $DetailsModels = new DetailsModels();
+        $data_details['details'] = $DetailsModels->findAll();
+
+        echo view('userview/layout/header_base', $data_details);
         echo view('userview/Contact');
         echo view('userview/layout/footer');
     }
@@ -234,10 +245,12 @@ class HomeController extends BaseController
     {
         $userModels = new UserModels();
         $HistoryModels = new HistoryModels();
+        $DetailsModels = new DetailsModels();
+        $data_details['details'] = $DetailsModels->findAll();
         $data['user_data'] = $userModels->where('id_user', session()->get('id'))->findAll();
         $data['count_data'] = $HistoryModels->where('id_user', session()->get('id'))->countAllResults();
 
-        echo view('userview/layout/header_home');
+        echo view('userview/layout/header_home' , $data_details);
         echo view('userview/Profile', $data);
         echo view('userview/layout/footer');
     }
@@ -249,7 +262,8 @@ class HomeController extends BaseController
         $CategoryModels = new CategoryModels();
         $PromotionModels = new PromotionModels();
         $LateFeesModels = new LateFeesModels();
-
+        $DetailsModels = new DetailsModels();
+        $data_details['details'] = $DetailsModels->findAll();
         // Fetch history data for user with id session()->get('id')
         $data['HistoryData_1'] = $HistoryModels->where('status_his', 1)
             ->where('id_user', session()->get('id'))
@@ -348,7 +362,7 @@ class HomeController extends BaseController
             }
         }
         // Load views
-        echo view('userview/layout/header_base');
+        echo view('userview/layout/header_base' , $data_details);
         echo view('userview/History', $data);
         echo view('userview/layout/footer');
     }

@@ -419,7 +419,7 @@
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: "#28a745",
-            confirmButtonText: "submit",
+            confirmButtonText: "ตกลง",
         }).then((result) => {
             if (result.isConfirmed) {
                 var formData = new FormData();

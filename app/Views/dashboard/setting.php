@@ -33,25 +33,20 @@
                                     </button>
                                 </div>
                             </div>
-                            <form class="mb-3" id="form_price_late" action="javascript:void(0)" method="post"
-                                enctype="multipart/form-data">
+                            <form class="mb-3" id="form_price_late" action="javascript:void(0)" method="post" enctype="multipart/form-data">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>อัตราค่าปรับ</label>
-                                                <input type="text" class="form-control" placeholder="ราคาค่าปรับ"
-                                                    id="late_price" name="late_price"
-                                                    value="<?= $late_fees[0]['price_fees']; ?>" required>
+                                                <input type="text" class="form-control" placeholder="ราคาค่าปรับ" id="late_price" name="late_price" value="<?= $late_fees[0]['price_fees']; ?>" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer text-center" id="btn_price_late">
-                                    <button type="submit" class="btn btn-success" name="submit" value="Submit"
-                                        id="submit">บันทึก</button>
-                                    <button type="button" class="btn btn-danger"
-                                        onclick="enable_edit(1,2)">ยกเลิก</button>
+                                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit">บันทึก</button>
+                                    <button type="button" class="btn btn-danger" onclick="enable_edit(1,2)">ยกเลิก</button>
                                 </div>
                             </form>
                             <div class="overlay dark">
@@ -72,25 +67,20 @@
                                     </button>
                                 </div>
                             </div>
-                            <form class="mb-3" id="form_day" action="javascript:void(0)" method="post"
-                                enctype="multipart/form-data">
+                            <form class="mb-3" id="form_day" action="javascript:void(0)" method="post" enctype="multipart/form-data">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>ระยะเวลาเช่าหนังสือ หน่วย/ต่อวัน</label>
-                                                <input type="text" class="form-control"
-                                                    placeholder="ระยะเวลาเช่าหนังสือ" id="day_rent" name="day_rent" value="<?= $dayrent[0]['day_rent']; ?>"
-                                                    required>
+                                                <label>จำนวนวันที่สามารถเช่าได้ หน่วย/ต่อวัน</label>
+                                                <input type="text" class="form-control" placeholder="ระยะเวลาเช่าหนังสือ" id="day_rent" name="day_rent" value="<?= $dayrent[0]['day_rent']; ?>" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer text-center" id="btn_day">
-                                    <button type="submit" class="btn btn-success" name="submit" value="Submit"
-                                        id="submit">บันทึก</button>
-                                    <button type="button" class="btn btn-danger"
-                                        onclick="enable_edit(2,2)">ยกเลิก</button>
+                                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit">บันทึก</button>
+                                    <button type="button" class="btn btn-danger" onclick="enable_edit(2,2)">ยกเลิก</button>
                                 </div>
                             </form>
                             <div class="overlay dark">
@@ -109,8 +99,7 @@
                             <div class="card-header bg-info">
                                 <h2 class="card-title">รายละเอียด</h2>
                                 <div class="card-tools">
-                                    <button type="button" class="btn btn-dark" data-toggle="modal"
-                                        data-target="#modal-default" onclick="load_modal(1)">
+                                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal-default" onclick="load_modal(1)">
                                         เพิ่มรายละเอียด
                                     </button>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -150,12 +139,24 @@
         </div>
     </div>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             getTableData();
             $("#btn_price_late").hide();
             $("#btn_day").hide();
             $("#late_price").prop("disabled", true);
             $("#day_rent").prop("disabled", true);
+        });
+        
+        $("#form_price_late").on('submit', function(e) {
+            e.preventDefault();
+            const urlRouteInput = 'dashboard/setting/lateprice/edit/1';
+            action_(urlRouteInput, 'form_price_late');
+        });
+
+        $("#form_day").on('submit', function(e) {
+            e.preventDefault();
+            const urlRouteInput = 'dashboard/setting/dayrent/edit/1';
+            action_(urlRouteInput, 'form_day');
         });
     </script>
     <script>
@@ -170,6 +171,7 @@
             } else if (load_check == 2) {
                 CRUD_Details.style.display = "block";
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
+
                 $(".modal-body #detail").val(rowData.text_details);
                 $(".modal-header #title_modal").text("แก้ไขรายละเอียด");
                 $(".modal-footer #submit").text("แก้ไขรายละเอียด");
@@ -199,7 +201,7 @@
             // Use the ternary operator to determine the action for targetInputElement
             if (action == '1') {
                 targetInputElement.prop('disabled', false);
-            }else{
+            } else {
                 targetInputElement.prop('disabled', true);
             }
         }
@@ -219,12 +221,12 @@
                     'type': 'GET',
                     'dataSrc': 'data',
                 },
-                "responsive": true,
+                "responsive": true, "lengthChange": false, "autoWidth": false,
                 "ordering": false,
                 "lengthChange": false,
                 "autoWidth": false,
                 "searching": false,
-                "drawCallback": function (settings) {
+                "drawCallback": function(settings) {
                     $("#late-price_Table .overlay").hide();
                     var daData = settings.json.data;
                     if (daData.length == 0) {
@@ -237,32 +239,33 @@
                     }
                 },
                 'columns': [{
-                    'data': null,
-                    'class': 'text-center',
-                    'render': function (data, type, row, meta) {
-                        return meta.settings.oAjaxData.start += 1;
-                    }
-                },
-                {
-                    'data': null,
-                    'class': 'text-center',
-                    'render': function (data, type, row, meta) {
-                        return data.text_details;
-                    }
-                },
-                {
-                    'data': null,
-                    'class': 'text-center',
-                    'render': function (data, type, row, meta) {
-                        <?php if (session()->get('type') == '2'): ?>
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function(data, type, row, meta) {
+                            return meta.settings.oAjaxData.start += 1;
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function(data, type, row, meta) {
+                            return data.text_details;
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function(data, type, row, meta) {
                             const encodedRowData = encodeURIComponent(JSON.stringify(row));
-                            return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"> แก้ไขข้อมูล</button>`;
-                        <?php else: ?>
-                            return ``;
-                        <?php endif; ?>
+                            <?php if (session()->get('type') == '2') : ?>
+                                return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"> แก้ไขข้อมูล</button>
+                            <button type="button" class="btn btn-danger" onclick="confirm_Alert('คุณต้องการลบรายการนี้ใช่หรือไม่ ?','dashboard/setting/details/delete/${data.id_details}')"> ลบ</button>`;
+                            <?php else : ?>
+                                return ``;
+                            <?php endif; ?>
 
-                    }
-                },
+                        }
+                    },
                 ]
             });
             $('[data-toggle="tooltip"]').tooltip();
@@ -279,7 +282,7 @@
                 processData: false,
                 contentType: false,
                 dataType: "JSON",
-                beforeSend: function () {
+                beforeSend: function() {
                     // Show loading indicator here
                     var loadingIndicator = Swal.fire({
                         title: 'กําลังดําเนินการ...',
@@ -288,7 +291,7 @@
                         showConfirmButton: false,
                     });
                 },
-                success: function (response) {
+                success: function(response) {
                     Swal.close();
                     if (response.success) {
                         Swal.fire({
@@ -311,7 +314,7 @@
                         });
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     Swal.fire({
                         title: "เกิดข้อผิดพลาด",
                         icon: 'error',
@@ -329,7 +332,7 @@
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: "#28a745",
-                confirmButtonText: "submit",
+                confirmButtonText: "ตกลง",
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -337,7 +340,7 @@
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
                         },
-                        beforeSend: function () {
+                        beforeSend: function() {
                             // Show loading indicator here
                             var loadingIndicator = Swal.fire({
                                 title: 'กําลังดําเนินการ...',
@@ -346,7 +349,7 @@
                                 showConfirmButton: false,
                             });
                         },
-                    }).done(function (response) {
+                    }).done(function(response) {
                         // console.log(response);
                         if (response.success) {
                             Swal.fire({

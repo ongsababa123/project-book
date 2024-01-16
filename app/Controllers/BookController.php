@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\CategoryModels;
 use App\Models\BookModels;
+use App\Models\StockBookModels;
 
 class BookController extends BaseController
 {
@@ -11,13 +12,31 @@ class BookController extends BaseController
     public function index()
     {
         $CategoryModels = new CategoryModels();
-        $BookModels = new BookModels();
-        $data['bookData'] = $BookModels->findAll();
         $data['categoryData'] = $CategoryModels->findAll();
 
         echo view('dashboard/layout/header');
         echo view('dashboard/book', $data);
     }
+
+    public function index_stock_id($id_book = null)
+    {
+        $BookModels = new BookModels();
+        $data['bookData'] = $BookModels->where('id_book', $id_book)->first();
+        echo view('dashboard/layout/header');
+        echo view('dashboard/stock_book_id', $data);
+    }
+
+    public function index_stock_all()
+    {
+        $BookModels = new BookModels();
+
+        // ดึงข้อมูลเฉพาะ name_book และ id_book
+        $data['bookData'] = $BookModels->select('name_book, id_book')->findAll();
+
+        echo view('dashboard/layout/header');
+        echo view('dashboard/stock_book_all', $data);
+    }
+
 
     public function create_book()
     {
@@ -82,6 +101,58 @@ class BookController extends BaseController
         return $this->response->setJSON($response);
     }
 
+    public function create_stock($id_book = null)
+    {
+        $StockBookModels = new StockBookModels();
+        $count_number = $StockBookModels->where('id_book', $id_book)->countAllResults();
+        $id_number_ = $id_book . '-' . ($count_number + 1);
+        $data = [
+            'id_book' => $id_book,
+            'id_number_' => $id_number_,
+            'status_stock' => 0
+        ];
+        $check = $StockBookModels->save($data);
+        if ($check) {
+            $response = [
+                'success' => true,
+                'message' => 'สร้างข้อมูลสำเร็จ',
+                'reload' => true,
+            ];
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'error',
+                'reload' => false,
+            ];
+        }
+
+        return $this->response->setJSON($response);
+    }
+
+    public function change_status_stock($id_stock = null, $status = null)
+    {
+        $StockBookModels = new StockBookModels();
+        $data = [
+            'status_stock' => $status
+        ];
+        $check = $StockBookModels->update($id_stock, $data);
+        if ($check) {
+            $response = [
+                'success' => true,
+                'message' => 'เปลี่ยนสถานะสำเร็จ',
+                'data' => $data,
+                'reload' => true,
+            ];
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'error',
+                'reload' => false,
+            ];
+        }
+
+        return $this->response->setJSON($response);
+    }
     public function edit_book($id_book = null)
     {
         $BookModels = new BookModels();
@@ -165,6 +236,143 @@ class BookController extends BaseController
                 'reload' => false,
             ];
         }
+        return $this->response->setJSON($response);
+    }
+
+    public function get_data_table($category_id = null)
+    {
+        $BookModels = new BookModels();
+        $StockBookModels = new StockBookModels();
+
+        $limit = $this->request->getVar('length');
+        $start = $this->request->getVar('start');
+        $draw = $this->request->getVar('draw');
+        $searchValue = $this->request->getVar('search')['value'];
+
+        if (!empty($searchValue)) {
+            $BookModels->groupStart()
+                ->like('name_book', $searchValue) // แทน 'column1', 'column2', ... ด้วยชื่อคอลัมน์ที่คุณต้องการค้นหา
+                ->orLike('price', $searchValue)
+                ->orLike('price_book', $searchValue)
+                // เพิ่มคอลัมน์เพิ่มเติมตามที่ต้องการค้นหา
+                ->groupEnd();
+        }
+        if ($category_id != 0) {
+            $totalRecords = $BookModels->where('category_id', $category_id)->countAllResults();
+        } else {
+            $totalRecords = $BookModels->countAllResults();
+        }
+        $recordsFiltered = $totalRecords;
+
+        if (!empty($searchValue)) {
+            $BookModels->groupStart()
+                ->like('name_book', $searchValue) // แทน 'column1', 'column2', ... ด้วยชื่อคอลัมน์ที่คุณต้องการค้นหา
+                ->orLike('price', $searchValue)
+                ->orLike('price_book', $searchValue)
+                // เพิ่มคอลัมน์เพิ่มเติมตามที่ต้องการค้นหา
+                ->groupEnd();
+        }
+        if ($category_id != 0) {
+            $data = $BookModels->where('category_id', $category_id)->findAll($limit, $start);
+        } else {
+            $data = $BookModels->findAll($limit, $start);
+        }
+
+        foreach ($data as $key => $value) {
+            $count_stock = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 1)->countAllResults();
+            $numver = [
+                'count_stock' => $count_stock
+            ];
+            $data[$key] = array_merge($data[$key], $numver);
+        }
+        $response = [
+            'draw' => intval($draw),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data,
+            'searchValue' => $searchValue,
+        ];
+
+        return $this->response->setJSON($response);
+    }
+
+    public function get_data_table_stock($id_book = null)
+    {
+        $StockBookModels = new StockBookModels();
+        $BookModels = new BookModels();
+
+        $limit = $this->request->getVar('length');
+        $start = $this->request->getVar('start');
+        $draw = $this->request->getVar('draw');
+        $searchValue = $this->request->getVar('search')['value'];
+        $value = 6;
+
+        if (!empty($searchValue)) {
+            if ($searchValue == 'ไม่พร้อมใช้งาน') {
+                $value = 0;
+            } else if ($searchValue == 'พร้อมใช้งาน') {
+                $value = 1;
+            } else if ($searchValue == 'กำลังเช่า') {
+                $value = 2;
+            } else if ($searchValue == 'หนังสือหาย') {
+                $value = 3;
+            } else if ($searchValue == 'หนังสือชำรุด') {
+                $value = 4;
+            } else if ($searchValue == 'หนังสือไม่สามารถใช้ต่อได้') {
+                $value = 5;
+            }
+        }
+
+        if ($id_book != 0) {
+            if (!empty($searchValue)) {
+                $StockBookModels->groupStart()
+                    ->like('id_number_', $searchValue)
+                    ->orLike('status_stock', $value)
+                    ->groupEnd();
+            }
+            $totalRecords = $StockBookModels->where('id_book', $id_book)->countAllResults();
+            if (!empty($searchValue)) {
+                $StockBookModels->groupStart()
+                    ->like('id_number_', $searchValue)
+                    ->orLike('status_stock', $value)
+                    ->groupEnd();
+            }
+            $data = $StockBookModels->where('id_book', $id_book)->findAll($limit, $start);
+        } else {
+            // ตั้งค่าการค้นหา
+            if (!empty($searchValue)) {
+                $StockBookModels->groupStart()
+                    ->like('id_number_', $searchValue)
+                    ->orLike('status_stock', $value)
+                    ->orLike('book_table.name_book', $searchValue) // ค้นหา name_book
+                    ->groupEnd();
+            }
+
+            // นำข้อมูลจาก $StockBookModels และ $BookModels ด้วยการ join
+            $StockBookModels->join('book_table', 'book_table.id_book = stock_book_table.id_book');
+
+            // ดึงข้อมูลจาก $StockBookModels โดยเรียงลำดับตามคอลัมน์ id_book
+            $data_stock_books = $StockBookModels->orderBy('stock_book_table.id_book')->findAll($limit, $start);
+
+            // นับจำนวนรายการทั้งหมดใน $StockBookModels
+            $totalRecords = $StockBookModels->countAllResults();
+
+            // $data_stock_books ตอนนี้จะมีคอลัมน์ name_book ที่ถูกเพิ่มเข้าไป
+            $data = $data_stock_books;
+
+
+        }
+        $recordsFiltered = $totalRecords;
+
+
+        $response = [
+            'draw' => intval($draw),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data,
+            'searchValue' => $searchValue,
+        ];
+
         return $this->response->setJSON($response);
     }
 }

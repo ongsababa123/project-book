@@ -117,7 +117,7 @@
                     'type': 'GET',
                     'dataSrc': 'data',
                 },
-                "responsive": true,
+                "responsive": true, "lengthChange": false, "autoWidth": false,
                 "ordering": false,
                 "lengthChange": false,
                 "autoWidth": false,
@@ -153,8 +153,6 @@
                                 '</a>';
                         }
                     },
-
-
                     {
                         'data': null,
                         'class': 'text-center',
@@ -205,7 +203,7 @@
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: "#28a745",
-                confirmButtonText: "submit",
+                confirmButtonText: "ตกลง",
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({

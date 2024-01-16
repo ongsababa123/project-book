@@ -131,7 +131,7 @@
                     'type': 'GET',
                     'dataSrc': 'data',
                 },
-                "responsive": true,
+                "responsive": true, "lengthChange": false, "autoWidth": false,
                 "ordering": false,
                 "lengthChange": false,
                 "autoWidth": false,

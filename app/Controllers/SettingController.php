@@ -25,7 +25,6 @@ class SettingController extends BaseController
         $data = [
             'price_fees' => $this->request->getVar('late_price'),
         ];
-
         $check = $LateFeesModels->update($id_late_fees, $data);
         if ($check) {
             $response = [
@@ -40,7 +39,30 @@ class SettingController extends BaseController
                 'reload' => false,
             ];
         }
+        return $this->response->setJSON($response);
+    }
 
+    public function edit_dayrent($id_day_rent = null)
+    {
+        helper(['form']);
+        $DayrentModels = new DayrentModels();
+        $data = [
+            'day_rent' => $this->request->getVar('day_rent'),
+        ];
+        $check = $DayrentModels->update($id_day_rent, $data);
+        if ($check) {
+            $response = [
+                'success' => true,
+                'message' => 'อัปเดตข้อมูลสำเร็จ',
+                'reload' => true,
+            ];
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'error',
+                'reload' => false,
+            ];
+        }
         return $this->response->setJSON($response);
     }
 
@@ -95,6 +117,28 @@ class SettingController extends BaseController
 
         return $this->response->setJSON($response);
     }
+
+    public function delete_details($id_details = null){
+        helper(['form']);
+        $DetailsModels = new DetailsModels();
+        $check = $DetailsModels->delete($id_details);
+        if ($check) {
+            $response = [
+                'success' => true,
+                'message' => 'ลบรายการสำเร็จ',
+                'reload' => true,
+            ];
+        }else{
+            $response = [
+                'success' => false,
+                'message' => 'error',
+                'reload' => false,
+            ];
+        }
+
+        return $this->response->setJSON($response);
+    }
+    
     public function get_data_table()
     {
         $DetailsModels = new DetailsModels();
