@@ -81,6 +81,7 @@
             Swal.fire({
                 title: "คุณมีรายการเข้ารับหนังสืออยู่ โปรดคืนหนังสือก่อนเช่าใหม่อีกครั้ง",
                 icon: 'warning',
+                confirmButtonText: "ตกลง",
                 showConfirmButton: true
             });
 
@@ -88,6 +89,7 @@
             Swal.fire({
                 title: "คุณกำลังเช่าหนังสืออยู่ โปรดคืนหนังสือก่อนเช่าใหม่อีกครั้ง",
                 icon: 'warning',
+                confirmButtonText: "ตกลง",
                 showConfirmButton: true
             });
         } else {
@@ -151,6 +153,7 @@
                     Swal.fire({
                         title: "เกิดข้อผิดพลาด",
                         icon: 'error',
+                        confirmButtonText: "ตกลง",
                         showConfirmButton: true
                     });
                 }

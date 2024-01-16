@@ -41,7 +41,7 @@
                 </div>
                 <div class="form-group">
                     <label>เบอร์โทรศัพท์</label>
-                    <input type="number" class="form-control" placeholder="กรอกเบอร์โทรศัพท์" id="phone" name="phone"
+                    <input type="text" class="form-control" placeholder="กรอกเบอร์โทรศัพท์" id="phone" name="phone"
                         required>
                 </div>
 
@@ -107,17 +107,22 @@
         // Remove any existing alert
         removeAlert();
 
-        if (this.value.length < 5) {
+        if (this.value.length < 8) {
             // Create and append a danger alert
-            createAlert('danger', 'รหัสผ่านต้องมีความยาวอย่างน้อย 5 ตัวอักษร');
+            createAlert('danger', 'รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร');
             $('#submit').prop('disabled', true);
         } else {
             // Check for special characters
             if (!/[^\w\s]/.test(this.value)) {
                 // Create and append a success alert
-                removeAlert();
-                $('#submit').prop('disabled', false);
 
+                if (/^(?=.*\d)(?=.*[a-zA-Z])/.test(this.value)) {
+                    removeAlert();
+                    $('#submit').prop('disabled', false);
+                } else {
+                    createAlert('danger', 'รหัสผ่านจะต้องมีตัวอักษร และตัวเลข');
+                    $('#submit').prop('disabled', true);
+                }
             } else {
                 createAlert('danger', 'รหัสผ่านห้ามใช้เครื่องหมายพิเศษ');
                 $('#submit').prop('disabled', true);

@@ -51,16 +51,45 @@ class UserController extends BaseController
         echo view('dashboard/profile', $data);
     }
 
+    function sendMail($data = null, $number_random = null)
+    {
+        $to = $data['email_user'];
+        // $imagePath = base_url('dist/img/logo11.png');
+        $imagePath = 'http://52.139.174.147/test/dist/img/logo11.png';
+
+        $email = \Config\Services::email();
+
+        $email->setTo($to);
+        $email->setFrom($to, 'Bang book shop');
+        #send mail for reset password
+        $email->setSubject("รหัสผ่านสำรอง");
+        // $email->setMessage('รหัสผ่านสำรองของคุณคือ ' . $number_random . ' ใช้สำหรับการเข้าสู่ระบบ' . '<br>');
+        $email_template = view('email_keypass_template', ['imagePath' => $imagePath, 'data' => $data, 'number_random' => $number_random]);
+
+        $email->setMessage($email_template);
+
+        if ($email->send()) {
+            $check = true;
+        } else {
+            $check = false;
+        }
+
+        return $check;
+    }
+
     public function create_user($type = null)
     {
         helper(['form']);
         $rules = [
             'name' => 'required|min_length[2]|max_length[200]',
             'last' => 'required|min_length[2]|max_length[200]',
-            'phone' => 'required|min_length[10]|max_length[10]',
+            'phone' => 'required|numeric|min_length[10]|max_length[10]',
             'email' => 'required|min_length[4]|max_length[100]|valid_email|is_unique[user_table.email_user]',
         ];
         $number_random = mt_rand(100000, 999999);
+        $key_pass = password_hash($number_random, PASSWORD_DEFAULT);
+        $key_pass = str_replace(['.', '/'], '', $key_pass);
+
         if ($this->validate($rules)) {
             $userModels = new UserModels();
             $data_check = $userModels->findAll();
@@ -79,17 +108,18 @@ class UserController extends BaseController
                     'lastname' => $this->request->getVar('last'),
                     'phone' => $this->request->getVar('phone'),
                     'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
-                    'key_pass' => password_hash(str_replace(['.', '/'], '', $number_random), PASSWORD_DEFAULT),
+                    'key_pass' => $key_pass,
                     'status_user' => 1,
                     'status_rental' => 1,
                     'type_user' => $type,
                 ];
                 $check = $userModels->save($data);
                 if ($check) {
+                    $this->sendMail($data, $number_random);
                     $response = [
                         'success' => true,
-                        'message' => 'สร้างข้อมูลสำเร็จ รหัส 6 หลักคุณคือ ' . $number_random . ' ใช้ในกรณีลืมรหัสผ่าน',
-                        'reload' => true,
+                        'message' => 'สร้างข้อมูลสำเร็จรหัสผ่านสำรองจะถูกส่งไปที่อีเมล์ของคุณ',
+                        'reload' => false,
                     ];
                 } else {
                     $response = [
@@ -126,7 +156,7 @@ class UserController extends BaseController
         $rules = [
             'name' => 'required|min_length[2]|max_length[200]',
             'last' => 'required|min_length[2]|max_length[200]',
-            'phone' => 'required|min_length[10]|max_length[10]',
+            'phone' => 'required|numeric|min_length[10]|max_length[10]',
             'email' => 'required|min_length[4]|max_length[100]|valid_email|is_unique[user_table.email_user,id_user,' . $id_user . ']',
         ];
         $password = $this->request->getVar('password');
@@ -148,14 +178,18 @@ class UserController extends BaseController
                 ];
             } else {
                 $number_random = mt_rand(100000, 999999);
+                $key_pass = password_hash($number_random, PASSWORD_DEFAULT);
+                $key_pass = str_replace(['.', '/'], '', $key_pass);
+
                 $passdata = [
                     'password' => password_hash($password, PASSWORD_DEFAULT),
-                    'key_pass' => password_hash(str_replace(['.', '/'], '', $number_random), PASSWORD_DEFAULT),
+                    'key_pass' => $key_pass,
                 ];
                 $data = array_merge($data, $passdata);
+                $this->sendMail($data, $number_random);
                 $response = [
                     'success' => true,
-                    'message' => 'อัปเดตข้อมูลสำเร็จ รหัส 6 หลักใหม่คือ ' . $number_random . ' ใช้ในกรณีลืมรหัสผ่าน',
+                    'message' => 'อัปเดตข้อมูลสำเร็จรหัสผ่านสำรองจะถูกส่งไปที่อีเมล์ของคุณ',
                     'reload' => false,
                     'pass' => $password
                 ];
@@ -186,7 +220,7 @@ class UserController extends BaseController
         $rules = [
             'name' => 'required|min_length[2]|max_length[200]',
             'last' => 'required|min_length[2]|max_length[200]',
-            'phone' => 'required|min_length[10]|max_length[10]',
+            'phone' => 'required|numeric|min_length[10]|max_length[10]',
             'email' => 'required|min_length[4]|max_length[100]|valid_email|is_unique[user_table.email_user,id_user,' . $id_user . ']',
         ];
         $password = $this->request->getVar('password');

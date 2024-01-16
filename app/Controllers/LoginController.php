@@ -3,16 +3,12 @@
 namespace App\Controllers;
 
 use App\Models\UserModels;
+use App\Models\DetailsModels;
 
 // use App\Models\CategoryModels;
 
 class LoginController extends BaseController
 {
-
-    public function index_Login()
-    {
-        echo view('Login');
-    }
 
     public function loginAuth()
     {
@@ -47,7 +43,7 @@ class LoginController extends BaseController
                         'reload' => true,
                         'type' => $url,
                     ];
-                }else{
+                } else {
                     $response = [
                         'success' => false,
                         'message' => 'บัญชีผู้ใช้นี้ถูกระงับ',
@@ -80,25 +76,6 @@ class LoginController extends BaseController
         return redirect()->to('/');
     }
 
-    public function index_Register()
-    {
-        echo view('Register');
-    }
-
-    public function index_forgotpassword()
-    {
-        echo view('Forgotpassword');
-    }
-
-    public function index_resetpassword($pin = null, $email = null)
-    {
-        $data = [
-            'pin' => $pin,
-            'email' => $email
-        ];
-        echo view('ResetPassword', $data);
-    }
-
     public function update_resetpassword()
     {
         helper(['form']);
@@ -112,16 +89,20 @@ class LoginController extends BaseController
         if ($data) {
             if ($data['key_pass'] === $pin) {
                 $number_random = mt_rand(100000, 999999);
+                $key_pass = password_hash($number_random, PASSWORD_DEFAULT);
+                $key_pass = str_replace(['.', '/'], '', $key_pass);
                 $data = [
                     'password' => password_hash($password, PASSWORD_DEFAULT),
-                    'key_pass' => password_hash(str_replace(['.', '/'], '', $number_random), PASSWORD_DEFAULT),
+                    'key_pass' => $key_pass,
                 ];
                 $userModels->set($data);
                 $updated = $userModels->where('email_user', $email)->update();
+                $data = $userModels->where('email_user', $email)->first();
+                $this->sendMail_keypass($data, $number_random);
                 if ($updated) {
                     $response = [
                         'success' => true,
-                        'message' => 'อัปเดตรหัสผ่านใหม่สำเร็จ รหัส 6 หลักคุณคือ ' . $number_random . ' ใช้ในกรณีลืมรหัสผ่าน',
+                        'message' => 'อัปเดตข้อมูลสำเร็จรหัสผ่านสำรองจะถูกส่งไปที่อีเมล์ของคุณ',
                         'reload' => true,
                     ];
                 } else {
@@ -149,31 +130,24 @@ class LoginController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    public function checkpin()
+    public function request_resetpassword()
     {
         $UserModels = new UserModels();
         $email = $this->request->getVar('email');
-        $pin = $this->request->getVar('pin');
-
         $data = $UserModels->where('email_user', $email)->first();
-
+        $check = $this->sendMail($email, $data);
         if ($data) {
-            $key_pass = $data['key_pass'];
-            $authenticatePin = password_verify($pin, $key_pass);
-
-            if ($authenticatePin) {
+            if ($check) {
                 $response = [
                     'success' => true,
-                    'message' => 'รหัส PIN ถูกต้อง',
-                    'reload' => true,
-                    'data' => $key_pass . '/' . $email
+                    'message' => 'กรุณาตรวจสอบอีเมล์ของคุณเพื่อเปลี่ยนรหัสผ่าน',
+                    'reload' => false,
                 ];
             } else {
                 $response = [
                     'success' => false,
-                    'message' => 'รหัส PIN ไม่ถูกต้อง',
+                    'message' => 'อีเมล์ไม่ถูกต้อง',
                     'reload' => false,
-                    'data' => $key_pass
                 ];
             }
         } else {
@@ -188,4 +162,91 @@ class LoginController extends BaseController
         return $this->response->setJSON($response);
     }
 
+    function sendMail($email = null, $data = null)
+    {
+        $to = $email;
+        $imagePath = 'http://52.139.174.147/test/dist/img/logo11.png';
+        $url_resetpassword = base_url('resetpassword/' . $data['key_pass'] . '/' . $email);
+
+        $email = \Config\Services::email();
+        $email->setTo($to);
+        $email->setFrom($to, 'Bang book shop');
+
+        #send mail for reset password
+        $email->setSubject("รีเซ็ตรหัสผ่าน");
+
+        // Load the email template view
+        $email_template = view('email_resetpass_template', ['imagePath' => $imagePath, 'data' => $data, 'url_resetpassword' => $url_resetpassword]);
+
+        $email->setMessage($email_template);
+
+        if ($email->send()) {
+            $check = true;
+        } else {
+            $check = false;
+        }
+
+        return $check;
+    }
+
+    function sendMail_keypass($data = null, $number_random = null)
+    {
+        $to = $data['email_user'];
+        // $imagePath = base_url('dist/img/logo11.png');
+        $imagePath = 'http://52.139.174.147/test/dist/img/logo11.png';
+
+        $email = \Config\Services::email();
+
+        $email->setTo($to);
+        $email->setFrom($to, 'Bang book shop');
+        #send mail for reset password
+        $email->setSubject("รหัสผ่านสำรอง");
+        // $email->setMessage('รหัสผ่านสำรองของคุณคือ ' . $number_random . ' ใช้สำหรับการเข้าสู่ระบบ' . '<br>');
+        $email_template = view('email_keypass_template', ['imagePath' => $imagePath, 'data' => $data, 'number_random' => $number_random]);
+
+        $email->setMessage($email_template);
+
+        if ($email->send()) {
+            $check = true;
+        } else {
+            $check = false;
+        }
+
+        return $check;
+    }
+
+    public function index_Login()
+    {
+        $DetailsModels = new DetailsModels();
+        $data['details'] = $DetailsModels->findAll();
+
+        echo view('Login', $data);
+    }
+    public function index_Register()
+    {
+        $DetailsModels = new DetailsModels();
+        $data['details'] = $DetailsModels->findAll();
+
+        echo view('Register', $data);
+    }
+
+    public function index_forgotpassword()
+    {
+        $DetailsModels = new DetailsModels();
+        $data['details'] = $DetailsModels->findAll();
+
+        echo view('Forgotpassword', $data);
+    }
+
+    public function index_resetpassword($pin = null, $email = null)
+    {
+        $DetailsModels = new DetailsModels();
+        $data_['details'] = $DetailsModels->findAll();
+
+        $data = [
+            'pin' => $pin,
+            'email' => $email
+        ];
+        echo view('ResetPassword', $data + $data_);
+    }
 }

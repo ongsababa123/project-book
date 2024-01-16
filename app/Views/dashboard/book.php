@@ -245,6 +245,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                         Swal.fire({
                             title: response.image_error,
                             icon: 'error',
+                            confirmButtonText: "ตกลง",
                             showConfirmButton: true,
                             width: '55%'
                         });
@@ -254,7 +255,8 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                     Swal.fire({
                         title: "เกิดข้อผิดพลาด",
                         icon: 'error',
-                        showConfirmButton: true
+                        showConfirmButton: true,
+                        confirmButtonText: "ตกลง",
                     });
                 }
             });
@@ -301,7 +303,8 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                             Swal.fire({
                                 title: response.message,
                                 icon: 'error',
-                                showConfirmButton: true
+                                showConfirmButton: true,
+                                confirmButtonText: "ตกลง",
                             });
                         }
                     });

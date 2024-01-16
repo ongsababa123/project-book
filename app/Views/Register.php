@@ -19,7 +19,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link rel="icon" href="<?= base_url('dist/img/icon/favicon.ico') ?>" type="image/gif">
 
-    <title>Register</title>
+    <title>สมัครสมาชิก</title>
 
 </head>
 <style>
@@ -55,14 +55,12 @@
                         <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" class="nav-link">รายละเอียด</i></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
-                            <a class="dropdown-item">1. ข้อจำกัดในการเช่าหนังสือ 7 เล่ม / ครั้ง </a>
-                            <a class="dropdown-item">2. หากลูกค้าทำหนังสือหายปรับตามราคาหนังสือเป็น 5 เท่า</a>
-                            <a class="dropdown-item">3. หากเลยกำหนดจะถูกปรับ 20 บาท / เล่ม / วัน </a>
-                            <a class="dropdown-item">4. ค่ามัดจำเล่มละ 100 บาท </a>
-                            <a class="dropdown-item">5. หากจองแล้วไม่เข้ามารับภายใน 2วัน
-                                ที่ทำการจองจะต้องทำการจองใหม่เท่านั้น</a>
-                            <a class="dropdown-item">6. ให้สิทธ์ในการเช่าเพียง 1ครั้ง สูงสุด 7 เล่ม
-                                หากยังไม่คืนจะไม่มารถยืมต่อได้</a>
+                            <?php foreach ($details as $key => $value): ?>
+                                <a class="dropdown-item">
+                                    <?= $key + 1 ?> :
+                                    <?= $value['text_details'] ?>
+                                </a>
+                            <?php endforeach; ?>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -110,11 +108,13 @@
                                 id="password" required oninput="checkPassword()">
                             <br>
                             <div class="alert alert-danger" role="alert" id="lengthAlert" style="display: none;">
-                                รหัสผ่านต้องมีความยาวอย่างน้อย 5 ตัวอักษร
+                                รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร
                             </div>
-
                             <div class="alert alert-danger" role="alert" id="symbolAlert" style="display: none;">
                                 รหัสผ่านห้ามใช้เครื่องหมายพิเศษ
+                            </div>
+                            <div class="alert alert-danger" role="alert" id="charAlert" style="display: none;">
+                                รหัสผ่านจะต้องมีตัวอักษร และตัวเลข
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -189,7 +189,8 @@
                             title: response.message,
                             icon: 'success',
                             showConfirmButton: true,
-                            allowOutsideClick: false
+                            allowOutsideClick: false,
+                            confirmButtonText: 'ตกลง',
                         }).then((result) => {
                             // Check if the user clicked the confirm button
                             if (result.isConfirmed) {
@@ -200,9 +201,13 @@
 
                     } else {
                         if (response.validator) {
+
                             var mes = "";
-                            if (response.validator.email) {
-                                mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้องหรือมีอีเมล์ซ้ำในระบบ.' + '<br><hr/>'
+                            if (response.validator.email === "The email field must contain a valid email address.") {
+                                mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้อง.' + '<br><hr/>'
+                            }
+                            if (response.validator.email === "The email field must contain a unique value.") {
+                                mes += 'อีเมล์นี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
                             }
                             if (response.validator.name) {
                                 mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
@@ -210,20 +215,28 @@
                             if (response.validator.last) {
                                 mes += 'นามสกุลต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
                             }
-                            if (response.validator.phone) {
+                            if (response.validator.phone === "The phone field must contain only numbers.") {
+                                mes += 'เบอร์ติดต่อต้องมีเฉพาะตัวเลขเท่านั้น.' + '<br>';
+                            }
+                            if (response.validator.phone === "The phone field must be at least 10 characters in length.") {
                                 mes += 'เบอร์ติดต่อต้องมี 10 หลัก.' + '<br>';
+                            }
+                            if (response.validator.phone === "The phone field cannot exceed 10 characters in length.") {
+                                mes += 'เบอร์ติดต่อต้องมีไม่เกิน 10 หลัก.' + '<br>';
                             }
                             Swal.fire({
                                 title: mes,
                                 icon: 'error',
                                 showConfirmButton: true,
-                                width: '55%'
+                                width: '55%',
+                                confirmButtonText: 'ตกลง',
                             });
                         } else {
                             Swal.fire({
                                 title: response.message,
                                 icon: 'error',
-                                showConfirmButton: true
+                                showConfirmButton: true,
+                                confirmButtonText: 'ตกลง',
                             });
                         }
                     }
@@ -232,7 +245,8 @@
                     Swal.fire({
                         title: "เกิดข้อผิดพลาด",
                         icon: 'error',
-                        showConfirmButton: true
+                        showConfirmButton: true,
+                        confirmButtonText: 'ตกลง',
                     });
                 }
             });
@@ -247,9 +261,10 @@
             var passwordInput = document.getElementById("password");
             var lengthAlert = document.getElementById("lengthAlert");
             var symbolAlert = document.getElementById("symbolAlert");
+            var charAlert = document.getElementById("charAlert");
 
             // Check ความยาว
-            if (passwordInput.value.length >= 5) {
+            if (passwordInput.value.length >= 8) {
                 lengthAlert.style.display = "none";
             } else {
                 lengthAlert.style.display = "block";
@@ -262,6 +277,11 @@
                 symbolAlert.style.display = "block";
             }
 
+            if (/^(?=.*\d)(?=.*[a-zA-Z])/.test(passwordInput.value)) {
+                charAlert.style.display = "none";
+            } else {
+                charAlert.style.display = "block";
+            }
             updateSubmitButton();
         }
 
@@ -270,7 +290,7 @@
             var passwordInput = document.getElementById("password");
 
             // Check ว่า checkbox ถูกติ๊ก และรหัสผ่านตรงตามเงื่อนไขหรือไม่
-            if (checkCheckbox && passwordInput.value.length >= 5 && !/[^\w\s]/.test(passwordInput.value)) {
+            if (checkCheckbox && passwordInput.value.length >= 8 && !/[^\w\s]/.test(passwordInput.value) && /^(?=.*\d)(?=.*[a-zA-Z])/.test(passwordInput.value)) {
                 $('#submit').prop('disabled', false);
             } else {
                 $('#submit').prop('disabled', true);

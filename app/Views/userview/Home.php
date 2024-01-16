@@ -1,4 +1,4 @@
-<title>Home</title>
+<title>หน้าหลัก</title>
 
 <!-- End Navbar -->
 

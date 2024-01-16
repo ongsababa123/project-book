@@ -17,7 +17,7 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="<?= base_url('assets/demo/demo.css') ?>" rel="stylesheet" />
     <link rel="icon" href="<?= base_url('dist/img/icon/favicon.ico') ?>" type="image/gif">
-    <title>Register</title>
+    <title>รีเซ็ตรหัสผ่าน</title>
 
 </head>
 <style>
@@ -53,14 +53,12 @@
                         <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" class="nav-link">รายละเอียด</i></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
-                            <a class="dropdown-item">1. ข้อจำกัดในการเช่าหนังสือ 7 เล่ม / ครั้ง </a>
-                            <a class="dropdown-item">2. หากลูกค้าทำหนังสือหายปรับตามราคาหนังสือเป็น 5 เท่า</a>
-                            <a class="dropdown-item">3. หากเลยกำหนดจะถูกปรับ 20 บาท / เล่ม / วัน </a>
-                            <a class="dropdown-item">4. ค่ามัดจำเล่มละ 100 บาท </a>
-                            <a class="dropdown-item">5. หากจองแล้วไม่เข้ามารับภายใน 2วัน
-                                ที่ทำการจองจะต้องทำการจองใหม่เท่านั้น</a>
-                            <a class="dropdown-item">6. ให้สิทธ์ในการเช่าเพียง 1ครั้ง สูงสุด 7 เล่ม
-                                หากยังไม่คืนจะไม่มารถยืมต่อได้</a>
+                            <?php foreach ($details as $key => $value): ?>
+                                <a class="dropdown-item">
+                                    <?= $key + 1 ?> :
+                                    <?= $value['text_details'] ?>
+                                </a>
+                            <?php endforeach; ?>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -90,10 +88,27 @@
                             <input type="textarea" class="form-control" placeholder="อีเมล์" id="pin" name="pin"
                                 value="<?= $pin ?>" hidden>
                             <label>รหัสผ่าน</label>
-                            <input type="password" class="form-control" placeholder="รหัสผ่าน" id="password"
-                                name="password" required>
+                            <input type="password" class="form-control" placeholder="รหัสผ่าน" name="password"
+                                id="password" required oninput="checkPassword()">
+                            <label>ยืนยันรหัสผ่าน</label>
+                            <input type="password" class="form-control" placeholder="ยืนยันรหัสผ่าน"
+                                name="password_confirmation" id="password_confirmation" required
+                                oninput="checkPassword()">
+                            <br>
+                            <div class="alert alert-danger" role="alert" id="lengthAlert" style="display: none;">
+                                รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร
+                            </div>
+                            <div class="alert alert-danger" role="alert" id="symbolAlert" style="display: none;">
+                                รหัสผ่านห้ามใช้เครื่องหมายพิเศษ
+                            </div>
+                            <div class="alert alert-danger" role="alert" id="charAlert" style="display: none;">
+                                รหัสผ่านจะต้องมีตัวอักษร และตัวเลข
+                            </div>
+                            <div class="alert alert-danger" role="alert" id="confirmAlert" style="display: none;">
+                                รหัสผ่านและยืนยันรหัสผ่านต้องตรงกัน
+                            </div>
                             <button type="submit" class="btn btn-warning btn-block btn-round bg-warning" name="submit"
-                                value="Submit" id="submit">ยืนยัน</button>
+                                value="Submit" id="submit">ยืนยันรหัสผ่าน</button>
                         </form>
                     </div>
                 </div>
@@ -118,6 +133,7 @@
     <script>
         $(document).ready(function () {
             $(".overlay").hide();
+            updateSubmitButton();
         });
 
         $("#forgotpassword_form").on('submit', function (e) {
@@ -152,6 +168,7 @@
                             title: response.message,
                             icon: 'success',
                             showConfirmButton: true,
+                            confirmButtonText: "ตกลง",
                             allowOutsideClick: false
                         }).then((result) => {
                             // Check if the user clicked the confirm button
@@ -164,11 +181,62 @@
                         Swal.fire({
                             title: response.message,
                             icon: 'error',
-                            showConfirmButton: true
+                            showConfirmButton: true,
+                            confirmButtonText: "ตกลง",
                         });
                     }
                 },
             });
+        }
+    </script>
+    <script>
+        function checkPassword() {
+            var passwordInput = document.getElementById("password");
+            var confirmPasswordInput = document.getElementById("password_confirmation");
+            var lengthAlert = document.getElementById("lengthAlert");
+            var symbolAlert = document.getElementById("symbolAlert");
+            var charAlert = document.getElementById("charAlert");
+            var confirmAlert = document.getElementById("confirmAlert");
+            // Check ความยาว
+            if (passwordInput.value.length >= 8) {
+                lengthAlert.style.display = "none";
+            } else {
+                lengthAlert.style.display = "block";
+            }
+
+            // Check เครื่องหมายพิเศษ
+            if (!/[^\w\s]/.test(passwordInput.value)) {
+                symbolAlert.style.display = "none";
+            } else {
+                symbolAlert.style.display = "block";
+            }
+
+            if (/^(?=.*\d)(?=.*[a-zA-Z])/.test(passwordInput.value)) {
+                charAlert.style.display = "none";
+            } else {
+                charAlert.style.display = "block";
+            }
+
+
+            if (passwordInput.value === confirmPasswordInput.value) {
+                confirmAlert.style.display = "none";
+            } else {
+                confirmAlert.style.display = "block";
+            }
+            console.log(passwordInput.value != confirmPasswordInput.value);
+            updateSubmitButton();
+        }
+
+        function updateSubmitButton() {
+            var passwordInput = document.getElementById("password");
+            var confirmPasswordInput = document.getElementById("password_confirmation");
+
+            // Check ว่า checkbox ถูกติ๊ก และรหัสผ่านตรงตามเงื่อนไขหรือไม่
+            if (passwordInput.value.length >= 8 && !/[^\w\s]/.test(passwordInput.value) && /^(?=.*\d)(?=.*[a-zA-Z])/.test(passwordInput.value) && passwordInput.value === confirmPasswordInput.value) {
+                $('#submit').prop('disabled', false);
+            } else {
+                $('#submit').prop('disabled', true);
+            }
         }
     </script>
 </body>

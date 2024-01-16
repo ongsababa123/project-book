@@ -14,7 +14,7 @@ $routes->match(['get', 'post'], '/logout', 'LoginController::logout');
 $routes->get('/register', 'LoginController::index_Register', ['filter' => ['CartCheck', 'HistoryCheck']]);
 
 $routes->get('/forgotpassword', 'LoginController::index_forgotpassword');
-$routes->match(['get', 'post'], '/checkpin', 'LoginController::checkpin');
+$routes->match(['get', 'post'], '/request_resetpassword', 'LoginController::request_resetpassword');
 
 $routes->match(['get', 'post'], '/resetpassword/(:any)/(:any)', 'LoginController::index_resetpassword/$1/$2');
 $routes->match(['get', 'post'], '/update/resetpassword', 'LoginController::update_resetpassword');
@@ -103,10 +103,15 @@ $routes->group("dashboard/history/", ['filter' => ['CartCheck', 'HistoryCheck']]
     $routes->match(['get', 'post'], 'update_status_his/(:num)', 'HistoryController::update_status_his/$1');  //update_status
 });
 
-$routes->group("dashboard/late-price/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {
-    $routes->match(['get', 'post'], 'index', 'LatePriceController::index', ['filter' => ['authGuard' , 'ISLogin']]); //display
-    $routes->match(['get', 'post'], 'getdata', 'LatePriceController::get_data_table');  //getData
-    $routes->match(['get', 'post'], 'edit/(:num)', 'LatePriceController::edit_lateprice/$1');  //edit
+$routes->group("dashboard/setting/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {
+    $routes->match(['get', 'post'], 'index', 'SettingController::index', ['filter' => ['authGuard' , 'ISLogin']]); //display
+    $routes->match(['get', 'post'], 'getdata', 'SettingController::get_data_table');  //getData
+
+    $routes->match(['get', 'post'], 'lateprice/edit/(:num)', 'SettingController::edit_lateprice/$1');  //edit late price
+    $routes->match(['get', 'post'], 'dayrent/edit/(:num)', 'SettingController::edit_dayrent/$1');  //edit day rent
+
+    $routes->match(['get', 'post'], 'details/create', 'SettingController::crate_details');  //create details
+    $routes->match(['get', 'post'], 'details/edit/(:num)', 'SettingController::edit_details/$1');  //create details
 });
 
 $routes->group("dashboard/promotion/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {

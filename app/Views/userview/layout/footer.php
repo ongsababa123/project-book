@@ -33,6 +33,7 @@
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
+            confirmButtonText: "ตกลง",
             showConfirmButton: true,
             timer: 5000,
             timerProgressBar: true,

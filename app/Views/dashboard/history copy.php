@@ -998,6 +998,7 @@
                             Swal.fire({
                                 title: response.message,
                                 icon: 'success',
+                                confirmButtonText: "ตกลง",
                                 showConfirmButton: true,
                                 allowOutsideClick: true
                             });
@@ -1023,6 +1024,7 @@
                     Swal.fire({
                         title: "เกิดข้อผิดพลาด",
                         icon: 'error',
+                        confirmButtonText: "ตกลง",
                         showConfirmButton: true
                     });
                 }
@@ -1075,6 +1077,7 @@
                             Swal.fire({
                                 title: response.message,
                                 icon: 'error',
+                                confirmButtonText: "ตกลง",
                                 showConfirmButton: true
                             });
                         }

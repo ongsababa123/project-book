@@ -80,7 +80,7 @@
                     </div>
                     <div class="form-group">
                         <label>เบอร์โทรศัพท์</label>
-                        <input type="number" class="form-control" placeholder="กรอกเบอร์โทรศัพท์" id="phone"
+                        <input type="text" class="form-control" placeholder="กรอกเบอร์โทรศัพท์" id="phone"
                             name="phone" value="<?= $user_data[0]['phone'] ?>" required>
                     </div>
                     <div class="form-group">
@@ -104,9 +104,11 @@
                             class="form-control" id="password" name="password" oninput="checkPassword()" />
                     </div>
                     <div class="alert alert-danger" role="alert" id="lengthAlert" style="display: none;">
-                        รหัสผ่านต้องมีความยาวอย่างน้อย 5 ตัวอักษร
+                        รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร
                     </div>
-
+                    <div class="alert alert-danger" role="alert" id="charAlert" style="display: none;">
+                        รหัสผ่านจะต้องมีตัวอักษร และตัวเลข
+                    </div>
                     <div class="alert alert-danger" role="alert" id="symbolAlert" style="display: none;">
                         รหัสผ่านห้ามใช้เครื่องหมายพิเศษ
                     </div>
@@ -146,7 +148,7 @@
         var symbolAlert = document.getElementById("symbolAlert");
 
         // Check ความยาว
-        if (passwordInput.value.length >= 5) {
+        if (passwordInput.value.length >= 8) {
             lengthAlert.style.display = "none";
         } else {
             lengthAlert.style.display = "block";
@@ -159,17 +161,22 @@
             symbolAlert.style.display = "block";
         }
 
+        if (/^(?=.*\d)(?=.*[a-zA-Z])/.test(passwordInput.value)) {
+            charAlert.style.display = "none";
+        } else {
+            charAlert.style.display = "block";
+        }
+
         updateSubmitButton();
     }
 
     function updateSubmitButton() {
         var checkCheckbox = $('#check').is(':checked');
         var passwordInput = document.getElementById("password");
-        console.log(checkCheckbox);
         if (checkCheckbox) {
             $('#password').prop('disabled', false);
             $('#submit').prop('disabled', true);
-            if (passwordInput.value.length >= 5 && !/[^\w\s]/.test(passwordInput.value)) {
+            if (passwordInput.value.length >= 8 && !/[^\w\s]/.test(passwordInput.value) && /^(?=.*\d)(?=.*[a-zA-Z])/.test(passwordInput.value)) {
                 $('#submit').prop('disabled', false);
             } else {
                 $('#submit').prop('disabled', true);
@@ -210,6 +217,7 @@
                     Swal.fire({
                         title: response.message,
                         icon: 'success',
+                        confirmButtonText: "ตกลง",
                         showConfirmButton: true,
                         allowOutsideClick: false
                     }).then((result) => {
@@ -222,21 +230,31 @@
                 } else {
                     if (response.validator) {
                         var mes = "";
-                        if (response.validator.email) {
-                            mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้องหรือมีอีเมล์ซ้ำในระบบ.' + '<br><hr/>'
-                        }
-                        if (response.validator.name) {
-                            mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
-                        }
-                        if (response.validator.last) {
-                            mes += 'นามสกุลต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
-                        }
-                        if (response.validator.phone) {
-                            mes += 'เบอร์ติดต่อต้องมี 10 หลัก.' + '<br>';
-                        }
+                            if (response.validator.email === "The email field must contain a valid email address.") {
+                                mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้อง.' + '<br><hr/>'
+                            }
+                            if (response.validator.email === "The email field must contain a unique value.") {
+                                mes += 'อีเมล์นี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
+                            }
+                            if (response.validator.name) {
+                                mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
+                            }
+                            if (response.validator.last) {
+                                mes += 'นามสกุลต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
+                            }
+                            if (response.validator.phone === "The phone field must contain only numbers.") {
+                                mes += 'เบอร์ติดต่อต้องมีเฉพาะตัวเลขเท่านั้น.' + '<br>';
+                            }
+                            if (response.validator.phone === "The phone field must be at least 10 characters in length.") {
+                                mes += 'เบอร์ติดต่อต้องมี 10 หลัก.' + '<br>';
+                            }
+                            if (response.validator.phone === "The phone field cannot exceed 10 characters in length.") {
+                                mes += 'เบอร์ติดต่อต้องมีไม่เกิน 10 หลัก.' + '<br>';
+                            }
                         Swal.fire({
                             title: mes,
                             icon: 'error',
+                            confirmButtonText: "ตกลง",
                             showConfirmButton: true,
                             width: '55%'
                         });
@@ -244,6 +262,7 @@
                         Swal.fire({
                             title: response.message,
                             icon: 'error',
+                            confirmButtonText: "ตกลง",
                             showConfirmButton: true
                         });
                     }
@@ -253,6 +272,7 @@
                 Swal.fire({
                     title: "เกิดข้อผิดพลาด",
                     icon: 'error',
+                    confirmButtonText: "ตกลง",
                     showConfirmButton: true
                 });
             }

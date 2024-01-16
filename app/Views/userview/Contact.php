@@ -53,7 +53,7 @@
                     <label for="details">ส่งคำติชมหรือเสนอคำแนะนำเพิ่มเติม</label>
                     <textarea class="form-control" id="details" rows="4" name="details"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary" name="submit" value="Submit" id="submit">Submit</button>
+                <button type="submit" class="btn btn-primary" name="submit" value="Submit" id="submit">ส่ง</button>
             </form>
         </div>
     </div>
@@ -132,6 +132,7 @@
                     Swal.fire({
                         title: response.message,
                         icon: 'error',
+                        confirmButtonText: "ตกลง",
                         showConfirmButton: true
                     });
                 }
@@ -140,6 +141,7 @@
                 Swal.fire({
                     title: "เกิดข้อผิดพลาด",
                     icon: 'error',
+                    confirmButtonText: "ตกลง",
                     showConfirmButton: true
                 });
             }

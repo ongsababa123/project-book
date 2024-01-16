@@ -363,6 +363,7 @@
             Swal.fire({
                 title: "การเช่าหนังสือสามารถเช่าได้แค่ 7 เล่มต่อครั้ง",
                 icon: 'error',
+                confirmButtonText: "ตกลง",
                 showConfirmButton: true
             });
             // Hide loading indicator
@@ -398,6 +399,7 @@
                     Swal.fire({
                         title: "เกิดข้อผิดพลาด",
                         icon: 'error',
+                        confirmButtonText: "ตกลง",
                         showConfirmButton: true
                     });
                 },
@@ -463,6 +465,7 @@
                         Swal.fire({
                             title: response.message,
                             icon: 'error',
+                            confirmButtonText: "ตกลง",
                             showConfirmButton: true
                         });
                     }

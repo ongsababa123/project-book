@@ -79,11 +79,11 @@
                             <!-- Dropdown items go here -->
                             <a class="dropdown-item" href="<?= site_url('dashboard/profile/index'); ?>"> <i
                                     class="fas fa-id-card"></i>
-                                Profile
+                                ประวัติ
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="nav-link" href="<?= site_url('/logout'); ?>" role="button">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                                <i class="fas fa-sign-out-alt"></i> ออกจากระบบ
                             </a>
                         </div>
                     </div>
@@ -198,10 +198,10 @@
                         <?php if (session()->get('type') == '2' || session()->get('type') == '3'): ?>
                             <li class="nav-header">ระบบการจัดการระบบ</li>
                             <li class="nav-item">
-                                <a href="<?= site_url('/dashboard/late-price/index'); ?>" class="nav-link">
-                                    <i class="nav-icon fas fa-cash-register"></i>
+                                <a href="<?= site_url('/dashboard/setting/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-cogs"></i>
                                     <p>
-                                        ข้อมูลค่าปรับ
+                                        การตั้งค่าระบบ
                                     </p>
                                 </a>
                             </li>

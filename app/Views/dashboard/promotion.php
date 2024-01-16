@@ -239,6 +239,7 @@
                             Swal.fire({
                                 title: response.message,
                                 icon: 'error',
+                                confirmButtonText: "ตกลง",
                                 showConfirmButton: true
                             });
                         }
@@ -285,6 +286,7 @@
                         Swal.fire({
                             title: response.image_error,
                             icon: 'error',
+                            confirmButtonText: "ตกลง",
                             showConfirmButton: true,
                             width: '55%'
                         });
@@ -294,6 +296,7 @@
                     Swal.fire({
                         title: "เกิดข้อผิดพลาด",
                         icon: 'error',
+                        confirmButtonText: "ตกลง",
                         showConfirmButton: true
                     });
                 }

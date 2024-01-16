@@ -146,8 +146,11 @@
                     } else {
                         if (response.validator) {
                             var mes = "";
-                            if (response.validator.email) {
-                                mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้องหรือมีอีเมล์ซ้ำในระบบ.' + '<br><hr/>'
+                            if (response.validator.email === "The email field must contain a valid email address.") {
+                                mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้อง.' + '<br><hr/>'
+                            }
+                            if (response.validator.email === "The email field must contain a unique value.") {
+                                mes += 'อีเมล์นี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
                             }
                             if (response.validator.name) {
                                 mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
@@ -155,12 +158,19 @@
                             if (response.validator.last) {
                                 mes += 'นามสกุลต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
                             }
-                            if (response.validator.phone) {
+                            if (response.validator.phone === "The phone field must contain only numbers.") {
+                                mes += 'เบอร์ติดต่อต้องมีเฉพาะตัวเลขเท่านั้น.' + '<br>';
+                            }
+                            if (response.validator.phone === "The phone field must be at least 10 characters in length.") {
                                 mes += 'เบอร์ติดต่อต้องมี 10 หลัก.' + '<br>';
+                            }
+                            if (response.validator.phone === "The phone field cannot exceed 10 characters in length.") {
+                                mes += 'เบอร์ติดต่อต้องมีไม่เกิน 10 หลัก.' + '<br>';
                             }
                             Swal.fire({
                                 title: mes,
                                 icon: 'error',
+                                confirmButtonText: "ตกลง",
                                 showConfirmButton: true,
                                 width: '55%'
                             });
@@ -168,6 +178,7 @@
                             Swal.fire({
                                 title: response.message,
                                 icon: 'error',
+                                confirmButtonText: "ตกลง",
                                 showConfirmButton: true
                             });
                         }
@@ -177,6 +188,7 @@
                     Swal.fire({
                         title: "เกิดข้อผิดพลาด",
                         icon: 'error',
+                        confirmButtonText: "ตกลง",
                         showConfirmButton: true
                     });
                 }
