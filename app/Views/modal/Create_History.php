@@ -76,7 +76,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label>ราคาเช่าหนังสือ(ยอดรวม)</label>
+                            <label>ราคาเช่าหนังสือ (ยอดรวม)</label>
                             <input type="text" class="form-control" placeholder="ราคาเช่า(ยอดรวม)" id="price_book_"
                                 name="price_book_" disabled>
                         </div>
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                    <div class="form-group">
+                        <div class="form-group">
                             <label>ราคาเช่าหนังสือทั้งหมด (ค่ามัดจำและหักโปรโมชั่น)</label>
                             <input type="text" class="form-control"
                                 placeholder="ราคาเช่าหนังสือ(ค่ามัดจำและหักโปรโมชั่น)" id="price_book_promotion"
@@ -98,6 +98,7 @@
                     </div>
                 </div>
                 <input type="text" class="form-control" id="price_book_create" name="price_book_create" hidden>
+                <input type="text" class="form-control" id="price_deposit_" name="price_deposit_" hidden>
                 <input type="text" class="form-control" id="sumid_promotion" name="sumid_promotion" hidden>
                 <input type="text" class="form-control" id="sum_price_promotion" name="sum_price_promotion" hidden>
                 <input type="text" id="url_route" name="url_route" hidden>
@@ -189,13 +190,14 @@
                 selectedid_book.push(selectElement.options[i].value);
                 let book__mat = data_book.find(element_book___ => element_book___.id_book === selectElement.options[i].value);
                 price__ = price__ + parseInt(book__mat.price);
-                cal_Deposit_price(book__mat.price, function (result) {
+                cal_Deposit_price(book__mat.price_book, function (result) {
                     price_deposit = price_deposit + parseInt(result);
                 })
             }
         }
         $(".modal-body #count_book").html("จำนวน " + selectedid_book.length + " เล่ม");
         $(".modal-body #price_deposit").val(price_deposit);
+        $(".modal-body #price_deposit_").val(price_deposit);
         check_promotion(id_user, selectedid_book, price__, function (result) {
             $(".modal-body #sum_price_promotion").val(result.price_promotion);
 

@@ -128,17 +128,20 @@
             $(".modal-body #price_book").val('');
             $(".modal-body #price_book_book").val('');
             $(".modal-body #uploadImage").val('');
-            $(".modal-body #image-preview").attr("src", '<?= base_url("dist/img/image-preview.png"); ?>');
-            $(".modal-body #image-preview-extra").attr("href", '<?= base_url("dist/img/image-preview.png"); ?>');
+            $(".modal-body #stock_book").val('');
+            $(".modal-body #stock").hide();
+            $(".modal-body #image-preview-").attr("src", '<?= base_url("dist/img/image-preview.png"); ?>');
+            $(".modal-body #image-preview-extra-").attr("href", '<?= base_url("dist/img/image-preview.png"); ?>');
             if (load_check == 1) {
                 CRUD_Book.style.display = "block";
-                $(".modal-body #customSwitch").hide();
                 categoryData.forEach(element_cat => {
                     if (element_cat.status == 1) {
                         var newOption = $('<option>').val(element_cat.id_category).text(element_cat.name_category);
                         $(".modal-body #categorySelect").append(newOption);
                     }
                 });
+                $(".modal-body #name_book, #name_book_author, #detail_category,  #price_book_book, #stock_book, #categorySelect").prop('disabled', false);
+                $(".modal-body #upload").show();
                 $(".modal-header #title_modal").text("สร้างข้อมูลหนังสือ");
                 $(".modal-footer #submit").text("สร้างข้อมูลหนังสือ");
                 $(".modal-body #url_route").val("dashboard/book/create");
@@ -154,27 +157,22 @@
                         }
                     }
                 });
-                $(".modal-body #customSwitch").show();
-                if (rowData.status_book == 1) {
-                    $(".modal-body #customSwitch3").prop('checked', true);
-                    $(".modal-body #LabelcustomSwitch3").text("เปิดใช้งาน");
-                } else {
-                    $(".modal-body #customSwitch3").prop('checked', false);
-                    $(".modal-body #LabelcustomSwitch3").text("ปิดใช้งาน");
-                }
                 $(".modal-body #name_book").val(rowData.name_book);
                 $(".modal-body #name_book_author").val(rowData.book_author);
                 $(".modal-body #detail_category").val(rowData.details);
                 $(".modal-body #price_book").val(rowData.price);
                 $(".modal-body #price_book_book").val(rowData.price_book);
                 $(".modal-body #stock_book").val(rowData.count_stock);
+                $(".modal-body #stock").show();
+                $(".modal-body #name_book, #name_book_author, #detail_category,  #price_book_book, #stock_book, #categorySelect").prop('disabled', true);
+                $(".modal-body #upload").hide();
                 if (rowData.pic_book == null) {
                     var imageSrc = '<?= base_url("dist/img/image-preview.png"); ?>';
                 } else {
                     var imageSrc = "data:image/png;base64," + rowData.pic_book;
                 }
-                $(".modal-body #image-preview").attr("src", imageSrc);
-                $(".modal-body #image-preview-extra").attr("href", imageSrc);
+                $(".modal-body #image-preview-").attr("src", imageSrc);
+                $(".modal-body #image-preview-extra-").attr("href", imageSrc);
                 $(".modal-header #title_modal").text("แก้ไขข้อมูลหนังสือ");
                 $(".modal-footer #submit").text("แก้ไขข้อมูลหนังสือ");
                 $(".modal-body #url_route").val("dashboard/book/edit/" + rowData.id_book);

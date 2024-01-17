@@ -5,8 +5,6 @@
 <!-- Tempusdominus Bootstrap 4 -->
 <!-- Select2 -->
 <link rel="stylesheet" href="<?= base_url('plugins/select2/css/select2.min.css'); ?>">
-<!-- iCheck for checkboxes and radio inputs -->
-<link rel="stylesheet" href="<?= base_url('plugins/icheck-bootstrap/icheck-bootstrap.min.css'); ?>">
 <link rel="stylesheet"
     href="<?= base_url('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'); ?>">
 <style>
@@ -212,7 +210,6 @@
             var data_user = <?php echo json_encode($data_user); ?>;
             var data_latefees = <?php echo json_encode($data_latefees); ?>;
             var data_promotion = <?php echo json_encode($data_promotion); ?>;
-            var data_dayrent = <?php echo json_encode($data_dayrent); ?>;
 
             Read_History = document.getElementById("Read_History");
             Create_History = document.getElementById("Create_History");
@@ -235,6 +232,7 @@
                     }
                 });
 
+
                 data_user.forEach(element_user_cr => {
                     if (element_user_cr.status_rental == 1 && element_user_cr.type_user == 4) {
                         var newOption = $('<option>').val(element_user_cr.id_user).text(element_user_cr.name + ' ' + element_user_cr.lastname);
@@ -252,10 +250,19 @@
                 $("#formImageContainer").empty();
                 Read_History.style.display = "block";
                 Create_History.style.display = "none";
+                // $(".modal-body #form_thebook").hide();
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
-                //ส่วนของหนังสือ
+
                 let count = 0;
                 let idbook = rowData.id_book.split(',');
+                var price_deposit = idbook.length * 100;
+                $(".modal-body #price_deposit").val(price_deposit);
+                $(".modal-body #price_deposit").val(price_deposit);
+                if (rowData.status_his == 2 || rowData.status_his == 3) {
+                    $(".modal-footer #print").show();
+                } else {
+                    $(".modal-footer #print").hide();
+                }
                 idbook.forEach(function (id) {
                     count += 1;
                     let matbook = data_book.find(element_book => element_book.id_book === id.trim());
@@ -282,36 +289,89 @@
                     $("#formContainer").append(clonedForm);
                     clonedForm.show();
                 });
-                //end ส่วนหนังสือ
-                //ส่วน ชื่่อผู้ยืม
+                var text_promotion = '';
+
+                if (rowData.id_promotion == null) {
+                    text_promotion = 'ไม่มีโปรโมชั่น';
+                } else {
+                    let id_promotion = rowData.id_promotion.split(',');
+                    data_promotion.forEach(element_promotion => {
+                        id_promotion.forEach(function (id_pro) {
+                            if (element_promotion.id_promotion == id_pro) {
+                                text_promotion += element_promotion.details + '<br>';
+                            }
+                        });
+                    });
+                }
+                $("#text_promotion").html(text_promotion);
+
+                if (rowData.sum_price_promotion) {
+                    $(".modal-body #pice_promotion").val(rowData.sum_price_promotion);
+                } else {
+                    $(".modal-body #pice_promotion").val('ไม่มีส่วนลด');
+                }
+
                 var matuser = data_user.find(element_user => element_user.id_user === rowData.id_user);
                 $(".modal-body #name_user").val(matuser.name + ' ' + matuser.lastname);
-                // end ชื่อผู้ยืม
-
-                $(".modal-body #rental_date").val(rowData.rental_date); //วันที่ยืม
-                //วันที่ต้องคืน
+                $(".modal-body #rental_date").val(rowData.rental_date);
                 $(".modal-body #return_date").val(rowData.return_date);
+                $(".modal-body #price_book").val(rowData.sum_price);
                 var rental_date = moment(rowData.rental_date, 'YYYY-MM-DD');
-                var minDate = rental_date.add(1, 'days');
+                var minDate = rental_date.add(7, 'days');
                 $('#return_date__').datetimepicker({
                     format: 'YYYY-MM-DD',
                     minDate: minDate,
-                    maxDate: moment(rental_date - 1).add(data_dayrent[0].day_rent, 'days').format('YYYY-MM-DD'),
                 });
-                // end วันที่ต้องคืน
-                //วันที่มาคืน
+                var today = new Date(); // Get the current date
+                today.setHours(0, 0, 0, 0)
+                var returnDate = new Date(rowData.return_date);
+                returnDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
                 if (rowData.submit_date == null) {
-                    if (rowData.late_price === '0' || rowData.late_price == null) {
 
+                    if (rowData.late_price === '0' || rowData.late_price == null) {
+                        $(".modal-footer #submit").prop("disabled", false);
+                        $(".modal-body #return_date").prop("disabled", false);
+                        $(".modal-body #submit_date").val("ยังไม่มีการคืน");
+                        $(".modal-body #pice_promotion").prop("disabled", false);
+                        $(".modal-body #price_late").prop("disabled", false);
+                        if (today > returnDate) {
+
+                            var price_fees = data_latefees[0]['price_fees'];
+                            calculate_price_late(idbook.length, price_fees, returnDate, function (result_price) {
+                                $(".modal-body #price_late").val(result_price);
+                            });
+                        } else {
+                            $(".modal-body #price_late").val("ไม่มีค่าปรับ");
+                        }
                     } else {
-                        $(".modal-body #price_late").val(rowData.sum_late_price);
+                        $(".modal-body #price_late").val(rowData.late_price);
+                    }
+
+                } else {
+                    $(".modal-footer #submit").prop("disabled", true);
+                    $(".modal-body #return_date").prop("disabled", true);
+                    $(".modal-body #pice_promotion").prop("disabled", true);
+                    $(".modal-body #price_late").prop("disabled", true);
+                    $(".modal-body #submit_date").val(rowData.submit_date);
+                    if (rowData.late_price == null) {
+                        $(".modal-body #price_late").val("ไม่มีค่าปรับ");
+                    } else {
+                        $(".modal-body #price_late").val(rowData.late_price);
                     }
                 }
-                if (rowData.status_his == 2 || rowData.status_his == 3) {
-                    $(".modal-footer #print").show();
-                } else {
-                    $(".modal-footer #print").hide();
+                if (type == 1) {
+                    $(".modal-footer #submit").prop("disabled", true);
+                    $(".modal-body #return_date").prop("disabled", true);
+                    $(".modal-body #pice_promotion").prop("disabled", true);
+                    $(".modal-body #price_late").prop("disabled", true);
                 }
+                var priceBook = parseInt($(".modal-body #price_book").val()) || 0;
+                var priceLate = parseInt($(".modal-body #price_late").val()) || 0;
+                var promotionPrice = parseInt($(".modal-body #pice_promotion").val()) || 0;
+                var sumPriceAll = ((price_deposit + priceBook) - promotionPrice) + priceLate;
+                $(".modal-body #price_total").val(sumPriceAll);
+                $(".modal-body #price_all").val((price_deposit + priceBook) - promotionPrice);
+
                 $(".modal-body #url_route").val("dashboard/history/edit/edit_history/" + rowData.id_history);
                 $(".modal-body #print").prop("href", "billview/" + rowData.id_history);
             }
@@ -593,14 +653,14 @@
                                 }
                             }, 2000);
                         }
-                    } else {
+                    }else{
                         Swal.fire({
                             title: response.message,
                             icon: 'error',
                             confirmButtonText: "ตกลง",
                             showConfirmButton: true
                         });
-
+                        
                     }
                 },
                 error: function (xhr, status, error) {

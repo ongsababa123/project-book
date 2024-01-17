@@ -14,6 +14,8 @@ class BookController extends BaseController
     {
         $CategoryModels = new CategoryModels();
         $data['categoryData'] = $CategoryModels->findAll();
+        $HistoryController = new HistoryController();
+        $HistoryController->check_stock_all();
 
         echo view('dashboard/layout/header');
         echo view('dashboard/book', $data);
@@ -133,14 +135,11 @@ class BookController extends BaseController
     function change_status_stock_function($id_stock = null, $status = null)
     {
         $StockBookModels = new StockBookModels();
-        $HistoryController = new HistoryController();
         $data = [
             'status_stock' => $status
         ];
         $check = $StockBookModels->update($id_stock, $data);
         if ($check) {
-            $book = $StockBookModels->where('id_stock', $id_stock)->first();
-            $HistoryController->check_stock($book['id_book']);
             return true;
         } else {
             return false;
@@ -171,48 +170,11 @@ class BookController extends BaseController
     public function edit_book($id_book = null)
     {
         $BookModels = new BookModels();
-        $profile_picture = $this->request->getFile('uploadImage');
-        $status = $this->request->getVar('customSwitch3') === 'on' ? 1 : 0;
+
         $data = [
-            'name_book' => $this->request->getVar('name_book'),
-            'book_author' => $this->request->getVar('name_book_author'),
-            'details' => $this->request->getVar('detail_category'),
-            'status_book' => $status,
             'price' => $this->request->getVar('price_book'),
-            'price_book' => $this->request->getVar('price_book_book'),
-            'category_id' => $this->request->getVar('categorySelect'),
         ];
-        if ($profile_picture->isValid() && !$profile_picture->hasMoved()) {
-            $validationRules = [
-                'uploadImage' => 'max_size[uploadImage,10240]', // 10MB in kilobytes
-            ];
-            // Validate the input
-            if (!$this->validate($validationRules)) {
-                $response = [
-                    'success' => false,
-                    'message' => 'ผิดพลาด',
-                    'reload' => false,
-                    'image_error' => 'ไฟล์จะต้องมีขนาดต่ำกว่า 10MB'
-                ];
-                return $this->response->setJSON($response);
-            }
-            $minFileSize = 1024; // 1MB in kilobytes
-            if ($profile_picture->getSize() >= $minFileSize) {
-                if ($profile_picture->isValid() && !$profile_picture->hasMoved()) {
-                    $imageData = file_get_contents($profile_picture->getTempName()); // Read image file data
-                    $base64ImageData = base64_encode($imageData);
-                    $data['pic_book'] = $base64ImageData;
-                }
-            } else {
-                $response = [
-                    'success' => false,
-                    'message' => 'ผิดพลาด',
-                    'reload' => false,
-                    'image_error' => 'ไฟล์จะต้องมีขนาดอย่างน้อย 1MB'
-                ];
-                return $this->response->setJSON($response);
-            }
-        }
+
         $check = $BookModels->update($id_book, $data);
         if ($check) {
             $response = [
@@ -227,7 +189,6 @@ class BookController extends BaseController
                 'reload' => false,
             ];
         }
-
 
         return $this->response->setJSON($response);
     }

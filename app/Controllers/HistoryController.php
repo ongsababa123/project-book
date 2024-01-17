@@ -26,29 +26,27 @@ class HistoryController extends BaseController
         $DayrentModels = new DayrentModels();
         $PromotionModels = new PromotionModels();
         $StockBookModels = new StockBookModels();
-
+        $this->check_stock_all();
         $data['data_user'] = $UserModels->where('type_user', 4)->where('status_user', 1)->findAll();
-        $data_book['data_book'] = $BookModels->findAll();
+        $data['data_book'] = $BookModels->findAll();
         $data['data_category'] = $CategoryModels->findAll();
         $data['data_latefees'] = $LateFeesModels->findAll();
         $data['data_promotion'] = $PromotionModels->findAll();
         $data['data_dayrent'] = $DayrentModels->findAll();
-        $data['data_book'] = [];
 
-        foreach ($data_book['data_book'] as $key => $value) {
+        foreach ($data['data_book'] as $key => $value) {
             $count_stock = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 1)->countAllResults();
             if (!empty($count_stock)) {
                 // Merge the arrays correctly
-                $data['data_book'][] = array_merge($value, ['count_stock' => $count_stock]);
+                $data['data_book'][$key] = array_merge($value, ['count_stock' => $count_stock]);
             }
         }
-
-        $this->check_stock_all();
 
         echo view('dashboard/layout/header');
         echo view('dashboard/history', $data);
     }
 
+    //เช็คหนังสือ
     function check_stock_all()
     {
         $StockBookModels = new StockBookModels();
@@ -64,37 +62,30 @@ class HistoryController extends BaseController
             }
         }
     }
-    function check_stock($id_book = null)
-    {
-        $StockBookModels = new StockBookModels();
-        $BookModels = new BookModels();
 
-        $data_book = $BookModels->where('id_book', $id_book)->first();
-        $data_stock = $StockBookModels->where('id_book', $id_book)->where('status_stock', 1)->first();
-        if ($data_stock != null) {
-            $BookModels->update($data_book['id_book'], ['status_book' => 1]);
-        } else {
-            $BookModels->update($data_book['id_book'], ['status_book' => 0]);
-        }
-        $this->check_stock_all();
-    }
+    //จองหนังสือ
     function reserve_book_stock($id_book = [])
     {
         $StockBookModels = new StockBookModels();
+        $BookModels = new BookModels();
         $data_stock = [];
+        $id_stock_book = null;
+
+        $this->check_stock_all();
         foreach ($id_book as $key => $id) {
-            $data = $StockBookModels->where('id_book', $id)->where('status_stock', 1)->first();
-            if ($data != null) {
-                $data_stock[$key] = $data['id_stock'];
-                $StockBookModels->update($data['id_stock'], ['status_stock' => 2]);
+            $check_status_book = $BookModels->where('id_book', $id)->where('status_book', 1)->first();
+            if ($check_status_book != null) {
+                $data = $StockBookModels->where('id_book', $id)->where('status_stock', 1)->first();
+                if ($data != null) {
+                    $data_stock[$key] = $data['id_stock'];
+                    $StockBookModels->update($data['id_stock'], ['status_stock' => 2]);
+                }
             }
-            $this->check_stock($id);
         }
         if ($data_stock != null) {
             $id_stock_book = implode(',', $data_stock);
-        } else {
-            $id_stock_book = null;
         }
+
         $this->check_stock_all();
         return $id_stock_book;
     }
@@ -117,9 +108,7 @@ class HistoryController extends BaseController
         $this->delete_cart($cart_id);
 
         $id_book = explode(',', $this->request->getVar('name_book_create__'));
-        foreach ($id_book as $id) {
-            $this->check_stock($id);
-        }
+
         $check_stock = $this->reserve_book_stock($id_book);
         if ($check_stock != null) {
             $data = [
@@ -129,10 +118,11 @@ class HistoryController extends BaseController
                 'rental_date' => $rental_formattedDate,
                 'return_date' => $return_formattedDate,
                 'submit_date' => null,
-                'sum_price' => $this->request->getVar('price_book_create'),
-                'late_price' => null,
-                'id_promotion' => $id_promotion,
+                'sum_rental_price' => $this->request->getVar('price_book_create'),
+                'sum_deposit_price' => $this->request->getVar('price_deposit_'),
+                'sum_late_price' => null,
                 'sum_price_promotion' => $this->request->getVar('sum_price_promotion'),
+                'id_promotion' => $id_promotion,
                 'status_his' => 1,
             ];
             $check = $HistoryModels->save($data);
@@ -142,24 +132,21 @@ class HistoryController extends BaseController
                     'success' => true,
                     'message' => 'สร้างข้อมูลเช่าสำเร็จ!',
                     'reload' => true,
-
                 ];
             } else {
                 $response = [
                     'success' => false,
                     'message' => 'error',
                     'reload' => false,
-                    'id' => $check_stock
                 ];
             }
         } else {
             $response = [
                 'success' => false,
-                'message' => 'มีหนังสือที่ถูกเช่าไปแล้ว',
+                'message' => 'หนังสือหมดสต็อก!',
                 'reload' => false,
             ];
         }
-
 
         return $this->response->setJSON($response);
     }

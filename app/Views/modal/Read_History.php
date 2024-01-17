@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="overlay preloader">
             <i class="fas fa-2x fa-sync fa-spin"></i>
@@ -49,6 +49,34 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="icheck-primary d-inline">
+                                <input type="radio" class="score-radio" id="answer1_1" name="r1_1" value="0">
+                                <label for="answer1_1">หนังสือปกติ</label>
+                            </div>
+                            <div class="icheck-primary d-inline">
+                                <input type="radio" class="score-radio" id="answer1_2" name="r1_1" value="1">
+                                <label for="answer1_2">หนังสือหาย</label>
+                            </div>
+                            <div class="icheck-primary d-inline">
+                                <input type="radio" class="score-radio" id="answer1_3" name="r1_1" value="1">
+                                <label for="answer1_2">หนังสือชำรุด</label>
+                            </div>
+                            <div class="icheck-primary d-inline">
+                                <input type="radio" class="score-radio" id="answer1_4" name="r1_1" value="1">
+                                <label for="answer1_2">หนังสือไม่สามรถใช้ต่อได้</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12 mt-1">
+                            <input type="text" class="form-control" placeholder="คำอธิบาย" id="text_book_xxx"
+                                name="text_book_xxx" >
+                        </div>
+                    </div>
+                    <hr>
                 </div>
                 <div id="formContainer"></div>
                 <div class="form-group">
@@ -86,59 +114,60 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="form-group">
                             <label>รายละเอียดโปรโมชั่น</label>
                             <p id="text_promotion" name="text_promotion"></p>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>ราคาโปรโมชั่น</label>
-                            <input type="text" class="form-control" id="pice_promotion" name="pice_promotion">
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
-                            <label>ค่าปรับ</label>
-                            <input type="text" class="form-control" placeholder="กรอกค่าปรับ" id="price_late"
-                                name="price_late">
+                            <label>ส่วนลดโปรโมชั่น</label>
+                            <input type="text" class="form-control" id="text_promotion" name="text_promotion">
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
-                            <label>ราคาเช่าหนังสือ(ยอดรวม)</label>
-                            <input type="text" class="form-control" placeholder="ราคาหนังสือรวม" id="price_book"
-                                name="price_book" disabled>
+                            <label>ราคาเช่าหนังสือ (ยอดรวม)</label>
+                            <input type="text" class="form-control" placeholder="ราคาเช่า(ยอดรวม)" id="sum_rental_price"
+                                name="sum_rental_price" disabled>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>รวมทั้งสิ้น</label>
-                            <input type="text" class="form-control" placeholder="ราคารวม" id="price_total"
-                                name="price_total" disabled>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>ค่ามัดจำ</label>
-                            <input type="text" class="form-control" placeholder="ราคาหนังสือรวม" id="price_deposit"
-                                name="price_deposit" disabled>
+                            <input type="text" class="form-control" placeholder="ค่ามัดจำต่อเล่ม" id="sum_deposit_price"
+                                name="sum_deposit_price" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>ราคาเช่าหนังสือทั้งหมด (ค่ามัดจำและหักโปรโมชั่น)</label>
+                            <input type="text" class="form-control"
+                                placeholder="ราคาเช่าหนังสือ(ค่ามัดจำและหักโปรโมชั่น)" id="total_price"
+                                name="total_price" disabled>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
-                    </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
-                            <label>ราคาเช่าหนังสือทั้งหมด(ค่ามัดจำและหักโปรโมชั่น)</label>
-                            <input type="text" class="form-control" placeholder="ราคาหนังสือรวม" id="price_all"
-                                name="price_all" disabled>
+                            <label>ตัวเลือกการเก็บค่าปรับเพิ่ม</label>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>ราคาค่าปรับ</label>
+                            <input type="text" class="form-control" id="sum_late_price" name="sum_late_price">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>รวมทั้งสิ้น</label>
+                            <input type="text" class="form-control" id="total_price_all" name="total_price_all">
                         </div>
                     </div>
                 </div>
@@ -174,7 +203,7 @@
         const price_all = parseFloat($("#price_all").val()) || 0;
         const lateFee = parseFloat($("#price_late").val()) || 0;
         const pice_promotion = parseFloat($("#pice_promotion").val()) || 0;
-        
+
         // Calculate the new values
         const newPriceAll = (price_book + price_deposit) - pice_promotion;
         const newPriceTotal = newPriceAll + lateFee;
