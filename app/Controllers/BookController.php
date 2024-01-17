@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\CategoryModels;
 use App\Models\BookModels;
 use App\Models\StockBookModels;
+use App\Controllers\HistoryController;
 
 class BookController extends BaseController
 {
@@ -129,18 +130,31 @@ class BookController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    public function change_status_stock($id_stock = null, $status = null)
+    function change_status_stock_function($id_stock = null, $status = null)
     {
         $StockBookModels = new StockBookModels();
+        $HistoryController = new HistoryController();
         $data = [
             'status_stock' => $status
         ];
         $check = $StockBookModels->update($id_stock, $data);
         if ($check) {
+            $book = $StockBookModels->where('id_stock', $id_stock)->first();
+            $HistoryController->check_stock($book['id_book']);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public function change_status_stock($id_stock = null, $status = null)
+    {
+        $check = $this->change_status_stock_function($id_stock, $status);
+        if ($check) {
             $response = [
                 'success' => true,
                 'message' => 'เปลี่ยนสถานะสำเร็จ',
-                'data' => $data,
                 'reload' => true,
             ];
         } else {
@@ -153,6 +167,7 @@ class BookController extends BaseController
 
         return $this->response->setJSON($response);
     }
+
     public function edit_book($id_book = null)
     {
         $BookModels = new BookModels();

@@ -10,11 +10,15 @@ use App\Models\PromotionModels;
 use App\Models\UserModels;
 use App\Models\LateFeesModels;
 use App\Models\DetailsModels;
+use App\Models\DayrentModels;
+use App\Controllers\HistoryController;
 
 class HomeController extends BaseController
 {
     public function index()
     {
+        $HistoryController = new HistoryController();
+        $HistoryController->check_stock_all();
         $BookModels = new BookModels();
         $HistoryModels = new HistoryModels();
 
@@ -51,7 +55,7 @@ class HomeController extends BaseController
             // กรณีไม่มีไอดีที่ซ้ำกัน
             $data['bookData'] = $BookModels->orderBy('RAND()')->limit(3)->get()->getResultArray();
         }
-        echo view('userview/layout/header_home',$data_details);
+        echo view('userview/layout/header_home', $data_details);
         echo view('userview/Home', $data);
         echo view('userview/layout/footer');
 
@@ -60,6 +64,8 @@ class HomeController extends BaseController
     public function index_listbook()
     {
         // Instantiate models
+        $HistoryController = new HistoryController();
+        $HistoryController->check_stock_all();
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
         $UserModels = new UserModels();
@@ -91,7 +97,6 @@ class HomeController extends BaseController
         // เรียงลำดับอาร์เรย์ bookData ตามชื่อหนังสือ (คาดว่าชื่อหนังสือถูกเก็บไว้ในฟิลด์ที่ชื่อ 'name' ในฐานข้อมูล)
         $this->sortBookData($data['bookData']);
 
-
         // Load views
         echo view('userview/layout/header_base', $data_details);
         echo view('userview/Booklist', $data);
@@ -113,6 +118,8 @@ class HomeController extends BaseController
 
     public function index_bookdetails($id_book = null)
     {
+        $HistoryController = new HistoryController();
+        $HistoryController->check_stock_all();
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
         $UserModels = new UserModels();
@@ -128,29 +135,26 @@ class HomeController extends BaseController
 
     public function add_cart($id_book = null)
     {
+        date_default_timezone_set('Asia/Bangkok');
         $CartModels = new CartModels();
         $BookModels = new BookModels();
-        date_default_timezone_set('Asia/Bangkok');
-        $check_status = $BookModels->where('id_book', $id_book)->findAll();
-        if ($check_status[0]['status_book'] == 2) {
-            $response = [
-                'success' => false,
-                'message' => 'หนังสือ ' . $check_status[0]['name_book'] . ' ถูกจองไปแล้ว',
-                'reload' => false,
-            ];
-            return $this->response->setJSON($response);
-        } else {
+        $HistoryController = new HistoryController();
+
+        $HistoryController->check_stock_all();
+        $Bookdata = $BookModels->where('id_book', $id_book)->findAll();
+        $data = [
+            'id_book' => $id_book,
+        ];
+        $id_stock_book = $HistoryController->reserve_book_stock($data);
+
+        if ($id_stock_book != null) {
             $data = [
                 'id_user' => session()->get('id'),
                 'id_book' => $id_book,
+                'id_stock_book' => $id_stock_book,
                 'cart_date' => date('Y-m-d H:i:s'),
                 'status_cart' => 1,
             ];
-
-            $data_book = [
-                'status_book' => 2,
-            ];
-            $BookModels->update($id_book, $data_book);
 
             $check = $CartModels->save($data);
             if ($check) {
@@ -166,6 +170,12 @@ class HomeController extends BaseController
                     'reload' => false,
                 ];
             }
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'หนังสือ ' . $Bookdata[0]['name_book'] . ' ถูกจองไปแล้ว',
+                'reload' => false,
+            ];
         }
 
         return $this->response->setJSON($response);
@@ -173,15 +183,20 @@ class HomeController extends BaseController
 
     public function index_cart()
     {
+        $HistoryController = new HistoryController();
+        $HistoryController->check_stock_all();
         $CartModels = new CartModels();
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
         $UserModels = new UserModels();
         $DetailsModels = new DetailsModels();
+        $DayrentModels = new DayrentModels();
+
         $data_details['details'] = $DetailsModels->findAll();
         $data['categoryData'] = $CategoryModels->where('id_category', session()->get('id'))->findAll();
         $data['cartData'] = $CartModels->where('id_user', session()->get('id'))->findAll();
         $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
+        $data['data_dayrent'] = $DayrentModels->findAll();
 
         foreach ($data['cartData'] as $key => $value) {
             // Retrieve book data for the current cart item
@@ -203,6 +218,8 @@ class HomeController extends BaseController
 
     public function index_contact()
     {
+        $HistoryController = new HistoryController();
+        $HistoryController->check_stock_all();
         $DetailsModels = new DetailsModels();
         $data_details['details'] = $DetailsModels->findAll();
 
@@ -243,6 +260,8 @@ class HomeController extends BaseController
 
     public function index_profile()
     {
+        $HistoryController = new HistoryController();
+        $HistoryController->check_stock_all();
         $userModels = new UserModels();
         $HistoryModels = new HistoryModels();
         $DetailsModels = new DetailsModels();
@@ -250,13 +269,15 @@ class HomeController extends BaseController
         $data['user_data'] = $userModels->where('id_user', session()->get('id'))->findAll();
         $data['count_data'] = $HistoryModels->where('id_user', session()->get('id'))->countAllResults();
 
-        echo view('userview/layout/header_home' , $data_details);
+        echo view('userview/layout/header_home', $data_details);
         echo view('userview/Profile', $data);
         echo view('userview/layout/footer');
     }
 
     public function index_history()
     {
+        $HistoryController = new HistoryController();
+        $HistoryController->check_stock_all();
         $HistoryModels = new HistoryModels();
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
@@ -362,7 +383,7 @@ class HomeController extends BaseController
             }
         }
         // Load views
-        echo view('userview/layout/header_base' , $data_details);
+        echo view('userview/layout/header_base', $data_details);
         echo view('userview/History', $data);
         echo view('userview/layout/footer');
     }

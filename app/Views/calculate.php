@@ -34,3 +34,11 @@
         result_price(sum);
     }
 </script>
+
+<script>
+function cal_Deposit_price(data_pricebook , result_deposit_price) {
+    // Calculate the deposit price as 50% of data_pricebook
+    var result_deposit = data_pricebook * 0.5;
+    result_deposit_price(result_deposit);
+}
+</script>

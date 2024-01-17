@@ -7,8 +7,11 @@ use App\Models\UserModels;
 use App\Models\BookModels;
 use App\Models\CategoryModels;
 use App\Models\LateFeesModels;
+use App\Models\DayrentModels;
 use App\Models\PromotionModels;
 use App\Models\CartModels;
+use App\Models\StockBookModels;
+use App\Controllers\BookController;
 
 
 class HistoryController extends BaseController
@@ -20,19 +23,86 @@ class HistoryController extends BaseController
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
         $LateFeesModels = new LateFeesModels();
+        $DayrentModels = new DayrentModels();
         $PromotionModels = new PromotionModels();
+        $StockBookModels = new StockBookModels();
+
         $data['data_user'] = $UserModels->where('type_user', 4)->where('status_user', 1)->findAll();
-        $data['data_book'] = $BookModels->findAll();
+        $data_book['data_book'] = $BookModels->findAll();
         $data['data_category'] = $CategoryModels->findAll();
         $data['data_latefees'] = $LateFeesModels->findAll();
         $data['data_promotion'] = $PromotionModels->findAll();
+        $data['data_dayrent'] = $DayrentModels->findAll();
+        $data['data_book'] = [];
+
+        foreach ($data_book['data_book'] as $key => $value) {
+            $count_stock = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 1)->countAllResults();
+            if (!empty($count_stock)) {
+                // Merge the arrays correctly
+                $data['data_book'][] = array_merge($value, ['count_stock' => $count_stock]);
+            }
+        }
+
+        $this->check_stock_all();
 
         echo view('dashboard/layout/header');
         echo view('dashboard/history', $data);
     }
 
+    function check_stock_all()
+    {
+        $StockBookModels = new StockBookModels();
+        $BookModels = new BookModels();
+
+        $data_book = $BookModels->findAll();
+        foreach ($data_book as $key => $value) {
+            $data_stock = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 1)->first();
+            if ($data_stock != null) {
+                $BookModels->update($value['id_book'], ['status_book' => 1]);
+            } else {
+                $BookModels->update($value['id_book'], ['status_book' => 0]);
+            }
+        }
+    }
+    function check_stock($id_book = null)
+    {
+        $StockBookModels = new StockBookModels();
+        $BookModels = new BookModels();
+
+        $data_book = $BookModels->where('id_book', $id_book)->first();
+        $data_stock = $StockBookModels->where('id_book', $id_book)->where('status_stock', 1)->first();
+        if ($data_stock != null) {
+            $BookModels->update($data_book['id_book'], ['status_book' => 1]);
+        } else {
+            $BookModels->update($data_book['id_book'], ['status_book' => 0]);
+        }
+        $this->check_stock_all();
+    }
+    function reserve_book_stock($id_book = [])
+    {
+        $StockBookModels = new StockBookModels();
+        $data_stock = [];
+        foreach ($id_book as $key => $id) {
+            $data = $StockBookModels->where('id_book', $id)->where('status_stock', 1)->first();
+            if ($data != null) {
+                $data_stock[$key] = $data['id_stock'];
+                $StockBookModels->update($data['id_stock'], ['status_stock' => 2]);
+            }
+            $this->check_stock($id);
+        }
+        if ($data_stock != null) {
+            $id_stock_book = implode(',', $data_stock);
+        } else {
+            $id_stock_book = null;
+        }
+        $this->check_stock_all();
+        return $id_stock_book;
+    }
+
+    //สร้างการยืมหนังสือ
     public function create_history()
     {
+        helper(['form']);
         $HistoryModels = new HistoryModels();
         $UserModels = new UserModels();
         $rental_date = $this->request->getVar('rental_date_create');
@@ -47,77 +117,88 @@ class HistoryController extends BaseController
         $this->delete_cart($cart_id);
 
         $id_book = explode(',', $this->request->getVar('name_book_create__'));
-        $this->chage_status_book($id_book, 2);
-        $data = [
-            'id_user' => $this->request->getVar('name_user_create'),
-            'id_book' => $this->request->getVar('name_book_create__'),
-            'rental_date' => $rental_formattedDate,
-            'return_date' => $return_formattedDate,
-            'submit_date' => null,
-            'sum_price' => $this->request->getVar('price_book_create'),
-            'late_price' => null,
-            'id_promotion' => $id_promotion,
-            'sum_price_promotion' => $this->request->getVar('sum_price_promotion'),
-            'status_his' => 1,
-        ];
-        $check = $HistoryModels->save($data);
-        if ($check) {
-            $UserModels->update($this->request->getVar('name_user_create'), ['status_rental' => 2]);
-            $response = [
-                'success' => true,
-                'message' => 'สร้างข้อมูลเช่าสำเร็จ!',
-                'reload' => true,
-
+        foreach ($id_book as $id) {
+            $this->check_stock($id);
+        }
+        $check_stock = $this->reserve_book_stock($id_book);
+        if ($check_stock != null) {
+            $data = [
+                'id_user' => $this->request->getVar('name_user_create'),
+                'id_book' => $this->request->getVar('name_book_create__'),
+                'id_stock_book' => $check_stock,
+                'rental_date' => $rental_formattedDate,
+                'return_date' => $return_formattedDate,
+                'submit_date' => null,
+                'sum_price' => $this->request->getVar('price_book_create'),
+                'late_price' => null,
+                'id_promotion' => $id_promotion,
+                'sum_price_promotion' => $this->request->getVar('sum_price_promotion'),
+                'status_his' => 1,
             ];
+            $check = $HistoryModels->save($data);
+            if ($check) {
+                $UserModels->update($this->request->getVar('name_user_create'), ['status_rental' => 2]);
+                $response = [
+                    'success' => true,
+                    'message' => 'สร้างข้อมูลเช่าสำเร็จ!',
+                    'reload' => true,
+
+                ];
+            } else {
+                $response = [
+                    'success' => false,
+                    'message' => 'error',
+                    'reload' => false,
+                    'id' => $check_stock
+                ];
+            }
         } else {
             $response = [
                 'success' => false,
-                'message' => 'error',
+                'message' => 'มีหนังสือที่ถูกเช่าไปแล้ว',
                 'reload' => false,
             ];
         }
 
-        return $this->response->setJSON($response);
-    }
-
-
-    public function delete_create_history()
-    {
-        $bookIds = explode(',', $this->request->getVar('name_book_create__'));
-        $cart_id = explode(',', $this->request->getVar('cart_id'));
-
-        $this->chage_status_book($bookIds, 1);
-        $this->delete_cart($cart_id);
-
-        $response = [
-            'success' => true,
-            'message' => 'ยกเลิกการตระกร้าสำเร็จ!',
-            'reload' => true,
-        ];
 
         return $this->response->setJSON($response);
     }
-    function chage_status_book($bookIds = [], $numberstatus = null)
+
+    //ยกเลิกการเช่า
+    public function cancel_his($id_history = null)
     {
-        $BookModels = new BookModels();
-        foreach ($bookIds as $id_book) {
-            $bookData = [
-                'status_book' => $numberstatus,
+        helper(['form']);
+        $HistoryModels = new HistoryModels();
+        $UserModels = new UserModels();
+        $BookController = new BookController();
+
+        $id_stock_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_stock_book'];
+        $StockIds = explode(',', $id_stock_book);
+        foreach ($StockIds as $StockId) {
+            $BookController->change_status_stock_function($StockId, 1);
+        }
+
+        $id_user = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_user'];
+        $UserModels->update($id_user, ['status_rental' => 1]);
+
+        $check = $HistoryModels->where('id_history', $id_history)->delete($id_history);
+        if ($check) {
+            $response = [
+                'success' => true,
+                'message' => 'ยกเลิกการเช่าสำเร็จ!',
+                'reload' => true,
             ];
-
-            $BookModels->update($id_book, $bookData);
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'error!',
+                'reload' => false,
+            ];
         }
+        return $this->response->setJSON($response);
     }
 
-    function delete_cart($cartIds = [])
-    {
-        $CartModels = new CartModels();
-        foreach ($cartIds as $id_cart) {
-            $CartModels->where('id_cart', $id_cart)->delete($id_cart);
-        }
-    }
-
-
+    //แก้ไขการเช่า
     public function edit_history($id_history = null)
     {
         $HistoryModels = new HistoryModels();
@@ -163,6 +244,7 @@ class HistoryController extends BaseController
         return $this->response->setJSON($response);
     }
 
+    //อัปเดตสถานะ กำลังเช่า
     public function update_status_his($id_history = null)
     {
         $HistoryModels = new HistoryModels();
@@ -191,40 +273,13 @@ class HistoryController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    public function cancel_his($id_history = null)
-    {
-        helper(['form']);
-        $HistoryModels = new HistoryModels();
-        $UserModels = new UserModels();
-        $id_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_book'];
-        $bookIds = explode(',', $id_book);
-        $this->chage_status_book($bookIds, 1);
-
-        $id_user = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_user'];
-        $UserModels->update($id_user, ['status_rental' => 1]);
-
-        $check = $HistoryModels->where('id_history', $id_history)->delete($id_history);
-        if ($check) {
-            $response = [
-                'success' => true,
-                'message' => 'ยกเลิกการเช่าสำเร็จ!',
-                'reload' => true,
-            ];
-        } else {
-            $response = [
-                'success' => false,
-                'message' => 'error!',
-                'reload' => false,
-            ];
-        }
-        return $this->response->setJSON($response);
-    }
-
+    //อัปเดตสถานะ ยืนยันการคืน
     public function submit_his($id_history = null, $price_fess_totel = null, $id_user = null)
     {
         helper(['form']);
         $HistoryModels = new HistoryModels();
         $UserModels = new UserModels();
+        $BookController = new BookController();
 
         $price = ($price_fess_totel === '0') ? null : $price_fess_totel;
         $data = [
@@ -233,9 +288,11 @@ class HistoryController extends BaseController
             'status_his' => 3,
         ];
         $UserModels->update($id_user, ['status_rental' => 1]);
-        $id_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_book'];
-        $bookIds = explode(',', $id_book);
-        $this->chage_status_book($bookIds, 1);
+        $id_stock_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_stock_book'];
+        $StockIds = explode(',', $id_stock_book);
+        foreach ($StockIds as $StockId) {
+            $BookController->change_status_stock_function($StockId, 1);
+        }
         $check = $HistoryModels->update($id_history, $data);
         if ($check) {
             $response = [
@@ -252,6 +309,43 @@ class HistoryController extends BaseController
         }
         return $this->response->setJSON($response);
     }
+
+    public function delete_create_history()
+    {
+        $bookIds = explode(',', $this->request->getVar('name_book_create__'));
+        $cart_id = explode(',', $this->request->getVar('cart_id'));
+
+        $this->chage_status_book($bookIds, 1);
+        $this->delete_cart($cart_id);
+
+        $response = [
+            'success' => true,
+            'message' => 'ยกเลิกการตระกร้าสำเร็จ!',
+            'reload' => true,
+        ];
+
+        return $this->response->setJSON($response);
+    }
+    function chage_status_book($bookIds = [], $numberstatus = null)
+    {
+        $BookModels = new BookModels();
+        foreach ($bookIds as $id_book) {
+            $bookData = [
+                'status_book' => $numberstatus,
+            ];
+
+            $BookModels->update($id_book, $bookData);
+        }
+    }
+
+    function delete_cart($cartIds = [])
+    {
+        $CartModels = new CartModels();
+        foreach ($cartIds as $id_cart) {
+            $CartModels->where('id_cart', $id_cart)->delete($id_cart);
+        }
+    }
+
 
     public function billview($id_history = null)
     {

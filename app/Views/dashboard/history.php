@@ -227,10 +227,11 @@
 
                 data_book.forEach(element_book_cr => {
                     if (element_book_cr.status_book == 1) {
-                        var newOption = $('<option>').val(element_book_cr.id_book).text(element_book_cr.name_book + ' ราคาเช่า : ' + element_book_cr.price);
+                        var newOption = $('<option>').val(element_book_cr.id_book).text(element_book_cr.name_book + ' ราคาเช่า : ' + element_book_cr.price + ' บาท' + ' [สต๊อก : ' + element_book_cr.count_stock + ']');
                         $(".modal-body #name_book_create").append(newOption);
                     }
                 });
+
 
                 data_user.forEach(element_user_cr => {
                     if (element_user_cr.status_rental == 1 && element_user_cr.type_user == 4) {
@@ -260,7 +261,7 @@
                 $(".modal-body #price_deposit").val(price_deposit);
                 if (rowData.status_his == 2 || rowData.status_his == 3) {
                     $(".modal-footer #print").show();
-                }else{
+                } else {
                     $(".modal-footer #print").hide();
                 }
                 idbook.forEach(function (id) {
@@ -626,6 +627,7 @@
                 },
                 success: function (response) {
                     Swal.close();
+                    console.log(response);
                     if (response.success) {
                         if (response.button) {
                             Swal.fire({
@@ -637,7 +639,7 @@
                             });
                             if (response.status_his === '1') {
                                 getTableData_('dashboard/history/getdata/1', 'table_history_one', '1')
-                            }else if(response.status_his === '2'){
+                            } else if (response.status_his === '2') {
                                 getTableData_('dashboard/history/getdata/2', 'table_history_two', '1')
                             }
                         } else {
@@ -653,8 +655,14 @@
                                 }
                             }, 2000);
                         }
-
-
+                    }else{
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'error',
+                            confirmButtonText: "ตกลง",
+                            showConfirmButton: true
+                        });
+                        
                     }
                 },
                 error: function (xhr, status, error) {

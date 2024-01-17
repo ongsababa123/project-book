@@ -219,7 +219,7 @@
                             if (response.reload) {
                                 window.location.reload();
                             }
-                        }, 2000);
+                        }, 1000);
                     } else {
                         Swal.fire({
                             title: response.image_error,
@@ -278,7 +278,7 @@
                                 if (response.reload) {
                                     getTableData();
                                 }
-                            }, 2000);
+                            }, 1000);
                         } else {
                             Swal.fire({
                                 title: response.message,
@@ -343,7 +343,7 @@
                                         if (response.reload) {
                                             getTableData();
                                         }
-                                    }, 2000);
+                                    }, 1000);
                                 } else {
                                     Swal.fire({
                                         title: response.message,

@@ -180,9 +180,12 @@
     });
 </script>
 <script>
+    var data_dayrent = <?php echo json_encode($data_dayrent); ?>;
+    var today = moment().format('YYYY-MM-DD');
+
     // กำหนดรูปแบบ datetimepicker
     $('.datetimepicker').datetimepicker({
-        format: 'L',
+        format: 'YYYY-MM-DD',
         icons: {
             date: "fa fa-calendar",
             up: "fa fa-chevron-up",
@@ -193,7 +196,7 @@
             clear: 'fa fa-trash',
             close: 'fa fa-remove'
         },
-        minDate: moment() // กำหนดให้เลือกวันที่ปัจจุบันเป็นต่ำสุด
+        minDate: today // กำหนดให้เลือกวันที่ปัจจุบันเป็นต่ำสุด
     });
 
     // ตั้งค่า flag ในการตรวจสอบว่ามีการเลือก rental_date_create แล้วหรือไม่
@@ -203,17 +206,14 @@
     $('#rental_date_create').on('dp.change', function (e) {
         // ดึงข้อมูลวันที่รับหนังสือ
         var rentalDate = e.date;
-
+        var returnDatemin = rentalDate.clone().add(1, 'days');
+        var returnDateMax = rentalDate.clone().add(data_dayrent[0].day_rent, 'days');
         // คำนวณวันที่คืน 7 วันหลัง
-        var returnDate = rentalDate.clone().add(7, 'days');
-        var today = moment();
         var maxDate = moment(today).add(2, 'days');
 
-        // กำหนดค่าวันที่คืนไปยัง input ของวันที่คืน
-        $('#return_date_create').val(returnDate.format('L'));
+        $('#return_date_create').data('DateTimePicker').minDate(returnDatemin);
+        $('#return_date_create').data('DateTimePicker').maxDate(returnDateMax);
 
-        // กำหนด minDate ของ return_date_create เป็น returnDate
-        $('#return_date_create').data('DateTimePicker').minDate(returnDate);
         $('#rental_date_create').data('DateTimePicker').maxDate(maxDate);
         // ตั้งค่า flag เมื่อมีการเลือก rental_date_create
         rentalDateSelected = true;

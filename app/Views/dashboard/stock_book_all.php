@@ -1,5 +1,17 @@
 <title>คลังหนังสือทั้งหมด</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
+<!-- Select2 -->
+<link rel="stylesheet" href="<?= base_url('plugins/select2/css/select2.min.css'); ?>">
+<style>
+    .select2-container .select2-selection--single {
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
+        height: 40px;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+</style>
 
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
@@ -28,8 +40,8 @@
                                 </h4>
                                 <div class="card-tools">
                                     <?php if (session()->get('type') == '2'): ?>
-                                        <button type="button"
-                                            class="btn btn-block-tool btn-dark btn-sm" onclick="add_Book_Stock()">เพิ่มจำนวนหนังสือ</button>
+                                        <button type="button" class="btn btn-block-tool btn-dark btn-sm" data-toggle="modal"
+                                            data-target="#modal-default">เพิ่มจำนวนหนังสือ</button>
                                     <?php endif; ?>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
@@ -61,9 +73,47 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
-
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="overlay preloader">
+                    <i class="fas fa-2x fa-sync fa-spin"></i>
+                </div>
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title" id="title_modal" name="title_modal">เพิ่มจำนวนหนังสือ</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="mb-3" id="form_add_stock" action="javascript:void(0)" method="post"
+                        enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-12" id="detail_group">
+                                <div class="form-group">
+                                    <label>เลือกหนังสือ</label>
+                                    <select class="form-control select2" style="width: 100%; height: 40px" id="book_id" name="book_id">
+                                        <option selected="selected" value="">เลือกหนังสือ</option>
+                                        <?php foreach ($bookData as $book): ?>
+                                            <option value="<?= $book['id_book']; ?>">
+                                                <?= $book['name_book']; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success" name="submit" value="Submit"
+                                id="submit">เพิ่มจำนวนหนังสือ</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<?= base_url('plugins/filterizr/jquery.filterizr.min.js') ?>"></script>
     <script src="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.min.js') ?>"></script>
+    <!-- Select2 -->
+    <script src="<?= base_url('plugins/select2/js/select2.full.min.js'); ?>"></script>
     <script>
         $(document).ready(function () {
             getTableData();
@@ -178,14 +228,15 @@
                         Swal.fire({
                             title: response.message,
                             icon: 'success',
-                            showConfirmButton: false,
+                            showConfirmButton: true,
+                            confirmButtonText: "ตกลง",
                             allowOutsideClick: false
                         });
                         setTimeout(() => {
                             if (response.reload) {
-                                window.location.reload();
+                                getTableData();
                             }
-                        }, 2000);
+                        }, 1000);
                     } else {
                         Swal.fire({
                             title: response.image_error,
@@ -244,7 +295,7 @@
                                 if (response.reload) {
                                     getTableData();
                                 }
-                            }, 2000);
+                            }, 1000);
                         } else {
                             Swal.fire({
                                 title: response.message,
@@ -259,29 +310,45 @@
         }
     </script>
     <script>
-        var bookData = <?php echo json_encode($bookData); ?>;
-
-        function add_Book_Stock() {
+        $('.select2').select2();
+        $("#form_add_stock").on('submit', function (e) {
+            e.preventDefault();
+            if ($('#book_id').val() == '') {
+                Swal.fire({
+                    title: "กรุณาเลือกหนังสือ",
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonText: "ตกลง",
+                })
+            } else {
+                const url = '/dashboard/book/stock/create/' + $('#book_id').val();
+                action_(url, 'form_add_stock');
+            }
+        });
+    </script>
+    <script>
+        function change_status_(id_stock) {
             // Create an options object for inputOptions
-            var options = {};
-            bookData.forEach(element => {
-                if (element.status_project != 0) {
-                    options[element.id_book] = element.name_book;
-                }
-            });
             Swal.fire({
-                title: "เลือกหนังสือที่ต้องการเพิ่ม",
+                title: "เลือกสถานะที่ต้องการเปลี่ยน",
                 input: "select",
-                inputOptions: options,
-                inputPlaceholder: "เลือกหนังสือ",
+                inputOptions: {
+                    0: "ไม่พร้อมใช้งาน",
+                    1: "พร้อมใช้งาน",
+                    2: "กำลังเช่า",
+                    3: "หนังสือหาย",
+                    4: "หนังสือชำรุด",
+                    5: "หนังสือไม่สามารถใช้ต่อได้"
+                },
+                inputPlaceholder: "เลือกสถานะ",
                 showCancelButton: true,
-                confirmButtonColor: "#28a745",
+                confirmButtonColor: "#dc3545",
                 confirmButtonText: "ตกลง",
                 cancelButtonText: "ปิด",
                 inputValidator: (value) => {
                     return new Promise((resolve) => {
                         if (value) {
-                            var url = '/dashboard/book/stock/create/' + value;
+                            var url = 'dashboard/book/stock/changestatus/' + id_stock + '/' + value;
                             $.ajax({
                                 url: '<?= base_url() ?>' + url,
                                 headers: {
@@ -310,7 +377,7 @@
                                         if (response.reload) {
                                             getTableData();
                                         }
-                                    }, 2000);
+                                    }, 1000);
                                 } else {
                                     Swal.fire({
                                         title: response.message,

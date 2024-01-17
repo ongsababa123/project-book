@@ -190,8 +190,7 @@ class UserController extends BaseController
                 $response = [
                     'success' => true,
                     'message' => 'อัปเดตข้อมูลสำเร็จรหัสผ่านสำรองจะถูกส่งไปที่อีเมล์ของคุณ',
-                    'reload' => false,
-                    'pass' => $password
+                    'reload' => true,
                 ];
             }
             $check = $userModels->update($id_user, $data);

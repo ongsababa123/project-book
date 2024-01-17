@@ -10,7 +10,7 @@ class CartModels extends Model
 
     protected $primaryKey = 'id_cart';
 
-    protected $allowedFields = ['id_user' , 'id_book' , 'cart_date', 'status_cart'];
+    protected $allowedFields = ['id_user' , 'id_book' , 'id_stock_book', 'cart_date', 'status_cart'];
 
 
 }

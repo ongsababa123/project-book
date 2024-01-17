@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="overlay preloader">
             <i class="fas fa-2x fa-sync fa-spin"></i>
@@ -12,7 +12,7 @@
                 <div class="form-group">
                     <label>ชือหนังสือ</label>
                     <div class="select2-secondary ">
-                        <select class="select2" multiple="multiple" data-placeholder="Select Books"
+                        <select class="select2" multiple="multiple" data-placeholder="เลือกหนังสือ"
                             data-dropdown-css-class="select2-secondary" style="width: 100%;" id="name_book_create"
                             required onchange="change()">
                         </select>
@@ -59,42 +59,38 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="form-group">
                             <label>รายละเอียดโปรโมชั่น</label>
                             <p id="details_promotion" name="details_promotion"></p>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>ส่วนลดโปรโมชั่น</label>
                             <input type="text" class="form-control" placeholder="โปรโมชั่น" id="promotion_book"
                                 name="promotion_book" disabled>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>ค่ามัดจำ</label>
-                            <input type="text" class="form-control" placeholder="ค่ามัดจำต่อเล่ม" id="price_deposit"
-                                name="price_deposit" disabled>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>ราคาเช่าหนังสือ(ยอดรวม)</label>
                             <input type="text" class="form-control" placeholder="ราคาเช่า(ยอดรวม)" id="price_book_"
                                 name="price_book_" disabled>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>ราคาเช่าหนังสือทั้งหมด(ค่ามัดจำและหักโปรโมชั่น)</label>
+                            <label>ค่ามัดจำ</label>
+                            <input type="text" class="form-control" placeholder="ค่ามัดจำต่อเล่ม" id="price_deposit"
+                                name="price_deposit" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                    <div class="form-group">
+                            <label>ราคาเช่าหนังสือทั้งหมด (ค่ามัดจำและหักโปรโมชั่น)</label>
                             <input type="text" class="form-control"
                                 placeholder="ราคาเช่าหนังสือ(ค่ามัดจำและหักโปรโมชั่น)" id="price_book_promotion"
                                 name="price_book_promotion" disabled>
@@ -135,9 +131,9 @@
     });
 </script>
 <script>
-
     $(function () {
-        var today = moment();
+        var data_dayrent = <?php echo json_encode($data_dayrent); ?>;
+        var today = moment().format('YYYY-MM-DD');
         var formattedReturnDate = null;
         $('#return_date_create').datetimepicker({
             format: 'YYYY-MM-DD',
@@ -146,20 +142,20 @@
         $('#rental_date__create').datetimepicker({
             format: 'YYYY-MM-DD',
             minDate: today,
-            maxDate: moment(today).add(2, 'days').format('YYYY-MM-DD'),
+            maxDate: moment(today).add(2, 'days')
         });
         $('.modal-body #return_date_create').prop("disabled", true);
 
         $('#rental_date__create').on('change.datetimepicker', function (e) {
             var rentalDate = e.date;
-            var returnDate = rentalDate.clone().add(7, 'days');
+            var returnDate = rentalDate.clone().add(1, 'days');
             formattedReturnDate = returnDate.format('YYYY-MM-DD');
-
             // Destroy and reinitialize datetimepicker for return_date_create
             $('#return_date_create').datetimepicker('destroy');
             $('#return_date_create').datetimepicker({
                 format: 'YYYY-MM-DD',
                 minDate: formattedReturnDate,
+                maxDate: moment(rentalDate).add(data_dayrent[0].day_rent, 'days').format('YYYY-MM-DD'),
             });
             $('.modal-body #return_date_create').prop("disabled", false);
 
@@ -183,9 +179,9 @@
     $(".modal-body #details_promotion").val("ไม่มีโปรโมชั่น");
     $(".modal-body #promotion_book").val("ไม่มีโปรโมชั่น");
     function change() {
-
         var selectedid_book = [];
         let price__ = 0;
+        let price_deposit = 0;
         var selectElement = document.getElementById("name_book_create");
         var id_user = document.getElementById("name_user_create").value;
         for (var i = 0; i < selectElement.options.length; i++) {
@@ -193,10 +189,12 @@
                 selectedid_book.push(selectElement.options[i].value);
                 let book__mat = data_book.find(element_book___ => element_book___.id_book === selectElement.options[i].value);
                 price__ = price__ + parseInt(book__mat.price);
+                cal_Deposit_price(book__mat.price, function (result) {
+                    price_deposit = price_deposit + parseInt(result);
+                })
             }
         }
         $(".modal-body #count_book").html("จำนวน " + selectedid_book.length + " เล่ม");
-        var price_deposit = selectedid_book.length * 100;
         $(".modal-body #price_deposit").val(price_deposit);
         check_promotion(id_user, selectedid_book, price__, function (result) {
             $(".modal-body #sum_price_promotion").val(result.price_promotion);
@@ -205,7 +203,6 @@
 
             $(".modal-body #price_book_create").val(result.price_result);
             $(".modal-body #price_book_").val(result.price_result);
-            console.log(result.price_promotion == 0);
             if (result.price_promotion == 0) {
 
                 $(".modal-body #price_book_promotion").val(parseInt(result.price_result) + parseInt(price_deposit));

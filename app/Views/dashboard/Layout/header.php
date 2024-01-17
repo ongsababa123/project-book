@@ -193,7 +193,7 @@
                             </li>
                             <li class="nav-item">
                                 <a href="<?= site_url('/dashboard/book/stock_all/index'); ?>" class="nav-link">
-                                    <i class="nav-icon fas fa-bookmark"></i>
+                                    <i class="nav-icon fas fa-cubes"></i>
                                     <p>
                                         คลังหนังสือทั้งหมด
                                     </p>
