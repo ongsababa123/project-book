@@ -24,6 +24,7 @@
                     <div class="row" id="formImageContainer">
                     </div>
                 </div>
+                <hr>
                 <div class="form-group" id="form_thebook">
                     <label id="labelbook"></label>
                     <div class="row">
@@ -50,30 +51,49 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div class="icheck-primary d-inline">
-                                <input type="radio" class="score-radio" id="answer1_1" name="r1_1" value="0">
-                                <label for="answer1_1">หนังสือปกติ</label>
+                        <div class="col-sm-9 pt-4">
+                            <div class="icheck-success d-inline">
+                                <input type="radio" class="score-radio " id="answer_1" name="r_" value="0"
+                                    onclick="setScore(this)">
+                                <label for="answer_1" id="label_answer_1">หนังสือปกติ</label>
                             </div>
-                            <div class="icheck-primary d-inline">
-                                <input type="radio" class="score-radio" id="answer1_2" name="r1_1" value="1">
-                                <label for="answer1_2">หนังสือหาย</label>
+                            <div class="icheck-danger d-inline">
+                                <input type="radio" class="score-radio" id="answer_2" name="r_" value="1"
+                                    onclick="setScore(this)">
+                                <label for="answer_2" id="label_answer_2">หนังสือหาย</label>
                             </div>
-                            <div class="icheck-primary d-inline">
-                                <input type="radio" class="score-radio" id="answer1_3" name="r1_1" value="1">
-                                <label for="answer1_2">หนังสือชำรุด</label>
+                            <div class="icheck-danger d-inline">
+                                <input type="radio" class="score-radio" id="answer_3" name="r_" value="2"
+                                    onclick="setScore(this)">
+                                <label for="answer_3" id="label_answer_3">หนังสือชำรุด</label>
                             </div>
-                            <div class="icheck-primary d-inline">
-                                <input type="radio" class="score-radio" id="answer1_4" name="r1_1" value="1">
-                                <label for="answer1_2">หนังสือไม่สามรถใช้ต่อได้</label>
+                            <div class="icheck-danger d-inline">
+                                <input type="radio" class="score-radio" id="answer_4" name="r_" value="3"
+                                    onclick="setScore(this)">
+                                <label for="answer_4" id="label_answer_4">หนังสือไม่สามรถใช้ต่อได้</label>
+                            </div>
+                            <input type="text" id="price_book_destroy_after" name="price_book_destroy_after" >
+                            <input type="text" id="price_book_destroy_before" name="price_book_destroy_before" >
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label>ราคาเช่า</label>
+                                <input type="text" class="form-control" id="price_rental_book" name="price_book"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>ราคาหนังสือ</label>
+                                <input type="text" class="form-control" id="price_book" name="price_book" disabled>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-sm-12 mt-1">
-                            <input type="text" class="form-control" placeholder="คำอธิบาย" id="text_book_xxx"
-                                name="text_book_xxx" >
+                            <input type="text" class="form-control" placeholder="คำอธิบาย" id="text_book_description"
+                                name="text_book_description">
                         </div>
                     </div>
                     <hr>
@@ -90,6 +110,8 @@
                             <label>วันที่ยืม</label>
                             <input type="text" class="form-control" placeholder="กรอกวันที่ยืม" id="rental_date"
                                 name="rental_date" disabled>
+                            <br>
+                            <h6 id="label_return_date" name="label_return_date"></h6>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -125,7 +147,7 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>ส่วนลดโปรโมชั่น</label>
-                            <input type="text" class="form-control" id="text_promotion" name="text_promotion">
+                            <input type="text" class="form-control" id="sum_price_promotion" name="sum_price_promotion">
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -154,20 +176,16 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label>ตัวเลือกการเก็บค่าปรับเพิ่ม</label>
-                            <br>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
                             <label>ราคาค่าปรับ</label>
-                            <input type="text" class="form-control" id="sum_late_price" name="sum_late_price">
+                            <input type="text" class="form-control" id="sum_late_price" name="sum_late_price"
+                                placeholder="ราคาค่าปรับ">
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>รวมทั้งสิ้น</label>
-                            <input type="text" class="form-control" id="total_price_all" name="total_price_all">
+                            <input type="text" class="form-control" id="total_price_all" name="total_price_all"
+                                disabled>
                         </div>
                     </div>
                 </div>
@@ -197,29 +215,70 @@
 <script>
     // Common function to calculate total price
     function updateTotalPrice() {
+
         // Retrieve values as floats
-        const price_book = parseFloat($("#price_book").val()) || 0;
-        const price_deposit = parseFloat($("#price_deposit").val()) || 0;
-        const price_all = parseFloat($("#price_all").val()) || 0;
-        const lateFee = parseFloat($("#price_late").val()) || 0;
-        const pice_promotion = parseFloat($("#pice_promotion").val()) || 0;
+        const sum_rental_price_cal = parseFloat($("#sum_rental_price").val()) || 0;
+        const sum_deposit_price_cal = parseFloat($("#sum_deposit_price").val()) || 0;
+        const sum_late_price_cal = parseFloat($("#sum_late_price").val()) || 0;
+        const sum_price_promotion_cal = parseFloat($("#sum_price_promotion").val()) || 0;
 
         // Calculate the new values
-        const newPriceAll = (price_book + price_deposit) - pice_promotion;
-        const newPriceTotal = newPriceAll + lateFee;
+        const total_price_cal = (sum_rental_price_cal + sum_deposit_price_cal) - sum_price_promotion_cal;
+        const total_price_all_cal = total_price_cal + sum_late_price_cal;
 
         // Update the values of the elements
-        $("#price_all").val(newPriceAll);
-        $("#price_total").val(newPriceTotal);
+        $("#total_price").val(total_price_cal);
+        $("#total_price_all").val(total_price_all_cal);
     }
 
-    // Event handler for pice_promotion input
-    $("#pice_promotion").on('input', function () {
+    // Event handler for sum_price_promotion input
+    $("#sum_price_promotion").on('input', function () {
         updateTotalPrice();
     });
 
     // Event handler for price_late input
-    $("#price_late").on('input', function () {
+    $("#sum_late_price").on('input', function () {
         updateTotalPrice();
     });
+</script>
+<script>
+    function setScoreRadio(value) {
+        let id_stock_check = value.id.split('_');
+        //[0] = เลขลำดับตัวเลือก 1-4 [1] = id_stock [2] = id_book
+        var sum_late_price_after = parseFloat($("#price_book_destroy_after_" + id_stock_check[1] + "_" + id_stock_check[2]).val()) || 0;
+        var sum_late_price_before = parseFloat($("#price_book_destroy_before_" + id_stock_check[1] + "_" + id_stock_check[2]).val()) || 0;
+        const sum_late_price_cal = parseFloat($("#sum_late_price").val()) || 0;
+        var price_temp = (sum_late_price_cal - sum_late_price_before) + sum_late_price_after;
+        $("#sum_late_price").val(price_temp);
+    }
+</script>
+<script>
+    function setScore(value) {
+        let id_stock_check = value.id.split('_');
+        //[0] = เลขลำดับตัวเลือก 1-4 [1] = id_stock [2] = id_book
+        var sum_late_price_after = parseFloat($("#price_book_destroy_after_" + id_stock_check[1] + "_" + id_stock_check[2]).val()) || 0;
+        var sum_late_price_before = parseFloat($("#price_book_destroy_before_" + id_stock_check[1] + "_" + id_stock_check[2]).val()) || 0;
+        const sum_late_price_cal = parseFloat($("#sum_late_price").val()) || 0;
+
+        var data_book = <?php echo json_encode($data_book); ?>;
+        var mat_book = data_book.find(element_book => element_book.id_book === id_stock_check[2]);
+
+        var price_book_destroy = 0;
+        if (id_stock_check[0] == 1) {
+            price_book_destroy = 0;
+        } else if (id_stock_check[0] == 2 || id_stock_check[0] == 4) {
+            price_book_destroy = mat_book.price_book;
+        } else if (id_stock_check[0] == 3) {
+            price_book_destroy = 0.2 * mat_book.price_book;
+        }
+        const showDescription = id_stock_check[0] == 3;
+        $("#text_book_description_" + id_stock_check[1] + "_" + id_stock_check[2])[showDescription ? 'show' : 'hide']();
+
+        $("#price_book_destroy_before_" + id_stock_check[1] + "_" + id_stock_check[2]).val(sum_late_price_after);
+        $("#price_book_destroy_after_" + id_stock_check[1] + "_" + id_stock_check[2]).val(price_book_destroy);
+
+        setScoreRadio(value)
+        updateTotalPrice();
+
+    }
 </script>

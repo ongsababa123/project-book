@@ -103,7 +103,6 @@
                                                                             <th>ชื่อ - นามสกุล</th>
                                                                             <th>เบอร์ติดต่อ</th>
                                                                             <th>อีเมล</th>
-                                                                            <th>ชื่อหนังสือ</th>
                                                                             <th>วันที่ยืม</th>
                                                                             <th>วันที่ต้องคืน</th>
                                                                             <th>วันที่คืน</th>
@@ -128,7 +127,6 @@
                                                                             <th>ชื่อ - นามสกุล</th>
                                                                             <th>เบอร์ติดต่อ</th>
                                                                             <th>อีเมล</th>
-                                                                            <th>ชื่อหนังสือ</th>
                                                                             <th>วันที่ยืม</th>
                                                                             <th>วันที่ต้องคืน</th>
                                                                             <th>วันที่คืน</th>
@@ -154,7 +152,6 @@
                                                                             <th>ชื่อ - นามสกุล</th>
                                                                             <th>เบอร์ติดต่อ</th>
                                                                             <th>อีเมล</th>
-                                                                            <th>ชื่อหนังสือ</th>
                                                                             <th>วันที่ยืม</th>
                                                                             <th>วันที่ต้องคืน</th>
                                                                             <th>วันที่คืน</th>
@@ -255,7 +252,9 @@
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
                 //ส่วนของหนังสือ
                 let count = 0;
+                let count_id = 0;
                 let idbook = rowData.id_book.split(',');
+
                 idbook.forEach(function (id) {
                     count += 1;
                     let matbook = data_book.find(element_book => element_book.id_book === id.trim());
@@ -278,9 +277,50 @@
                     clonedForm.find("#name_book").attr("id", "name_book_" + id.trim()).val(matbook.name_book);
                     clonedForm.find("#name_book_author").attr("id", "name_book_author_" + id.trim()).val(matbook.book_author);
                     clonedForm.find("#categorySelect").attr("id", "categorySelect_" + id.trim()).val(matcategory.name_category);
+                    clonedForm.find("#price_rental_book").attr("id", "price_rental_book_" + id.trim()).val(matbook.price);
+                    clonedForm.find("#price_book").attr("id", "price_book_" + id.trim()).val(matbook.price_book);
+                    const status = rowData.stock[count_id].status_stock;
+                    data_id_ = rowData.stock[count_id].id_stock + "_" + id.trim();
+
+                    clonedForm.find("#answer_1").attr("id", "1_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 2);
+                    clonedForm.find("#answer_2").attr("id", "2_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 3);
+                    clonedForm.find("#answer_3").attr("id", "3_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 4);
+                    clonedForm.find("#answer_4").attr("id", "4_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 5);
+                    clonedForm.find("#label_answer_1").attr("id", "label_answer_1_" + id.trim()).attr("for", "1_" + data_id_).val();
+                    clonedForm.find("#label_answer_2").attr("id", "label_answer_2_" + id.trim()).attr("for", "2_" + data_id_).val();
+                    clonedForm.find("#label_answer_3").attr("id", "label_answer_3_" + id.trim()).attr("for", "3_" + data_id_).val();
+                    clonedForm.find("#label_answer_4").attr("id", "label_answer_4_" + id.trim()).attr("for", "4_" + data_id_).val();
+                    clonedForm.find("#text_book_description").attr("id", "text_book_description_" + data_id_).attr("name", "text_book_description_" + data_id_).val(rowData.stock[count_id].description ?? "");
+                    clonedForm.find("#price_book_destroy_before").attr("id", "price_book_destroy_before_" + data_id_).attr("name", "price_book_destroy_before_" + data_id_);
+                    clonedForm.find("#price_book_destroy_after").attr("id", "price_book_destroy_after_" + data_id_).attr("name", "price_book_destroy_after_" + data_id_);
+
+                    if (status == 4) {
+                        clonedForm.find("#text_book_description_" + data_id_).show();
+                    } else {
+                        clonedForm.find("#text_book_description_" + data_id_).hide();
+                    }
                     $("#formImageContainer").append(clonedImage);
                     $("#formContainer").append(clonedForm);
                     clonedForm.show();
+                    count_id += 1;
+
+                    if (rowData.status_his == 2) {
+                        $(".modal-footer #print").show();
+                        $(".modal-body .score-radio, #return_date, #sum_late_price, #sum_price_promotion").prop("disabled", false);
+                    } else if (rowData.status_his == 3) {
+                        $(".modal-footer #print").show();
+                        $(".modal-body .score-radio, #return_date, #sum_late_price, #sum_price_promotion").prop("disabled", true);
+                    } else{
+                        $(".modal-footer #print").hide();
+                        $(".modal-body .score-radio, #return_date, #sum_late_price, #sum_price_promotion").prop("disabled", false);
+                    }
+                    if (status == 3 || status == 5) {
+                        $(".modal-body #price_book_destroy_before_" + data_id_).val(matbook.price_book);
+                    }else if (status == 4) {
+                        $(".modal-body #price_book_destroy_before_" + data_id_).val(0.2 * parseInt(matbook.price_book));
+                    }else if (status == 2) {
+                        $(".modal-body #price_book_destroy_before_" + data_id_).val(0);
+                    }
                 });
                 //end ส่วนหนังสือ
                 //ส่วน ชื่่อผู้ยืม
@@ -300,18 +340,69 @@
                 });
                 // end วันที่ต้องคืน
                 //วันที่มาคืน
+                $(".modal-body #label_return_date").text("");
                 if (rowData.submit_date == null) {
-                    if (rowData.late_price === '0' || rowData.late_price == null) {
+                    calculate_distance_day(rowData.return_date, function (result_distance_day) {
+                        if (result_distance_day > 0) {
+                            $(".modal-body #label_return_date").text("จำนวนวันที่เกินมา : " + result_distance_day + " วัน");
+                            calculate_price_late__(data_latefees[0]['price_fees'], result_distance_day, function (result_price) {
+                                if (rowData.sum_late_price == '0' || rowData.sum_late_price == null) {
+                                    $(".modal-body #sum_late_price").val(result_price);
+                                } else {
+                                    $(".modal-body #sum_late_price").val(parseInt(result_price) + parseInt(rowData.sum_late_price));
+                                }
+                            })
+                        }
+                    });
 
+                } else {
+                    if (rowData.sum_late_price == null) {
+                        $(".modal-body #sum_late_price").val("ไม่มีค่าปรับ");
                     } else {
-                        $(".modal-body #price_late").val(rowData.sum_late_price);
+                        $(".modal-body #sum_late_price").val(rowData.late_price);
                     }
                 }
-                if (rowData.status_his == 2 || rowData.status_his == 3) {
-                    $(".modal-footer #print").show();
+                // end วันที่มาคืน
+                //ส่วนลดโปรโมชั่น
+                var text_promotion = '';
+                if (rowData.id_promotion == null) {
+                    text_promotion = 'ไม่มีโปรโมชั่น';
                 } else {
-                    $(".modal-footer #print").hide();
+                    let id_promotion = rowData.id_promotion.split(',');
+                    data_promotion.forEach(element_promotion => {
+                        id_promotion.forEach(function (id_pro) {
+                            if (element_promotion.id_promotion == id_pro) {
+                                text_promotion += element_promotion.details + '<br>';
+                            }
+                        });
+                    });
                 }
+                $("#text_promotion").html(text_promotion); //text รายละเอียดโปรโมชั่น
+                if (rowData.sum_price_promotion) {
+                    $(".modal-body #sum_price_promotion").val(rowData.sum_price_promotion);
+                } else {
+                    $(".modal-body #sum_price_promotion").val('ไม่มีส่วนลด');
+                }
+                // end ส่วนลดโปรโมชั่น
+                $(".modal-body #sum_rental_price").val(rowData.sum_rental_price);  // ราคาเช่าหนังสือ
+                $(".modal-body #sum_deposit_price").val(rowData.sum_deposit_price);// ราคาค่ามัดจำ
+                //ราคาค่าปรับ
+                if (rowData.sum_late_price == null) {
+                    $(".modal-body #sum_late_price").val();
+                } else {
+                    $(".modal-body #sum_late_price").val(rowData.sum_late_price);
+                }
+                // end ราคาค่าปรับ
+                var sum_rental_price = parseInt($(".modal-body #sum_rental_price").val()) || 0;
+                var sum_deposit_price = parseInt($(".modal-body #sum_deposit_price").val()) || 0;
+                var sum_price_promotion = parseInt($(".modal-body #sum_price_promotion").val()) || 0;
+                var sum_late_price = parseInt($(".modal-body #sum_late_price").val()) || 0;
+                var total_price = ((sum_rental_price + sum_deposit_price) - sum_price_promotion);
+                var total_price_all = total_price + sum_late_price;
+                $(".modal-body #total_price").val(total_price);
+                $(".modal-body #total_price_all").val(total_price_all);
+
+
                 $(".modal-body #url_route").val("dashboard/history/edit/edit_history/" + rowData.id_history);
                 $(".modal-body #print").prop("href", "billview/" + rowData.id_history);
             }
@@ -415,22 +506,6 @@
                             'data': null,
                             'class': 'text-center',
                             'render': function (data, type, row, meta) {
-                                var text = '';
-                                data_book.forEach(element => {
-                                    var idUserArray = data.id_book.split(',');
-                                    idUserArray.forEach(function (id) {
-                                        if (element.id_book == id.trim()) {
-                                            text += element.name_book + ' , ' + '<br>'
-                                        }
-                                    });
-                                });
-                                return text;
-                            }
-                        },
-                        {
-                            'data': null,
-                            'class': 'text-center',
-                            'render': function (data, type, row, meta) {
                                 return data.rental_date;
                             }
                         },
@@ -456,27 +531,36 @@
                             'data': null,
                             'class': 'text-center',
                             'render': function (data, type, row, meta) {
-                                var today = new Date(); // Get the current date
-                                today.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
-                                if (data.status_his === '1') {
-                                    return "<span class='badge bg-info'>รอเข้ารับ</span>"
-                                } else if (data.status_his === '2') {
-                                    if (data.submit_date === null) {
-                                        var returnDate = new Date(data.return_date);
-                                        returnDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
-                                        if (today > returnDate) {
-                                            return "<span class='badge bg-danger'>เกินกำหนด</span>";
+                                var check_date;
+                                if (data.status_his == '1') {
+                                    calculate_distance_day(data.rental_date, function (result_distance_day) {
+                                        if (result_distance_day > 0) {
+                                            check_date = true
                                         } else {
-                                            return "<span class='badge bg-warning'>กำลังยืม</span>";
+                                            check_date = false
                                         }
+                                    });
+                                    if (check_date == true) {
+                                        return "<span class='badge bg-danger'>เกินกำหนดวันรับ</span>";
                                     } else {
-                                        return "<span class='badge bg-success'>คืนแล้ว</span>";
+                                        return "<span class='badge bg-info'>รอเข้ารับ</span>"
                                     }
-                                } else if (data.status_his === '3') {
-                                    return "<span class='badge bg-success'>คืนแล้ว</span>";
-
-                                } else {
-                                    return "<span class='badge bg-danger'>เกินกำหนดวันรับ</span>";
+                                    return "<span class='badge bg-info'>รอเข้ารับ</span>"
+                                } else if (data.status_his == '2') {
+                                    calculate_distance_day(data.return_date, function (result_distance_day) {
+                                        if (result_distance_day > 0) {
+                                            check_date = true
+                                        } else {
+                                            check_date = false
+                                        }
+                                    });
+                                    if (check_date == true) {
+                                        return "<span class='badge bg-danger'>เกินกำหนด</span>"
+                                    } else {
+                                        return "<span class='badge bg-warning'>กำลังยืม</span>"
+                                    }
+                                } else if (data.status_his == '3') {
+                                    return "<span class='badge bg-success'>คืนแล้ว</span>"
                                 }
                             }
                         },
@@ -486,10 +570,7 @@
                             'render': function (data, type, row, meta) {
                                 const matchingUser = data_user.find(element => data.id_user === element.id_user);
                                 const encodedRowData = encodeURIComponent(JSON.stringify(row));
-                                var today = new Date();
-                                today.setHours(0, 0, 0, 0)
-                                var returnDate = new Date(data.return_date);
-                                returnDate.setHours(0, 0, 0, 0);
+                                var price_fess_totel;
                                 if (data.status_his === '1') {
                                     return `
                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')">
@@ -504,32 +585,25 @@
                                     `;
                                 } else if (data.status_his === '2' || data.status_his === '3') {
                                     if (data.submit_date == null) {
-                                        if (data.late_price != null) {
-                                            var price_fess_totel = data.late_price;
-                                        } else {
-                                            if (today > returnDate) {
-                                                var returnDate = new Date(data.return_date);
-                                                var currentDate = new Date();
-                                                // หาความแตกต่างในวัน
-                                                var timeDifference = currentDate.getTime() - returnDate.getTime();
-                                                var daysDifference = Math.ceil((timeDifference / (1000 * 60 * 60 * 24)) - 1);
-                                                var price_fees = data_latefees[0]['price_fees'];
-                                                var idbook = data.id_book.split(',');
-                                                calculate_price_late(idbook.length, price_fees, returnDate, function (result_price) {
-                                                    price_fess_totel = result_price;
-                                                });
+                                        calculate_distance_day(data.return_date, function (result_distance_day) {
+                                            if (result_distance_day > 0) {
+                                                calculate_price_late__(data_latefees[0]['price_fees'], result_distance_day, function (result_price) {
+                                                    if (data.sum_late_price == '0' || data.sum_late_price == null) {
+                                                        price_fess_totel = parseInt(result_price);
+                                                    } else {
+                                                        price_fess_totel = parseInt(result_price) + parseInt(data.sum_late_price);
+                                                    }
+                                                })
                                             } else {
-                                                price_fess_totel = 0;
+                                                price_fess_totel = data.sum_late_price ?? 0;
                                             }
-                                        }
+                                        });
                                         return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>
-                                <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการคืนใช่หรือไม่', 'dashboard/history/submit/${data.id_history}/${price_fess_totel}/${data.id_user}')" ><i class="fas fa-check"></i></button>
-                            <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" <?= $type_hideen ?>><i class="fas fa-store-slash"></i></button>`;
+                                                <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการคืนใช่หรือไม่', 'dashboard/history/submit/${data.id_history}/${price_fess_totel}/${data.id_user}')" ><i class="fas fa-check"></i></button>
+                                                <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" <?= $type_hideen ?>><i class="fas fa-store-slash"></i></button>`;
                                     } else {
                                         return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>`;
                                     }
-                                } else {
-                                    return ``;
                                 }
                             }
                         },
@@ -575,9 +649,9 @@
                                 showConfirmButton: true,
                                 allowOutsideClick: true
                             });
-                            if (response.status_his === '1') {
+                            if (response.status_his == '1') {
                                 getTableData_('dashboard/history/getdata/1', 'table_history_one', '1')
-                            } else if (response.status_his === '2') {
+                            } else if (response.status_his == '2') {
                                 getTableData_('dashboard/history/getdata/2', 'table_history_two', '1')
                             }
                         } else {

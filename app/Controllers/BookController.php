@@ -132,24 +132,32 @@ class BookController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    function change_status_stock_function($id_stock = null, $status = null)
+    function change_status_stock_function($id_stock = null, $status = null, $bypass_edit = null)
+    {
+        $StockBookModels = new StockBookModels();
+        $data = [
+            'status_stock' => $status
+        ];
+        $status_stock = $StockBookModels->where('id_stock', $id_stock)->findAll()[0]['status_stock'];
+        if ($status_stock == 0 || $status_stock == 1 || $status_stock == 2 || $bypass_edit == 1) {
+            $check = $StockBookModels->update($id_stock, $data);
+            if ($check) {
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            return true;
+        }
+    }
+
+    public function change_status_stock($id_stock = null, $status = null)
     {
         $StockBookModels = new StockBookModels();
         $data = [
             'status_stock' => $status
         ];
         $check = $StockBookModels->update($id_stock, $data);
-        if ($check) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    public function change_status_stock($id_stock = null, $status = null)
-    {
-        $check = $this->change_status_stock_function($id_stock, $status);
         if ($check) {
             $response = [
                 'success' => true,

@@ -162,7 +162,7 @@ class HistoryController extends BaseController
         $id_stock_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_stock_book'];
         $StockIds = explode(',', $id_stock_book);
         foreach ($StockIds as $StockId) {
-            $BookController->change_status_stock_function($StockId, 1);
+            $BookController->change_status_stock_function($StockId, 1, 1);
         }
 
         $id_user = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_user'];
@@ -188,10 +188,12 @@ class HistoryController extends BaseController
     //แก้ไขการเช่า
     public function edit_history($id_history = null)
     {
+        helper(['form']);
         $HistoryModels = new HistoryModels();
         $inputDate = $this->request->getVar('return_date');
-        $price_late = $this->request->getVar('price_late');
-        $pice_promotion = $this->request->getVar('pice_promotion');
+        $price_late = $this->request->getVar('sum_late_price');
+        $pice_promotion = $this->request->getVar('sum_price_promotion');
+        $BookController = new BookController();
 
         // Format the date if needed (adjust the format according to your database requirements)
         $formattedDate = date('Y/m/d', strtotime($inputDate));
@@ -201,6 +203,21 @@ class HistoryController extends BaseController
             'late_price' => $price_late,
             'sum_price_promotion' => $pice_promotion,
         ];
+        $id_stock_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_stock_book'];
+        $StockIds = explode(',', $id_stock_book);
+        $status = "";
+        foreach ($StockIds as $StockId) {
+            $status = $this->request->getVar('r' . $StockId);
+            if ($status == 0) {
+                $BookController->change_status_stock_function($StockId, 2, 1);
+            }else if ($status == 1) {
+                $BookController->change_status_stock_function($StockId, 3, 1);
+            }else if ($status == 2) {
+                $BookController->change_status_stock_function($StockId, 4, 1);
+            }else if ($status == 3) {
+                $BookController->change_status_stock_function($StockId, 5, 1);
+            }
+        }
         $check = $HistoryModels->update($id_history, $data);
         $status_his = $HistoryModels->where('id_history', $id_history)->findAll()[0]['status_his'];
         if ($check) {
@@ -278,7 +295,7 @@ class HistoryController extends BaseController
         $id_stock_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_stock_book'];
         $StockIds = explode(',', $id_stock_book);
         foreach ($StockIds as $StockId) {
-            $BookController->change_status_stock_function($StockId, 1);
+            $BookController->change_status_stock_function($StockId, 1, 0);
         }
         $check = $HistoryModels->update($id_history, $data);
         if ($check) {
@@ -377,7 +394,7 @@ class HistoryController extends BaseController
     public function get_data_table($status_his = null)
     {
         $HistoryModels = new HistoryModels();
-        $UserModels = new UserModels();
+        $StockBookModels = new StockBookModels();
 
         // Get search value
         $searchValue = $this->request->getVar('search')['value'];
@@ -411,6 +428,14 @@ class HistoryController extends BaseController
         }
 
         $data = $HistoryModels->where('status_his', $status_his)->findAll($limit, $start);
+
+        foreach ($data as $key_1 => $value) {
+            $id_stock = explode(',', $value['id_stock_book']);
+            foreach ($id_stock as $key_2 => $id) {
+                $data_stock = $StockBookModels->where('id_stock', $id)->first();
+                $data[$key_1]['stock'][$key_2] = $data_stock;
+            }
+        }
         // Prepare response
         $response = [
             'draw' => intval($draw),

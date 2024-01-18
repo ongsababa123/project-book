@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2024 at 06:41 PM
+-- Generation Time: Jan 18, 2024 at 11:09 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -84,9 +84,9 @@ CREATE TABLE `cart_book_table` (
 --
 
 INSERT INTO `cart_book_table` (`id_cart`, `id_user`, `id_book`, `id_stock_book`, `cart_date`, `status_cart`) VALUES
-(17, 29, 2, '4', '2024-01-17 15:55:41', 1),
-(18, 29, 5, '6', '2024-01-17 15:55:51', 1),
-(19, 29, 2, '7', '2024-01-17 15:56:59', 1);
+(17, 29, 2, '4', '2024-01-17 15:55:41', 0),
+(18, 29, 5, '6', '2024-01-17 15:55:51', 0),
+(19, 29, 2, '7', '2024-01-17 15:56:59', 0);
 
 -- --------------------------------------------------------
 
@@ -188,8 +188,11 @@ CREATE TABLE `history_book_table` (
 --
 
 INSERT INTO `history_book_table` (`id_history`, `id_user`, `id_book`, `id_stock_book`, `rental_date`, `return_date`, `submit_date`, `sum_rental_price`, `sum_deposit_price`, `sum_late_price`, `sum_price_promotion`, `id_promotion`, `status_his`) VALUES
-(15, 18, '4', '5', '2024-01-17', '2024-01-20', NULL, 399, 0, NULL, 0, NULL, 1),
-(16, 18, '1,2,5', '1,4,6', '2024-01-18', '2024-01-19', NULL, 326, 125, NULL, 10, '1,', 1);
+(15, 18, '4', '5', '2024-01-17', '2024-01-20', NULL, 399, 0, NULL, 0, NULL, 0),
+(16, 18, '1,2,5', '1,4,6', '2024-01-15', '2024-01-17', '2024-01-18', 326, 125, NULL, 10, '1,', 3),
+(17, 20, '1', '2', '2024-01-18', '2024-01-17', NULL, 20, 50, NULL, 0, NULL, 2),
+(18, 18, '1,2', '1,4', '2024-01-17', '2024-01-19', NULL, 70, 100, NULL, 0, NULL, 2),
+(19, 22, '5', '6', '2024-01-18', '2024-01-19', NULL, 256, 25, NULL, 1, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -207,7 +210,7 @@ CREATE TABLE `late_fees_table` (
 --
 
 INSERT INTO `late_fees_table` (`id_late_fees`, `price_fees`) VALUES
-(1, 20);
+(1, 30);
 
 -- --------------------------------------------------------
 
@@ -241,6 +244,7 @@ CREATE TABLE `stock_book_table` (
   `id_stock` int(10) NOT NULL,
   `id_book` int(100) NOT NULL,
   `id_number_` varchar(100) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `status_stock` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -248,14 +252,14 @@ CREATE TABLE `stock_book_table` (
 -- Dumping data for table `stock_book_table`
 --
 
-INSERT INTO `stock_book_table` (`id_stock`, `id_book`, `id_number_`, `status_stock`) VALUES
-(1, 1, '1-1', 2),
-(2, 1, '1-2', 1),
-(3, 1, '1-3', 1),
-(4, 2, '2-1', 2),
-(5, 4, '4-1', 2),
-(6, 5, '5-1', 2),
-(7, 2, '2-2', 1);
+INSERT INTO `stock_book_table` (`id_stock`, `id_book`, `id_number_`, `description`, `status_stock`) VALUES
+(1, 1, '1-1', NULL, 3),
+(2, 1, '1-2', NULL, 2),
+(3, 1, '1-3', NULL, 1),
+(4, 2, '2-1', NULL, 3),
+(5, 4, '4-1', NULL, 2),
+(6, 5, '5-1', NULL, 3),
+(7, 2, '2-2', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -282,10 +286,10 @@ CREATE TABLE `user_table` (
 
 INSERT INTO `user_table` (`id_user`, `email_user`, `name`, `lastname`, `phone`, `password`, `key_pass`, `status_user`, `status_rental`, `type_user`) VALUES
 (1, 'jailyootbandit@gmail.com', 'Jirayutxxxx', 'Banditxxxx', '0972654762', '$2y$10$bUN6zBYC4GvujImXE3Ay3.hMhkEis.pk.ingw3.zKF4QLSagIs.fG', '1', 1, 1, 2),
-(18, 'developer.tnet@gmail.com', 'tt', 'net', '0972654762', '$2y$10$/K0SKl9Zz4XLSt0DJf4qNeDRlE54OP7GIz4rg.Zy9MldoEHG7pe8i', '$2y$10$5rLMWAJgd23FEKD0yun8O0qPewXhilT7DwOz5HaM8QyRm9ciQy', 1, 2, 4),
-(20, 'maya@kmutnb.ac.th', 'มัณยาภรณ์', 'ภูริปัญญาคุณ', '1234567890', '$2y$10$p0b0/mjis8R7Cjof/vEGAejw3EKIv8IJfwzN0OQN791sjjGBX.LVm', '$2y$10$gIu0wTXwajPZgqOcI8ucceHKXfwSh0Hk4s8ODMpit81M0kQz8UCeG', 1, 1, 4),
+(18, 'developer.tnet@gmail.com', 'tt', 'net', '0972654762', '$2y$10$/K0SKl9Zz4XLSt0DJf4qNeDRlE54OP7GIz4rg.Zy9MldoEHG7pe8i', '$2y$10$5rLMWAJgd23FEKD0yun8O0qPewXhilT7DwOz5HaM8QyRm9ciQy', 1, 3, 4),
+(20, 'maya@kmutnb.ac.th', 'มัณยาภรณ์', 'ภูริปัญญาคุณ', '1234567890', '$2y$10$p0b0/mjis8R7Cjof/vEGAejw3EKIv8IJfwzN0OQN791sjjGBX.LVm', '$2y$10$gIu0wTXwajPZgqOcI8ucceHKXfwSh0Hk4s8ODMpit81M0kQz8UCeG', 1, 3, 4),
 (21, 'manayaphorn.p@kmutnb.ac.th', 'จิลายุทธ', 'บัณฑิต', '0972654762', '$2y$10$UnW5Nsr1os81lEN3mTvkb.vDJ/7soz/52l/x9E6niKls.NLYpWmP2', '$2y$10$PNuqSOuDsaIBmV0lvyXIGOUOfQ7IupgbQOM8HrCS04kkFxQMtBrti', 1, 1, 1),
-(22, 'bookbanglem2@gmail.com', 'sadasd', 'asdasdas', '1234567891', '$2y$10$sRzkNCjFnRHpvEdQIfYJmuTR/ZsTgCMwCzp7jwa/KjG3lufv9wmEi', '$2y$10$v4zJ.DZ4JUm7DOBcZCD2weCW55cYJdzb9MXz32DQ6sAUuGqSg9/IC', 1, 1, 4),
+(22, 'bookbanglem2@gmail.com', 'sadasd', 'asdasdas', '1234567891', '$2y$10$sRzkNCjFnRHpvEdQIfYJmuTR/ZsTgCMwCzp7jwa/KjG3lufv9wmEi', '$2y$10$v4zJ.DZ4JUm7DOBcZCD2weCW55cYJdzb9MXz32DQ6sAUuGqSg9/IC', 1, 2, 4),
 (23, 'bookbanglem3@gmail.com', 'xxxx', 'xxxx', '1234567891', '$2y$10$J7Lxlokntyv2qbaGfrViKu12lz0JFP6E8MsSEiQw/iZ0jXwze7VBS', '$2y$10$s7PaTEfbyoOpZdNwFbrBnORMTvxwFNwve5epzwNI6nHMiwLTmDuqS', 1, 1, 4),
 (24, '6239010001@p-vec.ac.th', 'pvec', 'pvec', '1234567891', '$2y$10$EsgPHnIKwQirhDCAvj9H5eEi4OWEQORxZijypyEx2Jc.FZk6JfW0m', '$2y$10$yWvu0aMkomL1lOjLmtz2O6UPFhdvP49fTn9jq4I5oOkkdcAslHO', 1, 1, 4),
 (29, 's6406021421171@email.kmutnb.ac.th', 'jirayut', 'บัณฑิต', '1234567891', '$2y$10$C.mn5gEo7iGmhXlN/PaTiOkpexCEpTOiMeUAR6N5zslifKBmfuwKq', '$2y$10$gAsVBbk63oAKCusMwLBD3eaqEbUUrpxNMSwZPWcmDZR4GrbMWdfui', 1, 1, 4);
@@ -392,7 +396,7 @@ ALTER TABLE `details_table`
 -- AUTO_INCREMENT for table `history_book_table`
 --
 ALTER TABLE `history_book_table`
-  MODIFY `id_history` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ไอดีประวัติการเช่า', AUTO_INCREMENT=17;
+  MODIFY `id_history` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ไอดีประวัติการเช่า', AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `late_fees_table`
