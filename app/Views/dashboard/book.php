@@ -239,7 +239,8 @@
             Swal.fire({
                 title: text,
                 icon: 'question',
-                showCancelButton: true,
+                            showCancelButton: true,
+            cancelButtonText: "ยกเลิก",
                 confirmButtonColor: "#28a745",
                 confirmButtonText: "ตกลง",
             }).then((result) => {

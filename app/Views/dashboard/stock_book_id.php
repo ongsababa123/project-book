@@ -71,6 +71,7 @@
                                                     <th>ลำดับ</th>
                                                     <th>รหัสหนังสือ</th>
                                                     <th>สถานะหนังสือ</th>
+                                                    <th>คำอธิบาย</th>
                                                     <th>การกระทำ</th>
                                                 </tr>
                                             </thead>
@@ -162,6 +163,13 @@
                         'data': null,
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
+                            return data.description ?? "-";
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
                             var status_book = data.status_stock;
                             var statusMap = {
                                 0: "<span class='badge bg-danger'>ยังไม่พร้อมใช้งาน</span>",
@@ -247,6 +255,7 @@
                 title: text,
                 icon: 'question',
                 showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
                 confirmButtonColor: "#28a745",
                 confirmButtonText: "ตกลง",
             }).then((result) => {
@@ -294,70 +303,93 @@
     </script>
     <script>
         function change_status_(id_stock) {
-            // Create an options object for inputOptions
+            const inputOptions = {
+                0: "ไม่พร้อมใช้งาน",
+                1: "พร้อมใช้งาน",
+                2: "กำลังเช่า",
+                3: "หนังสือหาย",
+                4: "หนังสือชำรุด",
+                5: "หนังสือไม่สามารถใช้ต่อได้"
+            };
+
             Swal.fire({
                 title: "เลือกสถานะที่ต้องการเปลี่ยน",
-                input: "select",
-                inputOptions: {
-                    0: "ไม่พร้อมใช้งาน",
-                    1: "พร้อมใช้งาน",
-                    2: "กำลังเช่า",
-                    3: "หนังสือหาย",
-                    4: "หนังสือชำรุด",
-                    5: "หนังสือไม่สามารถใช้ต่อได้"
-                },
-                inputPlaceholder: "เลือกสถานะ",
+                html: `
+                <select id="swal-input2" class="form-control">
+                    ${Object.keys(inputOptions).map(key => `<option value="${key}">${inputOptions[key]}</option>`).join('')}
+                </select>
+                <br id="additional-input_" style="display: none;">
+                <input id="additional-input" class="form-control" style="display: none;" placeholder="คำอธิบาย">
+            `,
+                focusConfirm: false,
                 showCancelButton: true,
-                confirmButtonColor: "#dc3545",
+                cancelButtonText: "ยกเลิก",
                 confirmButtonText: "ตกลง",
-                cancelButtonText: "ปิด",
-                inputValidator: (value) => {
-                    return new Promise((resolve) => {
-                        if (value) {
-                            var url = 'dashboard/book/stock/changestatus/' + id_stock + '/' + value;
-                            $.ajax({
-                                url: '<?= base_url() ?>' + url,
-                                headers: {
-                                    'X-Requested-With': 'XMLHttpRequest'
-                                },
-                                beforeSend: function () {
-                                    // Show loading indicator here
-                                    var loadingIndicator = Swal.fire({
-                                        title: 'กําลังดําเนินการ...',
-                                        allowEscapeKey: false,
-                                        allowOutsideClick: false,
-                                        showConfirmButton: false,
-                                    });
-                                },
-                            }).done(function (response) {
-                                Swal.close();
-                                console.log(response);
-                                if (response.success) {
-                                    Swal.fire({
-                                        title: response.message,
-                                        icon: 'success',
-                                        showConfirmButton: true,
-                                        confirmButtonText: "ตกลง",
-                                    });
-                                    setTimeout(() => {
-                                        if (response.reload) {
-                                            getTableData();
-                                        }
-                                    }, 1000);
-                                } else {
-                                    Swal.fire({
-                                        title: response.message,
-                                        icon: 'error',
-                                        showConfirmButton: true,
-                                        confirmButtonText: "ตกลง",
-                                    });
-                                }
+
+                preConfirm: () => {
+                    const selectValue = document.getElementById("swal-input2").value;
+                    const inputValue2 = (selectValue === '4') ? document.getElementById("additional-input").value : '';
+                    return [selectValue, inputValue2];
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '<?= base_url() ?>' + 'dashboard/book/stock/changestatus/' + id_stock + '/' + result.value[0],
+                        type: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        data: {
+                            selectValue: result.value[0],
+                            description: result.value[1]
+                        },
+                        beforeSend: function () {
+                            // Show loading indicator here
+                            var loadingIndicator = Swal.fire({
+                                title: 'กําลังดําเนินการ...',
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                showConfirmButton: false,
                             });
-                        } else {
-                            resolve("กรุณาเลือกสถานะ");
+                        },
+                        success: function (response) {
+                            // Handle success
+                            Swal.close();
+                            if (response.success) {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: 'success',
+                                    showConfirmButton: true,
+                                    confirmButtonText: "ตกลง",
+                                });
+                                setTimeout(() => {
+                                    if (response.reload) {
+                                        getTableData();
+                                    }
+                                }, 1000);
+                            } else {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                    confirmButtonText: "ตกลง",
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            // Handle error
+                            console.error(error);
                         }
                     });
                 }
+            });
+
+            // Show/hide additional input based on select value
+            document.getElementById("swal-input2").addEventListener("change", function () {
+                const additionalInput = document.getElementById("additional-input");
+                const additionalInput_ = document.getElementById("additional-input_");
+                additionalInput.style.display = (this.value === '4') ? 'block' : 'none';
+                additionalInput_.style.display = (this.value === '4') ? 'block' : 'none';
             });
         }
     </script>

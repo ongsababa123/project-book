@@ -104,12 +104,16 @@ class HistoryController extends BaseController
         }
         $rental_formattedDate = date('Y/m/d', strtotime($rental_date));
         $return_formattedDate = date('Y/m/d', strtotime($return_date));
-        $cart_id = explode(',', $this->request->getVar('cart_id'));
-        $this->delete_cart($cart_id);
-
         $id_book = explode(',', $this->request->getVar('name_book_create__'));
+        $cart_id = explode(',', $this->request->getVar('cart_id'));
 
-        $check_stock = $this->reserve_book_stock($id_book);
+        if ($cart_id[0] == '') {
+            $check_stock = $this->reserve_book_stock($id_book);
+        } else {
+            $check_stock = $this->request->getVar('id_stock_book');
+            $this->delete_cart($cart_id);
+        }
+
         if ($check_stock != null) {
             $data = [
                 'id_user' => $this->request->getVar('name_user_create'),
@@ -125,7 +129,7 @@ class HistoryController extends BaseController
                 'id_promotion' => $id_promotion,
                 'status_his' => 1,
             ];
-            $check = $HistoryModels->save($data);
+            $check = $HistoryModels->insert($data);
             if ($check) {
                 $UserModels->update($this->request->getVar('name_user_create'), ['status_rental' => 2]);
                 $response = [
@@ -147,7 +151,6 @@ class HistoryController extends BaseController
                 'reload' => false,
             ];
         }
-
         return $this->response->setJSON($response);
     }
 
@@ -190,18 +193,19 @@ class HistoryController extends BaseController
     {
         helper(['form']);
         $HistoryModels = new HistoryModels();
-        $inputDate = $this->request->getVar('return_date');
-        $price_late = $this->request->getVar('sum_late_price');
-        $pice_promotion = $this->request->getVar('sum_price_promotion');
         $BookController = new BookController();
+        $StockBookModels = new StockBookModels();
+        $inputDate = $this->request->getVar('return_date');
 
         // Format the date if needed (adjust the format according to your database requirements)
         $formattedDate = date('Y/m/d', strtotime($inputDate));
 
         $data = [
             'return_date' => $formattedDate,
-            'late_price' => $price_late,
-            'sum_price_promotion' => $pice_promotion,
+            'sum_late_price' => $this->request->getVar('sum_late_price'),
+            'sum_day_late_price' => $this->request->getVar('day_late_price'),
+            'sum_book_des_price' => $this->request->getVar('book_des_price'),
+            'sum_price_promotion' => $this->request->getVar('sum_price_promotion'),
         ];
         $id_stock_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_stock_book'];
         $StockIds = explode(',', $id_stock_book);
@@ -210,11 +214,14 @@ class HistoryController extends BaseController
             $status = $this->request->getVar('r' . $StockId);
             if ($status == 0) {
                 $BookController->change_status_stock_function($StockId, 2, 1);
-            }else if ($status == 1) {
+            } else if ($status == 1) {
                 $BookController->change_status_stock_function($StockId, 3, 1);
-            }else if ($status == 2) {
+            } else if ($status == 2) {
                 $BookController->change_status_stock_function($StockId, 4, 1);
-            }else if ($status == 3) {
+                $data_stock = $StockBookModels->where('id_stock', $StockId)->findAll()[0];
+                $description = $this->request->getVar('text_book_description_' . $data_stock['id_stock'] . '_' . $data_stock['id_book']);
+                $StockBookModels->update($StockId, ['description' => $description]);
+            } else if ($status == 3) {
                 $BookController->change_status_stock_function($StockId, 5, 1);
             }
         }
@@ -227,7 +234,7 @@ class HistoryController extends BaseController
                     'message' => 'อัปเดตข้อมูลสำเร็จ',
                     'reload' => false,
                     'button' => true,
-                    'status_his' => $status_his
+                    'status_his' => $status_his,
                 ];
             } else {
                 $response = [
@@ -249,11 +256,14 @@ class HistoryController extends BaseController
     }
 
     //อัปเดตสถานะ กำลังเช่า
-    public function update_status_his($id_history = null)
+    public function update_status_his()
     {
         $HistoryModels = new HistoryModels();
         $UserModels = new UserModels();
-        $id_user = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_user'];
+        helper(['form']);
+        $id_history = $this->request->getVar('id_history');
+        $id_user = $this->request->getVar('id_user');
+
         $UserModels->update($id_user, ['status_rental' => 3]);
         $data = [
             'status_his' => 2,
@@ -278,24 +288,32 @@ class HistoryController extends BaseController
     }
 
     //อัปเดตสถานะ ยืนยันการคืน
-    public function submit_his($id_history = null, $price_fess_totel = null, $id_user = null)
+    public function submit_his()
     {
         helper(['form']);
+
         $HistoryModels = new HistoryModels();
         $UserModels = new UserModels();
         $BookController = new BookController();
-
-        $price = ($price_fess_totel === '0') ? null : $price_fess_totel;
+        $inputDate = $this->request->getVar('return_date');
+        $id_history = $this->request->getVar('id_history');
+        $id_user = $this->request->getVar('id_user');
+        $formattedDate = date('Y/m/d', strtotime($inputDate));
         $data = [
             'submit_date' => date('Y/m/d'),
-            'late_price' => $price,
+            'return_date' => $formattedDate,
+            'sum_late_price' => $this->request->getVar('sum_late_price'),
+            'sum_day_late_price' => $this->request->getVar('day_late_price'),
+            'sum_book_des_price' => $this->request->getVar('book_des_price'),
+            'sum_price_promotion' => $this->request->getVar('sum_price_promotion'),
             'status_his' => 3,
         ];
+
         $UserModels->update($id_user, ['status_rental' => 1]);
         $id_stock_book = $HistoryModels->where('id_history', $id_history)->findAll()[0]['id_stock_book'];
         $StockIds = explode(',', $id_stock_book);
         foreach ($StockIds as $StockId) {
-            $BookController->change_status_stock_function($StockId, 1, 0);
+            $BookController->change_status_stock_function($StockId, 1, 1);
         }
         $check = $HistoryModels->update($id_history, $data);
         if ($check) {
@@ -314,33 +332,28 @@ class HistoryController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    public function delete_create_history()
+    public function cancel_cart()
     {
-        $bookIds = explode(',', $this->request->getVar('name_book_create__'));
-        $cart_id = explode(',', $this->request->getVar('cart_id'));
+        $BookController = new BookController();
 
-        $this->chage_status_book($bookIds, 1);
+        $cart_id = explode(',', $this->request->getVar('cart_id'));
+        $StockIds = explode(',', $this->request->getVar('StockIds'));
+
+        foreach ($StockIds as $StockId) {
+            $BookController->change_status_stock_function($StockId, 1, 1);
+        }
+
         $this->delete_cart($cart_id);
 
         $response = [
             'success' => true,
-            'message' => 'ยกเลิกการตระกร้าสำเร็จ!',
+            'message' => 'ยกเลิกรายการหนังสือในตระกร้าสำเร็จ!',
             'reload' => true,
         ];
 
         return $this->response->setJSON($response);
     }
-    function chage_status_book($bookIds = [], $numberstatus = null)
-    {
-        $BookModels = new BookModels();
-        foreach ($bookIds as $id_book) {
-            $bookData = [
-                'status_book' => $numberstatus,
-            ];
 
-            $BookModels->update($id_book, $bookData);
-        }
-    }
 
     function delete_cart($cartIds = [])
     {

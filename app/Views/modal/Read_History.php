@@ -72,8 +72,8 @@
                                     onclick="setScore(this)">
                                 <label for="answer_4" id="label_answer_4">หนังสือไม่สามรถใช้ต่อได้</label>
                             </div>
-                            <input type="text" id="price_book_destroy_after" name="price_book_destroy_after" >
-                            <input type="text" id="price_book_destroy_before" name="price_book_destroy_before" >
+                            <input type="text" id="price_book_destroy" name="price_book_destroy"
+                                class="price_book_destroy" hidden>
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
@@ -174,14 +174,30 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>ราคาค่าปรับ</label>
-                            <input type="text" class="form-control" id="sum_late_price" name="sum_late_price"
-                                placeholder="ราคาค่าปรับ">
+                            <label>รวมค่าปรับหนังสือ</label>
+                            <input type="text" class="form-control" id="book_des_price_" name="book_des_price_"
+                                placeholder="รวมค่าปรับหนังสือ" disabled>
+                            <input type="text" id="book_des_price" name="book_des_price" hidden>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>ค่าปรับเกินกำหนด</label>
+                            <input type="text" class="form-control" id="day_late_price" name="day_late_price"
+                                placeholder="ค่าปรับเกินกำหนด" disabled>
+                            <input type="text" id="day_late_price" name="day_late_price" hidden>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>ค่าปรับอื่นๆ</label>
+                            <input type="text" class="form-control" id="sum_late_price" name="sum_late_price"
+                                placeholder="ค่าปรับอื่นๆ">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>รวมทั้งสิ้น</label>
                             <input type="text" class="form-control" id="total_price_all" name="total_price_all"
@@ -190,7 +206,16 @@
                     </div>
                 </div>
                 <input type="text" id="url_route" name="url_route" hidden>
+                <input type="text" id="id_history" name="id_history" hidden>
+                <input type="text" id="id_user" name="id_user" hidden>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" name="submit_bill" id="submit_bill"
+                        onclick="change_status_his('ยืนยันการคืนใช่หรือไม่', 'dashboard/history/submit')"><i
+                            class="fas fa-check"></i> คืนหนังสือ</button>
+                    <button type="button" class="btn btn-warning" name="submit_inbook" id="submit_inbook"
+                        onclick="change_status_his('ยืนยันการเข้าหนังสือรับใช่หรือไม่', 'dashboard/history/update_status_his')">
+                        <i class="far fa-calendar-check"></i> เข้ารับหนังสือ
+                    </button>
                     <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"></button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                     <a class="btn btn-app bg-danger mt-3" target="_blank" id="print" name="print"><i
@@ -205,7 +230,22 @@
     $(document).ready(function () {
         $(".overlay").hide();
     });
+    function change_status_his(msg, url) {
+        Swal.fire({
+            title: msg,
+            icon: 'question',
+            confirmButtonColor: "#28a745",
+            confirmButtonText: "ตกลง",
+            cancelButtonColor: "#d33",
+            showCancelButton: true,
+            cancelButtonText: "ยกเลิก",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action_(url, 'form_read_history');
+            }
+        })
 
+    }
     $("#form_read_history").on('submit', function (e) {
         e.preventDefault();
         const urlRouteInput = document.getElementById("url_route");
@@ -221,12 +261,29 @@
         const sum_deposit_price_cal = parseFloat($("#sum_deposit_price").val()) || 0;
         const sum_late_price_cal = parseFloat($("#sum_late_price").val()) || 0;
         const sum_price_promotion_cal = parseFloat($("#sum_price_promotion").val()) || 0;
+        const day_late_price_cal = parseFloat($("#day_late_price").val()) || 0;
 
         // Calculate the new values
         const total_price_cal = (sum_rental_price_cal + sum_deposit_price_cal) - sum_price_promotion_cal;
-        const total_price_all_cal = total_price_cal + sum_late_price_cal;
+
+        // ดึงข้อมูลจาก input elements ที่มี class เป็น "price_book_destroy"
+        var elements = $(".price_book_destroy");
+        // เตรียมตัวแปรสำหรับเก็บผลลัพธ์
+        var total = 0;
+        // วนลูปผ่าน input elements แต่ละตัว
+        elements.each(function () {
+            // ดึงค่าจาก input element
+            var value = parseFloat($(this).val()) || 0; // แปลงค่าเป็นจำนวนจริง
+            // บวกค่าไปยังผลลัพธ์
+            total += value;
+        });
+
+        const total_price_all_cal = total_price_cal + sum_late_price_cal + day_late_price_cal + total;
+
 
         // Update the values of the elements
+        $("#book_des_price_").val(total);
+        $("#book_des_price").val(total);
         $("#total_price").val(total_price_cal);
         $("#total_price_all").val(total_price_all_cal);
     }
@@ -241,43 +298,22 @@
         updateTotalPrice();
     });
 </script>
-<script>
-    function setScoreRadio(value) {
-        let id_stock_check = value.id.split('_');
-        //[0] = เลขลำดับตัวเลือก 1-4 [1] = id_stock [2] = id_book
-        var sum_late_price_after = parseFloat($("#price_book_destroy_after_" + id_stock_check[1] + "_" + id_stock_check[2]).val()) || 0;
-        var sum_late_price_before = parseFloat($("#price_book_destroy_before_" + id_stock_check[1] + "_" + id_stock_check[2]).val()) || 0;
-        const sum_late_price_cal = parseFloat($("#sum_late_price").val()) || 0;
-        var price_temp = (sum_late_price_cal - sum_late_price_before) + sum_late_price_after;
-        $("#sum_late_price").val(price_temp);
-    }
-</script>
+
 <script>
     function setScore(value) {
         let id_stock_check = value.id.split('_');
-        //[0] = เลขลำดับตัวเลือก 1-4 [1] = id_stock [2] = id_book
-        var sum_late_price_after = parseFloat($("#price_book_destroy_after_" + id_stock_check[1] + "_" + id_stock_check[2]).val()) || 0;
-        var sum_late_price_before = parseFloat($("#price_book_destroy_before_" + id_stock_check[1] + "_" + id_stock_check[2]).val()) || 0;
-        const sum_late_price_cal = parseFloat($("#sum_late_price").val()) || 0;
-
         var data_book = <?php echo json_encode($data_book); ?>;
-        var mat_book = data_book.find(element_book => element_book.id_book === id_stock_check[2]);
+        var mat_book = data_book.find(element_book => element_book.id_book == id_stock_check[2]);
 
-        var price_book_destroy = 0;
-        if (id_stock_check[0] == 1) {
-            price_book_destroy = 0;
-        } else if (id_stock_check[0] == 2 || id_stock_check[0] == 4) {
-            price_book_destroy = mat_book.price_book;
-        } else if (id_stock_check[0] == 3) {
-            price_book_destroy = 0.2 * mat_book.price_book;
+        cal_book_destory(mat_book.price_book, id_stock_check[0], function (result_price_book_des) {
+            $(".modal-body #price_book_destroy_" + id_stock_check[1] + "_" + id_stock_check[2]).val(result_price_book_des);
+        });
+
+        if (id_stock_check[0] == 4) {
+            $("#text_book_description_" + id_stock_check[1] + "_" + id_stock_check[2]).show();
+        }else{
+            $("#text_book_description_" + id_stock_check[1] + "_" + id_stock_check[2]).hide();
         }
-        const showDescription = id_stock_check[0] == 3;
-        $("#text_book_description_" + id_stock_check[1] + "_" + id_stock_check[2])[showDescription ? 'show' : 'hide']();
-
-        $("#price_book_destroy_before_" + id_stock_check[1] + "_" + id_stock_check[2]).val(sum_late_price_after);
-        $("#price_book_destroy_after_" + id_stock_check[1] + "_" + id_stock_check[2]).val(price_book_destroy);
-
-        setScoreRadio(value)
         updateTotalPrice();
 
     }

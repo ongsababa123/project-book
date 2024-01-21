@@ -213,13 +213,16 @@
 
             Read_History = document.getElementById("Read_History");
             Create_History = document.getElementById("Create_History");
-
+            $(".modal-body #book_des_price").val('');
+            $(".modal-body #day_late_price").val('');
+            $(".modal-body #sum_late_price").val('');
             if (load_check == 1) {
                 $(".modal-body #name_book_create").empty();
                 $(".modal-body #name_user_create").empty();
                 $(".modal-body #rental_date_create").val('');
                 $(".modal-body #return_date_create").val('');
                 $(".modal-body #price_book").val('');
+
 
                 Read_History.style.display = "none";
                 Create_History.style.display = "block";
@@ -281,18 +284,16 @@
                     clonedForm.find("#price_book").attr("id", "price_book_" + id.trim()).val(matbook.price_book);
                     const status = rowData.stock[count_id].status_stock;
                     data_id_ = rowData.stock[count_id].id_stock + "_" + id.trim();
-
-                    clonedForm.find("#answer_1").attr("id", "1_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 2);
-                    clonedForm.find("#answer_2").attr("id", "2_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 3);
-                    clonedForm.find("#answer_3").attr("id", "3_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 4);
-                    clonedForm.find("#answer_4").attr("id", "4_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 5);
-                    clonedForm.find("#label_answer_1").attr("id", "label_answer_1_" + id.trim()).attr("for", "1_" + data_id_).val();
-                    clonedForm.find("#label_answer_2").attr("id", "label_answer_2_" + id.trim()).attr("for", "2_" + data_id_).val();
-                    clonedForm.find("#label_answer_3").attr("id", "label_answer_3_" + id.trim()).attr("for", "3_" + data_id_).val();
-                    clonedForm.find("#label_answer_4").attr("id", "label_answer_4_" + id.trim()).attr("for", "4_" + data_id_).val();
+                    clonedForm.find("#answer_1").attr("id", "2_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 2 || status == 1 || status == 0);
+                    clonedForm.find("#answer_2").attr("id", "3_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 3);
+                    clonedForm.find("#answer_3").attr("id", "4_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 4);
+                    clonedForm.find("#answer_4").attr("id", "5_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 5);
+                    clonedForm.find("#label_answer_1").attr("id", "label_answer_1_" + id.trim()).attr("for", "2_" + data_id_).val();
+                    clonedForm.find("#label_answer_2").attr("id", "label_answer_2_" + id.trim()).attr("for", "3_" + data_id_).val();
+                    clonedForm.find("#label_answer_3").attr("id", "label_answer_3_" + id.trim()).attr("for", "4_" + data_id_).val();
+                    clonedForm.find("#label_answer_4").attr("id", "label_answer_4_" + id.trim()).attr("for", "5_" + data_id_).val();
                     clonedForm.find("#text_book_description").attr("id", "text_book_description_" + data_id_).attr("name", "text_book_description_" + data_id_).val(rowData.stock[count_id].description ?? "");
-                    clonedForm.find("#price_book_destroy_before").attr("id", "price_book_destroy_before_" + data_id_).attr("name", "price_book_destroy_before_" + data_id_);
-                    clonedForm.find("#price_book_destroy_after").attr("id", "price_book_destroy_after_" + data_id_).attr("name", "price_book_destroy_after_" + data_id_);
+                    clonedForm.find("#price_book_destroy").attr("id", "price_book_destroy_" + data_id_).attr("name", "price_book_destroy_" + data_id_);
 
                     if (status == 4) {
                         clonedForm.find("#text_book_description_" + data_id_).show();
@@ -302,24 +303,29 @@
                     $("#formImageContainer").append(clonedImage);
                     $("#formContainer").append(clonedForm);
                     clonedForm.show();
+                    cal_book_destory(matbook.price_book, status, function (result_price_book_des) {
+                        $(".modal-body #price_book_destroy_" + data_id_).val(result_price_book_des);
+                    });
                     count_id += 1;
 
                     if (rowData.status_his == 2) {
                         $(".modal-footer #print").show();
+                        $(".modal-footer #submit_bill").show();
+                        $(".modal-footer #submit_inbook").hide();
+                        $("#text_book_description_" + data_id_).prop("disabled", false);
                         $(".modal-body .score-radio, #return_date, #sum_late_price, #sum_price_promotion").prop("disabled", false);
                     } else if (rowData.status_his == 3) {
                         $(".modal-footer #print").show();
+                        $(".modal-footer #submit_bill").hide();
+                        $(".modal-footer #submit_inbook").hide();
                         $(".modal-body .score-radio, #return_date, #sum_late_price, #sum_price_promotion").prop("disabled", true);
-                    } else{
+                        $("#text_book_description_" + data_id_).prop("disabled", true);
+                    } else {
                         $(".modal-footer #print").hide();
+                        $(".modal-footer #submit_bill").hide();
+                        $(".modal-footer #submit_inbook").show();
                         $(".modal-body .score-radio, #return_date, #sum_late_price, #sum_price_promotion").prop("disabled", false);
-                    }
-                    if (status == 3 || status == 5) {
-                        $(".modal-body #price_book_destroy_before_" + data_id_).val(matbook.price_book);
-                    }else if (status == 4) {
-                        $(".modal-body #price_book_destroy_before_" + data_id_).val(0.2 * parseInt(matbook.price_book));
-                    }else if (status == 2) {
-                        $(".modal-body #price_book_destroy_before_" + data_id_).val(0);
+                        $("#text_book_description_" + data_id_).prop("disabled", false);
                     }
                 });
                 //end ส่วนหนังสือ
@@ -346,23 +352,22 @@
                         if (result_distance_day > 0) {
                             $(".modal-body #label_return_date").text("จำนวนวันที่เกินมา : " + result_distance_day + " วัน");
                             calculate_price_late__(data_latefees[0]['price_fees'], result_distance_day, function (result_price) {
-                                if (rowData.sum_late_price == '0' || rowData.sum_late_price == null) {
-                                    $(".modal-body #sum_late_price").val(result_price);
-                                } else {
-                                    $(".modal-body #sum_late_price").val(parseInt(result_price) + parseInt(rowData.sum_late_price));
-                                }
+                                $(".modal-body #day_late_price").val(result_price); //ค่าปรับเกินกำหนด
                             })
                         }
                     });
-
-                } else {
-                    if (rowData.sum_late_price == null) {
-                        $(".modal-body #sum_late_price").val("ไม่มีค่าปรับ");
-                    } else {
-                        $(".modal-body #sum_late_price").val(rowData.late_price);
-                    }
+                }else{
+                    $(".modal-body #day_late_price").val(rowData.sum_day_late_price); //ค่าปรับเกินกำหนด
+                    $(".modal-body #book_des_price").val(rowData.sum_book_des_price); //ค่าปรับหนังสือ
                 }
                 // end วันที่มาคืน
+                //ค่าปรับอื่นๆ
+                if (rowData.sum_late_price == null) {
+                    $(".modal-body #sum_late_price").val("");
+                } else {
+                    $(".modal-body #sum_late_price").val(rowData.late_price);
+                }
+                // end ค่าปรับอื่นๆ
                 //ส่วนลดโปรโมชั่น
                 var text_promotion = '';
                 if (rowData.id_promotion == null) {
@@ -397,14 +402,18 @@
                 var sum_deposit_price = parseInt($(".modal-body #sum_deposit_price").val()) || 0;
                 var sum_price_promotion = parseInt($(".modal-body #sum_price_promotion").val()) || 0;
                 var sum_late_price = parseInt($(".modal-body #sum_late_price").val()) || 0;
+                var day_late_price = parseInt($(".modal-body #day_late_price").val()) || 0;
                 var total_price = ((sum_rental_price + sum_deposit_price) - sum_price_promotion);
-                var total_price_all = total_price + sum_late_price;
+                var total_price_all = (total_price + sum_late_price) + day_late_price;
                 $(".modal-body #total_price").val(total_price);
                 $(".modal-body #total_price_all").val(total_price_all);
 
 
                 $(".modal-body #url_route").val("dashboard/history/edit/edit_history/" + rowData.id_history);
+                $(".modal-body #id_history").val(rowData.id_history);
+                $(".modal-body #id_user").val(rowData.id_user);
                 $(".modal-body #print").prop("href", "billview/" + rowData.id_history);
+                updateTotalPrice();
             }
         }
     </script>
@@ -570,14 +579,10 @@
                             'render': function (data, type, row, meta) {
                                 const matchingUser = data_user.find(element => data.id_user === element.id_user);
                                 const encodedRowData = encodeURIComponent(JSON.stringify(row));
-                                var price_fess_totel;
                                 if (data.status_his === '1') {
                                     return `
                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')">
                                             <i class="fas fa-info-circle"></i> ประวัติการเช่า
-                                        </button>
-                                        <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการเข้าหนังสือรับใช่หรือไม่', 'dashboard/history/update_status_his/${data.id_history}')">
-                                            <i class="far fa-calendar-check"></i>
                                         </button>
                                         <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" <?= $type_hideen ?>>
                                             <i class="fas fa-store-slash"></i>
@@ -585,21 +590,7 @@
                                     `;
                                 } else if (data.status_his === '2' || data.status_his === '3') {
                                     if (data.submit_date == null) {
-                                        calculate_distance_day(data.return_date, function (result_distance_day) {
-                                            if (result_distance_day > 0) {
-                                                calculate_price_late__(data_latefees[0]['price_fees'], result_distance_day, function (result_price) {
-                                                    if (data.sum_late_price == '0' || data.sum_late_price == null) {
-                                                        price_fess_totel = parseInt(result_price);
-                                                    } else {
-                                                        price_fess_totel = parseInt(result_price) + parseInt(data.sum_late_price);
-                                                    }
-                                                })
-                                            } else {
-                                                price_fess_totel = data.sum_late_price ?? 0;
-                                            }
-                                        });
                                         return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>
-                                                <button type="button" class="btn btn-success" name="submit_bill" id="submit_bill" onclick="confirm_Alert('ยืนยันการคืนใช่หรือไม่', 'dashboard/history/submit/${data.id_history}/${price_fess_totel}/${data.id_user}')" ><i class="fas fa-check"></i></button>
                                                 <button type="button" class="btn btn-danger" name="cancelhis" id="cancelhis" onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/${data.id_history}')" <?= $type_hideen ?>><i class="fas fa-store-slash"></i></button>`;
                                     } else {
                                         return `<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-info-circle"></i> ประวัติการเช่า</button>`;
@@ -709,6 +700,7 @@
                 title: text,
                 icon: 'question',
                 showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
                 confirmButtonColor: "#28a745",
                 confirmButtonText: "ตกลง",
             }).then((result) => {

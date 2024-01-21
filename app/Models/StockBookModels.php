@@ -10,6 +10,6 @@ class StockBookModels extends Model
 
     protected $primaryKey = 'id_stock';
 
-    protected $allowedFields = ['id_book' , 'id_number_', 'status_stock'];
+    protected $allowedFields = ['id_book' , 'id_number_','description', 'status_stock'];
 
 }

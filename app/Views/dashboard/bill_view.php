@@ -69,12 +69,13 @@ $book_total = 0;
                     <div class="row">
                         <div class="col-6">
                             <h5 class="">
-                                BL-<?= $data_history[0]['id_history'] ?>
+                                BL-
+                                <?= $data_history[0]['id_history'] ?>
                             </h5>
                         </div>
                         <div class="col-6">
                             <h5 class="text-right">
-                                <?= date('Y/m/d') ?>
+                                <?= date('d/m/Y') ?>
                             </h5>
                         </div>
                     </div>
@@ -83,6 +84,17 @@ $book_total = 0;
                         <div class="col-12 table-responsive">
                             <table class="table table-striped">
                                 <tbody>
+                                    <tr>
+                                        <td class="text-left border-0" width="5%">
+                                            ลำดับ
+                                        </td>
+                                        <td class="text-left border-0">
+                                            ชื่อหนังสือ
+                                        </td>
+                                        <td class="text-right border-0">
+                                            ราคาเช่า
+                                        </td>
+                                    </tr>
                                     <?php $data_history_values = explode(',', $data_history[0]['id_book']); ?>
                                     <?php foreach ($data_history_values as $index => $element): ?>
                                         <?php $filtered_books = array_filter($data_book, function ($value_book) use ($element) {
@@ -120,31 +132,10 @@ $book_total = 0;
                     <br>
                     <br>
                     <div class="row text-center">
-                        <!-- accepted payments column -->
-                        <div class="col-5">
-                            <div class="row text-center">
-                                <div class="col-12">
-                                    <img src="<?= base_url('dist/img/promptpay.png') ?>" width="40%" alt="Visa">
-                                </div>
-                                <div class="col-12">
-                                    <div style="position: relative; text-align: center;">
-                                        <img src="https://promptpay.io/0972654762/<?= $data_history[0]['sum_price'] + $data_history[0]['late_price'] ?>.png"
-                                            alt="QR Code"
-                                            style="max-width: 100%; max-height: 100%; display: inline-block;">
-                                        <div
-                                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                                            <img src="<?= base_url('dist/img/logo1.png') ?>" alt="logo" width="50%">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                                โปรดตรวจสอบยอดชำระเงินทุกครั้งก่อนชำระเงิน
-                            </p>
+                        <div class="col-4">
                         </div>
                         <!-- /.col -->
-                        <div class="col-7">
+                        <div class="col-8">
                             <div class="row">
                                 <div class="col-6">
                                     <h5 class="text-right">
@@ -153,7 +144,7 @@ $book_total = 0;
                                 </div>
                                 <div class="col-6">
                                     <h5 class="text-right">
-                                        <?= $data_history[0]['sum_price'] ?>.00
+                                        <?= $data_history[0]['sum_rental_price'] ?>.00
                                     </h5>
                                 </div>
                             </div>
@@ -185,7 +176,7 @@ $book_total = 0;
                                 </div>
                                 <div class="col-6">
                                     <h5 class="text-right">
-                                        <?= $book_total * 100 ?>.00
+                                        <?= $data_history[0]['sum_deposit_price'] ?>.00
                                     </h5>
                                 </div>
                             </div>
@@ -197,7 +188,7 @@ $book_total = 0;
                                 </div>
                                 <div class="col-6">
                                     <h5 class="text-right border-bottom border-dark">
-                                        <?= ($book_total * 100) + ($data_history[0]['sum_price'] - $data_history[0]['sum_price_promotion'] ?? 0) ?>.00
+                                        <?= ($data_history[0]['sum_deposit_price']) + ($data_history[0]['sum_rental_price'] - $data_history[0]['sum_price_promotion'] ?? 0) ?>.00
                                     </h5>
                                 </div>
                             </div>
@@ -209,7 +200,7 @@ $book_total = 0;
                                 </div>
                                 <div class="col-6">
                                     <h5 class="text-right border-bottom border-dark">
-                                        <?= ($book_total * 100) + ($data_history[0]['sum_price'] - $data_history[0]['sum_price_promotion'] ?? 0) ?>.00
+                                        <?= ($data_history[0]['sum_deposit_price']) + ($data_history[0]['sum_rental_price'] - $data_history[0]['sum_price_promotion'] ?? 0) ?>.00
                                     </h5>
                                     <h5 class="text-right border-bottom border-dark"></h5>
                                 </div>
@@ -217,21 +208,89 @@ $book_total = 0;
                             <div class="row">
                                 <div class="col-6">
                                     <h5 class="text-right">
-                                        ค่าปรับ
+                                        ค่าปรับหนังสือ
                                     </h5>
                                 </div>
                                 <div class="col-6">
                                     <h5 class="text-right">
-                                        <?php if ($data_history[0]['late_price'] === null): ?>
-                                            ไม่มีค่าปรับ
+                                        <?php if ($data_history[0]['sum_book_des_price'] === null): ?>
+                                            0.00
                                         <?php else: ?>
-                                            <?= $data_history[0]['late_price'] ?>.00
+                                            <?= $data_history[0]['sum_book_des_price'] ?>.00
                                         <?php endif; ?>
                                     </h5>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 class="text-right">
+                                        ค่าปรับเกินกำหนด
+                                    </h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 class="text-right">
+                                        <?php if ($data_history[0]['sum_day_late_price'] === null): ?>
+                                            0.00
+                                        <?php else: ?>
+                                            <?= $data_history[0]['sum_day_late_price'] ?>.00
+                                        <?php endif; ?>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 class="text-right">
+                                        ค่าปรับเกินกำหนด
+                                    </h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 class="text-right border-bottom border-dark">
+                                        <?php if ($data_history[0]['sum_late_price'] === null): ?>
+                                            0.00
+                                        <?php else: ?>
+                                            <?= $data_history[0]['sum_late_price'] ?>.00
+                                        <?php endif; ?>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 class="text-right">
+                                        รวมคาปรับทั้งสิ้น
+                                    </h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 class="text-right border-bottom border-dark">
+                                        <?= ($data_history[0]['sum_book_des_price']) + ($data_history[0]['sum_day_late_price'] + $data_history[0]['sum_late_price'] ?? 0) ?>.00
+                                    </h5>
+                                    <h5 class="text-right border-bottom border-dark"></h5>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.col -->
+                    </div>
+                    <br>
+                    <!-- accepted payments column -->
+                    <div class="col-12 text-center">
+                        <div class="row text-center">
+                            <div class="col-12">
+                                <img src="<?= base_url('dist/img/promptpay.png') ?>" width="40%" alt="Visa">
+                            </div>
+                            <div class="col-12">
+                                <div style="position: relative; text-align: center;">
+                                    <img src="https://promptpay.io/0972654762/<?= ($data_history[0]['sum_deposit_price']) + ($data_history[0]['sum_rental_price'] - $data_history[0]['sum_price_promotion'] ?? 0) ?>.00.png"
+                                        alt="QR Code" style="max-width: 100%; max-height: 100%; display: inline-block;">
+                                    <div
+                                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                        <img src="<?= base_url('dist/img/logo1.png') ?>" alt="logo" width="50%">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                            โปรดตรวจสอบยอดชำระเงินทุกครั้งก่อนชำระเงิน
+                        </p>
                     </div>
                 </div>
                 <div class="col-3">

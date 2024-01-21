@@ -6,7 +6,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 use App\Models\HistoryModels;
-use App\Models\BookModels;
+use App\Models\StockBookModels;
 use CodeIgniter\I18n\Time;
 use App\Models\UserModels;
 
@@ -16,7 +16,7 @@ class HistoryCheck implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $HistoryModels = new HistoryModels();
-        $BookModels = new BookModels();
+        $StockBookModels = new StockBookModels();
         $UserModels = new UserModels();
         $session = session();
         $data['data_History'] = $HistoryModels->findAll();
@@ -44,9 +44,9 @@ class HistoryCheck implements FilterInterface
                     }
                 } else if ($now > $rental_date) {
                     $HistoryModels->update($value['id_history'], ['status_his' => 0]);
-                    $idUserArray = explode(',', $value['id_book']);
+                    $idUserArray = explode(',', $value['id_stock_book']);
                     foreach ($idUserArray as $id) {
-                        $BookModels->update($id, ['status_book' => 1]);
+                        $StockBookModels->update($id, ['status_stock' => 1]);
                     }
                     $UserModels->update($value['id_user'], ['status_rental' => 1]);
 

@@ -152,7 +152,7 @@
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <?php if (session()->get('type') == '2'): ?>
+                        <!-- <?php if (session()->get('type') == '2'): ?>
                             <li class="nav-item">
                                 <a href="<?= site_url('/dashboard/admin/index'); ?>" class="nav-link">
                                     <i class="nav-icon fas fa-user-shield"></i>
@@ -161,7 +161,7 @@
                                     </p>
                                 </a>
                             </li>
-                        <?php endif; ?>
+                        <?php endif; ?> -->
                         <div>
                             <hr>
                         </div>
@@ -218,6 +218,14 @@
                                     <i class="nav-icon fas fa-ad"></i>
                                     <p>
                                         ข้อมูลโปรโมชั่น
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/report/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-chart-line"></i>
+                                    <p>
+                                        รายงานยอดขาย
                                     </p>
                                 </a>
                             </li>

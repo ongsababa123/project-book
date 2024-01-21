@@ -1,4 +1,3 @@
-
 <footer class="footer bg-success">
     <div class="container">
         <div class="row">
@@ -30,18 +29,7 @@
     $(document).ready(function () {
         var check_cart = <?php echo session()->get('check') ?>;
         var check_his = <?php echo session()->get('check_his') ?>;
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            confirmButtonText: "ตกลง",
-            showConfirmButton: true,
-            timer: 5000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
+
 
         var text = '';
         if (check_cart == '1') {
@@ -51,9 +39,12 @@
             text += '<?php echo session()->get('message_his') ?>';
         }
         if (text !== '') {
-            Toast.fire({
+            Swal.fire({
                 icon: "warning",
                 title: text,
+                confirmButtonText: "ตกลง",
+                showConfirmButton: true,
+                allowOutsideClick: false,
             })
         }
     });

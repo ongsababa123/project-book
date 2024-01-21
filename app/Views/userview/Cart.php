@@ -91,7 +91,7 @@
             <?php else: ?>
                 <div class="section mb-6" style="background-color: #bddce5; padding-bottom: 10rem;">
                     <div class="container ">
-                        <h1 class="text-center">ไม่มีประวัติการเช่า</h1>
+                        <h1 class="text-center">ไม่มีประวัติในตระกร้า</h1>
                     </div>
                 </div>
             <?php endif; ?>
@@ -99,7 +99,7 @@
     </div>
 </div>
 <div class="modal fade " id="Payment" tabindex="-1" role="dialog" aria-hidden="false">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header no-border-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -143,26 +143,27 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label class="label-control">เลิอกวันที่รับหนังสือ</label>
+                                <label class="label-control">เลือกวันที่รับหนังสือ</label>
                                 <input type="text" class="form-control datetimepicker" required id="rental_date_create"
                                     name="rental_date_create" />
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label class="label-control">เลิอกวันที่คืน</label>
+                                <label class="label-control">เลือกวันที่คืน</label>
                                 <input type="text" class="form-control datetimepicker" required id="return_date_create"
                                     name="return_date_create" />
                             </div>
                         </div>
                     </div>
-                    <input type="text" class="form-control" id="name_user_create" name="name_user_create"
-                        value="<?= session()->get('id') ?>" hidden>
-                    <input type="text" class="form-control" id="price_book_create" name="price_book_create" hidden>
-                    <input type="text" class="form-control" id="id_book_create" name="id_book_create" hidden>
-                    <input type="text" class="form-control" id="sumid_promotion" name="sumid_promotion" hidden>
-                    <input type="text" class="form-control" id="sum_price_promotion" name="sum_price_promotion" hidden>
-                    <input type="text" class="form-control" id="cart_id" name="cart_id" hidden>
+                    <input type="text" id="sumid_promotion" name="sumid_promotion" hidden>
+                    <input type="text" id="name_book_create__" name="name_book_create__" hidden>
+                    <input type="text" id="name_user_create" name="name_user_create" hidden>
+                    <input type="text" id="cart_id" name="cart_id" hidden>
+                    <input type="text" id="price_book_create" name="price_book_create" hidden>
+                    <input type="text" id="price_deposit_" name="price_deposit_" hidden>
+                    <input type="text" id="sum_price_promotion" name="sum_price_promotion" hidden>
+                    <input type="text" id="id_stock_book" name="id_stock_book" hidden>
                     <input type="text" id="url_route" name="url_route" hidden>
                     <button class="btn btn-block btn-round"> จอง</button>
                 </form>
@@ -223,116 +224,108 @@
 </script>
 
 <script>
-    var categoryData = <?php echo json_encode($cartData); ?>;
+    var cartData = <?php echo json_encode($cartData); ?>;
     var userData = <?php echo json_encode($userData); ?>;
     var cart_check = [];
-    var id_book_check = '';
-    var price_sum = 0;
 
-    if (cart_check.length === 0) {
-        $("#button_cancel").prop("disabled", true);
-        $("#button_modal").prop("disabled", true);
-    } else {
-        $("#button_cancel").prop("disabled", false);
-        $("#button_modal").prop("disabled", false);
+    function cart_check_length(value) {
+        if (cart_check.length === 0) {
+            $("#button_cancel").prop("disabled", true);
+            $("#button_modal").prop("disabled", true);
+        } else {
+            if (userData[0].status_rental == 2 || userData[0].status_rental == 3) {
+                $("#button_modal").prop("disabled", true);
+                $("#button_cancel").prop("disabled", false);
+            } else {
+                $("#button_cancel").prop("disabled", false);
+                $("#button_modal").prop("disabled", false);
+            }
+        }
     }
+    var StockIds = [];
     $(document).ready(function () {
+
+        cart_check_length(cart_check);
         $('.form-check-input').on('change', function () {
-
             var value = $(this).val();
-            var if_check = false;
-
-            cart_check.forEach((element, index) => {
-                if (element == value) {
-                    if_check = true;
-                    cart_check.splice(index, 1);
-                    categoryData.forEach(element_cat => {
-                        if (element_cat.id_cart == element) {
-                            price_sum = price_sum - parseInt(element_cat.bookData[0].price);
-                            id_book_check = id_book_check.replace(element_cat.bookData[0].id_book + ',', '');
-                        }
-                    });
-                }
-            });
-            if (!if_check) {
+            if ($(this).is(':checked')) {
                 cart_check.push(value);
-                categoryData.forEach(element_cat => {
-                    if (element_cat.id_cart == value) {
-                        price_sum = price_sum + parseInt(element_cat.bookData[0].price);
-                        id_book_check += element_cat.bookData[0].id_book + ',';
-                    }
+            } else {
+                cart_check = cart_check.filter(function (item) {
+                    return item !== value;
                 });
             }
-
-            $("#price").text(price_sum);
-            $("#quantity").text(cart_check.length);
-
-            if (cart_check.length === 0) {
-                $("#button_cancel").prop("disabled", true);
-                $("#button_modal").prop("disabled", true);
-            } else {
-                if (userData[0].status_rental == 2 || userData[0].status_rental == 3) {
-                    $("#button_modal").prop("disabled", true);
-                    $("#button_cancel").prop("disabled", false);
-                } else {
-                    $("#button_cancel").prop("disabled", false);
-                    $("#button_modal").prop("disabled", false);
-                }
-            }
+            $('#quantity').text(cart_check.length);
+            cart_check_length(value);
         });
     });
 
 </script>
 <script>
     function loadmodal() {
-        var count = 0;
         $("#cartTable").empty();
-        var selectedid_book = cart_check;
-        var price__ = price_sum;
-        var id_user = 1;
+        var count = 0;
+        var sum_rental_price = 0;
+        var sum_book_price = 0;
+        var id_book_check = '';
+        var id_stock_book = '';
+        var id_user = <?= session()->get('id') ?>;
         cart_check.forEach(element => {
-            count++;
-            categoryData.forEach(element_cat => {
-                if (element_cat.id_cart == element) {
-                    var row1 = `
-                        <tr>
-                            <th>ลำดับ : ${count}</th>
-                            <th>ชื่อหนังสือ : </th>
-                            <td>${element_cat.bookData[0].name_book}</td>
-                            <th>ราคาเช่า :</th>
-                            <td>${element_cat.bookData[0].price} บาท</td>
-                        </tr>
-                        `;
-                    $("#cartTable").append(row1);
-                }
-            });
+            let matcart = cartData.find(element_cart => element_cart.id_cart === element);
+            $("#cartTable").append(
+                `<tr>
+                    <th>ลำดับ : </th>
+                    <td>${count += 1}</td>
+                    <th>ชื่อหนังสือ : </th>
+                    <td>${matcart.bookData[0].name_book}</td>
+                    <td></td>
+                    <th>ราคาหนังสือ : </th>
+                    <td>${matcart.bookData[0].price_book}</td>
+                    <th>ราคาเช่า : </th>
+                    <td>${matcart.bookData[0].price}</td>
+                </tr>`
+            );
+            id_book_check += matcart.bookData[0].id_book + ',';
+            id_stock_book += matcart.id_stock_book + ',';
+
+            sum_rental_price += parseInt(matcart.bookData[0].price);
+            sum_book_price += parseInt(matcart.bookData[0].price_book);
         });
-        var price_deposit = count * 100;
-        $("#sum_price_deposit").html(price_deposit + ' ' + 'บาท');
-        var row2 = `
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <td></td>
-                            <th>ราคาเช่ารวม :</th>
-                            <td>${price_sum} บาท</td>
-                        </tr>
-                        `;
-        $("#cartTable").append(row2);
-        check_promotion(id_user, selectedid_book, price__, function (result) {
+        $(".modal-body #name_user_create").val(id_user);
+        $(".modal-body #cart_id").val(cart_check);
+        $(".modal-body #name_book_create__").val(id_book_check.slice(0, -1));
+        $(".modal-body #id_stock_book").val(id_stock_book.slice(0, -1));
+
+        $("#cartTable").append(
+            `<tr>
+                <th></th>
+                <th></th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>ราคาหนังสือรวม :</th>
+                <td>${sum_book_price} บาท</td>
+                <th>ราคาเช่ารวม :</th>
+                <td>${sum_rental_price} บาท</td>
+            </tr>`
+        );
+        check_promotion(id_user, cart_check, sum_rental_price, function (result) {
             if (result.text == null) {
                 $("#details_promotion").html("ไม่มีส่วนลดโปรโมชั่น");
             } else {
                 $("#details_promotion").html(result.text);
             }
             $("#sum_price_promotion").html(result.price_promotion + ' ' + 'บาท');
-            $("#sum_price").html(((result.price_result - result.price_promotion) + price_deposit) + ' ' + 'บาท');
-            $(".modal-body #price_book_create").val(result.price_result);
             $(".modal-body #sumid_promotion").val(result.sumid_promotion);
-            $(".modal-body #sum_price_promotion").val(result.price_promotion);
+            cal_Deposit_price(sum_book_price, function (result_deposit) {
+                $("#sum_price_deposit").html(result_deposit + ' ' + 'บาท');
+                $("#sum_price").html(((sum_rental_price - result.price_promotion) + result_deposit) + ' ' + 'บาท');
+                $(".modal-body #price_book_create").val(sum_rental_price);
+                $(".modal-body #price_deposit_").val(result_deposit);
+                $(".modal-body #sum_price_promotion").val(result.price_promotion);
 
+            });
         });
-        $(".modal-body #cart_id").val(cart_check);
         $(".modal-body #url_route").val("dashboard/history/create");
     }
 </script>
@@ -341,23 +334,6 @@
         var formData = new FormData(document.getElementById(form));
 
         // Show loading indicator
-        Swal.fire({
-            title: "กำลังโหลด...",
-            allowOutsideClick: false,
-            onBeforeOpen: () => {
-                Swal.showLoading();
-            }
-        });
-
-        if (id_book_check.endsWith(',')) {
-            id_book_check = id_book_check.slice(0, -1);
-        }
-
-        if (form == 'form_create_history_cart') {
-            formData.append('name_book_create__', id_book_check);
-            formData.append('sumid_promotion', $('#sumid_promotion').val());
-            formData.append('cart_id', $('#cart_id').val());
-        }
 
         if (cart_check.length > '7') {
             Swal.fire({
@@ -378,14 +354,22 @@
                 dataType: "JSON",
                 beforeSend: function () {
                     // Show loading indicator
-                    Swal.showLoading();
+                    Swal.fire({
+                        title: "กำลังโหลด...",
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
                 },
                 success: function (response) {
+                    Swal.close();
+                    console.log(response);
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
                             icon: 'success',
-                            showConfirmButton: false,
+                            showConfirmButton: true,
                             allowOutsideClick: false
                         });
                         setTimeout(() => {
@@ -414,16 +398,22 @@
 </script>
 <script>
     function confirm_Alert() {
+        cart_check.forEach(element => {
+            let matcart = cartData.find(element_cart => element_cart.id_cart === element);
+            StockIds.push(matcart.id_stock_book);
+        });
         Swal.fire({
             title: 'ต้องการยกเลิกตระกร้าหรือไม่?',
             icon: 'question',
             showCancelButton: true,
+            cancelButtonText: "ยกเลิก",
             confirmButtonColor: "#28a745",
             confirmButtonText: "ตกลง",
         }).then((result) => {
             if (result.isConfirmed) {
                 var formData = new FormData();
-                formData.append('name_book_create__', id_book_check);
+
+                formData.append('StockIds', StockIds);
                 formData.append('cart_id', cart_check);
 
                 // เพิ่มกำลังโหลด

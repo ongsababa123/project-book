@@ -146,7 +146,7 @@ class BookController extends BaseController
             } else {
                 return false;
             }
-        }else{
+        } else {
             return true;
         }
     }
@@ -154,8 +154,13 @@ class BookController extends BaseController
     public function change_status_stock($id_stock = null, $status = null)
     {
         $StockBookModels = new StockBookModels();
+        $description = $this->request->getVar('description');
+        if ($description == "") {
+            $description = null;
+        }
         $data = [
-            'status_stock' => $status
+            'status_stock' => $status,
+            'description' => $description,
         ];
         $check = $StockBookModels->update($id_stock, $data);
         if ($check) {

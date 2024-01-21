@@ -439,7 +439,7 @@
     </div>
 </div>
 <div class="modal fade " id="details" tabindex="-1" role="dialog" aria-hidden="false">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header no-border-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -493,36 +493,27 @@
 
         HistoryData.find(element => {
             if (element.id_history == id_history) {
+                console.log(element);
                 const splittedIdBook = element.id_book.split(',');
-                const price_deposit = splittedIdBook.length * 100;
-                var price_late = null;
+                const price_deposit = element.sum_deposit_price;
+                var day_late_price = 0;
                 var today = new Date(); // Get the current date
                 today.setHours(0, 0, 0, 0)
                 var returnDate = new Date(element.return_date);
                 returnDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
                 if (element.submit_date == null) {
-
-                    if (element.late_price === '0' || element.late_price == null) {
-                        if (today > returnDate) {
-
-                            var price_fees = data_latefees[0]['price_fees'];
-                            calculate_price_late(splittedIdBook.length, price_fees, returnDate, function (result_price) {
-                                price_late = result_price;
-                            });
-                        } else {
-                            price_late = "ไม่มีค่าปรับ";
+                    calculate_distance_day(element.return_date, function (result_distance_day) {
+                        if (result_distance_day > 0) {
+                            calculate_price_late__(data_latefees[0]['price_fees'], result_distance_day, function (result_price) {
+                                day_late_price = result_price //ค่าปรับเกินกำหนด
+                            })
                         }
-                    } else {
-                        price_late = element.late_price;
-                    }
-                } else {
-                    if (element.late_price == null) {
-                        price_late = "ไม่มีค่าปรับ";
-                    } else {
-                        price_late = element.late_price;
-                    }
-                }
+                    });
+                }else{
+                    day_late_price = element.sum_day_late_price
 
+                }
+                var price_book_all = 0;
                 splittedIdBook.forEach(element_id_book => {
                     const foundBook = bookData.find(element_book => element_book.id_book == element_id_book);
                     if (foundBook) {
@@ -533,11 +524,14 @@
                                 <td>${count}</td>
                                 <th>ชื่อหนังสือ :</th>
                                 <td>${foundBook.name_book}</td>
+                                <th>ราคาหนังสือ :</th>
+                                <td>${foundBook.price_book} บาท</td>
                                 <th>ราคาเช่า :</th>
                                 <td>${foundBook.price} บาท</td>
                             </tr>
                         `;
                         $("#book_Table").append(row1);
+                        price_book_all += parseInt(foundBook.price_book);
                     }
 
                 });
@@ -547,8 +541,10 @@
                             <td></td>
                             <th></th>
                             <td></td>
-                            <th>ราคารวม :</th>
-                            <td>${element.sum_price}</td>
+                            <th>ราคาหนังสือรวม :</th>
+                            <td>${price_book_all}</td>
+                            <th>ราคาเช่ารวม :</th>
+                            <td>${element.sum_rental_price}</td>
                         </tr>`;
                 $("#book_Table").append(row1_1);
                 if (element.id_promotion != null) {
@@ -559,7 +555,7 @@
                             const row2 = `
                                 <tr>
                                     <th>โปรโมชั่น :</th>
-                                    <td colspan="5">${foundPromotion.details}</td>
+                                    <td colspan="6">${foundPromotion.details}</td>
                                 </tr>
                             `;
                             $("#promotionTable").append(row2);
@@ -584,10 +580,12 @@
                             <td></td>
                             <th>ส่วนลด :</th>
                             <td>${element.sum_price_promotion} บาท</td>
+                            <th>ค่าปรับหนังสือ (รวม) :</th>
+                            <td>${element.sum_book_des_price ?? "0"} บาท</td>
                         </tr>
                     `;
                 $("#promotionTable").append(row2_2);
-
+                var all_price_all = parseInt(day_late_price) + parseInt(element.sum_book_des_price) + parseInt(element.sum_late_price);
                 const row3 = `
                 <tr>
                     <th>วันที่เข้ารับหนังสือ</th>
@@ -595,20 +593,26 @@
                     <td></td>
                     <th>ค่ามัดจํา :</th>
                     <td>${price_deposit} บาท</td>
+                    <th>ค่าปรับเกินกำหนด :</th>
+                    <td>${day_late_price ?? "0"} บาท</td>
                 </tr>
                 <tr>
                     <th>วันที่จะต้องคืนหนังสือ</th>
                     <td>${element.return_date}</td>
                     <td></td>
-                    <th>ราคารวม(ค่ามัดจําและหักโปรโมชั่น) :</th>
-                    <td>${(parseInt(element.sum_price) - parseInt(element.sum_price_promotion)) + parseInt(price_deposit)} บาท</td>
+                    <th>ราคารวม (ค่ามัดจําและหักโปรโมชั่น) :</th>
+                    <td>${(parseInt(element.sum_rental_price) - parseInt(element.sum_price_promotion)) + parseInt(price_deposit)} บาท</td>
+                    <th>ค่าปรับอื่นๆ</th>
+                    <td>${element.sum_late_price ?? "0"} บาท</td>
                 </tr>
                 <tr>
                     <th>วันที่มาคืนหนังสือ</th>
                     <td>${element.submit_date === null ? "ยังไม่มาคืน" : element.submit_date}</td>
                     <td></td>
-                    <th>ค่าปรับ :</th>
-                    <td>${price_late}</td>
+                    <td></td>
+                    <td></td>
+                    <th>ค่าปรับรวม :</th>
+                    <td>${all_price_all ?? "0"} บาท</td>
                 </tr>`;
                 $("#promotionTable").append(row3);
             }

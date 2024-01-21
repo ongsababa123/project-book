@@ -1,0 +1,8 @@
+;/*FB_PKG_DELIM*/
+
+__d("NotifBeeperDismissFalcoEvent",["FalcoLoggerInternal","getFalcoLogPolicy_DO_NOT_USE"],(function(a,b,c,d,e,f,g){"use strict";a=c("getFalcoLogPolicy_DO_NOT_USE")("1835791");b=d("FalcoLoggerInternal").create("notif_beeper_dismiss",a);e=b;g["default"]=e}),98);
+__d("NotifClickEventsFalcoEvent",["FalcoLoggerInternal","getFalcoLogPolicy_DO_NOT_USE"],(function(a,b,c,d,e,f,g){"use strict";a=c("getFalcoLogPolicy_DO_NOT_USE")("1835463");b=d("FalcoLoggerInternal").create("notif_click_events",a);e=b;g["default"]=e}),98);
+__d("NotifCtaImpressionFalcoEvent",["FalcoLoggerInternal","getFalcoLogPolicy_DO_NOT_USE"],(function(a,b,c,d,e,f,g){"use strict";a=c("getFalcoLogPolicy_DO_NOT_USE")("1650");b=d("FalcoLoggerInternal").create("notif_cta_impression",a);e=b;g["default"]=e}),98);
+__d("NotifImpressionEventsFalcoEvent",["FalcoLoggerInternal","getFalcoLogPolicy_DO_NOT_USE"],(function(a,b,c,d,e,f,g){"use strict";a=c("getFalcoLogPolicy_DO_NOT_USE")("1835750");b=d("FalcoLoggerInternal").create("notif_impression_events",a);e=b;g["default"]=e}),98);
+__d("OpenOptionsMenuFalcoEvent",["FalcoLoggerInternal","getFalcoLogPolicy_DO_NOT_USE"],(function(a,b,c,d,e,f,g){"use strict";a=c("getFalcoLogPolicy_DO_NOT_USE")("1836366");b=d("FalcoLoggerInternal").create("open_options_menu",a);e=b;g["default"]=e}),98);
+__d("XCometSettingsControllerRouteBuilder",["jsRouteBuilder"],(function(a,b,c,d,e,f,g){a=c("jsRouteBuilder")("/settings/",Object.freeze({show_dialog:!1,show_recommendable_nux:!1}),void 0);b=a;g["default"]=b}),98);

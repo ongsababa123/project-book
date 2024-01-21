@@ -236,10 +236,10 @@ class HomeController extends BaseController
         $message = $this->request->getVar('details');
 
         $email = \Config\Services::email();
-        $email->setTo('6239010001@p-vec.ac.th');
-        $email->setFrom('6239010001@p-vec.ac.th', 'Comments, suggestions, and problem reports');
+        $email->setTo('bookbanglem31@gmail.com');
+        $email->setFrom('bookbanglem31@gmail.com', 'Bang book shop');
 
-        $email->setSubject("Comments, suggestions, and problem reports");
+        $email->setSubject("ความคิดเห็น ข้อเสนอแนะ และรายงานปัญหา");
         $email->setMessage('อีเมล์ผู้ส่ง' . '<br>' . $to . "<br>" . 'ชื่อผู้ส่ง ' . $name . ' ' . $lastname . "<br>" . 'รายละเอียด' . '<br> ' . $message);
 
         if ($email->send()) {

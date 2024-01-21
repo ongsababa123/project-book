@@ -7,14 +7,16 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 use App\Models\CartModels;
 use App\Models\BookModels;
+use App\Models\StockBookModels;
 use CodeIgniter\I18n\Time;
+use App\View\calculate;
 
 class CartCheck implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
         $CartModels = new CartModels();
-        $BookModels = new BookModels();
+        $StockBookModels = new StockBookModels();
         date_default_timezone_set('Asia/Bangkok');
         $session = session();
 
@@ -46,7 +48,7 @@ class CartCheck implements FilterInterface
 
                 if ($diffInHours >= 24) {
                     $CartModels->update($value['id_cart'], ['status_cart' => 0]);
-                    $BookModels->update($value['id_book'], ['status_book' => 1]);
+                    $StockBookModels->update($value['id_stock_book'], ['status_stock' => 1]);
                     if (session()->get('id') === $value['id_user']) {
                         $ses_data = [
                             'message_cart' => 'รายการสินค้าในตระกร้าของคุณหมดอายุ!!',
