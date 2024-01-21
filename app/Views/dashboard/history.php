@@ -357,6 +357,8 @@
                         }
                     });
                 }else{
+                    $(".modal-body #submit_date").val(rowData.submit_date); //ค่าปรับเกินกำหนด
+
                     $(".modal-body #day_late_price").val(rowData.sum_day_late_price); //ค่าปรับเกินกำหนด
                     $(".modal-body #book_des_price").val(rowData.sum_book_des_price); //ค่าปรับหนังสือ
                 }

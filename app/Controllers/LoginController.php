@@ -135,8 +135,8 @@ class LoginController extends BaseController
         $UserModels = new UserModels();
         $email = $this->request->getVar('email');
         $data = $UserModels->where('email_user', $email)->first();
-        $check = $this->sendMail($email, $data);
         if ($data) {
+            $check = $this->sendMail($email, $data);
             if ($check) {
                 $response = [
                     'success' => true,

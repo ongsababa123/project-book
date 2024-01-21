@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="<?= base_url('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
-    <link rel="icon" href="<?=base_url('dist/img/icon/favicon.ico')?>" type="image/gif">
+    <link rel="icon" href="<?= base_url('dist/img/icon/favicon.ico') ?>" type="image/gif">
 </head>
 <style>
     /* เพิ่ม CSS ในส่วนนี้เพื่อกำหนดฟอนต์ให้กับทุกส่วนของหน้าเว็บไซต์ */
@@ -66,13 +66,15 @@
                         <a class="nav-link " href="#" id="userDropdown" role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <img class="img-circle" src="<?= base_url('dist/img/avatar6.png'); ?>" alt="User Image">
-                            <span class="username"><?= session()->get('name') . ' ' . session()->get('lastname') ?> </span>
+                            <span class="username">
+                                <?= session()->get('name') . ' ' . session()->get('lastname') ?>
+                            </span>
                             <?php if (session()->get('type') == '1'): ?>
-                            <span class="description">ผู้จัดการระบบ</span>
+                                <span class="description">ผู้จัดการระบบ</span>
                             <?php elseif (session()->get('type') == '2'): ?>
-                            <span class="description">เจ้าของร้าน</span>
+                                <span class="description">เจ้าของร้าน</span>
                             <?php elseif (session()->get('type') == '3'): ?>
-                            <span class="description">พนักงาน</span>
+                                <span class="description">พนักงาน</span>
                             <?php endif; ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="userDropdown">
@@ -221,14 +223,17 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="<?= site_url('/dashboard/report/index'); ?>" class="nav-link">
-                                    <i class="nav-icon fas fa-chart-line"></i>
-                                    <p>
-                                        รายงานยอดขาย
-                                    </p>
-                                </a>
-                            </li>
+                            <?php if (session()->get('type') == '2'): ?>
+                                <li class="nav-item">
+                                    <a href="<?= site_url('/dashboard/report/index'); ?>" class="nav-link">
+                                        <i class="nav-icon fas fa-chart-line"></i>
+                                        <p>
+                                            รายงานยอดขาย
+                                        </p>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+
                             <div>
                                 <hr>
                             </div>

@@ -1,5 +1,11 @@
 <title>การตั้งค่าระบบ</title>
-
+<?php 
+if(session()->get('type') == '2'){
+    $hidden = '';
+}else{
+    $hidden = 'hidden';
+}
+?>
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
         <section class="content-header">
@@ -25,7 +31,7 @@
                             <div class="card-header bg-maroon">
                                 <h2 class="card-title">ราคาค่าปรับ</h2>
                                 <div class="card-tools">
-                                    <button type="button" class="btn btn-dark" onclick="enable_edit(1,1)">
+                                    <button type="button" class="btn btn-dark" onclick="enable_edit(1,1)" <?= $hidden ?>>
                                         แก้ไขข้อมูลค่าปรับ
                                     </button>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -59,7 +65,7 @@
                             <div class="card-header bg-lightblue">
                                 <h2 class="card-title">ระยะเวลาเช่าหนังสือ</h2>
                                 <div class="card-tools">
-                                    <button type="button" class="btn btn-dark" onclick="enable_edit(2,1)">
+                                    <button type="button" class="btn btn-dark" onclick="enable_edit(2,1)" <?= $hidden ?>>
                                         แก้ไขระยะเวลาเช่าหนังสือ
                                     </button>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -99,7 +105,7 @@
                             <div class="card-header bg-info">
                                 <h2 class="card-title">รายละเอียด</h2>
                                 <div class="card-tools">
-                                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal-default" onclick="load_modal(1)">
+                                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal-default" onclick="load_modal(1)" <?= $hidden ?>>
                                         เพิ่มรายละเอียด
                                     </button>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">

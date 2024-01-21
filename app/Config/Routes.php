@@ -137,4 +137,5 @@ $routes->group("dashboard/profile/", ['filter' => ['CartCheck', 'HistoryCheck']]
 
 $routes->group("dashboard/report/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {
     $routes->match(['get', 'post'], 'index', 'ReportController::report_index', ['filter' => ['authGuard' , 'ISLogin']]);  //display
+    $routes->match(['get', 'post'], 'getdata/(:num)', 'ReportController::get_data_table/$1');  //getdata
 });
