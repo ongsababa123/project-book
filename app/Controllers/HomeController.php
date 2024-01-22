@@ -11,6 +11,7 @@ use App\Models\UserModels;
 use App\Models\LateFeesModels;
 use App\Models\DetailsModels;
 use App\Models\DayrentModels;
+use App\Models\StockBookModels;
 use App\Controllers\HistoryController;
 
 class HomeController extends BaseController
@@ -71,6 +72,7 @@ class HomeController extends BaseController
         $UserModels = new UserModels();
         $PromotionModels = new PromotionModels();
         $DetailsModels = new DetailsModels();
+        $StockBookModels = new StockBookModels();
         $data_details['details'] = $DetailsModels->findAll();
         $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
 
@@ -93,6 +95,15 @@ class HomeController extends BaseController
 
             // Merge the books for the current category into the main array
             $data['bookData'] = array_merge($data['bookData'], $booksForCategory);
+        }
+
+        foreach ($data['bookData'] as $key => $value) {
+            // var_dump($key);
+            $count_stock = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 1)->countAllResults();
+            $numver = [
+                'count_stock' => $count_stock
+            ];
+            $data['bookData'][$key] = array_merge($data['bookData'][$key], $numver);
         }
         // เรียงลำดับอาร์เรย์ bookData ตามชื่อหนังสือ (คาดว่าชื่อหนังสือถูกเก็บไว้ในฟิลด์ที่ชื่อ 'name' ในฐานข้อมูล)
         $this->sortBookData($data['bookData']);
@@ -124,10 +135,19 @@ class HomeController extends BaseController
         $CategoryModels = new CategoryModels();
         $UserModels = new UserModels();
         $DetailsModels = new DetailsModels();
+        $StockBookModels = new StockBookModels();
         $data_details['details'] = $DetailsModels->findAll();
         $data['bookData'] = $BookModels->where('id_book', $id_book)->findAll();
         $data['categoryData'] = $CategoryModels->where('id_category', $data['bookData'][0]['category_id'])->findAll();
         $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
+        foreach ($data['bookData'] as $key => $value) {
+            // var_dump($key);
+            $count_stock = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 1)->countAllResults();
+            $numver = [
+                'count_stock' => $count_stock
+            ];
+            $data['bookData'][$key] = array_merge($data['bookData'][$key], $numver);
+        }
         echo view('userview/layout/header_base', $data_details);
         echo view('userview/Bookdetails', $data);
         echo view('userview/layout/footer');

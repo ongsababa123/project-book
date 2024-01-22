@@ -16,6 +16,7 @@
     <link href="<?= base_url('assets/css/paper-kit.css') ?>" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="<?= base_url('assets/demo/demo.css') ?>" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link rel="icon" href="<?= base_url('dist/img/icon/favicon.ico') ?>" type="image/gif">
     <title>รีเซ็ตรหัสผ่าน</title>
 
@@ -32,11 +33,11 @@
 
 <body class="register-page sidebar-collapse">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-success" color-on-scroll="200">
+    <nav class="navbar navbar-expand-lg fixed-top bg-success">
         <div class="container">
             <div class="navbar-translate">
                 <a class="navbar-brand" href="<?= site_url('/') ?>" rel="tooltip" title="Coded by Creative Tim"
-                    data-placement="bottom">
+                    style="font-size: medium" data-placement="bottom">
                     ร้านบางเล่ม
                 </a>
                 <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse"
@@ -51,10 +52,10 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown" id="dropdown">
                         <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" class="nav-link">รายละเอียด</i></a>
+                            style="font-size: medium" aria-expanded="false" class="nav-link">รายละเอียด</i></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
                             <?php foreach ($details as $key => $value): ?>
-                                <a class="dropdown-item">
+                                <a class="dropdown-item" style="font-size: medium">
                                     <?= $key + 1 ?> :
                                     <?= $value['text_details'] ?>
                                 </a>
@@ -62,10 +63,11 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('/book/booklist') ?>" class="nav-link"> รายการหนังสือ</a>
+                        <a href="<?= site_url('/book/booklist') ?>" class="nav-link" style="font-size: medium">
+                            รายการหนังสือ</a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('/contact') ?>" class="nav-link"> ติดต่อเรา</a>
+                        <a href="<?= site_url('/contact') ?>" class="nav-link" style="font-size: medium"> ติดต่อเรา</a>
                     </li>
                 </ul>
             </div>
@@ -90,10 +92,28 @@
                             <label>รหัสผ่าน</label>
                             <input type="password" class="form-control" placeholder="รหัสผ่าน" name="password"
                                 id="password" required oninput="checkPassword()">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="" id="showpassword1"
+                                        name="showpassword1">แสดงรหัสผ่าน
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
                             <label>ยืนยันรหัสผ่าน</label>
                             <input type="password" class="form-control" placeholder="ยืนยันรหัสผ่าน"
                                 name="password_confirmation" id="password_confirmation" required
                                 oninput="checkPassword()">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="" id="showpassword2"
+                                        name="showpassword2">แสดงรหัสผ่าน
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
                             <br>
                             <div class="alert alert-danger" role="alert" id="lengthAlert" style="display: none;">
                                 รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร
@@ -238,6 +258,27 @@
                 $('#submit').prop('disabled', true);
             }
         }
+    </script>
+        <script>
+        const passwordInput1 = document.getElementById('password');
+        const passwordInput2 = document.getElementById('password_confirmation');
+        const showPasswordCheckbox1 = document.getElementById('showpassword1');
+        const showPasswordCheckbox2 = document.getElementById('showpassword2');
+
+        showPasswordCheckbox1.addEventListener('change', function () {
+            if (this.checked) {
+                passwordInput1.type = 'text';
+            } else {
+                passwordInput1.type = 'password';
+            }
+        });
+        showPasswordCheckbox2.addEventListener('change', function () {
+            if (this.checked) {
+                passwordInput2.type = 'text';
+            } else {
+                passwordInput2.type = 'password';
+            }
+        });
     </script>
 </body>
 

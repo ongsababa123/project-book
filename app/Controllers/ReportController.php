@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\BookModels;
 use App\Models\HistoryModels;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class ReportController extends BaseController
 {
@@ -44,24 +46,43 @@ class ReportController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    function htmlToPDF()
+    public function htmlToPDF()
     {
-        $options = new \Dompdf\Options();
+        $html = view('dashboard/pdf_view');
+
+        $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isPhpEnabled', true);
-        $dompdf = new \Dompdf\Dompdf($options);
 
+        $dompdf = new Dompdf($options);
 
-        $dompdf->loadHtml(view('dashboard/pdf_view'));
-        $dompdf->setPaper('A4', 'landscape');
+        // Set font directory explicitly
+        $fontDir = WRITEPATH . 'fonts/';
+        $dompdf->getOptions()->setFontDir($fontDir);
+        $dompdf->getOptions()->setFontCache($fontDir);
+
+        $dompdf->loadHtml($html);
+
+        $dompdf->setPaper('A4', 'portrait');
+
         $dompdf->render();
-        $dompdf->stream();
+
+        $output = $dompdf->output();
+
+        $filename = 'hello.pdf';
+
+        $this->response->setStatusCode(200);
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $this->response->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"');
+        $this->response->setBody($output);
+
+        return $this->response;
     }
+
+
 
     public function view_pdf()
     {
         echo view('dashboard/pdf_view');
     }
-
-
 }

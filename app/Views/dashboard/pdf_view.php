@@ -2,24 +2,97 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Codeigniter 4 PDF Example - positronx.io</title>
-    <!-- Google Font: Source Sans Pro -->
-<link rel="stylesheet" href="<?= base_url('dist/css/fontsgoogle.css'); ?>">
-<!-- Font Awesome -->
-<link rel="stylesheet" href="<?= base_url('plugins/fontawesome-free/css/all.min.css'); ?>">
-<!-- Theme style -->
-<link rel="stylesheet" href="<?= base_url('dist/css/adminlte.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('dist/sweetalert/sweetalert2.min.css'); ?>">
-<!-- overlayScrollbars -->
-<link rel="stylesheet" href="<?= base_url('plugins/overlayScrollbars/css/OverlayScrollbars.min.css'); ?>">
-<!-- DataTables -->
-<link rel="stylesheet" href="<?= base_url('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Generate PDF</title>
+    <style>
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: normal;
+            font-weight: normal;
+            src: url('<?php echo base_url('public/fonts/THSarabunNew.ttf'); ?>') format('truetype');
+        }
 
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: normal;
+            font-weight: bold;
+            src: url('<?php echo base_url('public/fonts/THSarabunNew Bold.ttf'); ?>') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: italic;
+            font-weight: normal;
+            src: url('<?php echo base_url('public/fonts/THSarabunNew Italic.ttf'); ?>') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: italic;
+            font-weight: bold;
+            src: url('<?php echo base_url('public/fonts/THSarabunNew BoldItalic.ttf'); ?>') format('truetype');
+        }
+
+        body {
+            font-family: 'THSarabunNew', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .table-striped tbody tr:nth-child(odd) {
+            background-color: #f8f9fa;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #e9ecef;
+        }
+    </style>
 </head>
+
 
 <body>
     <div class="container mt-5">
@@ -37,15 +110,16 @@
                     <th>City</th>
                     <th>Date</th>
                     <th>CTC</th>
+                    <th>CTC</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Airi Satou</td>
+                    <td>ฟหกฟหกฟหกฟ</td>
                     <td>Accountant</td>
                     <td>Tokyo</td>
                     <td>33</td>
-                    <td>2008/11/28</td>
+                    <td>ฟหกฟหกหฟ/11/28</td>
                     <td>$162,700</td>
                 </tr>
                 <tr>
@@ -123,34 +197,6 @@
             </tbody>
         </table>
     </div>
-
-    <!-- jQuery -->
-    <script src="<?= base_url('plugins/jquery/jquery.min.js'); ?>"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="<?= base_url('plugins/jquery-ui/jquery-ui.min.js'); ?>"></script>
-    <!-- Bootstrap 4 -->
-    <script src="<?= base_url('plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-    <!-- overlayScrollbars -->
-    <script src="<?= base_url('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'); ?>"></script>
-    <!-- AdminLTE App -->
-    <script src="<?= base_url('dist/js/adminlte.js'); ?>"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="<?= base_url('dist/js/demo.js'); ?>"></script>
-    <!-- SweetAlert2 -->
-    <script src="<?= base_url('dist/sweetalert/sweetalert2.js'); ?>"></script>
-
-    <!-- DataTables  & Plugins -->
-    <script src="<?= base_url('plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
-    <script src="<?= base_url('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
-    <script src="<?= base_url('plugins/datatables-responsive/js/dataTables.responsive.min.js'); ?>"></script>
-    <script src="<?= base_url('plugins/datatables-responsive/js/responsive.bootstrap4.min.js'); ?>"></script>
-    <script src="<?= base_url('plugins/datatables-buttons/js/dataTables.buttons.min.js'); ?>"></script>
-    <script src="<?= base_url('plugins/datatables-buttons/js/buttons.bootstrap4.min.js'); ?>"></script>
-    <script src="<?= base_url('plugins/jszip/jszip.min.js'); ?>"></script>
-    <script src="<?= base_url('plugins/pdfmake/pdfmake.min.js'); ?>"></script>
-    <script src="<?= base_url('plugins/pdfmake/vfs_fonts.js'); ?>"></script>
-    <script src="<?= base_url('plugins/datatables-buttons/js/buttons.html5.min.js'); ?>"></script>
-    <script src="<?= base_url('plugins/datatables-buttons/js/buttons.print.min.js'); ?>"></script>
-    <script src="<?= base_url('plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
 </body>
+
 </html>

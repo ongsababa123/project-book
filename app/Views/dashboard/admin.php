@@ -68,28 +68,34 @@
         </div>
     </div>
     <script>
-        function load_modal(load_check, data_encode) {
+function load_modal(load_check, data_encode) {
             CRUD_UserModal = document.getElementById("CRUD_UserModal");
             $(".modal-body #name").val('');
             $(".modal-body #last").val('');
             $(".modal-body #email").val('');
             $(".modal-body #phone").val('');
+            $(".modal-body #password").val('');
+            $('#showPassword').prop('checked', false);
+            removeAlert();
 
             if (load_check == 1) {
                 CRUD_UserModal.style.display = "block";
-                $("#password").prop("disabled", false);
-                $("#password").prop("disabled", false);
-                $('.form-check').hide();
-                $('#customSwitch_status').hide();
                 $(".modal-header #title_modal").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("สร้างข้อมูลผู้ใช้");
-                $(".modal-body #url_route").val("dashboard/admin/create/1");
+                $(".modal-body #url_route").val("dashboard/customer/create/4");
+                $("#password").prop("disabled", false);
+                $('#changePasswordCheckbox').hide();
+                $('#showPasswordCheckbox____').show();
+                $('#customSwitch_status').hide();
+
             } else if (load_check == 2) {
                 $('#customSwitch_status').show();
                 CRUD_UserModal.style.display = "block";
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
                 $("#password").prop("disabled", true);
-                $('.form-check').show();
+                $('#changePasswordCheckbox').show();
+                $('#showPasswordCheckbox____').hide();
+
                 const customSwitch3 = $(".modal-body #customSwitch3");
                 const labelCustomSwitch3 = $(".modal-body #LabelcustomSwitch3");
 

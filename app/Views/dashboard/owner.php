@@ -74,26 +74,32 @@
             $(".modal-body #last").val('');
             $(".modal-body #email").val('');
             $(".modal-body #phone").val('');
+            $(".modal-body #password").val('');
+            $('#showPassword').prop('checked', false);
+            removeAlert();
 
             if (load_check == 1) {
                 CRUD_UserModal.style.display = "block";
-                $("#password").prop("disabled", false);
-                $("#password").prop("disabled", false);
-                $('.form-check').hide();
-                $('#customSwitch_status').hide(); 
                 $(".modal-header #title_modal").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("สร้างข้อมูลผู้ใช้");
-                $(".modal-body #url_route").val("dashboard/owner/create/2");
+                $(".modal-body #url_route").val("dashboard/customer/create/4");
+                $("#password").prop("disabled", false);
+                $('#changePasswordCheckbox').hide();
+                $('#showPasswordCheckbox____').show();
+                $('#customSwitch_status').hide();
+
             } else if (load_check == 2) {
                 $('#customSwitch_status').show();
                 CRUD_UserModal.style.display = "block";
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
                 $("#password").prop("disabled", true);
-                $('.form-check').show();
+                $('#changePasswordCheckbox').show();
+                $('#showPasswordCheckbox____').hide();
+
                 const customSwitch3 = $(".modal-body #customSwitch3");
                 const labelCustomSwitch3 = $(".modal-body #LabelcustomSwitch3");
 
-                labelCustomSwitch3.text(rowData.status_user == 1 ? "เปิดใช้งาน" : "ปิดใช้งาน");
+                labelCustomSwitch3.text(rowData.status_user == 1 ? "เปิดใช้งาน" : "แบล็คลิส");
 
                 if (rowData.status_user == '1') {
                     customSwitch3.prop('checked', true);
@@ -295,8 +301,8 @@
             Swal.fire({
                 title: text,
                 icon: 'question',
-                            showCancelButton: true,
-            cancelButtonText: "ยกเลิก",
+                showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
                 confirmButtonColor: "#28a745",
                 confirmButtonText: "ตกลง",
             }).then((result) => {

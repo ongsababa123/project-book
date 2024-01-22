@@ -34,10 +34,10 @@
 
 <body class="register-page sidebar-collapse">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-success" color-on-scroll="200">
+    <nav class="navbar navbar-expand-lg fixed-top bg-success">
         <div class="container">
             <div class="navbar-translate">
-                <a class="navbar-brand" href="<?= site_url('/') ?>" rel="tooltip" title="Coded by Creative Tim"
+                <a class="navbar-brand" href="<?= site_url('/') ?>" rel="tooltip" title="Coded by Creative Tim" style="font-size: medium"
                     data-placement="bottom">
                     ร้านบางเล่ม
                 </a>
@@ -52,11 +52,11 @@
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown" id="dropdown">
-                        <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" class="nav-link">รายละเอียด</i></a>
+                        <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true" style="font-size: medium"
+                            aria-expanded="false" class="nav-link" >รายละเอียด</i></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
                             <?php foreach ($details as $key => $value): ?>
-                                <a class="dropdown-item">
+                                <a class="dropdown-item" style="font-size: medium">
                                     <?= $key + 1 ?> :
                                     <?= $value['text_details'] ?>
                                 </a>
@@ -64,10 +64,10 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('/book/booklist') ?>" class="nav-link"> รายการหนังสือ</a>
+                        <a href="<?= site_url('/book/booklist') ?>" class="nav-link" style="font-size: medium"> รายการหนังสือ</a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('/contact') ?>" class="nav-link"> ติดต่อเรา</a>
+                        <a href="<?= site_url('/contact') ?>" class="nav-link" style="font-size: medium"> ติดต่อเรา</a>
                     </li>
                 </ul>
             </div>
@@ -106,6 +106,16 @@
                             <label>รหัสผ่าน</label>
                             <input type="password" class="form-control" placeholder="รหัสผ่าน" name="password"
                                 id="password" required oninput="checkPassword()">
+                            <br>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="" id="showpassword"
+                                        name="showpassword">แสดงรหัสผ่าน
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
                             <br>
                             <div class="alert alert-danger" role="alert" id="lengthAlert" style="display: none;">
                                 รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร
@@ -297,7 +307,18 @@
             }
         }
     </script>
+    <script>
+        const passwordInput = document.getElementById('password');
+        const showPasswordCheckbox = document.getElementById('showpassword');
 
+        showPasswordCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -58,6 +58,9 @@
                     <p class="description">
                         <?= $bookData[0]['price_book'] ?> บาท
                     </p>
+                    <p class="description">
+                    <span class="badge badge-default">คงเหลือในสต๊อก <?= $bookData[0]['count_stock'] ?> เล่ม</span>
+                    </p>
                     <br>
                     <?php if (session()->get('isLoggedIn')): ?>
                         <button class="btn btn-danger btn-round" onclick="alert_(<?= $bookData[0]['id_book'] ?>)"
@@ -112,9 +115,6 @@
                 success: function (response) {
                     // ซ่อนกำลังโหลดหลังจากที่เสร็จสิ้น
                     Swal.close();
-
-
-
                     const Toast = Swal.mixin({
                         toast: true,
                         position: "top-end",
@@ -123,13 +123,15 @@
                         timerProgressBar: true,
                         didOpen: (toast) => {
                             toast.onmouseleave = Swal.resumeTimer;
-
                             toast.addEventListener('click', () => {
                                 // Navigate to the desired URL
                                 window.location.href = "<?= site_url('/cart') ?>";
                             });
                         }
                     });
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
                     if (response.success) {
                         Toast.fire({
                             icon: "success",
@@ -143,8 +145,6 @@
                             title: response.message
                         });
                     }
-
-
                 },
                 error: function (xhr, status, error) {
                     // ซ่อนกำลังโหลดหลังจากที่เกิดข้อผิดพลาด

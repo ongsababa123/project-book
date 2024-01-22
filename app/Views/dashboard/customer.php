@@ -85,6 +85,9 @@
             $(".modal-body #last").val('');
             $(".modal-body #email").val('');
             $(".modal-body #phone").val('');
+            $(".modal-body #password").val('');
+            $('#showPassword').prop('checked', false);
+            removeAlert();
 
             if (load_check == 1) {
                 CRUD_UserModal.style.display = "block";
@@ -92,7 +95,8 @@
                 $(".modal-footer #submit").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-body #url_route").val("dashboard/customer/create/4");
                 $("#password").prop("disabled", false);
-                $('.form-check').hide();
+                $('#changePasswordCheckbox').hide();
+                $('#showPasswordCheckbox____').show();
                 $('#customSwitch_status').hide();
 
             } else if (load_check == 2) {
@@ -100,7 +104,9 @@
                 CRUD_UserModal.style.display = "block";
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
                 $("#password").prop("disabled", true);
-                $('.form-check').show();
+                $('#changePasswordCheckbox').show();
+                $('#showPasswordCheckbox____').hide();
+
                 const customSwitch3 = $(".modal-body #customSwitch3");
                 const labelCustomSwitch3 = $(".modal-body #LabelcustomSwitch3");
 

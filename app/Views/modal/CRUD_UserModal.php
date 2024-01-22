@@ -47,13 +47,17 @@
 
                 <div class="form-group" id="password_group">
                     <label>รหัสผ่าน</label>
-                    <div class="form-check">
+                    <div class="form-check" id="changePasswordCheckbox">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">เปลี่ยนรหัสผ่าน</label>
                     </div>
-                    <div class="input-group mb-3">
+                    <div class="input-group">
                         <input type="password" name="password" class="form-control" id="password"
                             placeholder="กรอกรหัสผ่าน">
+                    </div>
+                    <div class="form-check" id="showPasswordCheckbox____" name="showPasswordCheckbox____">
+                        <input type="checkbox" class="form-check-input" id="showPassword">
+                        <label class="form-check-label" for="showPassword">แสดงรหัสผ่าน</label>
                     </div>
                 </div>
                 <input type="text" id="url_route" name="url_route" hidden>
@@ -76,6 +80,7 @@
         e.preventDefault();
         const urlRouteInput = document.getElementById("url_route");
         action_(urlRouteInput.value, 'form_user');
+        
     });
 </script>
 <script>
@@ -83,12 +88,13 @@
         if ($(this).is(':checked')) {
             $("#password").prop("disabled", false);
             $('#submit').prop('disabled', true);
+            $('#showPasswordCheckbox____').show();
         } else {
             $("#password").prop("disabled", true);
             $('#submit').prop('disabled', false);
             $("#password").val("");
+            $('#showPasswordCheckbox____').hide();
             removeAlert();
-
         }
     })
 </script>
@@ -147,4 +153,16 @@
             existingAlert.parentNode.removeChild(existingAlert);
         }
     }
+</script>
+<script>
+    const passwordInput = document.getElementById('password');
+    const showPasswordCheckbox = document.getElementById('showPassword');
+
+    showPasswordCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
 </script>

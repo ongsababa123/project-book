@@ -174,8 +174,12 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                                 <?php else: ?>
                                     <span class="badge badge-pill badge-danger">กำลังเช่าอยู่</span>
                                 <?php endif; ?>
+                                <br>
                             </div>
                             <div class="card-footer">
+                                <span class="badge badge-default">คงเหลือในสต๊อก <?= $book['count_stock'] ?> เล่ม</span>
+                                <br>
+                                <hr>
                                 <?php if (session()->get('isLoggedIn')): ?>
                                     <a href="<?= site_url('/book/details/') . $book['id_book'] ?>"
                                         class="btn btn-info btn-round">เพิ่มเติม</a>
@@ -219,7 +223,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                         </div>
                     <?php endif; ?>
                     <?php
-                    else:
+                else:
                     echo '<div class="col-md-12">';
                     echo '<div class="card mb-4">';
                     echo '<div class="card-body">';
