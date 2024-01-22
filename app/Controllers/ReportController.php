@@ -44,5 +44,24 @@ class ReportController extends BaseController
         return $this->response->setJSON($response);
     }
 
+    function htmlToPDF()
+    {
+        $options = new \Dompdf\Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
+        $dompdf = new \Dompdf\Dompdf($options);
+
+
+        $dompdf->loadHtml(view('dashboard/pdf_view'));
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream();
+    }
+
+    public function view_pdf()
+    {
+        echo view('dashboard/pdf_view');
+    }
+
 
 }

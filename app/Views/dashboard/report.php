@@ -42,21 +42,22 @@
                                         <div class="icheck-success d-inline">
                                             <input type="radio" class="score-radio" id="answer_day" name="r_" value="1"
                                                 checked onclick="change_radio(this)">
-                                            <label for="answer_day" id="label_answer_day">ยอดขายรายวัน</label>
+                                            <label for="answer_day" id="label_answer_day">ยอดขายประจำวัน</label>
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="icheck-success d-inline">
                                             <input type="radio" class="score-radio" id="answer_mounth" name="r_"
                                                 value="2" onclick="change_radio(this)">
-                                            <label for="answer_mounth" id="label_answer_mounth">ยอดขายรายเดือน</label>
+                                            <label for="answer_mounth"
+                                                id="label_answer_mounth">ยอดขายรายวันของเดือน</label>
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="icheck-success d-inline">
                                             <input type="radio" class="score-radio" id="answer_year" name="r_" value="3"
                                                 onclick="change_radio(this)">
-                                            <label for="answer_year" id="label_answer_year">ยอดขายรายปี</label>
+                                            <label for="answer_year" id="label_answer_year">ยอดขายรายเดือนของปี</label>
                                         </div>
                                     </div>
                                 </div>
@@ -131,12 +132,14 @@
                             <div class="card-header border-0">
                                 <h3 class="card-title">รายการหนังสือ</h3>
                                 <div class="card-tools">
-                                    <a href="#" class="btn btn-tool btn-sm">
+                                    <a href="<?php echo base_url('dashboard/report/generate/pdf') ?>"
+                                        class="btn btn-primary">
                                         <i class="fas fa-download"></i>
+                                        โหลดสรุปรายงาน PDF
                                     </a>
-                                    <a href="#" class="btn btn-tool btn-sm">
-                                        <i class="fas fa-bars"></i>
-                                    </a>
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-body table-responsive p-0">
@@ -178,9 +181,11 @@
                     <div class="col-12 col-sm-12">
                         <div class="card card-navy">
                             <div class="card-header border-0">
-                                <div class="d-flex justify-content-between">
-                                    <h3 class="card-title">กราฟแท่งเปรียบเทียบจำนวนที่ขาย</h3>
-                                    <a href="javascript:void(0);"></a>
+                                <h3 class="card-title">กราฟแท่งเปรียบเทียบจำนวนที่ขาย</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -199,9 +204,11 @@
                     <div class="col-12 col-sm-12">
                         <div class="card card-navy">
                             <div class="card-header border-0">
-                                <div class="d-flex justify-content-between">
-                                    <h3 class="card-title">กราฟแท่งเปรียบเทียบยอดขาย </h3>
-                                    <a href="javascript:void(0);"></a>
+                                <h3 class="card-title">กราฟแท่งเปรียบเทียบยอดขาย</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -228,7 +235,9 @@
     <script src="<?= base_url('plugins/chart.js/Chart.min.js') ?>"></script>
     <script>
         $(document).ready(function () {
-            var value = { value: '1' };
+            var value = {
+                value: '1'
+            };
             change_radio(value)
 
         });
@@ -272,20 +281,24 @@
         }
     </script>
     <script>
-        var first = 0;
         function getdata(type_data) {
+            var baseUrl = "<?= base_url('dashboard/report/getdata/') ?>";
+            var dayInput = $("#day_input").val();
+            var monthInput = $("#month_input").val();
+            var yearInput = $("#year_input").val();
+            var loadingIndicator;
+
             $.ajax({
                 type: "POST",
-                url: "<?= base_url('dashboard/report/getdata/') ?>" + type_data,
+                url: baseUrl + type_data,
                 dataType: "JSON",
                 data: {
-                    input_day: $("#day_input").val(),
-                    input_month: $("#month_input").val(),
-                    input_year: $("#year_input").val()
+                    input_day: dayInput,
+                    input_month: monthInput,
+                    input_year: yearInput
                 },
                 beforeSend: function () {
-                    // Show loading indicator here
-                    var loadingIndicator = Swal.fire({
+                    loadingIndicator = Swal.fire({
                         title: 'กําลังดําเนินการ...',
                         allowEscapeKey: false,
                         allowOutsideClick: false,
@@ -294,145 +307,126 @@
                 },
                 success: function (data) {
                     Swal.close();
+                    var bookData = <?= json_encode($book) ?>;
+                    var label = [];
 
-                    var bookData = <?php echo json_encode($book); ?>;
-                    var label;
+                    function zeroPad(number, length) {
+                        var str = String(number);
+                        while (str.length < length) {
+                            str = '0' + str;
+                        }
+                        return str;
+                    }
                     if (type_data == 1) {
-                        label = [$("#day_input").val()];
-                        // YYYY-MM-DD
+                        label = [dayInput];
                     } else if (type_data == 2) {
-                        // ดึงข้อมูลเดือนและปีจาก input
-                        var monthInput = $("#month_input").val();
-
-                        // แยกปีและเดือน
-                        var year = parseInt(monthInput.slice(0, 4));
-                        var month = parseInt(monthInput.slice(5, 7));
-
-                        // หาจำนวนวันในเดือนนั้น ๆ
+                        var [year, month] = monthInput.split('-');
                         var daysInMonth = new Date(year, month, 0).getDate();
-
-                        // สร้าง label สำหรับทุกวันในเดือนนั้น
-                        label = [];
-                        for (var i = 1; i <= daysInMonth; i++) {
-                            // เพิ่มวันที่ในรูปแบบ YYYY-MM-DD ลงใน label
-                            label.push(year + '-' + month.toString().padStart(2, '0') + '-' + i.toString().padStart(2, '0'));
-                        }
+                        label = Array.from({
+                            length: daysInMonth
+                        }, (_, i) => `${year}-${month.padStart(2, '0')}-${(i + 1).toString().padStart(2, '0')}`);
                     } else if (type_data == 3) {
-                        var year = $("#year_input").val();
-                        label = [];
-                        for (var month = 1; month <= 12; month++) {
-                            label.push(year + '-' + month.toString().padStart(2, '0'));
-                        }
+                        var year = yearInput;
+                        label = Array.from({
+                            length: 12
+                        }, (_, i) => `${year}-${zeroPad(i + 1, 2)}`);
                     }
 
                     var areaChartData_book = {
                         labels: label,
                         datasets: []
                     };
-
                     var areaChartData_book_sum_price = {
                         labels: label,
                         datasets: []
                     };
 
-                    areaChartData_book.datasets = [];
-                    areaChartData_book_sum_price.datasets = [];
-                    if (data.data.length != 0) {
-                        bookData.forEach(element_bookdata => {
+                    function areAllZeros(array) {
+                        return array.every(value => value === 0);
+                    }
+
+                    bookData.forEach(element_bookdata => {
+                        var data_count_history_set = [];
+                        var data_count_price_set = [];
+
+                        label.forEach(element_label => {
                             var count_history = 0;
                             var count_price_sum = 0;
+
                             data.data.forEach(element_history => {
                                 var id_book_splite = element_history.id_book.split(",");
                                 id_book_splite.forEach(element_id_book => {
                                     if (element_bookdata.id_book == element_id_book) {
-                                        count_history++;
-                                        var price = (parseInt(element_history.sum_rental_price) + parseInt(element_history.sum_deposit_price)) - parseInt(element_history.sum_price_promotion);
-                                        var late_price = parseInt(element_history.sum_late_price) + parseInt(element_history.sum_day_late_price) + parseInt(element_history.sum_book_des_price);
-                                        count_price_sum += price + late_price;
+                                        if ((type_data == 1 || type_data == 2) && element_label == element_history.submit_date) {
+                                            count_history++;
+                                            var price = (parseInt(element_history.sum_rental_price) + parseInt(element_history.sum_deposit_price)) - parseInt(element_history.sum_price_promotion);
+                                            var late_price = parseInt(element_history.sum_late_price) + parseInt(element_history.sum_day_late_price) + parseInt(element_history.sum_book_des_price);
+                                            count_price_sum += price + late_price;
+                                        } else if (type_data == 3) {
+                                            var submitDateYearMonth = element_history.submit_date.substring(0, 7);
+                                            if (element_label === submitDateYearMonth) {
+                                                count_history++;
+                                                var price = (parseInt(element_history.sum_rental_price) + parseInt(element_history.sum_deposit_price)) - parseInt(element_history.sum_price_promotion);
+                                                var late_price = parseInt(element_history.sum_late_price) + parseInt(element_history.sum_day_late_price) + parseInt(element_history.sum_book_des_price);
+                                                count_price_sum += price + late_price;
+                                            }
+                                        }
                                     }
                                 });
                             });
 
-                            $("#count_history_" + element_bookdata.id_book).text(count_history + ' ครั้ง');
-                            $("#count_price_sum_" + element_bookdata.id_book).text(count_price_sum + ' บาท');
-
-                            if (count_history != 0) {
-
-                                // สร้าง dataset สำหรับแต่ละหนังสือ
-                                var dataset1 = {
-                                    label: element_bookdata.name_book,
-                                    backgroundColor: getRandomColor(),
-                                    borderColor: getRandomColor(),
-                                    pointRadius: false,
-                                    pointColor: getRandomColor(),
-                                    pointStrokeColor: getRandomColor(),
-                                    pointHighlightFill: getRandomColor(),
-                                    pointHighlightStroke: getRandomColor(),
-                                    data: [count_history]
-                                };
-                                var dataset2 = {
-                                    label: element_bookdata.name_book,
-                                    backgroundColor: getRandomColor(),
-                                    borderColor: getRandomColor(),
-                                    pointRadius: false,
-                                    pointColor: getRandomColor(),
-                                    pointStrokeColor: getRandomColor(),
-                                    pointHighlightFill: getRandomColor(),
-                                    pointHighlightStroke: getRandomColor(),
-                                    data: [count_price_sum]
-                                };
-                                areaChartData_book.datasets.push(dataset1);
-                                areaChartData_book_sum_price.datasets.push(dataset2);
-                            }
+                            data_count_history_set.push(count_history);
+                            data_count_price_set.push(count_price_sum);
                         });
-                    } else {
-                        bookData.forEach(element_bookdata => {
-                            $("#count_history_" + element_bookdata.id_book).text(0 + ' ครั้ง');
-                            $("#count_price_sum_" + element_bookdata.id_book).text(0 + ' บาท');
-                        })
-                        var dataset1 = {
-                            label: "ไม่มีข้อมูล",
-                            backgroundColor: getRandomColor(),
-                            borderColor: getRandomColor(),
-                            pointRadius: false,
-                            pointColor: getRandomColor(),
-                            pointStrokeColor: getRandomColor(),
-                            pointHighlightFill: getRandomColor(),
-                            pointHighlightStroke: getRandomColor(),
-                            data: [0]
-                        };
-                        var dataset2 = {
-                            label: "ไม่มีข้อมูล",
-                            backgroundColor: getRandomColor(),
-                            borderColor: getRandomColor(),
-                            pointRadius: false,
-                            pointColor: getRandomColor(),
-                            pointStrokeColor: getRandomColor(),
-                            pointHighlightFill: getRandomColor(),
-                            pointHighlightStroke: getRandomColor(),
-                            data: [0]
-                        };
-                        areaChartData_book.datasets.push(dataset1);
-                        areaChartData_book_sum_price.datasets.push(dataset2);
-                    }
 
+                        if (!areAllZeros(data_count_history_set)) {
+                            var dataset1 = {
+                                label: element_bookdata.name_book,
+                                backgroundColor: getRandomColor(),
+                                borderColor: getRandomColor(),
+                                pointRadius: false,
+                                pointColor: getRandomColor(),
+                                pointStrokeColor: getRandomColor(),
+                                pointHighlightFill: getRandomColor(),
+                                pointHighlightStroke: getRandomColor(),
+                                data: data_count_history_set
+                            };
+                            var dataset2 = {
+                                label: element_bookdata.name_book,
+                                backgroundColor: getRandomColor(),
+                                borderColor: getRandomColor(),
+                                pointRadius: false,
+                                pointColor: getRandomColor(),
+                                pointStrokeColor: getRandomColor(),
+                                pointHighlightFill: getRandomColor(),
+                                pointHighlightStroke: getRandomColor(),
+                                data: data_count_price_set
+                            };
 
-                    //-------------
-                    //- BAR CHART -
-                    //-------------
-                    var barChart_count_sale = $('#barChart_count_sale').get(0).getContext('2d');
-                    var barChartData1 = $.extend(true, {}, areaChartData_book);
-                    var temp0 = areaChartData_book.datasets[0];
-                    var temp1 = areaChartData_book.datasets[1];
-                    barChartData1.datasets[0] = temp1;
-                    barChartData1.datasets[1] = temp0;
+                            areaChartData_book.datasets.push(dataset1);
+                            areaChartData_book_sum_price.datasets.push(dataset2);
+                        }
+                    });
 
-                    var barChart_count_sum_price = $('#barChart_count_sum_price').get(0).getContext('2d');
-                    var barChartData2 = $.extend(true, {}, areaChartData_book_sum_price);
-                    var temp2 = areaChartData_book_sum_price.datasets[0];
-                    var temp3 = areaChartData_book_sum_price.datasets[1];
-                    barChartData2.datasets[0] = temp2;
-                    barChartData2.datasets[1] = temp3;
+                    bookData.forEach(element_bookdata => {
+                        var count_history = 0;
+                        var count_price_sum = 0;
+
+                        data.data.forEach(element_history => {
+                            var id_book_splite = element_history.id_book.split(",");
+                            id_book_splite.forEach(element_id_book => {
+                                if (element_bookdata.id_book == element_id_book) {
+                                    count_history++;
+                                    var price = (parseInt(element_history.sum_rental_price) + parseInt(element_history.sum_deposit_price)) - parseInt(element_history.sum_price_promotion);
+                                    var late_price = parseInt(element_history.sum_late_price) + parseInt(element_history.sum_day_late_price) + parseInt(element_history.sum_book_des_price);
+                                    count_price_sum += price + late_price;
+                                }
+                            });
+                        });
+
+                        $("#count_history_" + element_bookdata.id_book).text(count_history + ' ครั้ง');
+                        $("#count_price_sum_" + element_bookdata.id_book).text(count_price_sum + ' บาท');
+                    });
 
                     var barChartOptions = {
                         responsive: true,
@@ -442,50 +436,40 @@
                             yAxes: [{
                                 display: true,
                                 ticks: {
-                                    min: 0, // minimum value
+                                    min: 0
                                 }
                             }]
                         }
                     };
 
-
-                    // ในฟังก์ชั่น success หลังจาก Swal.close();
-
-                    // เลือก canvas ของ chart เก่า
                     var barChartCanvasCountSale = $('#barChart_count_sale')[0];
                     var barChartCanvasCountSumPrice = $('#barChart_count_sum_price')[0];
 
-                    // ล้างข้อมูลเก่าใน canvas ของ chart
                     barChartCanvasCountSale.getContext('2d').clearRect(0, 0, barChartCanvasCountSale.width, barChartCanvasCountSale.height);
                     barChartCanvasCountSumPrice.getContext('2d').clearRect(0, 0, barChartCanvasCountSumPrice.width, barChartCanvasCountSumPrice.height);
 
-                    // ทำลาย chart เก่า (ถ้ามี)
                     if (barChartCanvasCountSale.chart) {
                         barChartCanvasCountSale.chart.destroy();
                     }
-
                     if (barChartCanvasCountSumPrice.chart) {
                         barChartCanvasCountSumPrice.chart.destroy();
                     }
 
-                    // สร้าง chart ใหม่
                     barChartCanvasCountSale.chart = new Chart(barChartCanvasCountSale, {
                         type: 'bar',
                         data: areaChartData_book,
                         options: barChartOptions
                     });
-
                     barChartCanvasCountSumPrice.chart = new Chart(barChartCanvasCountSumPrice, {
                         type: 'bar',
                         data: areaChartData_book_sum_price,
                         options: barChartOptions
                     });
-
-
                 }
-            })
+            });
         }
     </script>
+
     <script>
         $('#search').on('click', function () {
             var checkedRadioValue = $('.score-radio:checked').val();

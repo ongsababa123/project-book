@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2024 at 07:33 PM
+-- Generation Time: Jan 22, 2024 at 05:28 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -186,7 +186,8 @@ INSERT INTO `history_book_table` (`id_history`, `id_user`, `id_book`, `id_stock_
 (3, 22, '1,4,15', '2,4,6', '2024-01-21', '2024-01-22', '2024-01-21', 439, 150, 0, 0, 0, 10, '1,', 3),
 (4, 22, '1,4,15', '2,4,6', '2024-01-21', '2024-01-22', '2024-01-21', 439, 150, 0, 0, 0, 10, '1,', 3),
 (5, 22, '1,4,15', '2,4,6', '2024-01-21', '2024-01-22', '2024-01-22', 439, 150, 0, 0, 0, 10, '1,', 3),
-(6, 20, '1', '2', '2024-01-18', '2024-01-19', '2024-01-21', 20, 50, 30, 40, 0, 0, NULL, 3);
+(6, 20, '1', '2', '2024-01-18', '2024-01-19', '2024-01-21', 20, 50, 30, 40, 0, 0, NULL, 3),
+(7, 20, '1', '2', '2024-01-18', '2024-01-19', '2024-03-07', 20, 50, 30, 40, 0, 0, NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -390,7 +391,7 @@ ALTER TABLE `details_table`
 -- AUTO_INCREMENT for table `history_book_table`
 --
 ALTER TABLE `history_book_table`
-  MODIFY `id_history` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ไอดีประวัติการเช่า', AUTO_INCREMENT=7;
+  MODIFY `id_history` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ไอดีประวัติการเช่า', AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `late_fees_table`
