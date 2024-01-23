@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 use App\Models\BookModels;
 use App\Models\HistoryModels;
-use Dompdf\Dompdf;
-use Dompdf\Options;
+// use Dompdf\Dompdf;
+// use Dompdf\Options;
 
 class ReportController extends BaseController
 {
@@ -46,37 +46,37 @@ class ReportController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    public function htmlToPDF()
-    {
-        $html = view('dashboard/pdf_view');
+    // public function htmlToPDF()
+    // {
+    //     $html = view('dashboard/pdf_view');
 
-        $options = new Options();
-        $options->set('isHtml5ParserEnabled', true);
-        $options->set('isPhpEnabled', true);
+    //     $options = new Options();
+    //     $options->set('isHtml5ParserEnabled', true);
+    //     $options->set('isPhpEnabled', true);
 
-        $dompdf = new Dompdf($options);
+    //     $dompdf = new Dompdf($options);
 
-        // Set font directory explicitly
-        $fontDir = WRITEPATH . 'fonts/';
-        $dompdf->getOptions()->setFontDir($fontDir);
-        $dompdf->getOptions()->setFontCache($fontDir);
-        $dompdf->loadHtml($html);
+    //     // Set font directory explicitly
+    //     $fontDir = WRITEPATH . 'fonts/';
+    //     $dompdf->getOptions()->setFontDir($fontDir);
+    //     $dompdf->getOptions()->setFontCache($fontDir);
+    //     $dompdf->loadHtml($html);
 
-        $dompdf->setPaper('A4', 'portrait');
+    //     $dompdf->setPaper('A4', 'portrait');
 
-        $dompdf->render();
+    //     $dompdf->render();
 
-        $output = $dompdf->output();
+    //     $output = $dompdf->output();
 
-        $filename = 'hello.pdf';
+    //     $filename = 'hello.pdf';
 
-        $this->response->setStatusCode(200);
-        $this->response->setHeader('Content-Type', 'application/pdf');
-        $this->response->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"');
-        $this->response->setBody($output);
+    //     $this->response->setStatusCode(200);
+    //     $this->response->setHeader('Content-Type', 'application/pdf');
+    //     $this->response->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"');
+    //     $this->response->setBody($output);
 
-        return $this->response;
-    }
+    //     return $this->response;
+    // }
 
 
 
