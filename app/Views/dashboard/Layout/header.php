@@ -228,7 +228,7 @@
                                     <a href="<?= site_url('/dashboard/report/index'); ?>" class="nav-link">
                                         <i class="nav-icon fas fa-chart-line"></i>
                                         <p>
-                                            รายงานยอดขาย
+                                            รายงานยอดเช่า
                                         </p>
                                     </a>
                                 </li>

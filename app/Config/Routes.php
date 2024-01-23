@@ -139,5 +139,5 @@ $routes->group("dashboard/report/", ['filter' => ['CartCheck', 'HistoryCheck']],
     $routes->match(['get', 'post'], 'index', 'ReportController::report_index', ['filter' => ['authGuard' , 'ISLogin']]);  //display
     $routes->match(['get', 'post'], 'getdata/(:num)', 'ReportController::get_data_table/$1');  //getdata
     $routes->match(['get', 'post'], 'generate/pdf', 'ReportController::htmlToPDF');
-    $routes->match(['get', 'post'], 'generate/view', 'ReportController::view_pdf');
+    $routes->match(['get', 'post'], 'generate/view/(:any)/(:any)/(:any)', 'ReportController::view_pdf/$1/$2/$3');
 });

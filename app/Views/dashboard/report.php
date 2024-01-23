@@ -42,7 +42,7 @@
                                         <div class="icheck-success d-inline">
                                             <input type="radio" class="score-radio" id="answer_day" name="r_" value="1"
                                                 checked onclick="change_radio(this)">
-                                            <label for="answer_day" id="label_answer_day">ยอดขายประจำวัน</label>
+                                            <label for="answer_day" id="label_answer_day">ยอดเช่าประจำวัน</label>
                                         </div>
                                     </div>
                                     <div class="col-2">
@@ -50,14 +50,14 @@
                                             <input type="radio" class="score-radio" id="answer_mounth" name="r_"
                                                 value="2" onclick="change_radio(this)">
                                             <label for="answer_mounth"
-                                                id="label_answer_mounth">ยอดขายรายวันของเดือน</label>
+                                                id="label_answer_mounth">ยอดเช่ารายวันของเดือน</label>
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="icheck-success d-inline">
                                             <input type="radio" class="score-radio" id="answer_year" name="r_" value="3"
                                                 onclick="change_radio(this)">
-                                            <label for="answer_year" id="label_answer_year">ยอดขายรายเดือนของปี</label>
+                                            <label for="answer_year" id="label_answer_year">ยอดเช่ารายเดือนของปี</label>
                                         </div>
                                     </div>
                                 </div>
@@ -132,10 +132,13 @@
                             <div class="card-header border-0">
                                 <h3 class="card-title">รายการหนังสือ</h3>
                                 <div class="card-tools">
-                                    <a href="<?php echo base_url('dashboard/report/generate/pdf') ?>"
-                                        class="btn btn-primary">
+                                    <a href="#" onclick="exportPdf(1)" class="btn btn-primary">
                                         <i class="fas fa-download"></i>
-                                        โหลดสรุปรายงาน PDF
+                                        โหลดสรุปรายงานการเช่า PDF
+                                    </a>
+                                    <a href="#" onclick="exportPdf(2)" class="btn btn-primary">
+                                        <i class="nav-icon fas fa-print"></i>
+                                        ปริ้นงานรายงานสรุปการเช่า
                                     </a>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
@@ -148,8 +151,8 @@
                                         <tr>
                                             <th>ชื่อหนังสือ</th>
                                             <th>ราคาเช่า</th>
-                                            <th>จำนวนที่ขาย</th>
-                                            <th>ยอดขาย (รวม)</th>
+                                            <th>จำนวนที่เช่า (รวม)</th>
+                                            <th>ยอดเช่า (รวม)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -181,7 +184,7 @@
                     <div class="col-12 col-sm-12">
                         <div class="card card-navy">
                             <div class="card-header border-0">
-                                <h3 class="card-title">กราฟแท่งเปรียบเทียบจำนวนที่ขาย</h3>
+                                <h3 class="card-title">กราฟแท่งเปรียบเทียบจำนวนที่เช่า</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
@@ -204,7 +207,7 @@
                     <div class="col-12 col-sm-12">
                         <div class="card card-navy">
                             <div class="card-header border-0">
-                                <h3 class="card-title">กราฟแท่งเปรียบเทียบยอดขาย</h3>
+                                <h3 class="card-title">กราฟแท่งเปรียบเทียบยอดเช่า</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
@@ -233,6 +236,7 @@
     <script src="<?= base_url('plugins/filterizr/jquery.filterizr.min.js') ?>"></script>
     <script src="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.min.js') ?>"></script>
     <script src="<?= base_url('plugins/chart.js/Chart.min.js') ?>"></script>
+
     <script>
         $(document).ready(function () {
             var value = {
@@ -469,7 +473,6 @@
             });
         }
     </script>
-
     <script>
         $('#search').on('click', function () {
             var checkedRadioValue = $('.score-radio:checked').val();
@@ -484,5 +487,22 @@
                 color += letters[Math.floor(Math.random() * 16)];
             }
             return color;
+        }
+    </script>
+    <script>
+        function exportPdf(type) {
+            var checkedRadioValue = $('.score-radio:checked').val();
+            var dayInput = $("#day_input").val();
+            var monthInput = $("#month_input").val();
+            var yearInput = $("#year_input").val();
+            if (checkedRadioValue == 1) {
+                var baseUrl = "<?= base_url('dashboard/report/generate/view/') ?>" + dayInput + "/" + checkedRadioValue + "/" + type ;
+            } else if (checkedRadioValue == 2) {
+                var baseUrl = "<?= base_url('dashboard/report/generate/view/') ?>" + monthInput + "/" + checkedRadioValue + "/" + type;
+            } else if (checkedRadioValue == 3) {
+                var baseUrl = "<?= base_url('dashboard/report/generate/view/') ?>" + yearInput + "/" + checkedRadioValue + "/" + type;
+            }
+
+            window.open(baseUrl, '_blank');
         }
     </script>
