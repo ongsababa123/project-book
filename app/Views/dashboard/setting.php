@@ -357,7 +357,6 @@ if(session()->get('type') == '2'){
                             });
                         },
                     }).done(function(response) {
-                        // console.log(response);
                         if (response.success) {
                             Swal.fire({
                                 title: response.message,

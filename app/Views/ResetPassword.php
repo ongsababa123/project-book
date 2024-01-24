@@ -243,7 +243,6 @@
             } else {
                 confirmAlert.style.display = "block";
             }
-            console.log(passwordInput.value != confirmPasswordInput.value);
             updateSubmitButton();
         }
 

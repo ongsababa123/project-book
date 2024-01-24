@@ -64,7 +64,6 @@ class ReportController extends BaseController
         // Set additional properties
         $mpdf->autoScriptToLang = true;
         $mpdf->autoLangToFont = true;
-
         // Generate PDF content
         $html = view('dashboard/pdf_view_', []);
         $mpdf->WriteHTML($html);
@@ -141,7 +140,7 @@ class ReportController extends BaseController
 
             // Output the PDF to the browser or save it to a file
             $this->response->setHeader('Content-Type', 'application/pdf');
-            $mpdf->Output('arjun.pdf', 'I'); // opens in browser
+            $mpdf->Output('รายงานยอดขาย.pdf', 'I'); // opens in browser
         } else {
             echo view('dashboard/print_view', $data);
         }

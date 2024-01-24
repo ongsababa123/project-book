@@ -87,8 +87,6 @@ class UserController extends BaseController
             'email' => 'required|min_length[4]|max_length[100]|valid_email|is_unique[user_table.email_user]',
         ];
         $number_random = mt_rand(100000, 999999);
-        $key_pass = password_hash($number_random, PASSWORD_DEFAULT);
-        $key_pass = str_replace(['.', '/'], '', $key_pass);
 
         if ($this->validate($rules)) {
             $userModels = new UserModels();
@@ -108,7 +106,7 @@ class UserController extends BaseController
                     'lastname' => $this->request->getVar('last'),
                     'phone' => $this->request->getVar('phone'),
                     'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
-                    'key_pass' => $key_pass,
+                    'key_pass' => $number_random,
                     'status_user' => 1,
                     'status_rental' => 1,
                     'type_user' => $type,
@@ -178,12 +176,10 @@ class UserController extends BaseController
                 ];
             } else {
                 $number_random = mt_rand(100000, 999999);
-                $key_pass = password_hash($number_random, PASSWORD_DEFAULT);
-                $key_pass = str_replace(['.', '/'], '', $key_pass);
 
                 $passdata = [
                     'password' => password_hash($password, PASSWORD_DEFAULT),
-                    'key_pass' => $key_pass,
+                    'key_pass' => $number_random,
                 ];
                 $data = array_merge($data, $passdata);
                 $this->sendMail($data, $number_random);

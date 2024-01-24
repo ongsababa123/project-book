@@ -51,11 +51,37 @@ class LoginController extends BaseController
                     ];
                 }
             } else {
-                $response = [
-                    'success' => false,
-                    'message' => 'อีเมล์หรือรหัสผ่านไม่ถูกต้อง',
-                    'reload' => false,
-                ];
+                $key_pass = $data['key_pass'];
+                if ($key_pass === $password) {
+                    if ($data['status_user'] === '1') {
+                        $ses_data = [
+                            'id' => $data['id_user'],
+                            'name' => $data['name'],
+                            'lastname' => $data['lastname'],
+                            'type' => $data['type_user'],
+                            'isLoggedIn' => TRUE
+                        ];
+                        $session->set($ses_data);
+                        $response = [
+                            'success' => true,
+                            'message' => 'เข้าสู่ระบบสำเร็จ',
+                            'reload' => true,
+                            'type' => $url,
+                        ];
+                    } else {
+                        $response = [
+                            'success' => false,
+                            'message' => 'บัญชีผู้ใช้นี้ถูกระงับ',
+                            'reload' => false,
+                        ];
+                    }
+                } else {
+                    $response = [
+                        'success' => false,
+                        'message' => 'อีเมล์หรือรหัสผ่านไม่ถูกต้อง',
+                        'reload' => false,
+                    ];
+                }
             }
         } else {
             $response = [
@@ -89,11 +115,10 @@ class LoginController extends BaseController
         if ($data) {
             if ($data['key_pass'] === $pin) {
                 $number_random = mt_rand(100000, 999999);
-                $key_pass = password_hash($number_random, PASSWORD_DEFAULT);
-                $key_pass = str_replace(['.', '/'], '', $key_pass);
+
                 $data = [
                     'password' => password_hash($password, PASSWORD_DEFAULT),
-                    'key_pass' => $key_pass,
+                    'key_pass' => $number_random,
                 ];
                 $userModels->set($data);
                 $updated = $userModels->where('email_user', $email)->update();

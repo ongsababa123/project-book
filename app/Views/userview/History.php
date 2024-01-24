@@ -493,7 +493,6 @@
 
         HistoryData.find(element => {
             if (element.id_history == id_history) {
-                console.log(element);
                 const splittedIdBook = element.id_book.split(',');
                 const price_deposit = element.sum_deposit_price;
                 var day_late_price = 0;

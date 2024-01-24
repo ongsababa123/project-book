@@ -15,6 +15,21 @@
         /* ให้เต็มพื้นที่ที่เหลือ */
     }
 </style>
+<style>
+    .no-arrow {
+        -moz-appearance: textfield;
+    }
+
+    .no-arrow::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    .no-arrow::-webkit-outer-spin-button,
+    .no-arrow::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 <div class="page-header page-header-xs" data-parallax="true"
     style="background-image: url('<?= base_url('dist/img/background.png') ?>');">
     <div class="filter"></div>
@@ -80,8 +95,10 @@
                     </div>
                     <div class="form-group">
                         <label>เบอร์โทรศัพท์</label>
-                        <input type="text" class="form-control" placeholder="กรอกเบอร์โทรศัพท์" id="phone"
-                            name="phone" value="<?= $user_data[0]['phone'] ?>" required>
+                        <input id="phone" name="phone" class="no-arrow form-control"
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            type="number" maxlength="10" placeholder="กรอกเบอร์โทรศัพท์"
+                            value="<?= $user_data[0]['phone'] ?>" required/>
                     </div>
                     <div class="form-group">
                         <label>อีเมล์</label>
@@ -103,6 +120,15 @@
                         <input type="password" placeholder="กรอกรหัสผ่านของคุณ (กรณีเปลี่ยนรหัสผ่าน)"
                             class="form-control" id="password" name="password" oninput="checkPassword()" />
                     </div>
+                    <div class="form-check" id="showpass">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" id="showpassword"
+                                name="showpassword">แสดงรหัสผ่าน
+                            <span class="form-check-sign">
+                                <span class="check"></span>
+                            </span>
+                        </label>
+                    </div>
                     <div class="alert alert-danger" role="alert" id="lengthAlert" style="display: none;">
                         รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร
                     </div>
@@ -122,6 +148,7 @@
 <script>
     $(document).ready(function () {
         $(".overlay").hide();
+        $("#showpass").hide();
     });
 
     $("#form_user").on('submit', function (e) {
@@ -174,6 +201,7 @@
         var checkCheckbox = $('#check').is(':checked');
         var passwordInput = document.getElementById("password");
         if (checkCheckbox) {
+            $("#showpass").show();
             $('#password').prop('disabled', false);
             $('#submit').prop('disabled', true);
             if (passwordInput.value.length >= 8 && !/[^\w\s]/.test(passwordInput.value) && /^(?=.*\d)(?=.*[a-zA-Z])/.test(passwordInput.value)) {
@@ -182,8 +210,10 @@
                 $('#submit').prop('disabled', true);
             }
         } else {
+            $("#showpass").hide();
             $('#password').prop('disabled', true);
             $('#password').val('');
+            $('.alert').hide();
             $('#submit').prop('disabled', false);
         }
     }
@@ -211,8 +241,6 @@
             success: function (response) {
                 // ซ่อนกำลังโหลดเมื่อเสร็จสิ้น
                 Swal.close();
-
-                console.log(response);
                 if (response.success) {
                     Swal.fire({
                         title: response.message,
@@ -230,27 +258,27 @@
                 } else {
                     if (response.validator) {
                         var mes = "";
-                            if (response.validator.email === "The email field must contain a valid email address.") {
-                                mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้อง.' + '<br><hr/>'
-                            }
-                            if (response.validator.email === "The email field must contain a unique value.") {
-                                mes += 'อีเมล์นี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
-                            }
-                            if (response.validator.name) {
-                                mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
-                            }
-                            if (response.validator.last) {
-                                mes += 'นามสกุลต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
-                            }
-                            if (response.validator.phone === "The phone field must contain only numbers.") {
-                                mes += 'เบอร์ติดต่อต้องมีเฉพาะตัวเลขเท่านั้น.' + '<br>';
-                            }
-                            if (response.validator.phone === "The phone field must be at least 10 characters in length.") {
-                                mes += 'เบอร์ติดต่อต้องมี 10 หลัก.' + '<br>';
-                            }
-                            if (response.validator.phone === "The phone field cannot exceed 10 characters in length.") {
-                                mes += 'เบอร์ติดต่อต้องมีไม่เกิน 10 หลัก.' + '<br>';
-                            }
+                        if (response.validator.email === "The email field must contain a valid email address.") {
+                            mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้อง.' + '<br><hr/>'
+                        }
+                        if (response.validator.email === "The email field must contain a unique value.") {
+                            mes += 'อีเมล์นี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
+                        }
+                        if (response.validator.name) {
+                            mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
+                        }
+                        if (response.validator.last) {
+                            mes += 'นามสกุลต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
+                        }
+                        if (response.validator.phone === "The phone field must contain only numbers.") {
+                            mes += 'เบอร์ติดต่อต้องมีเฉพาะตัวเลขเท่านั้น.' + '<br>';
+                        }
+                        if (response.validator.phone === "The phone field must be at least 10 characters in length.") {
+                            mes += 'เบอร์ติดต่อต้องมี 10 หลัก.' + '<br>';
+                        }
+                        if (response.validator.phone === "The phone field cannot exceed 10 characters in length.") {
+                            mes += 'เบอร์ติดต่อต้องมีไม่เกิน 10 หลัก.' + '<br>';
+                        }
                         Swal.fire({
                             title: mes,
                             icon: 'error',
@@ -279,4 +307,16 @@
         });
     }
 
+</script>
+<script>
+    const passwordInput = document.getElementById('password');
+    const showPasswordCheckbox = document.getElementById('showpassword');
+
+    showPasswordCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
 </script>

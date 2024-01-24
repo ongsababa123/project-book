@@ -31,14 +31,28 @@
         background-color: #86d9ab;
     }
 </style>
+<style>
+    .no-arrow {
+        -moz-appearance: textfield;
+    }
 
+    .no-arrow::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    .no-arrow::-webkit-outer-spin-button,
+    .no-arrow::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 <body class="register-page sidebar-collapse">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top bg-success">
         <div class="container">
             <div class="navbar-translate">
-                <a class="navbar-brand" href="<?= site_url('/') ?>" rel="tooltip" title="Coded by Creative Tim" style="font-size: medium"
-                    data-placement="bottom">
+                <a class="navbar-brand" href="<?= site_url('/') ?>" rel="tooltip" title="Coded by Creative Tim"
+                    style="font-size: medium" data-placement="bottom">
                     ร้านบางเล่ม
                 </a>
                 <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse"
@@ -52,8 +66,8 @@
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown" id="dropdown">
-                        <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true" style="font-size: medium"
-                            aria-expanded="false" class="nav-link" >รายละเอียด</i></a>
+                        <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
+                            style="font-size: medium" aria-expanded="false" class="nav-link">รายละเอียด</i></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
                             <?php foreach ($details as $key => $value): ?>
                                 <a class="dropdown-item" style="font-size: medium">
@@ -64,7 +78,8 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('/book/booklist') ?>" class="nav-link" style="font-size: medium"> รายการหนังสือ</a>
+                        <a href="<?= site_url('/book/booklist') ?>" class="nav-link" style="font-size: medium">
+                            รายการหนังสือ</a>
                     </li>
                     <li class="nav-item">
                         <a href="<?= site_url('/contact') ?>" class="nav-link" style="font-size: medium"> ติดต่อเรา</a>
@@ -101,8 +116,9 @@
                             <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email"
                                 required>
                             <label>เบอร์โทรศัพท์</label>
-                            <input type="text" class="form-control" placeholder="เบอร์โทรศัพท์" id="phone" name="phone"
-                                required>
+                            <input id="phone" name="phone" class="no-arrow form-control"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                type="number" maxlength="10" placeholder="เบอร์โทรศัพท์" required />
                             <label>รหัสผ่าน</label>
                             <input type="password" class="form-control" placeholder="รหัสผ่าน" name="password"
                                 id="password" required oninput="checkPassword()">

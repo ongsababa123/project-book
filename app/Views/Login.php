@@ -161,7 +161,6 @@
                 success: function (response) {
                     // ซ่อนกำลังโหลดเมื่อเสร็จสิ้น
                     Swal.close();
-
                     if (response.success) {
                         Swal.fire({
                             title: response.message,

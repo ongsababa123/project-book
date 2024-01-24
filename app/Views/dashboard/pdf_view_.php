@@ -3,24 +3,19 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Welcome to CodeIgniter</title>
+    <title>รายงานยอดเช่า</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
         }
 
         header {
             text-align: center;
         }
 
-        img {
-            width: 50%;
-            display: block;
-            margin: 0 auto;
-        }
+
 
         table {
             width: 100%;
@@ -57,7 +52,7 @@
 
 <body>
     <header>
-        <img src="<?= base_url('dist/img/logo11.png') ?>" alt="logo">
+        <img src="<?= base_url('dist/img/logo11.jpg') ?>" style="text-align: center;">
         <h1 style="font-weight: bold;">ร้านหนังสือบางเล่ม</h1>
     </header>
 

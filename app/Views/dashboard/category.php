@@ -211,7 +211,6 @@
                 contentType: false,
                 dataType: "JSON",
                 success: function (response) {
-                    console.log(response);
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
@@ -284,7 +283,6 @@
                             'X-Requested-With': 'XMLHttpRequest'
                         }
                     }).done(function (response) {
-                        // console.log(response);
                         if (response.success) {
                             Swal.fire({
                                 title: response.message,

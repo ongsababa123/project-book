@@ -56,11 +56,10 @@
                 </div>
                 <div class="form-group">
                     <label>เบอร์โทรศัพท์</label>
-                    <input type="text" class="form-control" placeholder="กรอกเบอร์โทรศัพท์" id="phone" name="phone"
-                        required>
+                    <input id="phone" name="phone" class="no-arrow form-control"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        type="number" maxlength="10" placeholder="กรอกเบอร์โทรศัพท์" required/>
                 </div>
-                <input type="number" maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" class="no-arrow"/>
-
                 <div class="form-group" id="password_group">
                     <label>รหัสผ่าน</label>
                     <div class="form-check" id="changePasswordCheckbox">

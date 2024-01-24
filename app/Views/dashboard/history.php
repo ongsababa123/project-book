@@ -632,7 +632,6 @@
                 },
                 success: function (response) {
                     Swal.close();
-                    console.log(response);
                     if (response.success) {
                         if (response.button) {
                             Swal.fire({

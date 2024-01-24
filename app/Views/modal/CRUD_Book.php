@@ -111,7 +111,6 @@
         var preview_extra = document.getElementById('image-preview-extra-');
         var file = input.files[0];
         var reader = new FileReader();
-        console.log(file);
         reader.onloadend = function () {
             preview.src = reader.result;
             preview_extra.href = reader.result;

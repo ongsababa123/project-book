@@ -18,7 +18,6 @@
             },
             error: function (error) {
                 // Handle errors if needed
-                console.log(error);
                 callback(null); // Pass null to indicate an error
             }
         });

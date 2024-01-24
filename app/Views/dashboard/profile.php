@@ -103,6 +103,8 @@
             $(".modal-body #last").val('');
             $(".modal-body #email").val('');
             $(".modal-body #phone").val('');
+            $(".modal-body #password").val('');
+            $('#showPassword').prop('checked', false);
             if (load_check == 1) {
                 CRUD_UserModal.style.display = "block";
                 $(".modal-body #name").val('<?= $data_user[0]['name'] ?>');
@@ -111,7 +113,9 @@
                 $(".modal-body #phone").val('<?= $data_user[0]['phone'] ?>');
                 $('#customSwitch_status').hide();
                 $("#password").prop("disabled", true);
-
+                $('#changePasswordCheckbox').show();
+                $('#showPasswordCheckbox____').hide();
+                
                 $(".modal-header #title_modal").text("แก้ไขข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("แก้ไขข้อมูลผู้ใช้");
                 $(".modal-body #url_route").val("dashboard/edit/user/profile/" + <?= $data_user[0]['id_user'] ?>);
@@ -130,7 +134,6 @@
                 contentType: false,
                 dataType: "JSON",
                 success: function (response) {
-                    console.log(response);
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
