@@ -190,7 +190,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                                 <?php else: ?>
                                     <a href="<?= site_url('/book/details/') . $book['id_book'] ?>"
                                         class="btn btn-info btn-round">เพิ่มเติม</a>
-                                    <button class="btn btn-danger btn-round" onclick="showAlert('กรุณาล็อคอินก่อนเลือกสินค้า')"
+                                    <button class="btn btn-danger btn-round" onclick="showAlert('กรุณาเข้าสู่ระบบก่อนเลือกสินค้า')"
                                         <?= $status ?>>
                                         <i class="fas fa-cart-arrow-down"></i> ใส่ตระกร้าเลย
                                     </button>

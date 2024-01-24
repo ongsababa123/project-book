@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 use App\Models\BookModels;
 use App\Models\HistoryModels;
-// use Dompdf\Dompdf;
-// use Dompdf\Options;
+use Config\Services;
+use Mpdf\Mpdf;
 
 class ReportController extends BaseController
 {
@@ -46,42 +46,37 @@ class ReportController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    // public function htmlToPDF()
-    // {
-    //     $html = view('dashboard/pdf_view');
+    public function htmlToPDF()
+    {
+        // Create an instance of Mpdf
+        $mpdf = new \Mpdf\Mpdf([
+            'fontDir' => __DIR__ . '/fonts',
+            'fontdata' => [
+                'sarabun' => [
+                    'R' => 'THSarabunNew.ttf',
+                    'I' => 'THSarabunNew Italic.ttf',
+                    'B' => 'THSarabunNew Bold.ttf',
+                ]
+            ],
+            'default_font' => 'sarabun',
+        ]);
 
-    //     $options = new Options();
-    //     $options->set('isHtml5ParserEnabled', true);
-    //     $options->set('isPhpEnabled', true);
+        // Set additional properties
+        $mpdf->autoScriptToLang = true;
+        $mpdf->autoLangToFont = true;
 
-    //     $dompdf = new Dompdf($options);
+        // Generate PDF content
+        $html = view('dashboard/pdf_view_', []);
+        $mpdf->WriteHTML($html);
 
-    //     // Set font directory explicitly
-    //     $fontDir = WRITEPATH . 'fonts/';
-    //     $dompdf->getOptions()->setFontDir($fontDir);
-    //     $dompdf->getOptions()->setFontCache($fontDir);
-    //     $dompdf->loadHtml($html);
-
-    //     $dompdf->setPaper('A4', 'portrait');
-
-    //     $dompdf->render();
-
-    //     $output = $dompdf->output();
-
-    //     $filename = 'hello.pdf';
-
-    //     $this->response->setStatusCode(200);
-    //     $this->response->setHeader('Content-Type', 'application/pdf');
-    //     $this->response->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"');
-    //     $this->response->setBody($output);
-
-    //     return $this->response;
-    // }
-
-
+        // Output the PDF to the browser or save it to a file
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('arjun.pdf', 'I'); // opens in browser
+    }
 
     public function view_pdf($date = null, $type_data = null, $type = null)
     {
+
         $HistoryModels = new HistoryModels();
         $BookModels = new BookModels();
         $data['book'] = $BookModels->findAll();
@@ -121,6 +116,35 @@ class ReportController extends BaseController
         $data['type'] = $type_data;
         $data['type_load'] = $type;
 
-        echo view('dashboard/pdf_view', $data);
+        if ($type == 1) {
+            // Create an instance of Mpdf
+            $mpdf = new \Mpdf\Mpdf([
+                'fontDir' => __DIR__ . '/fonts',
+                'fontdata' => [
+                    'sarabun' => [
+                        'R' => 'THSarabunNew.ttf',
+                        'I' => 'THSarabunNew Italic.ttf',
+                        'B' => 'THSarabunNew Bold.ttf',
+                    ],
+                ],
+                'default_font' => 'sarabun',
+            ]);
+
+            // Set additional properties
+            $mpdf->autoScriptToLang = true;
+            $mpdf->autoLangToFont = true;
+
+            // Generate PDF content
+            $html = view('dashboard/pdf_view_', $data);
+
+            $mpdf->WriteHTML($html);
+
+            // Output the PDF to the browser or save it to a file
+            $this->response->setHeader('Content-Type', 'application/pdf');
+            $mpdf->Output('arjun.pdf', 'I'); // opens in browser
+        } else {
+            echo view('dashboard/print_view', $data);
+        }
+
     }
 }

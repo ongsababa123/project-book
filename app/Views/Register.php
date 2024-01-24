@@ -140,7 +140,7 @@
                                 value="Submit" id="submit">สมัครสมาชิก</button>
                         </form>
                         <div class="forgot">
-                            <a href="<?= site_url('login') ?>" class="btn btn-link btn-default">ล็อคอิน</a>
+                            <a href="<?= site_url('login') ?>" class="btn btn-link btn-default">เข้าสู่ระบบ</a>
                         </div>
                     </div>
                 </div>

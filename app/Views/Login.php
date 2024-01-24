@@ -19,7 +19,7 @@
     <link rel="icon" href="<?= base_url('dist/img/icon/favicon.ico') ?>" type="image/gif">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 
-    <title>ล็อคอิน</title>
+    <title>เข้าสู่ระบบ</title>
 
 </head>
 <style>

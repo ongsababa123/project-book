@@ -64,7 +64,7 @@
                     </li>
                     <?php if (!session()->get('isLoggedIn')): ?>
                         <li class="nav-item">
-                            <a href="<?= site_url('/login') ?>" class="btn btn-warning btn-round" style="font-size: medium">ล็อคอิน</a>
+                            <a href="<?= site_url('/login') ?>" class="btn btn-warning btn-round" style="font-size: medium">เข้าสู่ระบบ</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item dropdown">

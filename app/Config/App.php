@@ -16,6 +16,8 @@ class App extends BaseConfig
      *
      *    http://example.com/
      */
+    public $composerAutoload = true;
+
     public string $baseURL = 'http://localhost/project-book/';
     
     /**

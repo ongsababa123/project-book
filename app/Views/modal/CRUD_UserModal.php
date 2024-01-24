@@ -1,3 +1,18 @@
+<style>
+    .no-arrow {
+        -moz-appearance: textfield;
+    }
+
+    .no-arrow::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    .no-arrow::-webkit-outer-spin-button,
+    .no-arrow::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="overlay preloader">
@@ -44,6 +59,7 @@
                     <input type="text" class="form-control" placeholder="กรอกเบอร์โทรศัพท์" id="phone" name="phone"
                         required>
                 </div>
+                <input type="number" maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" class="no-arrow"/>
 
                 <div class="form-group" id="password_group">
                     <label>รหัสผ่าน</label>
@@ -80,7 +96,7 @@
         e.preventDefault();
         const urlRouteInput = document.getElementById("url_route");
         action_(urlRouteInput.value, 'form_user');
-        
+
     });
 </script>
 <script>

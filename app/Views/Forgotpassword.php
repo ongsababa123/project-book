@@ -91,7 +91,7 @@
                                 value="Submit" id="submit">ยืนยัน</button>
                         </form>
                         <div class="forgot">
-                            <a href="<?= site_url('login') ?>" class="btn btn-link btn-default">ล็อคอิน</a>
+                            <a href="<?= site_url('login') ?>" class="btn btn-link btn-default">เข้าสู่ระบบ</a>
                             <a href="<?= site_url('register') ?>" class="btn btn-link btn-default">สมัครสมาชิก</a>
                         </div>
                     </div>
