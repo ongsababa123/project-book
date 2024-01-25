@@ -282,6 +282,7 @@
                     clonedForm.find("#categorySelect").attr("id", "categorySelect_" + id.trim()).val(matcategory.name_category);
                     clonedForm.find("#price_rental_book").attr("id", "price_rental_book_" + id.trim()).val(matbook.price);
                     clonedForm.find("#price_book").attr("id", "price_book_" + id.trim()).val(matbook.price_book);
+                    clonedForm.find("#code_book_stock").attr("id", "code_book_stock_" + id.trim()).val(rowData.stock[count_id].id_number_);
                     const status = rowData.stock[count_id].status_stock;
                     data_id_ = rowData.stock[count_id].id_stock + "_" + id.trim();
                     clonedForm.find("#answer_1").attr("id", "2_" + data_id_).attr("name", "r" + rowData.stock[count_id].id_stock).prop('checked', status == 2 || status == 1 || status == 0);

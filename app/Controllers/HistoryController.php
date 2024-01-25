@@ -371,6 +371,7 @@ class HistoryController extends BaseController
         $CategoryModels = new CategoryModels();
         $BookModels = new BookModels();
         $PromotionModels = new PromotionModels();
+        $StockBookModels = new StockBookModels();
 
         $data['data_book'] = $BookModels->findAll();
         $data['data_promotion'] = $PromotionModels->findAll();
@@ -381,6 +382,13 @@ class HistoryController extends BaseController
         if (!empty($data['data_history'])) {
             $id_user = $data['data_history'][0]['id_user'];
             $data['data_user'] = $UserModels->getWhere(['id_user' => $id_user])->getResultArray();
+            foreach ($data['data_history'] as $key_1 => $value) {
+                $id_stock = explode(',', $value['id_stock_book']);
+                foreach ($id_stock as $key_2 => $id) {
+                    $data_stock = $StockBookModels->where('id_stock', $id)->first();
+                    $data['data_history'][$key_1]['stock'][$key_2] = $data_stock;
+                }
+            }
             echo view('dashboard/bill_view', $data);
         } else {
             echo "History record not found for id_history: $id_history";
@@ -393,13 +401,21 @@ class HistoryController extends BaseController
         $UserModels = new UserModels();
         $BookModels = new BookModels();
         $CategoryModels = new CategoryModels();
+        $StockBookModels = new StockBookModels();
         $LateFeesModels = new LateFeesModels();
+        
         $data['data_history'] = $HistoryModels->where('id_user', $id_user)->findAll();
         $data['data_user'] = $UserModels->where('id_user', $id_user)->findAll();
         $data['data_book'] = $BookModels->findAll();
         $data['data_category'] = $CategoryModels->findAll();
         $data['data_latefees'] = $LateFeesModels->findAll();
-
+        foreach ($data['data_history'] as $key_1 => $value) {
+            $id_stock = explode(',', $value['id_stock_book']);
+            foreach ($id_stock as $key_2 => $id) {
+                $data_stock = $StockBookModels->where('id_stock', $id)->first();
+                $data['data_history'][$key_1]['stock'][$key_2] = $data_stock;
+            }
+        }
         echo view('dashboard/layout/header');
         echo view('dashboard/user_history', $data);
     }

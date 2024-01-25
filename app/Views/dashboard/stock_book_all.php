@@ -12,6 +12,21 @@
         -webkit-user-select: none;
     }
 </style>
+<style>
+    .no-arrow {
+        -moz-appearance: textfield;
+    }
+
+    .no-arrow::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    .no-arrow::-webkit-outer-spin-button,
+    .no-arrow::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
@@ -99,6 +114,14 @@
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" id="detail_group">
+                                <div class="form-group">
+                                    <label>จำนวนที่เพิ่ม</label>
+                                    <input type="number" class="form-control no-arrow" id="quantity" name="quantity">
                                 </div>
                             </div>
                         </div>
@@ -331,8 +354,17 @@
                     confirmButtonText: "ตกลง",
                 })
             } else {
-                const url = '/dashboard/book/stock/create/' + $('#book_id').val();
-                action_(url, 'form_add_stock');
+                if ($('#quantity').val() == '' || $('#quantity').val() == '0' || $('#quantity').val() <= 0) {
+                    Swal.fire({
+                        title: "กรุณาเพิ่มจำนวนมากกว่า 1 ขึ้นไป",
+                        icon: 'error',
+                        showConfirmButton: true,
+                        confirmButtonText: "ตกลง",
+                    })
+                } else {
+                    const url = '/dashboard/book/stock/create/' + $('#book_id').val();
+                    action_(url, 'form_add_stock');
+                }
             }
         });
     </script>

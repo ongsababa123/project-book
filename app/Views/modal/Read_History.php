@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-9 pt-4">
+                        <div class="col-sm-6 pt-4">
                             <div class="icheck-success d-inline">
                                 <input type="radio" class="score-radio " id="answer_1" name="r_" value="0"
                                     onclick="setScore(this)">
@@ -75,10 +75,17 @@
                             <input type="text" id="price_book_destroy" name="price_book_destroy"
                                 class="price_book_destroy" hidden>
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>รหัสหนังสือ</label>
+                                <input type="text" class="form-control" id="code_book_stock" name="code_book_stock"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label>ราคาเช่า</label>
-                                <input type="text" class="form-control" id="price_rental_book" name="price_book"
+                                <input type="text" class="form-control" id="price_rental_book" name="price_rental_book"
                                     disabled>
                             </div>
                         </div>

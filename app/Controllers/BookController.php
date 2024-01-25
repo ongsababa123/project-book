@@ -107,30 +107,51 @@ class BookController extends BaseController
     public function create_stock($id_book = null)
     {
         $StockBookModels = new StockBookModels();
-        $count_number = $StockBookModels->where('id_book', $id_book)->countAllResults();
-        $id_number_ = $id_book . '-' . ($count_number + 1);
-        $data = [
-            'id_book' => $id_book,
-            'id_number_' => $id_number_,
-            'status_stock' => 0
-        ];
-        $check = $StockBookModels->save($data);
-        if ($check) {
+        $BookModels = new BookModels();
+        $quantity = $this->request->getVar('quantity');
+        $response = []; // Initialize the response array outside the loop
+    
+        for ($i = 0; $i < $quantity; $i++) {
+            do {
+                $number_random = mt_rand(100000, 999999);
+                $id_number_ = $this->generateIdNumber($id_book, $number_random, $BookModels);
+                $check = $StockBookModels->where('id_number_', $id_number_)->first();
+            } while ($check); // Keep generating until a unique id_number_ is found
+    
+            $data = [
+                'id_book' => $id_book,
+                'id_number_' => $id_number_,
+                'status_stock' => 0
+            ];
+            $check = $StockBookModels->save($data);
+    
+            if (!$check) {
+                $response = [
+                    'success' => false,
+                    'message' => 'Error saving data',
+                    'reload' => false,
+                ];
+                break; // Exit the loop if an error occurs during saving
+            }
+        }
+    
+        if (empty($response)) {
             $response = [
                 'success' => true,
                 'message' => 'สร้างข้อมูลสำเร็จ',
                 'reload' => true,
             ];
-        } else {
-            $response = [
-                'success' => false,
-                'message' => 'error',
-                'reload' => false,
-            ];
         }
-
+    
         return $this->response->setJSON($response);
     }
+    
+    private function generateIdNumber($id_book, $number_random, $BookModels)
+    {
+        $data_book = $BookModels->where('id_book', $id_book)->find();
+        return $data_book[0]['id_book'] . '-' . ($data_book[0]['category_id'] . '-' . $number_random);
+    }
+    
 
     function change_status_stock_function($id_stock = null, $status = null, $bypass_edit = null)
     {

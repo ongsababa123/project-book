@@ -82,7 +82,7 @@
                 CRUD_UserModal.style.display = "block";
                 $(".modal-header #title_modal").text("สร้างข้อมูลผู้ใช้");
                 $(".modal-footer #submit").text("สร้างข้อมูลผู้ใช้");
-                $(".modal-body #url_route").val("dashboard/customer/create/4");
+                $(".modal-body #url_route").val("dashboard/customer/create/3");
                 $("#password").prop("disabled", false);
                 $('#changePasswordCheckbox').hide();
                 $('#showPasswordCheckbox____').show();

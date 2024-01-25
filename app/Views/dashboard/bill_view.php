@@ -89,6 +89,9 @@ $book_total = 0;
                                             ลำดับ
                                         </td>
                                         <td class="text-left border-0">
+                                            รหัสหนังสือ
+                                        </td>
+                                        <td class="text-left border-0">
                                             ชื่อหนังสือ
                                         </td>
                                         <td class="text-right border-0">
@@ -107,6 +110,9 @@ $book_total = 0;
                                         <tr>
                                             <td class="text-left border-0" width="5%">
                                                 <?= $index + 1 ?>
+                                            </td>
+                                            <td class="text-left border-0">
+                                                <?= $data_history[0]['stock'][$index]['id_number_'] ?>
                                             </td>
                                             <td class="text-left border-0">
                                                 <?= $matching_book['name_book'] ?>
@@ -276,9 +282,14 @@ $book_total = 0;
                             <div class="col-12">
                                 <img src="<?= base_url('dist/img/promptpay.png') ?>" width="40%" alt="Visa">
                             </div>
+                            <?php 
+                            $price_sum_rental = ($data_history[0]['sum_deposit_price']) + ($data_history[0]['sum_rental_price'] - $data_history[0]['sum_price_promotion'] ?? 0);
+                            $price_sum_late = ($data_history[0]['sum_book_des_price']) + ($data_history[0]['sum_day_late_price'] + $data_history[0]['sum_late_price'] ?? 0);
+                            $total_price = $price_sum_rental + $price_sum_late;
+                            ?>
                             <div class="col-12">
                                 <div style="position: relative; text-align: center;">
-                                    <img src="https://promptpay.io/0972654762/<?= ($data_history[0]['sum_deposit_price']) + ($data_history[0]['sum_rental_price'] - $data_history[0]['sum_price_promotion'] ?? 0) ?>.00.png"
+                                    <img src="https://promptpay.io/0972654762/<?= ($total_price) ?>.00.png"
                                         alt="QR Code" style="max-width: 100%; max-height: 100%; display: inline-block;">
                                     <div
                                         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
@@ -312,6 +323,7 @@ $book_total = 0;
     var data_user = <?php echo json_encode($data_user); ?>;
     var data_book = <?php echo json_encode($data_book); ?>;
     var data_category = <?php echo json_encode($data_category); ?>;
+    console.log(data_history);
 </script>
 
 </html>

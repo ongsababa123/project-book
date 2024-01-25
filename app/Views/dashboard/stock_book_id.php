@@ -1,6 +1,21 @@
 <title>คลังหนังสือ :
     <?= $bookData['name_book'] ?>
 </title>
+<style>
+    .no-arrow {
+        -moz-appearance: textfield;
+    }
+
+    .no-arrow::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    .no-arrow::-webkit-outer-spin-button,
+    .no-arrow::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
 
 <body class="hold-transition sidebar-mini">
@@ -34,8 +49,8 @@
                                 </h4>
                                 <div class="card-tools">
                                     <?php if (session()->get('type') == '2'): ?>
-                                        <button type="button" class="btn btn-block-tool btn-dark btn-sm"
-                                            onclick="confirm_Alert('ยืนยันการเพิ่มจำนวนหนังสือ', '/dashboard/book/stock/create/<?= $bookData['id_book'] ?>')">เพิ่มจำนวนหนังสือ</button>
+                                        <button type="button" class="btn btn-block-tool btn-dark btn-sm" data-toggle="modal"
+                                            data-target="#modal-default">เพิ่มจำนวนหนังสือ</button>
                                     <?php endif; ?>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
@@ -87,7 +102,38 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
-
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="overlay preloader">
+                    <i class="fas fa-2x fa-sync fa-spin"></i>
+                </div>
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title" id="title_modal" name="title_modal">เพิ่มจำนวนหนังสือ</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="mb-3" id="form_add_stock" action="javascript:void(0)" method="post"
+                        enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-12" id="detail_group">
+                                <div class="form-group">
+                                    <label>จำนวนที่เพิ่ม</label>
+                                    <input type="number" class="form-control no-arrow" id="quantity" name="quantity">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control no-arrow" id="book_id" name="book_id"
+                            value="<?= $bookData['id_book'] ?>" hidden>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success" name="submit" value="Submit"
+                                id="submit">เพิ่มจำนวนหนังสือ</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<?= base_url('plugins/filterizr/jquery.filterizr.min.js') ?>"></script>
     <script src="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.min.js') ?>"></script>
     <script>
@@ -250,58 +296,6 @@
         }
     </script>
     <script>
-        function confirm_Alert(text, url) {
-            Swal.fire({
-                title: text,
-                icon: 'question',
-                showCancelButton: true,
-                cancelButtonText: "ยกเลิก",
-                confirmButtonColor: "#28a745",
-                confirmButtonText: "ตกลง",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '<?= base_url() ?>' + url,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        beforeSend: function () {
-                            // Show loading indicator here
-                            var loadingIndicator = Swal.fire({
-                                title: 'กําลังดําเนินการ...',
-                                allowEscapeKey: false,
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                            });
-                        },
-                    }).done(function (response) {
-                        Swal.close();
-                        if (response.success) {
-                            Swal.fire({
-                                title: response.message,
-                                icon: 'success',
-                                showConfirmButton: true,
-                                confirmButtonText: "ตกลง",
-                            });
-                            setTimeout(() => {
-                                if (response.reload) {
-                                    getTableData();
-                                }
-                            }, 1000);
-                        } else {
-                            Swal.fire({
-                                title: response.message,
-                                icon: 'error',
-                                showConfirmButton: true,
-                                confirmButtonText: "ตกลง",
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    </script>
-    <script>
         function change_status_(id_stock) {
             const inputOptions = {
                 0: "ไม่พร้อมใช้งาน",
@@ -392,4 +386,20 @@
                 additionalInput_.style.display = (this.value === '4') ? 'block' : 'none';
             });
         }
+    </script>
+    <script>
+        $("#form_add_stock").on('submit', function (e) {
+            e.preventDefault();
+            if ($('#quantity').val() == '' || $('#quantity').val() == '0' || $('#quantity').val() <= 0) {
+                Swal.fire({
+                    title: "กรุณาเพิ่มจำนวนมากกว่า 1 ขึ้นไป",
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonText: "ตกลง",
+                })
+            } else {
+                const url = '/dashboard/book/stock/create/' + $('#book_id').val();
+                action_(url, 'form_add_stock');
+            }
+        });
     </script>

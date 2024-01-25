@@ -38,274 +38,238 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <form class="mb-3" id="user_history" action="javascript:void(0)" method="post"
-                                            enctype="multipart/form-data">
-                                            <?php foreach ($data_history as $key => $value): ?>
-                                                <div class="border mt-3" id="form_details_history">
-                                                    <div class="col-sm-12 justify-content-between"
-                                                        style="background-color: #f0f0f0;">
-                                                        <label class="ml-3 mt-2">รายการที
-                                                            <?= $key + 1 ?>
-                                                        </label>
+                                <?php foreach ($data_history as $key => $value): ?>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <?php if ($value['status_his'] == '1'): ?>
+                                                    <div class="card-header bg-lightblue">
+                                                    <?php elseif ($value['status_his'] == '2'): ?>
                                                         <?php
                                                         date_default_timezone_set('Asia/Bangkok'); // ตั้งค่าโซนเวลา
                                                         $today = strtotime(date("Y-m-d")); // รับวันที่ปัจจุบันและแปลงเป็น timestamp
                                                         $today = strtotime("midnight", $today); // ตั้งค่าเวลาเป็นเที่ยงคืน
-                                                        if ($value['status_his'] == '1') {
-                                                            echo "<span class='badge bg-info'>รอเข้ารับหนังสือ</span>";
-                                                        } else if ($value['status_his'] == '2') {
-                                                            if ($value['submit_date'] === null) {
-                                                                $returnDate = strtotime($value['return_date']); // รับวันที่คืนและแปลงเป็น timestamp
-                                                                $returnDate = strtotime("midnight", $returnDate); // ตั้งค่าเวลาเป็นเที่ยงคืน
-                                                    
-                                                                if ($today > $returnDate) {
-                                                                    echo "<span class='badge bg-danger'>เกินกำหนด</span>";
-                                                                } else {
-                                                                    echo "<span class='badge bg-warning'>กำลังยืม</span>";
-                                                                }
-                                                            } else {
-                                                                echo "<span class='badge bg-success'>คืนแล้ว</span>";
-                                                            }
-                                                        } else if ($value['status_his'] == '3') {
-                                                            echo "<span class='badge bg-success'>คืนแล้ว</span>";
-                                                        } else {
-                                                            echo "<span class='badge bg-danger'>เกินกำหนดเข้ารับหนังสือ</span>";
-                                                        }
-
+                                                        $returnDate = strtotime($value['return_date']); // รับวันที่คืนและแปลงเป็น timestamp
+                                                        $returnDate = strtotime("midnight", $returnDate); // ตั้งค่าเวลาเป็นเที่ยงคืน
                                                         ?>
-                                                    </div>
-                                                    <div>
-                                                        <div>
-                                                            <?php $data_history_values = explode(',', $value['id_book']);
-                                                            $pice_total = 0;
-                                                            ?>
-                                                            <?php foreach ($data_history_values as $index => $element): ?>
-                                                                <?php
-                                                                $filtered_books = array_filter($data_book, function ($value_book) use ($element) {
-                                                                    return $value_book['id_book'] === $element;
-                                                                });
-                                                                $matching_book = reset($filtered_books);
-                                                                $pice_total = $pice_total + $matching_book['price'];
-
-                                                                $filtered_category = array_filter($data_category, function ($value_category) use ($matching_book) {
-                                                                    return $value_category['id_category'] === $matching_book['category_id'];
-                                                                });
-                                                                $matching_category = reset($filtered_category);
-                                                                ?>
-                                                                <div class="row mb-2 mt-2" id="form_details_image">
-                                                                    <div class="col-sm-2 ml-3 text-center border">
-                                                                        <a href="data:image/png;base64,<?= $matching_book['pic_book'] ?>"
-                                                                            data-toggle="lightbox" id="image-preview-extra_1">
-                                                                            <img class="img-fluid mb-2"
-                                                                                src="data:image/png;base64,<?= $matching_book['pic_book'] ?>"
-                                                                                alt="Book Cover 1" id="image-preview_1" />
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12">
-                                                                                <div class="form-group">
-                                                                                    <label>ชื่อหนังสือ</label>
-                                                                                    <p type="text" id="price_book"
-                                                                                        name="price_book">
-                                                                                        <?= $matching_book['name_book'] ?>
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <div class="form-group">
-                                                                                    <label>หมวดหมู่</label>
-                                                                                    <p type="text" id="price_late"
-                                                                                        name="price_late">
-                                                                                        <?= $matching_category['name_category'] ?>
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-3">
-                                                                        <div class="form-group">
-                                                                            <label>ชื่อผู้แต่ง</label>
-                                                                            <p>
-                                                                                <?= $matching_book['book_author'] ?>
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-1">
-                                                                        <div class="form-group">
-                                                                            <label>ราคาเช่า</label>
-                                                                            <p>
-                                                                                <?= $matching_book['price'] ?> บาท
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-1">
-                                                                        <div class="form-group">
-                                                                            <label>ราคาหนังสือ</label>
-                                                                            <p>
-                                                                                <?= $matching_book['price_book'] ?> บาท
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            <?php endforeach; ?>
-                                                        </div>
-                                                        <div class="col-sm-12" style="background-color:#f0f0f0;">
-                                                            <div class="row ml-3">
-                                                                <div class="col-sm-1 mt-3">
-                                                                    <div class="form-group">
-                                                                        <label>ยอดรวม</label>
-                                                                        <p>
-                                                                            <?= $pice_total ?> บาท
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-1 mt-3">
-                                                                    <div class="form-group">
-                                                                        <label>ส่วนลด</label>
-                                                                        <?php if ($value['sum_price_promotion'] === null || $value['sum_price_promotion'] === '0'): ?>
-                                                                            <p>ไม่มีมีส่วนลด</p>
-                                                                        <?php else: ?>
-                                                                            <p>
-                                                                                <?= $value['sum_price_promotion'] ?> บาท
-                                                                            </p>
-                                                                        <?php endif; ?>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-1 mt-3">
-                                                                    <div class="form-group">
-                                                                        <label>ค่ามัดจำ</label>
-                                                                        <?php $id_book = $value['id_book'];
-                                                                        $split_array = explode(',', $id_book);
-                                                                        $length_book = count($split_array) * 100;
-                                                                        echo "<p>" . $length_book . "</p>";
-                                                                        ?>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4 mt-3">
-                                                                    <div class="form-group">
-                                                                        <label>ราคาเช่าหนังสือทั้งหมด(ค่ามัดจำและหักโปรโมชั่น)</label>
-                                                                        <p>
-                                                                            <?= ($value['sum_price'] + $length_book) - $value['sum_price_promotion'] ?? 0 ?>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-2 mt-3">
-                                                                    <div class="form-group">
-                                                                        <label>ค่าปรับ</label>
-                                                                        <?php
-                                                                        $today = new DateTime(); // Get the current date
-                                                                        $today->setTime(0, 0, 0, 0);
-                                                                        $returnDate = new DateTime($value['return_date']);
-                                                                        $returnDate->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
-                                                                        if ($value['submit_date'] === null) {
-                                                                            if ($today > $returnDate) {
-                                                                                if ($value['late_price'] === null || $value['late_price'] === '0') {
-                                                                                    $returnDate = new DateTime($value['return_date']);
-                                                                                    $currentDate = new DateTime();
-
-                                                                                    // Calculate the difference in days
-                                                                                    $timeDifference = $currentDate->getTimestamp() - $returnDate->getTimestamp();
-                                                                                    $daysDifference = ceil(($timeDifference / (60 * 60 * 24)) - 1);
-                                                                                    $priceFees = $data_latefees[0]['price_fees'];
-                                                                                    $id_book = $value['id_book'];
-                                                                                    $split_array = explode(',', $id_book);
-                                                                                    $length_book = count($split_array) * 100;
-                                                                                    $sum = ($daysDifference * $priceFees) + ($priceFees * $length_book);
-
-                                                                                    echo "<p>" . $sum . "</p>";
-                                                                                } else {
-                                                                                    echo "<p>" . $value['late_price'] . "</p>";
-                                                                                }
-                                                                            } else if ($value['late_price'] !== null || $value['late_price'] !== '0') {
-                                                                                echo "<p>" . $value['late_price'] . "</p>";
-                                                                            } else {
-                                                                                echo " <p>ไม่มีค่าปรับ</p>";
-                                                                            }
-
-                                                                        } else {
-                                                                            if ($value['late_price'] === '0' || $value['late_price'] == null) {
-                                                                                echo "<p>ไม่มีค่าปรับ</p>";
-                                                                            } else {
-                                                                                echo "<p>" . $value['late_price'] . "</p>";
-
-                                                                            }
-                                                                        }
-                                                                        ?>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <div class="form-group">
-                                                                        <?php
-                                                                        date_default_timezone_set('Asia/Bangkok'); // Set the time zone
-                                                                        $today = strtotime(date("Y-m-d")); // Get the current date and convert it to a timestamp
-                                                                        $today = strtotime("midnight", $today); // Set the time to midnight
-                                                                    
-                                                                        if ($value['submit_date'] === null) {
-                                                                            $returnDate = strtotime($value['return_date']); // Get the return date and convert it to a timestamp
-                                                                            $returnDate = strtotime("midnight", $returnDate); // Set the time to midnight
-                                                                    
-                                                                            if ($today > $returnDate) {
-                                                                                echo '<a class="btn btn-app bg-danger mt-3" onclick="showAlert()">';
-                                                                                echo '<i class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>';
-                                                                            } else {
-                                                                                echo '<a class="btn btn-app bg-danger mt-3" onclick="showAlert()">';
-                                                                                echo '<i class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>';
-                                                                            }
-                                                                        } else {
-                                                                            echo '<a class="btn btn-app bg-danger mt-3" href="' . site_url('dashboard/history/billview/' . $value['id_history']) . '" target="_blank">';
-                                                                            echo '<i class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>';
-                                                                        }
-                                                                        ?>
-                                                                    </div>
+                                                        <?php if ($value['submit_date'] == null): ?>
+                                                            <?php if ($today > $returnDate): ?>
+                                                                <div class="card-header bg-danger">
+                                                                    <span class='badge bg-info'>เกินกำหนด</span>
+                                                                <?php else: ?>
+                                                                    <div class="card-header bg-warning">
+                                                                        <span class='badge bg-info'>กำลังเช่า</span>
+                                                                    <?php endif ?>
+                                                                <?php endif ?>
+                                                            <?php elseif ($value['status_his'] == '3'): ?>
+                                                                <div class="card-header bg-success">
+                                                                    <span class='badge bg-info'>คืนแล้ว</span>
+                                                                <?php endif; ?>
+                                                                <h3 class="card-title">รายการเช่าที่
+                                                                    <?= $key + 1 ?>
+                                                                </h3>
+                                                                <div class="card-tools">
+                                                                    <button type="button" class="btn btn-tool"
+                                                                        data-card-widget="collapse">
+                                                                        <i class="fas fa-minus"></i>
+                                                                    </button>
                                                                 </div>
                                                             </div>
-                                                            <div class="row ml-3">
-                                                                <div class="col-sm-2">
-                                                                    <div class="form-group">
-                                                                        <label>วันที่เข้ารับหนังสือ</label>
-                                                                        <p>
-                                                                            <?= $value['rental_date'] ?>
-                                                                        </p>
+                                                            <div class="card-body">
+                                                                <?php $data_history_values = explode(',', $value['id_book']); ?>
+                                                                <?php foreach ($data_history_values as $index => $element): ?>
+                                                                    <?php
+                                                                    $filtered_books = array_filter($data_book, function ($value_book) use ($element) {
+                                                                        return $value_book['id_book'] === $element;
+                                                                    });
+                                                                    $matching_book = reset($filtered_books);
+
+                                                                    $filtered_category = array_filter($data_category, function ($value_category) use ($matching_book) {
+                                                                        return $value_category['id_category'] === $matching_book['category_id'];
+                                                                    });
+                                                                    $matching_category = reset($filtered_category);
+                                                                    ?>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group">
+                                                                                <label>ชื่อหนังสือ</label>
+                                                                                <p>
+                                                                                    <?= $matching_book['name_book'] ?>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-1">
+                                                                            <label>รหัสหนังสือ</label>
+                                                                            <p>
+                                                                                <?= $value['stock'][$index]['id_number_'] ?>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <div class="form-group">
+                                                                                <label>ชื่อผู้แต่ง</label>
+                                                                                <p>
+                                                                                    <?= $matching_book['book_author'] ?>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <div class="form-group">
+                                                                                <label>หมวดหมู่</label>
+                                                                                <p>
+                                                                                    <?= $matching_category['name_category'] ?>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <div class="form-group">
+                                                                                <label>ราคาเช่า</label>
+                                                                                <p>
+                                                                                    <?= $matching_book['price'] ?>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <div class="form-group">
+                                                                                <label>ราคาหนังสือ</label>
+                                                                                <p>
+                                                                                    <?= $matching_book['price_book'] ?>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <hr>
+                                                                <?php endforeach; ?>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <label for="">ข้อมูลการเช่า</label>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-2">
-                                                                    <div class="form-group">
-                                                                        <label>วันที่ต้องคืนหนังสือ</label>
-                                                                        <p>
-                                                                            <?= $value['return_date'] ?>
-                                                                        </p>
+                                                                <div class="row">
+                                                                    <div class="col-sm-1">
+                                                                        <div class="form-group">
+                                                                            <label>ราคาเช่ารวม</label>
+                                                                            <p>
+                                                                                <?= $value['sum_rental_price'] ?? '-' ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <div class="form-group">
+                                                                            <label>ค่ามัดจำ</label>
+                                                                            <p>
+                                                                                <?= $value['sum_deposit_price'] ?? '-' ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <div class="form-group">
+                                                                            <label>ส่วนลดโปรโมชั่น</label>
+                                                                            <p>
+                                                                                <?= $value['sum_price_promotion'] ?? '-' ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php $price_all = ($value['sum_rental_price'] + $value['sum_deposit_price']) - $value['sum_price_promotion']; ?>
+                                                                    <div class="col-sm-1">
+                                                                        <div class="form-group">
+                                                                            <label>รวมสุทธิ</label>
+                                                                            <p>
+                                                                                <?= $price_all ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-1"></div>
+                                                                    <div class="col-sm-2">
+                                                                        <div class="form-group">
+                                                                            <label>วันที่เช่า</label>
+                                                                            <p>
+                                                                                <?= $value['rental_date'] ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <div class="form-group">
+                                                                            <label>วันที่ต้องคืน</label>
+                                                                            <p>
+                                                                                <?= $value['return_date'] ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <div class="form-group">
+                                                                            <label>วันที่มาคืน</label>
+                                                                            <p>
+                                                                                <?= $value['submit_date'] ?? '-' ?>
+                                                                            </p>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-2">
-                                                                    <div class="form-group">
-                                                                        <label>วันที่มาคืนหนังสือ</label>
-                                                                        <p>
-                                                                            <?= $value['submit_date'] ?? '-' ?>
-                                                                        </p>
+                                                                <hr>
+                                                                <div class="row">
+                                                                    <div class="col-sm-1">
+                                                                        <div class="form-group">
+                                                                            <label>ค่าปรับหนังสือ</label>
+                                                                            <p>
+                                                                                <?= $value['sum_book_des_price'] ?>
+                                                                            </p>
+                                                                        </div>
                                                                     </div>
+                                                                    <div class="col-sm-1"></div>
+                                                                    <div class="col-sm-2">
+                                                                        <div class="form-group">
+                                                                            <label>ค่าปรับเกินกำหนด</label>
+                                                                            <p>
+                                                                                <?= $value['sum_day_late_price'] ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <div class="form-group">
+                                                                            <label>ค่าปรับอื่นๆ</label>
+                                                                            <p>
+                                                                                <?= $value['sum_late_price'] ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php $sum_late = ($value['sum_day_late_price'] + $value['sum_late_price']) + $value['sum_book_des_price']; ?>
+                                                                    <div class="col-sm-2">
+                                                                        <div class="form-group">
+                                                                            <label>รวมค่าปรับ</label>
+                                                                            <p>
+                                                                                <?= $sum_late ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php if ($value['status_his'] == 2 || $value['status_his'] == 3): ?>
+                                                                        <div class="col-sm-1">
+                                                                            <div class="form-group">
+                                                                                <a class="btn btn-app bg-danger mt-3"
+                                                                                    href="<?= base_url('dashboard/history/billview/' . $value['id_history']) ?>"
+                                                                                    target="_blank">
+                                                                                    <i class="fas fa-print"></i>
+                                                                                    พิมพ์ใบเสร็จ</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php endif; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php $pice_total = 0; ?>
                                             <?php endforeach; ?>
-                                        </form>
+                                        </div>
+                                        <div class="overlay dark">
+                                            <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="overlay dark">
-                                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
-                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
         </section>
     </div>
+    <?= $this->include("calculate"); ?>
     <script src="<?= base_url('plugins/filterizr/jquery.filterizr.min.js') ?>"></script>
     <script src="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.min.js') ?>"></script>
     <script>
@@ -325,10 +289,10 @@
     </script>
     <script>
         var data_history = <?php echo json_encode($data_history); ?>;
+        console.log(data_history);
         var data_user = <?php echo json_encode($data_user); ?>;
         var data_book = <?php echo json_encode($data_book); ?>;
         var data_category = <?php echo json_encode($data_category); ?>;
-
     </script>
     <script>
         $(document).ready(function () {
