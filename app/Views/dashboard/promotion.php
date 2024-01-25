@@ -1,4 +1,48 @@
 <title>ข้อมูลการจัดการโปรโมชั่น</title>
+<link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
+<!-- daterange picker -->
+<link rel="stylesheet" href="<?= base_url('plugins/daterangepicker/daterangepicker.css'); ?>">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet"
+    href="<?= base_url('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'); ?>">
+<!-- Select2 -->
+<link rel="stylesheet" href="<?= base_url('plugins/select2/css/select2.min.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'); ?>">
+
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="<?= base_url('plugins/icheck-bootstrap/icheck-bootstrap.min.css'); ?>">
+<style>
+    .select2 {
+        width: 100% !important;
+    }
+</style>
+<style>
+    .no-arrow {
+        -moz-appearance: textfield;
+    }
+
+    .no-arrow::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    .no-arrow::-webkit-outer-spin-button,
+    .no-arrow::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+<style>
+    /* Select2 CSS ที่คุณต้องการ */
+
+    .select2-container .select2-selection--single {
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
+        height: 37px;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+</style>
 
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
@@ -44,8 +88,12 @@
                                                     <th>ลำดับ</th>
                                                     <th>ภาพโปรโมชั่น</th>
                                                     <th>รายละเอียดโปรโมชั่น</th>
+                                                    <th>ประเภทโปรโมชั่น</th>
+                                                    <th>ราคาส่วนลด</th>
+                                                    <th>ประเภทการลด</th>
+                                                    <th>วันที่สิ้นสุดโปรโมชั่น</th>
                                                     <th>สถานะ</th>
-                                                    <th>action</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -68,6 +116,14 @@
             <?= $this->include("modal/Create_Promotion"); ?>
         </div>
     </div>
+    <!-- InputMask -->
+    <script src="<?= base_url('plugins/moment/moment.min.js'); ?>"></script>
+    <!-- date-range-picker -->
+    <script src="<?= base_url('plugins/daterangepicker/daterangepicker.js'); ?>"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="<?= base_url('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js'); ?>"></script>
+    <!-- Select2 -->
+    <script src="<?= base_url('plugins/select2/js/select2.full.min.js'); ?>"></script>
     <script src="<?= base_url('plugins/filterizr/jquery.filterizr.min.js') ?>"></script>
     <script src="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.min.js') ?>"></script>
     <script>
@@ -86,14 +142,81 @@
         })
     </script>
     <script>
-        function load_modal(load_check) {
+        function load_modal(load_check, data_encode) {
             Create_Promotion = document.getElementById("Create_Promotion");
+            var data_book = <?php echo json_encode($book); ?>;
+            var data_category = <?php echo json_encode($category); ?>;
+            
+            $(".modal-body #id_book_cat").empty();
+            $(".modal-body #number_cal").val('');
+            $(".modal-body #end_date_promotion").val('');
+            $(".modal-body #detail_promotion").val('');
 
             if (load_check == 1) {
                 Create_Promotion.style.display = "block";
+                $(".modal-body #status_check").hide();
+                $(".modal-body #answer_1").prop('checked', true);
+                $(".modal-body #answer_3").prop('checked', true);
+                data_book.forEach(element_book_cr => {
+                    var newOption = $('<option>').val(element_book_cr.id_book).text(element_book_cr.name_book);
+                    $(".modal-body #id_book_cat").append(newOption);
+                });
+                var imageSrc = '<?= base_url("dist/img/image-preview.png"); ?>';
+                $(".modal-body #image-preview___").attr("src", imageSrc);
+                $(".modal-body #mage-preview-extra__").attr("href", imageSrc);
+
                 $(".modal-header #title_modal").text("สร้างข้อมูลโปรโมชั่น");
                 $(".modal-footer #submit").text("สร้างข้อมูลโปรโมชั่น");
                 $(".modal-body #url_route").val("dashboard/promotion/create");
+            } else if (load_check == 2) {
+                Create_Promotion.style.display = "block";
+                const rowData = JSON.parse(decodeURIComponent(data_encode));
+                $(".modal-body #status_check").show();
+                if (rowData.status == 1) {
+                    $(".modal-body #answer_5").prop('checked', true);
+                } else {
+                    $(".modal-body #answer_6").prop('checked', true);
+                }
+                if (rowData.type_promotion == 1) {
+                    $(".modal-body #answer_1").prop('checked', true);
+                    data_book.forEach(element_book_cr => {
+                        var newOption = $('<option>').val(element_book_cr.id_book).text(element_book_cr.name_book);
+                        if (element_book_cr.id_book == rowData.id_book_cat) {
+                            $(".modal-body #id_book_cat").append(newOption.prop('selected', true));
+                        } else {
+                            $(".modal-body #id_book_cat").append(newOption);
+                        }
+                    });
+                } else {
+                    $(".modal-body #answer_2").prop('checked', true);
+                    data_category.forEach(element_category_cr => {
+                        var newOption = $('<option>').val(element_category_cr.id_category).text(element_category_cr.name_category);
+                        if (element_category_cr.id_category == rowData.id_book_cat) {
+                            $(".modal-body #id_book_cat").append(newOption.prop('selected', true));
+                        } else {
+                            $(".modal-body #id_book_cat").append(newOption);
+                        }
+                    })
+                }
+                if (rowData.type_sale == 1) {
+                    $(".modal-body #answer_3").prop('checked', true);
+                } else {
+                    $(".modal-body #answer_4").prop('checked', true);
+                }
+                if (rowData.image_promotion == null) {
+                    var imageSrc = '<?= base_url("dist/img/image-preview.png"); ?>';
+                } else {
+                    var imageSrc = "data:image/png;base64," + rowData.image_promotion;
+                }
+                $(".modal-body #image-preview___").attr("src", imageSrc);
+                $(".modal-body #image-preview-extra__").attr("href", imageSrc);
+                $(".modal-body #number_cal").val(rowData.number_cal);
+                $(".modal-body #end_date_promotion").val(rowData.date_end);
+                $(".modal-body #detail_promotion").val(rowData.details);
+                $(".modal-header #title_modal").text("แก้ไขข้อมูลโปรโมชั่น");
+                $(".modal-footer #submit").text("แก้ไขข้อมูลโปรโมชั่น");
+                $(".modal-body #url_route").val("dashboard/promotion/edit/" + rowData.id_promotion);
+
             }
         }
     </script>
@@ -104,6 +227,9 @@
     </script>
     <script>
         function getTableData() {
+            var data_book = <?php echo json_encode($book); ?>;
+            var data_category = <?php echo json_encode($category); ?>;
+
             if ($.fn.DataTable.isDataTable('#table_promotion')) {
                 $('#table_promotion').DataTable().destroy();
             }
@@ -147,10 +273,14 @@
                         'data': null,
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
-                            var imageSrc = 'data:image/png;base64,' + data.image_promotion;
-                            return '<a href="' + imageSrc + '" data-toggle="lightbox" id="image-preview-extra">' +
-                                '<img class="img-fluid" style="width: 15rem;" src="' + imageSrc + '" alt="white sample" id="image-preview" />' +
-                                '</a>';
+                            if (data.image_promotion == null) {
+                                return "ไม่มีรูปภาพ"
+                            } else {
+                                var imageSrc = 'data:image/png;base64,' + data.image_promotion;
+                                return '<a href="' + imageSrc + '" data-toggle="lightbox" id="image-preview-extra">' +
+                                    '<img class="img-fluid" style="width: 15rem;" src="' + imageSrc + '" alt="white sample" id="image-preview" />' +
+                                    '</a>';
+                            }
                         }
                     },
                     {
@@ -158,6 +288,50 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             return data.details;
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            if (data.type_promotion == 1) {
+                                return "หนังสือ"
+                            } else if (data.type_promotion == 2) {
+                                return "หมวดหมู่"
+                            } else {
+                                return "-"
+                            }
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            if (data.type_promotion == 0) {
+                                return "-"
+                            } else {
+                                return data.number_cal;
+                            }
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            if (data.type_sale == 1) {
+                                return "คิดแบบลบ"
+                            } else if (data.type_sale == 2) {
+                                return "คิดแบบเปอร์เซ็นต์"
+                            } else {
+                                return "-"
+                            }
+                        }
+                    },
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            return data.date_end ?? '-';
                         }
                     },
                     {
@@ -178,13 +352,9 @@
                         'data': null,
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
+                            const encodedRowData = encodeURIComponent(JSON.stringify(row));
                             <?php if (session()->get('type') == '2'): ?>
-                                var status = data.status;
-                                if (status == 1) {
-                                    return `<button type="button" class="btn btn-warning" onclick="confirm_Alert('ต้องการปิดใช้งานใช้หรือไม่','dashboard/promotion/edit/${data.id_promotion}/0')">แก้ไขสถานะ</button>`;
-                                } else if (status == 0) {
-                                    return `<button type="button" class="btn btn-warning" onclick="confirm_Alert('ต้องการเปิดใช้งานใช้หรือไม่','dashboard/promotion/edit/${data.id_promotion}/1')">แก้ไขสถานะ</button>`;
-                                }
+                                return `<button type="button" class="btn btn-warning" onclick="load_modal(2,'${encodedRowData}')" data-toggle="modal" data-target="#modal-default">แก้ไขโปรโมชั่น</button>`;
                             <?php else: ?>
                                 return ``;
                             <?php endif; ?>
@@ -201,8 +371,8 @@
             Swal.fire({
                 title: text,
                 icon: 'question',
-                            showCancelButton: true,
-            cancelButtonText: "ยกเลิก",
+                showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
                 confirmButtonColor: "#28a745",
                 confirmButtonText: "ตกลง",
             }).then((result) => {

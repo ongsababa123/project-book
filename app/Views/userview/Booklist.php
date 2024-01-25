@@ -62,8 +62,10 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <?php foreach ($promotionData as $index => $promotion): ?>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="<?= $index ?>"
-                                class="<?= $index === 0 ? 'active' : '' ?>"></li>
+                            <?php if ($promotion['image_promotion'] !== null): ?>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="<?= $index ?>"
+                                    class="<?= $index === 0 ? 'active' : '' ?>"></li>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </ol>
                     <div class="carousel-inner" role="listbox">
@@ -78,10 +80,12 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                                 $imagepromotionSrc = 'data:image/png;base64,' . base64_encode($decodedData);
                             }
                             ?>
-                            <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                                <img class="d-block img-fluid" src="<?= $imagepromotionSrc ?>"
-                                    alt="Slide <?= $index + 1 ?>">
-                            </div>
+                            <?php if ($promotion['image_promotion'] !== null): ?>
+                                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                    <img class="d-block img-fluid" src="<?= $imagepromotionSrc ?>"
+                                        alt="Slide <?= $index + 1 ?>">
+                                </div>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -177,7 +181,9 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                                 <br>
                             </div>
                             <div class="card-footer">
-                                <span class="badge badge-default">คงเหลือในสต๊อก <?= $book['count_stock'] ?> เล่ม</span>
+                                <span class="badge badge-default">คงเหลือในสต๊อก
+                                    <?= $book['count_stock'] ?> เล่ม
+                                </span>
                                 <br>
                                 <hr>
                                 <?php if (session()->get('isLoggedIn')): ?>
@@ -190,8 +196,8 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                                 <?php else: ?>
                                     <a href="<?= site_url('/book/details/') . $book['id_book'] ?>"
                                         class="btn btn-info btn-round">เพิ่มเติม</a>
-                                    <button class="btn btn-danger btn-round" onclick="showAlert('กรุณาเข้าสู่ระบบก่อนเลือกสินค้า')"
-                                        <?= $status ?>>
+                                    <button class="btn btn-danger btn-round"
+                                        onclick="showAlert('กรุณาเข้าสู่ระบบก่อนเลือกสินค้า')" <?= $status ?>>
                                         <i class="fas fa-cart-arrow-down"></i> ใส่ตระกร้าเลย
                                     </button>
                                 <?php endif; ?>

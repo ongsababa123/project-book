@@ -10,6 +10,6 @@ class PromotionModels extends Model
 
     protected $primaryKey = 'id_promotion';
 
-    protected $allowedFields = ['details' , 'status', 'image_promotion'];
+    protected $allowedFields = ['details' ,'type_promotion', 'id_book_cat', 'number_cal', 'type_sale', 'date_end', 'status', 'image_promotion'];
 
 }

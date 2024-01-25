@@ -50,7 +50,7 @@
                                                     <th>ชื่อหมวดหมู่</th>
                                                     <th>รายละเอียด</th>
                                                     <th>สถานะ</th>
-                                                    <th>action</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>

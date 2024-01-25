@@ -18,6 +18,7 @@
         display: none;
 
     }
+    
 </style>
 <?php if (session()->get('type') == '3') {
     $type_hideen = 'hidden';
