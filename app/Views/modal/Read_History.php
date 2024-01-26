@@ -227,6 +227,8 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                     <a class="btn btn-app bg-danger mt-3" target="_blank" id="print" name="print"><i
                             class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>
+                    <a class="btn btn-app bg-danger mt-3" target="_blank" id="print_return" name="print_return"><i
+                            class="fas fa-print"></i> พิมพ์ใบเสร็จคืนค่ามัดจำ</a>
                 </div>
             </form>
         </div>
@@ -318,7 +320,7 @@
 
         if (id_stock_check[0] == 4) {
             $("#text_book_description_" + id_stock_check[1] + "_" + id_stock_check[2]).show();
-        }else{
+        } else {
             $("#text_book_description_" + id_stock_check[1] + "_" + id_stock_check[2]).hide();
         }
         updateTotalPrice();

@@ -78,7 +78,7 @@ class HistoryController extends BaseController
                 $data = $StockBookModels->where('id_book', $id)->where('status_stock', 1)->first();
                 if ($data != null) {
                     $data_stock[$key] = $data['id_stock'];
-                    $StockBookModels->update($data['id_stock'], ['status_stock' => 2]);
+                    $StockBookModels->update($data['id_stock'], ['status_stock' => 6]);
                 }
             }
         }
@@ -101,6 +101,8 @@ class HistoryController extends BaseController
         $id_promotion = $this->request->getVar('sumid_promotion');
         if ($id_promotion == null) {
             $id_promotion = null;
+        } else {
+            $id_promotion = rtrim($id_promotion, ',');
         }
         $rental_formattedDate = date('Y/m/d', strtotime($rental_date));
         $return_formattedDate = date('Y/m/d', strtotime($return_date));
@@ -260,16 +262,20 @@ class HistoryController extends BaseController
     {
         $HistoryModels = new HistoryModels();
         $UserModels = new UserModels();
+        $BookController = new BookController();
         helper(['form']);
         $id_history = $this->request->getVar('id_history');
         $id_user = $this->request->getVar('id_user');
-
+        $data['history'] = $HistoryModels->where('id_history', $id_history)->first();
+        $StockIds = explode(',', $data['history']['id_stock_book']);
+        foreach ($StockIds as $StockId) {
+            $BookController->change_status_stock_function($StockId, 2, 1);
+        }
         $UserModels->update($id_user, ['status_rental' => 3]);
         $data = [
             'status_his' => 2,
         ];
         $check = $HistoryModels->update($id_history, $data);
-
         if ($check) {
             $response = [
                 'success' => true,
@@ -374,7 +380,6 @@ class HistoryController extends BaseController
         $StockBookModels = new StockBookModels();
 
         $data['data_book'] = $BookModels->findAll();
-        $data['data_promotion'] = $PromotionModels->findAll();
         $data['data_category'] = $CategoryModels->findAll();
         $data['data_category'] = $CategoryModels->findAll();
         $data['data_history'] = $HistoryModels->getWhere(['id_history' => $id_history])->getResultArray();
@@ -384,9 +389,14 @@ class HistoryController extends BaseController
             $data['data_user'] = $UserModels->getWhere(['id_user' => $id_user])->getResultArray();
             foreach ($data['data_history'] as $key_1 => $value) {
                 $id_stock = explode(',', $value['id_stock_book']);
+                $id_promotion = explode(',', $value['id_promotion']);
                 foreach ($id_stock as $key_2 => $id) {
                     $data_stock = $StockBookModels->where('id_stock', $id)->first();
                     $data['data_history'][$key_1]['stock'][$key_2] = $data_stock;
+                }
+                foreach ($id_promotion as $key_3 => $id_pro) {
+                    $data_stock = $PromotionModels->where('id_promotion', $id_pro)->first();
+                    $data['data_history'][$key_1]['data_promotion'][$key_3] = $data_stock;
                 }
             }
             echo view('dashboard/bill_view', $data);
@@ -395,6 +405,40 @@ class HistoryController extends BaseController
         }
     }
 
+    public function billview_return($id_history = null)
+    {
+        $HistoryModels = new HistoryModels();
+        $UserModels = new UserModels();
+        $CategoryModels = new CategoryModels();
+        $BookModels = new BookModels();
+        $PromotionModels = new PromotionModels();
+        $StockBookModels = new StockBookModels();
+
+        $data['data_book'] = $BookModels->findAll();
+        $data['data_category'] = $CategoryModels->findAll();
+        $data['data_category'] = $CategoryModels->findAll();
+        $data['data_history'] = $HistoryModels->getWhere(['id_history' => $id_history])->getResultArray();
+
+        if (!empty($data['data_history'])) {
+            $id_user = $data['data_history'][0]['id_user'];
+            $data['data_user'] = $UserModels->getWhere(['id_user' => $id_user])->getResultArray();
+            foreach ($data['data_history'] as $key_1 => $value) {
+                $id_stock = explode(',', $value['id_stock_book']);
+                $id_promotion = explode(',', $value['id_promotion']);
+                foreach ($id_stock as $key_2 => $id) {
+                    $data_stock = $StockBookModels->where('id_stock', $id)->first();
+                    $data['data_history'][$key_1]['stock'][$key_2] = $data_stock;
+                }
+                foreach ($id_promotion as $key_3 => $id_pro) {
+                    $data_stock = $PromotionModels->where('id_promotion', $id_pro)->first();
+                    $data['data_history'][$key_1]['data_promotion'][$key_3] = $data_stock;
+                }
+            }
+            echo view('dashboard/bill_view_return', $data);
+        } else {
+            echo "History record not found for id_history: $id_history";
+        }
+    }
     public function history_user($id_user = null)
     {
         $HistoryModels = new HistoryModels();
@@ -403,7 +447,7 @@ class HistoryController extends BaseController
         $CategoryModels = new CategoryModels();
         $StockBookModels = new StockBookModels();
         $LateFeesModels = new LateFeesModels();
-        
+
         $data['data_history'] = $HistoryModels->where('id_user', $id_user)->findAll();
         $data['data_user'] = $UserModels->where('id_user', $id_user)->findAll();
         $data['data_book'] = $BookModels->findAll();

@@ -14,6 +14,7 @@
             contentType: false,
             dataType: "JSON",
             success: function (response) {
+                console.log(response);
                 callback(response);
             },
             error: function (error) {

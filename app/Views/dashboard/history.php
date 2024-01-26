@@ -417,6 +417,7 @@
                 $(".modal-body #id_history").val(rowData.id_history);
                 $(".modal-body #id_user").val(rowData.id_user);
                 $(".modal-body #print").prop("href", "billview/" + rowData.id_history);
+                $(".modal-body #print_return").prop("href", "billview/return/" + rowData.id_history);
                 updateTotalPrice();
             }
         }

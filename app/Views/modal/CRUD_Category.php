@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label>รายละเอียด</label>
                     <textarea class="form-control" rows="3" placeholder="กรอกรายละเอียด" id="detail_category"
-                        name="detail_category"></textarea>
+                        name="detail_category" required></textarea>
                 </div>
                 <input type="text" id="url_route" name="url_route" hidden>
                 <div class="modal-footer">

@@ -55,6 +55,11 @@ $book_total = 0;
                             <h5 class="text-center ml-1">0987654278</h5>
                         </div>
                     </div>
+                    <div class="row mt-4">
+                        <div class="col-12 d-flex justify-content-center">
+                            <h5 class="text-center font-weight-bold">ใบเสร็จคืนค่ามัดจำ </h5>
+                        </div>
+                    </div>
                     <hr class="border border-dark">
                     <div class="row">
                         <div class="col-6">
@@ -69,7 +74,7 @@ $book_total = 0;
                     <div class="row">
                         <div class="col-6">
                             <h5 class="">
-                                BL-
+                                BL-R-
                                 <?= $data_history[0]['id_history'] ?>
                             </h5>
                         </div>
@@ -292,90 +297,18 @@ $book_total = 0;
                             <div class="row">
                                 <div class="col-6">
                                     <h5 class="text-right">
-                                        ค่าปรับหนังสือ
-                                    </h5>
-                                </div>
-                                <div class="col-6">
-                                    <h5 class="text-right">
-                                        <?php if ($data_history[0]['sum_book_des_price'] === null): ?>
-                                            0.00
-                                        <?php else: ?>
-                                            <?= $data_history[0]['sum_book_des_price'] ?>.00
-                                        <?php endif; ?>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <h5 class="text-right">
-                                        ค่าปรับเกินกำหนด
-                                    </h5>
-                                </div>
-                                <div class="col-6">
-                                    <h5 class="text-right">
-                                        <?php if ($data_history[0]['sum_day_late_price'] === null): ?>
-                                            0.00
-                                        <?php else: ?>
-                                            <?= $data_history[0]['sum_day_late_price'] ?>.00
-                                        <?php endif; ?>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <h5 class="text-right">
-                                        ค่าอื่นๆ
+                                        ค่ามัดจำที่จะได้คืน
                                     </h5>
                                 </div>
                                 <div class="col-6">
                                     <h5 class="text-right border-bottom border-dark">
-                                        <?php if ($data_history[0]['sum_late_price'] === null): ?>
-                                            0.00
-                                        <?php else: ?>
-                                            <?= $data_history[0]['sum_late_price'] ?>.00
-                                        <?php endif; ?>
-                                    </h5>
-                                </div>
-                            </div>
-                            <?php $late_price_all_sum = ($data_history[0]['sum_book_des_price']) + ($data_history[0]['sum_day_late_price'] + $data_history[0]['sum_late_price'] ?? 0) ?>
-                            <div class="row">
-                                <div class="col-6">
-                                    <h5 class="text-right">
-                                        ยอดรวมสุทธิ
-                                    </h5>
-                                </div>
-                                <div class="col-6">
-                                    <h5 class="text-right border-bottom border-dark">
-                                        <?= $late_price_all_sum + $all_rental_price_sum ?>
+                                        <?= $data_history[0]['sum_deposit_price'] ?>.00
                                     </h5>
                                     <h5 class="text-right border-bottom border-dark"></h5>
                                 </div>
                             </div>
                         </div>
                         <!-- /.col -->
-                    </div>
-                    <br>
-                    <!-- accepted payments column -->
-                    <div class="col-12 text-center">
-                        <div class="row text-center">
-                            <div class="col-12">
-                                <img src="<?= base_url('dist/img/promptpay.png') ?>" width="40%" alt="Visa">
-                            </div>
-                            <div class="col-12">
-                                <div style="position: relative; text-align: center;">
-                                    <img src="https://promptpay.io/0972654762/<?= ($late_price_all_sum + $all_rental_price_sum) ?>.00.png"
-                                        alt="QR Code" style="max-width: 100%; max-height: 100%; display: inline-block;">
-                                    <div
-                                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                                        <img src="<?= base_url('dist/img/logo1.png') ?>" alt="logo" width="50%">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                            โปรดตรวจสอบยอดชำระเงินทุกครั้งก่อนชำระเงิน
-                        </p>
                     </div>
                 </div>
                 <div class="col-3">

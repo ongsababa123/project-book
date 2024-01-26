@@ -17,59 +17,90 @@ class CategoryController extends BaseController
         helper(['form']);
 
         $CategoryModels = new CategoryModels();
-        $data = [
-            'name_category' => $this->request->getVar('name_category'),
-            'details' => $this->request->getVar('detail_category'),
-            'status' => 1,
+
+        // Validation rules
+        $rules = [
+            'name_category' => 'is_unique[category_table.name_category]',
+            'detail_category' => 'is_unique[category_table.details]',
         ];
 
-        $check = $CategoryModels->save($data);
-        if ($check) {
-            $response = [
-                'success' => true,
-                'message' => 'สร้างข้อมูลสำเร็จ',
-                'reload' => true,
-            ];
-        } else {
+        if (!$this->validate($rules)) {
             $response = [
                 'success' => false,
-                'message' => 'error',
+                'message' => 'ผิดพลาด',
+                'validator' => $this->validator->getErrors(), // Get validation errors
                 'reload' => false,
             ];
+        } else {
+            // Validated successfully, proceed to save
+            $data = [
+                'name_category' => $this->request->getVar('name_category'),
+                'details' => $this->request->getVar('detail_category'),
+                'status' => 1,
+            ];
+
+            $check = $CategoryModels->save($data);
+            if ($check) {
+                $response = [
+                    'success' => true,
+                    'message' => 'สร้างข้อมูลสำเร็จ',
+                    'reload' => true,
+                ];
+            } else {
+                $response = [
+                    'success' => false,
+                    'message' => 'Error saving data to the database',
+                    'reload' => false,
+                ];
+            }
         }
 
         return $this->response->setJSON($response);
     }
 
+
     public function edit_category($id_category = null)
     {
         helper(['form']);
         $CategoryModels = new CategoryModels();
-        $status = $this->request->getVar('customSwitch3');
-        if ($status === 'on') {
-            $status = 1;
-        } else {
-            $status = 0;
-        }
-        $data = [
-            'name_category' => $this->request->getVar('name_category'),
-            'details' => $this->request->getVar('detail_category'),
-            'status' => $status
+        $rules = [
+            'name_category' => 'is_unique[category_table.name_category]',
+            'detail_category' => 'is_unique[category_table.details]',
         ];
-
-        $check = $CategoryModels->update($id_category, $data);
-        if ($check) {
-            $response = [
-                'success' => true,
-                'message' => 'อัปเดตข้อมูลสำเร็จ',
-                'reload' => true,
-            ];
-        } else {
+        if (!$this->validate($rules)) {
             $response = [
                 'success' => false,
-                'message' => 'error',
+                'message' => 'ผิดพลาด',
+                'validator' => $this->validator->getErrors(), // Get validation errors
                 'reload' => false,
             ];
+        } else {
+            $status = $this->request->getVar('customSwitch3');
+            if ($status === 'on') {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+            $data = [
+                'name_category' => $this->request->getVar('name_category'),
+                'details' => $this->request->getVar('detail_category'),
+                'status' => $status
+            ];
+
+            $check = $CategoryModels->update($id_category, $data);
+            if ($check) {
+                $response = [
+                    'success' => true,
+                    'message' => 'อัปเดตข้อมูลสำเร็จ',
+                    'reload' => true,
+                ];
+            } else {
+                $response = [
+                    'success' => false,
+                    'message' => 'error',
+                    'reload' => false,
+                ];
+            }
         }
 
         return $this->response->setJSON($response);

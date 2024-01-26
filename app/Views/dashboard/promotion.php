@@ -146,11 +146,19 @@
             Create_Promotion = document.getElementById("Create_Promotion");
             var data_book = <?php echo json_encode($book); ?>;
             var data_category = <?php echo json_encode($category); ?>;
-            
+
             $(".modal-body #id_book_cat").empty();
             $(".modal-body #number_cal").val('');
             $(".modal-body #end_date_promotion").val('');
             $(".modal-body #detail_promotion").val('');
+            $(".modal-body #detail_promotion_show").val('');
+            $(".modal-body #id_book_cat").prop("disabled", false);
+            $(".modal-body #answer_1").prop("disabled", false);
+            $(".modal-body #answer_2").prop("disabled", false);
+            $(".modal-body #answer_3").prop("disabled", false);
+            $(".modal-body #answer_4").prop("disabled", false);
+            $(".modal-body #number_cal").prop("disabled", false);
+            $(".modal-body #detail_promotion_show").prop("disabled", true);
 
             if (load_check == 1) {
                 Create_Promotion.style.display = "block";
@@ -168,6 +176,7 @@
                 $(".modal-header #title_modal").text("สร้างข้อมูลโปรโมชั่น");
                 $(".modal-footer #submit").text("สร้างข้อมูลโปรโมชั่น");
                 $(".modal-body #url_route").val("dashboard/promotion/create");
+                change_text();
             } else if (load_check == 2) {
                 Create_Promotion.style.display = "block";
                 const rowData = JSON.parse(decodeURIComponent(data_encode));
@@ -177,6 +186,10 @@
                 } else {
                     $(".modal-body #answer_6").prop('checked', true);
                 }
+
+                $(".modal-body #id_book_cat").prop("disabled", true);
+                $(".modal-body #answer_1").prop("disabled", true);
+                $(".modal-body #answer_2").prop("disabled", true);
                 if (rowData.type_promotion == 1) {
                     $(".modal-body #answer_1").prop('checked', true);
                     data_book.forEach(element_book_cr => {
@@ -198,6 +211,8 @@
                         }
                     })
                 }
+                $(".modal-body #answer_3").prop("disabled", true);
+                $(".modal-body #answer_4").prop("disabled", true);
                 if (rowData.type_sale == 1) {
                     $(".modal-body #answer_3").prop('checked', true);
                 } else {
@@ -211,8 +226,12 @@
                 $(".modal-body #image-preview___").attr("src", imageSrc);
                 $(".modal-body #image-preview-extra__").attr("href", imageSrc);
                 $(".modal-body #number_cal").val(rowData.number_cal);
+                $(".modal-body #number_cal").prop("disabled", true);
                 $(".modal-body #end_date_promotion").val(rowData.date_end);
+
                 $(".modal-body #detail_promotion").val(rowData.details);
+                $(".modal-body #detail_promotion_show").val(rowData.details);
+
                 $(".modal-header #title_modal").text("แก้ไขข้อมูลโปรโมชั่น");
                 $(".modal-footer #submit").text("แก้ไขข้อมูลโปรโมชั่น");
                 $(".modal-body #url_route").val("dashboard/promotion/edit/" + rowData.id_promotion);

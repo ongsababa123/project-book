@@ -223,7 +223,8 @@
                                 2: "<span class='badge bg-info'>กำลังเช่า</span>",
                                 3: "<span class='badge bg-danger'>หนังสือหาย</span>",
                                 4: "<span class='badge bg-danger'>หนังสือชำรุด</span>",
-                                5: "<span class='badge bg-danger'>หนังสือไม่สามารถใช้ต่อได้</span>"
+                                5: "<span class='badge bg-danger'>หนังสือไม่สามารถใช้ต่อได้</span>",
+                                6: "<span class='badge bg-info'>หนังสือถูกจอง</span>"
                             };
                             return statusMap[status_book] || '';
                         }

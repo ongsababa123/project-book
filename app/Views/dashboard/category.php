@@ -7,6 +7,7 @@
     $type_disable = '';
 }
 ?>
+
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
         <section class="content-header">
@@ -17,7 +18,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
                             <li class="breadcrumb-item active">ข้อมูลหมวดหมู่</li>
                         </ol>
                     </div>
@@ -33,8 +34,8 @@
                                 <h2 class="card-title"></h2>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-block-tool btn-success btn-sm"
-                                        data-toggle="modal" data-target="#modal-default"
-                                        onclick="load_modal(1)" <?= $type_hideen ?>>สร้างหมวดหมู่</button>
+                                        data-toggle="modal" data-target="#modal-default" onclick="load_modal(1)"
+                                        <?= $type_hideen ?>>สร้างหมวดหมู่</button>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
                                     </button>
@@ -190,8 +191,7 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             const encodedRowData = encodeURIComponent(JSON.stringify(row));
-                            return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')" <?= $type_hideen ?>><i class="fas fa-tools"></i> แก้ไขข้อมูล</button>
-                            <button type="button" class="btn btn-danger" onclick="confirm_Alert('ต้องการลบข้อมูลใช่หรือไม่ ?' , 'dashboard/category/delete/${data.id_category}')" <?= $type_hideen ?>><i class="fas fa-trash"></i> ลบข้อมูล</button>`;
+                            return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')" <?= $type_hideen ?>><i class="fas fa-tools"></i> แก้ไขข้อมูล</button>`;
                         }
                     },
                 ]
@@ -210,7 +210,18 @@
                 processData: false,
                 contentType: false,
                 dataType: "JSON",
+                beforeSend: function () {
+                    // Show loading indicator here
+                    var loadingIndicator = Swal.fire({
+                        title: 'กําลังดําเนินการ...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });
+                },
                 success: function (response) {
+                    Swal.close();
+                    console.log(response);
                     if (response.success) {
                         Swal.fire({
                             title: response.message,
@@ -226,17 +237,12 @@
                     } else {
                         if (response.validator) {
                             var mes = "";
-                            if (response.validator.email) {
-                                mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้องหรือมีอีเมล์ซ้ำในระบบ.' + '<br><hr/>'
+                            
+                            if (response.validator.detail_category == "The detail_category field must contain a unique value.") {
+                                mes += 'รายละเอียดต้องไม่ซ้ํา.' + '<br><hr/>'
                             }
-                            if (response.validator.name) {
-                                mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
-                            }
-                            if (response.validator.last) {
-                                mes += 'นามสกุลต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';
-                            }
-                            if (response.validator.phone) {
-                                mes += 'เบอร์ติดต่อต้องมี 10 หลัก.' + '<br>';
+                            if (response.validator.name_category == "The name_category field must contain a unique value.") {
+                                mes += 'ชื่อหมวดหมู่ต้องไม่ซ้ํา.' + '<br><hr/>';
                             }
                             Swal.fire({
                                 title: mes,
@@ -271,8 +277,8 @@
             Swal.fire({
                 title: text,
                 icon: 'question',
-                            showCancelButton: true,
-            cancelButtonText: "ยกเลิก",
+                showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
                 confirmButtonColor: "#28a745",
                 confirmButtonText: "ตกลง",
             }).then((result) => {
@@ -281,8 +287,18 @@
                         url: '<?= base_url() ?>' + url,
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
-                        }
+                        },
+                        beforeSend: function () {
+                            // Show loading indicator here
+                            var loadingIndicator = Swal.fire({
+                                title: 'กําลังดําเนินการ...',
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                showConfirmButton: false,
+                            });
+                        },
                     }).done(function (response) {
+                        Swal.close();
                         if (response.success) {
                             Swal.fire({
                                 title: response.message,

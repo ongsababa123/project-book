@@ -323,105 +323,161 @@
                                     $returnDate->setTime(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
                     
                                     if ($today > $returnDate) {
-                                        echo '<div class="bg-danger pb-3 text-center">
-                                <div class="row mt-2">
-                                    <div class="col-lg-12 mt-4">
-                                        <h6 class="text-white">เกินกำหนด</h6>
-                                    </div>
-                                </div>
-                            </div>';
+                                        echo '  <div class="bg-danger pb-3 text-center">
+                                                    <div class="row mt-2">
+                                                        <div class="col-lg-5 mt-4">
+                                                        </div>
+                                                        <div class="col-lg-2 mt-4">
+                                                            <h6 class="text-white">เกินกำหนด</h6>
+                                                        </div>
+                                                        <div class="col-lg-3 mt-4">
+                                                        </div>
+                                                        <div class="col-lg-2 mt-4">
+                                                            <button class="btn btn-primary btn-round" type="button" data-toggle="collapse" data-target="#collapseTab3_' . $value['id_history'] . '" aria-expanded="false" aria-controls="collapseTab3' . $value['id_history'] . '">
+                                                                เปิด/ปิด 
+                                                            </button>                                
+                                                        </div>
+                                                    </div>
+                                                </div>';
                                     } else {
-                                        echo '<div class="bg-warning pb-3 text-center">
-                                    <div class="row mt-2">
-                                        <div class="col-lg-12 mt-4">
-                                            <h6 class="text-white">กำลังยืม</h6>
-                                        </div>
-                                    </div>
-                                </div>';
-                                    }
+                                        echo '  <div class="bg-warning pb-3 text-center">
+                                                    <div class="row mt-2">
+                                                        <div class="col-lg-5 mt-4">
+                                                        </div>
+                                                        <div class="col-lg-2 mt-4">
+                                                            <h6 class="text-white">กำลังยืม</h6>
+                                                        </div>
+                                                        <div class="col-lg-3 mt-4">
+                                                        </div>
+                                                        <div class="col-lg-2 mt-4">
+                                                            <button class="btn btn-primary btn-round" type="button" data-toggle="collapse" data-target="#collapseTab3_' . $value['id_history'] . '" aria-expanded="false" aria-controls="collapseTab3' . $value['id_history'] . '">
+                                                                เปิด/ปิด 
+                                                            </button>                                
+                                                        </div>
+                                                    </div>
+                                                </div>';}
                                 } else {
-                                    echo '<div class="bg-success pb-3 text-center">
-                                    <div class="row mt-2">
-                                        <div class="col-lg-12 mt-4">
-                                            <h6 class="text-white">คืนแล้ว</h6>
-                                        </div>
-                                    </div>
-                                </div>';
-                                }
+                                    echo '  <div class="bg-success pb-3 text-center">
+                                                <div class="row mt-2">
+                                                    <div class="col-lg-5 mt-4">
+                                                    </div>
+                                                    <div class="col-lg-2 mt-4">
+                                                        <h6 class="text-white">คืนแล้ว</h6>
+                                                    </div>
+                                                    <div class="col-lg-3 mt-4">
+                                                    </div>
+                                                    <div class="col-lg-2 mt-4">
+                                                        <button class="btn btn-primary btn-round" type="button" data-toggle="collapse" data-target="#collapseTab3_' . $value['id_history'] . '" aria-expanded="false" aria-controls="collapseTab3' . $value['id_history'] . '">
+                                                            เปิด/ปิด 
+                                                        </button>                                
+                                                    </div>
+                                                </div>
+                                            </div>';}
                             } else if ($value['status_his'] === '3') {
                                 echo '<div class="bg-success pb-3 text-center">
-                                <div class="row mt-2">
-                                    <div class="col-lg-12 mt-4">
-                                        <h6 class="text-white">คืนแล้ว</h6>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-5 mt-4">
+                                        </div>
+                                        <div class="col-lg-2 mt-4">
+                                            <h6 class="text-white">คืนแล้ว</h6>
+                                        </div>
+                                        <div class="col-lg-3 mt-4">
+                                        </div>
+                                        <div class="col-lg-2 mt-4">
+                                            <button class="btn btn-primary btn-round" type="button" data-toggle="collapse" data-target="#collapseTab3_' . $value['id_history'] . '" aria-expanded="false" aria-controls="collapseTab3' . $value['id_history'] . '">
+                                                เปิด/ปิด 
+                                            </button>                                
+                                        </div>
                                     </div>
-                                </div>
-                            </div>';
+                                </div>';
                             } else {
                                 echo '<div class="bg-danger pb-3 text-center">
-                        <div class="row mt-2">
-                            <div class="col-lg-12 mt-4">
-                                <h6 class="text-white">เกินกำหนดวันรับ</h6>
-                            </div>
-                        </div>
-                    </div>';
-                            }
-                            ?>
-                            <div class="p-4 border mb-3" style="background-color: white;">
-                                <?php $id_books = explode(',', $value['id_book']); ?>
-                                <?php foreach ($bookData as $keybookData => $valuebookData): ?>
-                                    <?php if (in_array($valuebookData['id_book'], $id_books)): ?>
                                         <div class="row mt-2">
-                                            <div class="col-lg-5 col-md-12 text-center">
-                                                <?php
-                                                $imageSrc = base_url('dist/img/image-preview.png');
-                                                if ($valuebookData['pic_book'] !== null) {
-                                                    $base64Data = $valuebookData['pic_book'];
-                                                    $decodedData = base64_decode($base64Data);
-                                                    $imageSrc = 'data:image/png;base64,' . base64_encode($decodedData);
-                                                }
-                                                $details_book = $valuebookData['details'];
-                                                $encoding = mb_detect_encoding($details_book, 'UTF-8,ISO-8859-1');
-                                                $details_book = mb_convert_encoding($details_book, 'UTF-8', $encoding);
-
-                                                $shortenedDetails = strlen($details_book) > 50 ?
-                                                    htmlspecialchars(mb_substr($details_book, 0, 50) . '...', ENT_QUOTES, 'UTF-8') :
-                                                    htmlspecialchars($details_book, ENT_QUOTES, 'UTF-8');
-                                                ?>
-                                                <img src="<?= $imageSrc ?>" class="img-rounded img-responsive" alt="Rounded Image"
-                                                    style="height: 300px;">
+                                            <div class="col-lg-5 mt-4">
                                             </div>
-                                            <div class="col-lg-6">
-                                                <h2 class="title">
-                                                    <?= $valuebookData['name_book'] ?>
-                                                </h2>
-                                                <h6 class="description">ชื่อผู้แต่ง
-                                                    <?= $valuebookData['book_author'] ?>
-                                                </h6>
-                                                <h6 class="description">ประเภท
-                                                    <?= $valuebookData['categoryData']['name_category'] ?>
-                                                </h6>
-                                                <p class="description">
-                                                    <?= $shortenedDetails ?>
-                                                </p>
-                                                <h6 class="description">ราคาเช่า
-                                                    <?= $valuebookData['price'] ?> บาท
-                                                </h6>
-                                                <h6 class="description">ราคาหนังสือ
-                                                    <?= $valuebookData['price_book'] ?> บาท
-                                                </h6>
-                                                <a href="<?= site_url('/book/details/') . $valuebookData['id_book'] ?>"
-                                                    class="btn btn-default ">เพิ่มเติม</a>
+                                            <div class="col-lg-2 mt-4">
+                                                <h6 class="text-white">เกินกำหนดวันรับ</h6>
+                                            </div>
+                                            <div class="col-lg-3 mt-4">
+                                            </div>
+                                            <div class="col-lg-2 mt-4">
+                                                <button class="btn btn-primary btn-round" type="button" data-toggle="collapse" data-target="#collapseTab3_' . $value['id_history'] . '" aria-expanded="false" aria-controls="collapseTab3' . $value['id_history'] . '">
+                                                    เปิด/ปิด 
+                                                </button>                                
                                             </div>
                                         </div>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-lg-10 mt-2"></div>
-                                    <div class="col-lg-2 mt-2">
-                                        <button class="btn btn-primary btn-round" data-toggle="modal" data-target="#details"
-                                            onclick="loadmodal(<?= $value['id_history'] ?>, 3)" id="button_modal"
-                                            name="button_modal">รายละเอียด</button>
+                                    </div>';}?>
+                            <div id="collapseTab3_<?= $value['id_history'] ?>" class="collapse">
+                                <div class="p-4 border mb-3" style="background-color: white;">
+                                    <?php $id_books = explode(',', $value['id_book']); ?>
+                                    <?php foreach ($bookData as $keybookData => $valuebookData): ?>
+                                        <?php if (in_array($valuebookData['id_book'], $id_books)): ?>
+                                            <div class="row mt-2">
+                                                <div class="col-lg-5 col-md-12 text-center">
+                                                    <?php
+                                                    $imageSrc = base_url('dist/img/image-preview.png');
+                                                    if ($valuebookData['pic_book'] !== null) {
+                                                        $base64Data = $valuebookData['pic_book'];
+                                                        $decodedData = base64_decode($base64Data);
+                                                        $imageSrc = 'data:image/png;base64,' . base64_encode($decodedData);
+                                                    }
+                                                    $details_book = $valuebookData['details'];
+                                                    $encoding = mb_detect_encoding($details_book, 'UTF-8,ISO-8859-1');
+                                                    $details_book = mb_convert_encoding($details_book, 'UTF-8', $encoding);
+
+                                                    $shortenedDetails = strlen($details_book) > 50 ?
+                                                        htmlspecialchars(mb_substr($details_book, 0, 50) . '...', ENT_QUOTES, 'UTF-8') :
+                                                        htmlspecialchars($details_book, ENT_QUOTES, 'UTF-8');
+                                                    ?>
+                                                    <img src="<?= $imageSrc ?>" class="img-rounded img-responsive" alt="Rounded Image"
+                                                        style="height: 300px;">
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <h2 class="title">
+                                                        <?= $valuebookData['name_book'] ?>
+                                                    </h2>
+                                                    <h6 class="description">ชื่อผู้แต่ง
+                                                        <?= $valuebookData['book_author'] ?>
+                                                    </h6>
+                                                    <h6 class="description">ประเภท
+                                                        <?= $valuebookData['categoryData']['name_category'] ?>
+                                                    </h6>
+                                                    <p class="description">
+                                                        <?= $shortenedDetails ?>
+                                                    </p>
+                                                    <h6 class="description">ราคาเช่า
+                                                        <?= $valuebookData['price'] ?> บาท
+                                                    </h6>
+                                                    <h6 class="description">ราคาหนังสือ
+                                                        <?= $valuebookData['price_book'] ?> บาท
+                                                    </h6>
+                                                    <a href="<?= site_url('/book/details/') . $valuebookData['id_book'] ?>"
+                                                        class="btn btn-default ">เพิ่มเติม</a>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-5 mt-2">
+                                        </div>
+                                        <div class="col-lg-2 mt-2">
+                                            <a class="btn btn-danger btn-round" id="print" name="print"
+                                                href="dashboard/history/billview/<?= $value['id_history'] ?>" target="_blank"><i
+                                                    class="fas fa-print"></i>
+                                                พิมพ์ใบเสร็จ</a>
+                                        </div>
+                                        <div class="col-lg-3 mt-2">
+                                            <a class="btn btn-danger btn-round" id="print" name="print"
+                                                href="dashboard/history/billview/return/<?= $value['id_history'] ?>"
+                                                target="_blank"><i class="fas fa-print"></i>
+                                                พิมพ์ใบเสร็จคืนค่ามัดจำ</a>
+                                        </div>
+                                        <div class="col-lg-2 mt-2">
+                                            <button class="btn btn-primary btn-round" data-toggle="modal" data-target="#details"
+                                                onclick="loadmodal(<?= $value['id_history'] ?>, 3)" id="button_modal"
+                                                name="button_modal">รายละเอียด</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -508,7 +564,7 @@
                             })
                         }
                     });
-                }else{
+                } else {
                     day_late_price = element.sum_day_late_price
 
                 }
@@ -532,7 +588,6 @@
                         $("#book_Table").append(row1);
                         price_book_all += parseInt(foundBook.price_book);
                     }
-
                 });
                 const row1_1 = `
                         <tr>
@@ -584,7 +639,7 @@
                         </tr>
                     `;
                 $("#promotionTable").append(row2_2);
-                var all_price_all = parseInt(day_late_price) + parseInt(element.sum_book_des_price) + parseInt(element.sum_late_price);
+                var all_price_all = parseInt(day_late_price ?? 0) + parseInt(element.sum_book_des_price ?? 0) + parseInt(element.sum_late_price ?? 0);
                 const row3 = `
                 <tr>
                     <th>วันที่เข้ารับหนังสือ</th>

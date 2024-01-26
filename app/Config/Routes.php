@@ -106,6 +106,7 @@ $routes->group("dashboard/history/", ['filter' => ['CartCheck', 'HistoryCheck']]
     $routes->match(['get', 'post'], 'cancel/(:num)', 'HistoryController::cancel_his/$1');  //cancel
     $routes->match(['get', 'post'], 'submit', 'HistoryController::submit_his');  //submit
     $routes->match(['get', 'post'], 'billview/(:num)', 'HistoryController::billview/$1');  //billview
+    $routes->match(['get', 'post'], 'billview/return/(:num)', 'HistoryController::billview_return/$1');  //billview
     $routes->match(['get', 'post'], 'history/user/(:num)', 'HistoryController::history_user/$1');  //hisuser
     $routes->match(['get', 'post'], 'cartcancel', 'HistoryController::cancel_cart');  //cancel cart
     $routes->match(['get', 'post'], 'update_status_his', 'HistoryController::update_status_his');  //update_status
@@ -123,7 +124,7 @@ $routes->group("dashboard/setting/", ['filter' => ['CartCheck', 'HistoryCheck']]
     $routes->match(['get', 'post'], 'details/delete/(:num)', 'SettingController::delete_details/$1');  //create details
 });
 
-$routes->group("dashboard/promotion/", ['filter' => ['CartCheck', 'HistoryCheck']], function ($routes) {
+$routes->group("dashboard/promotion/", ['filter' => ['CartCheck', 'HistoryCheck' , 'PromotionCheck']], function ($routes) {
     $routes->match(['get', 'post'], 'index', 'PromotionController::index', ['filter' => ['authGuard' , 'ISLogin']]);  //display
     $routes->match(['get', 'post'], 'create', 'PromotionController::create_promotion');  //getData
     $routes->match(['get', 'post'], 'getdata', 'PromotionController::get_data_table');  //getData

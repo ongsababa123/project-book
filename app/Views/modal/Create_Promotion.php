@@ -7,14 +7,6 @@
             <h4 class="modal-title" id="title_modal" name="title_modal"></h4>
         </div>
         <div class="modal-body">
-            <?php if (session()->get('type') == '3') {
-                $type_hideen = 'hidden';
-                $type_disable = 'disabled';
-            } else {
-                $type_hideen = '';
-                $type_disable = '';
-            }
-            ?>
             <form class="mb-3" id="form_promotion" action="javascript:void(0)" method="post"
                 enctype="multipart/form-data">
                 <div class="container">
@@ -28,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center mt-2" <?= $type_hideen ?>>
+                <div class="text-center mt-2" id="uploadImage_div">
                     <label for="uploadImage" class="btn btn-block-tool btn-success btn-sm mb-2">อัปโหลดรูป</label>
                     <input type="file" id="uploadImage" name="uploadImage" style="display: none;" accept="image/*"
                         onchange="previewImage(this);">
@@ -76,11 +68,13 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="icheck-orange d-inline">
-                            <input type="radio" class="score-radio" id="answer_3" name="type_sale" value="1">
+                            <input type="radio" class="score-radio" id="answer_3" name="type_sale" value="1"
+                                onclick="change_text()">
                             <label for="answer_3" id="label_answer_3">คิดแบบลบ</label>
                         </div>
                         <div class="icheck-orange d-inline">
-                            <input type="radio" class="score-radio" id="answer_4" name="type_sale" value="2">
+                            <input type="radio" class="score-radio" id="answer_4" name="type_sale" value="2"
+                                onclick="change_text()">
                             <label for="answer_4" id="label_answer_4">คิดแบบเปอร์เซ็นต์</label>
                         </div>
                     </div>
@@ -88,7 +82,8 @@
                 <div class="row">
                     <div class="col-md-6 mt-2">
                         <div class="form-group">
-                            <select class="select2 form-control" style="width: 100%;" id="id_book_cat" name="id_book_cat">
+                            <select class="select2 form-control" style="width: 100%;" id="id_book_cat"
+                                name="id_book_cat" onchange="change_text()">
                             </select>
                         </div>
                     </div>
@@ -118,15 +113,16 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>รายละเอียดโปรโมชั่น</label>
+                            <textarea class="form-control" rows="3" placeholder="กรอกรายละเอียด"
+                                id="detail_promotion_show" name="detail_promotion_show" required></textarea>
                             <textarea class="form-control" rows="3" placeholder="กรอกรายละเอียด" id="detail_promotion"
-                                name="detail_promotion" required <?= $type_disable ?>></textarea>
+                                name="detail_promotion" required hidden></textarea>
                         </div>
                     </div>
                 </div>
                 <input type="text" id="url_route" name="url_route" hidden>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"
-                        <?= $type_hideen ?>></button>
+                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"></button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                 </div>
             </form>
@@ -169,6 +165,46 @@
     }
 </script>
 <script>
+    $('#number_cal').on('input', function () {
+        change_text();
+    });
+    function change_text() {
+        var data_book = <?php echo json_encode($book); ?>;
+        var data_category = <?php echo json_encode($category); ?>;
+        var id_book_cat = document.getElementById('id_book_cat');
+        var type_promotion = document.getElementsByName('type_promotion');
+        var number_cal = document.getElementById('number_cal');
+        var type_sale = document.getElementsByName('type_sale');
+        var num = 0;
+        if (number_cal.value != '') {
+            num = number_cal.value;
+        }
+
+        var text1 = "";
+        var text2 = "";
+
+        if (type_sale[0].checked) {
+            text1 = num + " บาท";
+        } else {
+            text1 = num + "%";
+        }
+
+        if (type_promotion[0].checked) {
+            let mat_book = data_book.find(element_book => element_book.id_book === id_book_cat.value);
+            text2 = " จากหนังสือเรื่อง " + mat_book.name_book;
+        } else {
+            let matcategory = data_category.find(element_category => element_category.id_category === id_book_cat.value);
+            text2 = " จากหมวดหมู่ " + matcategory.name_category;
+        }
+
+        var text = "ส่วนลดราคาเช่า " + text1 + text2;
+
+        // Corrected line using jQuery
+        $('#detail_promotion_show').val(text);
+        $('#detail_promotion').val(text);
+
+    }
+
     function logValue(radioButton) {
         var data_book = <?php echo json_encode($book); ?>;
         var data_category = <?php echo json_encode($category); ?>;
@@ -184,5 +220,6 @@
                 $(".modal-body #id_book_cat").append(newOption);
             })
         }
+        change_text();
     }
 </script>
