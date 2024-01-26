@@ -148,13 +148,17 @@
             var data_category = <?php echo json_encode($category); ?>;
 
             $(".modal-body #id_book_cat").empty();
+            $(".modal-body #id_book_cat_2").val('');
             $(".modal-body #number_cal").val('');
             $(".modal-body #end_date_promotion").val('');
             $(".modal-body #detail_promotion").val('');
             $(".modal-body #detail_promotion_show").val('');
             $(".modal-body #id_book_cat").prop("disabled", false);
+            $(".modal-body #id_book_cat_2").prop("disabled", false);
             $(".modal-body #answer_1").prop("disabled", false);
             $(".modal-body #answer_2").prop("disabled", false);
+            $(".modal-body #answer_1_1").prop("disabled", false);
+            $(".modal-body #answer_2_1").prop("disabled", false);
             $(".modal-body #answer_3").prop("disabled", false);
             $(".modal-body #answer_4").prop("disabled", false);
             $(".modal-body #number_cal").prop("disabled", false);
@@ -165,6 +169,8 @@
                 $(".modal-body #status_check").hide();
                 $(".modal-body #answer_1").prop('checked', true);
                 $(".modal-body #answer_3").prop('checked', true);
+                $(".modal-body #book_cat_2").hide();
+                $(".modal-body #book_cat_1").show();
                 data_book.forEach(element_book_cr => {
                     var newOption = $('<option>').val(element_book_cr.id_book).text(element_book_cr.name_book);
                     $(".modal-body #id_book_cat").append(newOption);
@@ -186,11 +192,16 @@
                 } else {
                     $(".modal-body #answer_6").prop('checked', true);
                 }
-
+                
                 $(".modal-body #id_book_cat").prop("disabled", true);
+                $(".modal-body #id_book_cat_2").prop("disabled", true);
                 $(".modal-body #answer_1").prop("disabled", true);
                 $(".modal-body #answer_2").prop("disabled", true);
+                $(".modal-body #answer_1_1").prop("disabled", true);
+                $(".modal-body #answer_2_1").prop("disabled", true);
                 if (rowData.type_promotion == 1) {
+                    $(".modal-body #book_cat_1").show();
+                    $(".modal-body #book_cat_2").hide();
                     $(".modal-body #answer_1").prop('checked', true);
                     data_book.forEach(element_book_cr => {
                         var newOption = $('<option>').val(element_book_cr.id_book).text(element_book_cr.name_book);
@@ -200,7 +211,9 @@
                             $(".modal-body #id_book_cat").append(newOption);
                         }
                     });
-                } else {
+                } else if (rowData.type_promotion == 2) {
+                    $(".modal-body #book_cat_1").show();
+                    $(".modal-body #book_cat_2").hide();
                     $(".modal-body #answer_2").prop('checked', true);
                     data_category.forEach(element_category_cr => {
                         var newOption = $('<option>').val(element_category_cr.id_category).text(element_category_cr.name_category);
@@ -210,7 +223,18 @@
                             $(".modal-body #id_book_cat").append(newOption);
                         }
                     })
+                } else if (rowData.type_promotion == 3) {
+                    $(".modal-body #book_cat_1").hide();
+                    $(".modal-body #book_cat_2").show();
+                    $(".modal-body #answer_1_1").prop('checked', true);
+                    $(".modal-body #id_book_cat_2").val(rowData.id_book_cat);
+                } else if (rowData.type_promotion == 4) {
+                    $(".modal-body #book_cat_1").hide();
+                    $(".modal-body #book_cat_2").show();
+                    $(".modal-body #answer_2_1").prop('checked', true);
+                    $(".modal-body #id_book_cat_2").val(rowData.id_book_cat);
                 }
+
                 $(".modal-body #answer_3").prop("disabled", true);
                 $(".modal-body #answer_4").prop("disabled", true);
                 if (rowData.type_sale == 1) {
@@ -317,6 +341,10 @@
                                 return "หนังสือ"
                             } else if (data.type_promotion == 2) {
                                 return "หมวดหมู่"
+                            } else if (data.type_promotion == 3) {
+                                return "เมื่อเช่าครบ(ครั้ง)"
+                            } else if (data.type_promotion == 4) {
+                                return "เมื่อเช่ามากกว่า(/เล่ม)"
                             } else {
                                 return "-"
                             }

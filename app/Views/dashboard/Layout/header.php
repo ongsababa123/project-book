@@ -233,7 +233,16 @@
                                     </a>
                                 </li>
                             <?php endif; ?>
-
+                            <?php if (session()->get('type') == '2'): ?>
+                                <li class="nav-item">
+                                    <a href="<?= site_url('/dashboard/activity/index'); ?>" class="nav-link">
+                                        <i class="nav-icon fas fa-people-arrows"></i>
+                                        <p>
+                                            รายงานเข้า-ออก
+                                        </p>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                             <div>
                                 <hr>
                             </div>

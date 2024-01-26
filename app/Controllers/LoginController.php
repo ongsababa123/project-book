@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UserModels;
 use App\Models\DetailsModels;
+use App\Models\ActivityModels;
 
 // use App\Models\CategoryModels;
 
@@ -14,6 +15,8 @@ class LoginController extends BaseController
     {
         $session = session();
         $UserModels = new UserModels();
+        $ActivityModels = new ActivityModels();
+        date_default_timezone_set('Asia/Bangkok');
         $email = $this->request->getVar('email');
         $password = $this->request->getVar('password');
 
@@ -37,6 +40,14 @@ class LoginController extends BaseController
                         'isLoggedIn' => TRUE
                     ];
                     $session->set($ses_data);
+                    $activity_data = [
+                        'id_user' => $data['id_user'],
+                        'type_user' => $data['type_user'],
+                        'type' => '1',
+                        'date_activity' => date('Y/m/d'),
+                        'time_activites' => date('H:i:s')
+                    ];
+                    $ActivityModels->save($activity_data);
                     $response = [
                         'success' => true,
                         'message' => 'เข้าสู่ระบบสำเร็จ',
@@ -97,6 +108,16 @@ class LoginController extends BaseController
     {
 
         $session = session();
+        $ActivityModels = new ActivityModels();
+        date_default_timezone_set('Asia/Bangkok');
+        $activity_data = [
+            'id_user' => $session->get('id'),
+            'type_user' => $session->get('type'),
+            'type' => '2',
+            'date_activity' => date('Y/m/d'),
+            'time_activites' => date('H:i:s')
+        ];
+        $ActivityModels->save($activity_data);
         $session->destroy();
 
         return redirect()->to('/');

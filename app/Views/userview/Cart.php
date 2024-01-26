@@ -269,6 +269,7 @@
         var sum_book_price = 0;
         var id_book_check = '';
         var id_stock_book = '';
+        var selectedid_book = [];
         var id_user = <?= session()->get('id') ?>;
         cart_check.forEach(element => {
             let matcart = cartData.find(element_cart => element_cart.id_cart === element);
@@ -287,6 +288,7 @@
             );
             id_book_check += matcart.bookData[0].id_book + ',';
             id_stock_book += matcart.id_stock_book + ',';
+            selectedid_book.push(matcart.bookData[0].id_book);
 
             sum_rental_price += parseInt(matcart.bookData[0].price);
             sum_book_price += parseInt(matcart.bookData[0].price_book);
@@ -309,7 +311,9 @@
                 <td>${sum_rental_price} บาท</td>
             </tr>`
         );
-        check_promotion(id_user, cart_check, sum_rental_price, function (result) {
+
+
+        check_promotion(id_user, selectedid_book, sum_rental_price, function (result) {
             if (result.text == null) {
                 $("#details_promotion").html("ไม่มีส่วนลดโปรโมชั่น");
             } else {
@@ -323,7 +327,6 @@
                 $(".modal-body #price_book_create").val(sum_rental_price);
                 $(".modal-body #price_deposit_").val(result_deposit);
                 $(".modal-body #sum_price_promotion").val(result.price_promotion);
-
             });
         });
         $(".modal-body #url_route").val("dashboard/history/create");

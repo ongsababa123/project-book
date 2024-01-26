@@ -312,18 +312,21 @@
 
                     if (rowData.status_his == 2) {
                         $(".modal-footer #print").show();
+                        $(".modal-footer #print_return").show();
                         $(".modal-footer #submit_bill").show();
                         $(".modal-footer #submit_inbook").hide();
                         $("#text_book_description_" + data_id_).prop("disabled", false);
                         $(".modal-body .score-radio, #return_date, #sum_late_price, #sum_price_promotion").prop("disabled", false);
                     } else if (rowData.status_his == 3) {
                         $(".modal-footer #print").show();
+                        $(".modal-footer #print_return").show();
                         $(".modal-footer #submit_bill").hide();
                         $(".modal-footer #submit_inbook").hide();
                         $(".modal-body .score-radio, #return_date, #sum_late_price, #sum_price_promotion").prop("disabled", true);
                         $("#text_book_description_" + data_id_).prop("disabled", true);
                     } else {
                         $(".modal-footer #print").hide();
+                        $(".modal-footer #print_return").hide();
                         $(".modal-footer #submit_bill").hide();
                         $(".modal-footer #submit_inbook").show();
                         $(".modal-body .score-radio, #return_date, #sum_late_price, #sum_price_promotion").prop("disabled", false);

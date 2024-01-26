@@ -47,14 +47,10 @@
                             <label>ประเภทโปรโมชั่น</label>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>รูปแบบการคำนวน</label>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="icheck-primary d-inline">
                             <input type="radio" class="score-radio" id="answer_1" name="type_promotion" value="1"
                                 onclick="logValue(this)">
@@ -65,8 +61,41 @@
                                 onclick="logValue(this)">
                             <label for="answer_2" id="label_answer_2">ลดราคาหมวดหมู่</label>
                         </div>
+                        <div class="icheck-primary d-inline">
+                            <input type="radio" class="score-radio" id="answer_1_1" name="type_promotion" value="3"
+                                onclick="logValue(this)">
+                            <label for="answer_1_1" id="label_answer_1_1">เมื่อเช่าครบ(ครั้ง)</label>
+                        </div>
+                        <div class="icheck-primary d-inline">
+                            <input type="radio" class="score-radio" id="answer_2_1" name="type_promotion" value="4"
+                                onclick="logValue(this)">
+                            <label for="answer_2_1" id="label_answer_2_1">เมื่อเช่ามากกว่า(/เล่ม)</label>
+                        </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-2">
+                        <div class="form-group" id="book_cat_1" name="book_cat_1">
+                            <select class="select2 form-control" style="width: 100%;" id="id_book_cat"
+                                name="id_book_cat" onchange="change_text()">
+                            </select>
+                        </div>
+                        <div class="form-group" id="book_cat_2" name="book_cat_2">
+                            <input class="form-control no-arrow" type="number" id="id_book_cat_2" name="id_book_cat_2"
+                                placeholder="กรอกจำนวนเลขที่ต้องการคำนวน" required>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
                     <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>รูปแบบการคำนวน</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
                         <div class="icheck-orange d-inline">
                             <input type="radio" class="score-radio" id="answer_3" name="type_sale" value="1"
                                 onclick="change_text()">
@@ -80,13 +109,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 mt-2">
-                        <div class="form-group">
-                            <select class="select2 form-control" style="width: 100%;" id="id_book_cat"
-                                name="id_book_cat" onchange="change_text()">
-                            </select>
-                        </div>
-                    </div>
                     <div class="col-md-6 mt-2">
                         <div class="form-group">
                             <input class="form-control no-arrow" type="number" id="number_cal" name="number_cal"
@@ -168,16 +190,24 @@
     $('#number_cal').on('input', function () {
         change_text();
     });
+    $('#id_book_cat_2').on('input', function () {
+        change_text();
+    });
     function change_text() {
         var data_book = <?php echo json_encode($book); ?>;
         var data_category = <?php echo json_encode($category); ?>;
         var id_book_cat = document.getElementById('id_book_cat');
+        var id_book_cat_2 = document.getElementById('id_book_cat_2');
         var type_promotion = document.getElementsByName('type_promotion');
         var number_cal = document.getElementById('number_cal');
         var type_sale = document.getElementsByName('type_sale');
         var num = 0;
+        var num1 = 0;
         if (number_cal.value != '') {
             num = number_cal.value;
+        }
+        if (id_book_cat_2.value != '') {
+            num1 = id_book_cat_2.value;
         }
 
         var text1 = "";
@@ -192,9 +222,13 @@
         if (type_promotion[0].checked) {
             let mat_book = data_book.find(element_book => element_book.id_book === id_book_cat.value);
             text2 = " จากหนังสือเรื่อง " + mat_book.name_book;
-        } else {
+        } else if (type_promotion[1].checked) {
             let matcategory = data_category.find(element_category => element_category.id_category === id_book_cat.value);
             text2 = " จากหมวดหมู่ " + matcategory.name_category;
+        } else if (type_promotion[2].checked) {
+            text2 = " เมื่อเช่าครบ " + num1 + " ครั้ง";
+        } else if (type_promotion[3].checked) {
+            text2 = " เมื่อเช่ามากกว่า " + num1 + " เล่ม";
         }
 
         var text = "ส่วนลดราคาเช่า " + text1 + text2;
@@ -209,6 +243,9 @@
         var data_book = <?php echo json_encode($book); ?>;
         var data_category = <?php echo json_encode($category); ?>;
         $(".modal-body #id_book_cat").empty();
+        $(".modal-body #id_book_cat_2").empty();
+        $(".modal-body #book_cat_1").show();
+        $(".modal-body #book_cat_2").hide();
         if (radioButton.value == 1) {
             data_book.forEach(element_book_cr => {
                 var newOption = $('<option>').val(element_book_cr.id_book).text(element_book_cr.name_book);
@@ -219,6 +256,10 @@
                 var newOption = $('<option>').val(element_category_cr.id_category).text(element_category_cr.name_category);
                 $(".modal-body #id_book_cat").append(newOption);
             })
+        } else if (radioButton.value == 3 || radioButton.value == 4) {
+            $(".modal-body #book_cat_1").hide();
+            $(".modal-body #book_cat_2").show();
+
         }
         change_text();
     }

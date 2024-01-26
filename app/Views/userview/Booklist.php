@@ -151,7 +151,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                     }
 
                     // Set status and details_book
-                    $status = ($book['status_book'] == 2) ? 'disabled' : '';
+                    $status = ($book['status_book'] == 2 || $book['status_book'] == 0) ? 'disabled' : '';
                     $details_book = $book['details'];
                     $encoding = mb_detect_encoding($details_book, 'UTF-8,ISO-8859-1');
                     $details_book = mb_convert_encoding($details_book, 'UTF-8', $encoding);

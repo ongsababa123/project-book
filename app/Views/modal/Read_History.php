@@ -307,7 +307,6 @@
         updateTotalPrice();
     });
 </script>
-
 <script>
     function setScore(value) {
         let id_stock_check = value.id.split('_');

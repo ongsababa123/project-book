@@ -102,12 +102,12 @@
                                 }
                             } else {
                                 echo '<div class="bg-danger pb-3 text-center">
-                        <div class="row mt-2">
-                            <div class="col-lg-12 mt-4">
-                                <h6 class="text-white">เกินกำหนดวันรับ</h6>
-                            </div>
-                        </div>
-                    </div>';
+                                        <div class="row mt-2">
+                                            <div class="col-lg-12 mt-4">
+                                                <h6 class="text-white">เกินกำหนดวันรับ</h6>
+                                            </div>
+                                        </div>
+                                    </div>';
                             }
                             ?>
                             <div class="p-4 border mb-3" style="background-color: white;">
@@ -161,11 +161,17 @@
                                 <?php endforeach; ?>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-lg-10 mt-2"></div>
+                                    <div class="col-lg-8 mt-2"></div>
                                     <div class="col-lg-2 mt-2">
                                         <button class="btn btn-primary btn-round" data-toggle="modal" data-target="#details"
                                             onclick="loadmodal(<?= $value['id_history'] ?>, 1)" id="button_modal"
                                             name="button_modal">รายละเอียด</button>
+                                    </div>
+                                    <div class="col-lg-2 mt-2">
+                                        <button type="button" class="btn btn-danger btn-round" name="cancelhis" id="cancelhis"
+                                            onclick="confirm_Alert('ต้องการยกเลิกการเช่าใช่หรือไม่', 'dashboard/history/cancel/<?= $value['id_history'] ?>')">
+                                            <i class="fas fa-store-slash"></i> ยกเลิกการเช่า
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -355,7 +361,8 @@
                                                             </button>                                
                                                         </div>
                                                     </div>
-                                                </div>';}
+                                                </div>';
+                                    }
                                 } else {
                                     echo '  <div class="bg-success pb-3 text-center">
                                                 <div class="row mt-2">
@@ -372,7 +379,8 @@
                                                         </button>                                
                                                     </div>
                                                 </div>
-                                            </div>';}
+                                            </div>';
+                                }
                             } else if ($value['status_his'] === '3') {
                                 echo '<div class="bg-success pb-3 text-center">
                                     <div class="row mt-2">
@@ -406,7 +414,8 @@
                                                 </button>                                
                                             </div>
                                         </div>
-                                    </div>';}?>
+                                    </div>';
+                            } ?>
                             <div id="collapseTab3_<?= $value['id_history'] ?>" class="collapse">
                                 <div class="p-4 border mb-3" style="background-color: white;">
                                     <?php $id_books = explode(',', $value['id_book']); ?>
@@ -672,5 +681,55 @@
             }
         });
     }
-
+</script>
+<script>
+    function confirm_Alert(text, url) {
+        Swal.fire({
+            title: text,
+            icon: 'question',
+            showCancelButton: true,
+            cancelButtonText: "ยกเลิก",
+            confirmButtonColor: "#28a745",
+            confirmButtonText: "ตกลง",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '<?= base_url() ?>' + url,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    beforeSend: function () {
+                        // Show loading indicator here
+                        var loadingIndicator = Swal.fire({
+                            title: 'กําลังดําเนินการ...',
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                        });
+                    },
+                }).done(function (response) {
+                    Swal.close();
+                    if (response.success) {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'success',
+                            showConfirmButton: false
+                        });
+                        setTimeout(() => {
+                            if (response.reload) {
+                                window.location.reload();
+                            }
+                        }, 2000);
+                    } else {
+                        Swal.fire({
+                            title: response.message,
+                            icon: 'error',
+                            confirmButtonText: "ตกลง",
+                            showConfirmButton: true
+                        });
+                    }
+                });
+            }
+        });
+    }
 </script>
