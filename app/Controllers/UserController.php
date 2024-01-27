@@ -60,7 +60,7 @@ class UserController extends BaseController
         $email = \Config\Services::email();
 
         $email->setTo($to);
-        $email->setFrom($to, 'Bang book shop');
+        $email->setFrom($to, 'Bang Lem Shop');
         #send mail for reset password
         $email->setSubject("รหัสผ่านสำรอง");
         // $email->setMessage('รหัสผ่านสำรองของคุณคือ ' . $number_random . ' ใช้สำหรับการเข้าสู่ระบบ' . '<br>');
@@ -116,7 +116,7 @@ class UserController extends BaseController
                     $this->sendMail($data, $number_random);
                     $response = [
                         'success' => true,
-                        'message' => 'สร้างข้อมูลสำเร็จรหัสผ่านสำรองจะถูกส่งไปที่อีเมล์ของคุณ',
+                        'message' => 'สร้างข้อมูลสำเร็จรหัสผ่านสำรองจะถูกส่งไปที่อีเมลของคุณ',
                         'reload' => false,
                     ];
                 } else {
@@ -171,7 +171,7 @@ class UserController extends BaseController
             if ($password === '' || $password === null) {
                 $response = [
                     'success' => true,
-                    'message' => 'อัปเดตข้อมูลสำเร็จ',
+                    'message' => 'อัพเดทข้อมูลสำเร็จ',
                     'reload' => true,
                 ];
             } else {
@@ -185,7 +185,7 @@ class UserController extends BaseController
                 $this->sendMail($data, $number_random);
                 $response = [
                     'success' => true,
-                    'message' => 'อัปเดตข้อมูลสำเร็จรหัสผ่านสำรองจะถูกส่งไปที่อีเมล์ของคุณ',
+                    'message' => 'อัพเดทข้อมูลสำเร็จรหัสผ่านสำรองจะถูกส่งไปที่อีเมลของคุณ',
                     'reload' => true,
                 ];
             }
@@ -248,7 +248,7 @@ class UserController extends BaseController
             if ($check) {
                 $response = [
                     'success' => true,
-                    'message' => 'อัปเดตข้อมูลสำเร็จ',
+                    'message' => 'อัพเดทข้อมูลสำเร็จ',
                     'reload' => true,
                 ];
             } else {

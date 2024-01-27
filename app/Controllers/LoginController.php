@@ -89,7 +89,7 @@ class LoginController extends BaseController
                 } else {
                     $response = [
                         'success' => false,
-                        'message' => 'อีเมล์หรือรหัสผ่านไม่ถูกต้อง',
+                        'message' => 'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
                         'reload' => false,
                     ];
                 }
@@ -97,7 +97,7 @@ class LoginController extends BaseController
         } else {
             $response = [
                 'success' => false,
-                'message' => 'อีเมล์หรือรหัสผ่านไม่ถูกต้อง',
+                'message' => 'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
                 'reload' => false,
             ];
         }
@@ -148,7 +148,7 @@ class LoginController extends BaseController
                 if ($updated) {
                     $response = [
                         'success' => true,
-                        'message' => 'อัปเดตข้อมูลสำเร็จรหัสผ่านสำรองจะถูกส่งไปที่อีเมล์ของคุณ',
+                        'message' => 'อัพเดทข้อมูลสำเร็จรหัสผ่านสำรองจะถูกส่งไปที่อีเมลของคุณ',
                         'reload' => true,
                     ];
                 } else {
@@ -186,20 +186,20 @@ class LoginController extends BaseController
             if ($check) {
                 $response = [
                     'success' => true,
-                    'message' => 'กรุณาตรวจสอบอีเมล์ของคุณเพื่อเปลี่ยนรหัสผ่าน',
+                    'message' => 'กรุณาตรวจสอบอีเมลของคุณเพื่อเปลี่ยนรหัสผ่าน',
                     'reload' => false,
                 ];
             } else {
                 $response = [
                     'success' => false,
-                    'message' => 'อีเมล์ไม่ถูกต้อง',
+                    'message' => 'อีเมลไม่ถูกต้อง',
                     'reload' => false,
                 ];
             }
         } else {
             $response = [
                 'success' => false,
-                'message' => 'อีเมล์ไม่ถูกต้อง',
+                'message' => 'อีเมลไม่ถูกต้อง',
                 'reload' => false,
                 'data' => $data
             ];
@@ -216,7 +216,7 @@ class LoginController extends BaseController
 
         $email = \Config\Services::email();
         $email->setTo($to);
-        $email->setFrom($to, 'Bang book shop');
+        $email->setFrom($to, 'Bang Lem Shop');
 
         #send mail for reset password
         $email->setSubject("รีเซ็ตรหัสผ่าน");
@@ -244,7 +244,7 @@ class LoginController extends BaseController
         $email = \Config\Services::email();
 
         $email->setTo($to);
-        $email->setFrom($to, 'Bang book shop');
+        $email->setFrom($to, 'Bang Lem Shop');
         #send mail for reset password
         $email->setSubject("รหัสผ่านสำรอง");
         // $email->setMessage('รหัสผ่านสำรองของคุณคือ ' . $number_random . ' ใช้สำหรับการเข้าสู่ระบบ' . '<br>');

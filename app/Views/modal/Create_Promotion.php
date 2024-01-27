@@ -82,7 +82,7 @@
                         </div>
                         <div class="form-group" id="book_cat_2" name="book_cat_2">
                             <input class="form-control no-arrow" type="number" id="id_book_cat_2" name="id_book_cat_2"
-                                placeholder="กรอกจำนวนเลขที่ต้องการคำนวน" required>
+                                placeholder="กรอกจำนวนเลขที่ต้องการคำนวน">
                         </div>
                     </div>
                 </div>
@@ -259,6 +259,7 @@
         } else if (radioButton.value == 3 || radioButton.value == 4) {
             $(".modal-body #book_cat_1").hide();
             $(".modal-body #book_cat_2").show();
+
 
         }
         change_text();

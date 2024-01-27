@@ -27,7 +27,7 @@
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-block-tool btn-success btn-sm"
                                         data-toggle="modal" data-target="#modal-default"
-                                        onclick="load_modal(1)">สร้างสมาชิก</button>
+                                        onclick="load_modal(1)">เพิ่มผู้ใช้งาน</button>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
                                     </button>
@@ -201,8 +201,7 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             const encodedRowData = encodeURIComponent(JSON.stringify(row));
-                            return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-user-edit"></i> แก้ไขข้อมูล</button>
-                            <button type="button" class="btn btn-danger" onclick="confirm_Alert('ต้องการลบข้อมูลใช่หรือไม่ ?' , 'dashboard/employee/delete/${data.id_user}')"><i class="fas fa-trash"></i> ลบข้อมูล</button>`;
+                            return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"><i class="fas fa-user-edit"></i> แก้ไขข้อมูล</button>`;
                         }
                     },
                 ]
@@ -251,7 +250,7 @@
                                 mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้อง.' + '<br><hr/>'
                             }
                             if (response.validator.email === "The email field must contain a unique value.") {
-                                mes += 'อีเมล์นี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
+                                mes += 'อีเมลนี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
                             }
                             if (response.validator.name) {
                                 mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';

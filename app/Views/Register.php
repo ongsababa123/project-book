@@ -112,8 +112,8 @@
                                         required>
                                 </div>
                             </div>
-                            <label>อีเมล์</label>
-                            <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email"
+                            <label>อีเมล</label>
+                            <input type="text" class="form-control" placeholder="อีเมล" id="email" name="email"
                                 required>
                             <label>เบอร์โทรศัพท์</label>
                             <input id="phone" name="phone" class="no-arrow form-control"
@@ -233,7 +233,7 @@
                                 mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้อง.' + '<br><hr/>'
                             }
                             if (response.validator.email === "The email field must contain a unique value.") {
-                                mes += 'อีเมล์นี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
+                                mes += 'อีเมลนี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
                             }
                             if (response.validator.name) {
                                 mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';

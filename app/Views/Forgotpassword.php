@@ -84,8 +84,8 @@
                         </div>
                         <form id="forgot_password" action="javascript:void(0)" method="post"
                             enctype="multipart/form-data">
-                            <label>อีเมล์</label>
-                            <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email"
+                            <label>อีเมล</label>
+                            <input type="text" class="form-control" placeholder="อีเมล" id="email" name="email"
                                 required>
                             <button type="submit" class="btn btn-warning btn-block btn-round bg-warning" name="submit"
                                 value="Submit" id="submit">ยืนยัน</button>

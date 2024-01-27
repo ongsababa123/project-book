@@ -221,14 +221,14 @@ class PromotionController extends BaseController
                                 if ($data['book'][0]['id_book'] == $value_promotion['id_book_cat']) {
                                     $text .= "ส่วนลดราคาเช่า " . $value_promotion['number_cal'] . "% จากหนังสือ " . $data['book'][0]['name_book'] . '<br>';
                                     $sumid_promotion .= $value_promotion['id_promotion'] . ',';
-                                    $price_promotion += $originalPrice - ($originalPrice * $value_promotion['number_cal'] / 100);
+                                    $price_promotion += $originalPrice * $value_promotion['number_cal'] / 100;
 
                                 }
                             } else if ($value_promotion['type_promotion'] == '2') {
                                 if ($data['book'][0]['category_id'] == $value_promotion['id_book_cat']) {
                                     $text .= "ส่วนลดราคาเช่า " . $value_promotion['number_cal'] . "% จากหมวดหมู่ " . $data['category'][0]['name_category'] . '<br>';
                                     $sumid_promotion .= $value_promotion['id_promotion'] . ',';
-                                    $price_promotion += $originalPrice - ($originalPrice * $value_promotion['number_cal'] / 100);
+                                    $price_promotion += $originalPrice * $value_promotion['number_cal'] / 100;
                                 }
                             }
                         }
@@ -257,13 +257,13 @@ class PromotionController extends BaseController
                             if ($countHis >= $value_promotion['id_book_cat']) {
                                 $text .= $value_promotion['details'] . '<br>';
                                 $sumid_promotion .= $value_promotion['id_promotion'] . ',';
-                                $price_promotion += $sum_price - ($sum_price * $value_promotion['number_cal'] / 100);
+                                $price_promotion += $sum_price * $value_promotion['number_cal'] / 100;
                             }
                         } else if ($value_promotion['type_promotion'] == '4') {
                             if (count($sum_id_book_array) >= $value_promotion['id_book_cat']) {
                                 $text .= $value_promotion['details'] . '<br>';
                                 $sumid_promotion .= $value_promotion['id_promotion'] . ',';
-                                $price_promotion += $sum_price - ($sum_price * $value_promotion['number_cal'] / 100);
+                                $price_promotion += $sum_price * $value_promotion['number_cal'] / 100;
                             }
                         }
                     }

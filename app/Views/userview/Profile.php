@@ -51,7 +51,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6 ml-auto mr-auto text-center">
-                    <p>อีเมล์ :
+                    <p>อีเมล :
                         <?= $user_data[0]['email_user'] ?>
                     </p>
                     <p>เบอร์โทรศัพท์ :
@@ -101,8 +101,8 @@
                             value="<?= $user_data[0]['phone'] ?>" required/>
                     </div>
                     <div class="form-group">
-                        <label>อีเมล์</label>
-                        <input type="text" placeholder="กรอกอีเมล์ของคุณ" class="form-control" id="email" name="email"
+                        <label>อีเมล</label>
+                        <input type="text" placeholder="กรอกอีเมลของคุณ" class="form-control" id="email" name="email"
                             value="<?= $user_data[0]['email_user'] ?>" required />
                     </div>
 
@@ -262,7 +262,7 @@
                             mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้อง.' + '<br><hr/>'
                         }
                         if (response.validator.email === "The email field must contain a unique value.") {
-                            mes += 'อีเมล์นี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
+                            mes += 'อีเมลนี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
                         }
                         if (response.validator.name) {
                             mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';

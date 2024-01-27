@@ -29,7 +29,7 @@ class SettingController extends BaseController
         if ($check) {
             $response = [
                 'success' => true,
-                'message' => 'อัปเดตข้อมูลสำเร็จ',
+                'message' => 'อัพเดทข้อมูลสำเร็จ',
                 'reload' => true,
             ];
         } else {
@@ -53,7 +53,7 @@ class SettingController extends BaseController
         if ($check) {
             $response = [
                 'success' => true,
-                'message' => 'อัปเดตข้อมูลสำเร็จ',
+                'message' => 'อัพเดทข้อมูลสำเร็จ',
                 'reload' => true,
             ];
         } else {

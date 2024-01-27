@@ -257,7 +257,7 @@
                 $(".modal-body #detail_promotion_show").val(rowData.details);
 
                 $(".modal-header #title_modal").text("แก้ไขข้อมูลโปรโมชั่น");
-                $(".modal-footer #submit").text("แก้ไขข้อมูลโปรโมชั่น");
+                $(".modal-footer #submit").text("อัพเดทข้อมูล");
                 $(".modal-body #url_route").val("dashboard/promotion/edit/" + rowData.id_promotion);
 
             }

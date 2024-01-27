@@ -45,9 +45,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="email">อีเมล์</label>
+                    <label for="email">อีเมล</label>
                     <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
-                        placeholder="อีเมล์ของคุณ" required>
+                        placeholder="อีเมลของคุณ" required>
                 </div>
                 <div class="form-group">
                     <label for="details">ส่งคำติชมหรือเสนอคำแนะนำเพิ่มเติม</label>

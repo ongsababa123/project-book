@@ -175,7 +175,7 @@ INSERT INTO `details_table` (`id_details`, `text_details`) VALUES
 
 CREATE TABLE `history_book_table` (
   `id_history` int(10) NOT NULL COMMENT 'ไอดีประวัติการเช่า',
-  `id_user` int(10) NOT NULL COMMENT 'อีเมล์ user',
+  `id_user` int(10) NOT NULL COMMENT 'อีเมล user',
   `id_book` varchar(10) NOT NULL COMMENT 'ไอดีหนังสือ',
   `id_stock_book` varchar(100) NOT NULL,
   `rental_date` date NOT NULL COMMENT 'วันที่เช่า',
@@ -249,7 +249,7 @@ CREATE TABLE `stock_book_table` (
 
 CREATE TABLE `user_table` (
   `id_user` int(11) NOT NULL,
-  `email_user` varchar(255) NOT NULL COMMENT 'อีเมล์ user',
+  `email_user` varchar(255) NOT NULL COMMENT 'อีเมล user',
   `name` varchar(255) NOT NULL COMMENT 'ชื่อ user',
   `lastname` varchar(255) NOT NULL COMMENT 'สกุล user',
   `phone` varchar(10) NOT NULL COMMENT 'เบอร์โทร',

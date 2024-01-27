@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `user_table` (
   `id_user` int NOT NULL,
-  `email_user` varchar(255) NOT NULL COMMENT 'อีเมล์ user',
+  `email_user` varchar(255) NOT NULL COMMENT 'อีเมล user',
   `name` varchar(255) NOT NULL COMMENT 'ชื่อ user',
   `lastname` varchar(255) NOT NULL COMMENT 'สกุล user',
   `phone` varchar(10) NOT NULL COMMENT 'เบอร์โทร',

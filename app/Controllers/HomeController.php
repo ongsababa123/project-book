@@ -256,10 +256,10 @@ class HomeController extends BaseController
 
         $email = \Config\Services::email();
         $email->setTo('bookbanglem31@gmail.com');
-        $email->setFrom('bookbanglem31@gmail.com', 'Bang book shop');
+        $email->setFrom('bookbanglem31@gmail.com', 'Bang Lem Shop');
 
         $email->setSubject("ความคิดเห็น ข้อเสนอแนะ และรายงานปัญหา");
-        $email->setMessage('อีเมล์ผู้ส่ง' . '<br>' . $to . "<br>" . 'ชื่อผู้ส่ง ' . $name . ' ' . $lastname . "<br>" . 'รายละเอียด' . '<br> ' . $message);
+        $email->setMessage('อีเมลผู้ส่ง' . '<br>' . $to . "<br>" . 'ชื่อผู้ส่ง ' . $name . ' ' . $lastname . "<br>" . 'รายละเอียด' . '<br> ' . $message);
 
         if ($email->send()) {
             $response = [

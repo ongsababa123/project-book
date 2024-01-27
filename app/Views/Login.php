@@ -86,8 +86,8 @@
                         </div>
                         <form class="mb-3" id="login_form" action="javascript:void(0)" method="post"
                             enctype="multipart/form-data">
-                            <label>อีเมล์</label>
-                            <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email"
+                            <label>อีเมล</label>
+                            <input type="text" class="form-control" placeholder="อีเมล" id="email" name="email"
                                 required>
                             <label>รหัสผ่าน</label>
                             <input type="password" class="form-control" placeholder="รหัสผ่าน" id="password"

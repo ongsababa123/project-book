@@ -290,7 +290,7 @@
                                 mes += 'ช่องอีเมลจะต้องมีที่อยู่อีเมลที่ถูกต้อง.' + '<br><hr/>'
                             }
                             if (response.validator.email === "The email field must contain a unique value.") {
-                                mes += 'อีเมล์นี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
+                                mes += 'อีเมลนี้ถูกสมัครสมาชิกแล้ว' + '<br><hr/>'
                             }
                             if (response.validator.name) {
                                 mes += 'ชื่อต้องมีอย่างน้อย 2 ตัว.' + '<br><hr/>';

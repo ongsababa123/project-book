@@ -85,9 +85,9 @@
                         </div>
                         <form class="mb-3" id="forgotpassword_form" action="javascript:void(0)" method="post"
                             enctype="multipart/form-data">
-                            <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email"
+                            <input type="text" class="form-control" placeholder="อีเมล" id="email" name="email"
                                 value="<?= $email ?>" hidden>
-                            <input type="textarea" class="form-control" placeholder="อีเมล์" id="pin" name="pin"
+                            <input type="textarea" class="form-control" placeholder="อีเมล" id="pin" name="pin"
                                 value="<?= $pin ?>" hidden>
                             <label>รหัสผ่าน</label>
                             <input type="password" class="form-control" placeholder="รหัสผ่าน" name="password"

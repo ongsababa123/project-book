@@ -233,7 +233,7 @@ class HistoryController extends BaseController
             if ($status_his == 2 || $status_his == 1) {
                 $response = [
                     'success' => true,
-                    'message' => 'อัปเดตข้อมูลสำเร็จ',
+                    'message' => 'อัพเดทข้อมูลสำเร็จ',
                     'reload' => false,
                     'button' => true,
                     'status_his' => $status_his,
@@ -241,7 +241,7 @@ class HistoryController extends BaseController
             } else {
                 $response = [
                     'success' => true,
-                    'message' => 'อัปเดตข้อมูลสำเร็จ',
+                    'message' => 'อัพเดทข้อมูลสำเร็จ',
                     'reload' => true,
                 ];
             }
@@ -257,7 +257,7 @@ class HistoryController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    //อัปเดตสถานะ กำลังเช่า
+    //อัพเดทสถานะ กำลังเช่า
     public function update_status_his()
     {
         $HistoryModels = new HistoryModels();
@@ -279,7 +279,7 @@ class HistoryController extends BaseController
         if ($check) {
             $response = [
                 'success' => true,
-                'message' => 'อัปเดตข้อมูลสำเร็จ',
+                'message' => 'อัพเดทข้อมูลสำเร็จ',
                 'reload' => true,
             ];
         } else {
@@ -293,7 +293,7 @@ class HistoryController extends BaseController
         return $this->response->setJSON($response);
     }
 
-    //อัปเดตสถานะ ยืนยันการคืน
+    //อัพเดทสถานะ ยืนยันการคืน
     public function submit_his()
     {
         helper(['form']);

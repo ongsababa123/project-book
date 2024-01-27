@@ -51,8 +51,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>อีเมล์</label>
-                    <input type="email" class="form-control" placeholder="กรอกอีเมล์" id="email" name="email" required>
+                    <label>อีเมล</label>
+                    <input type="email" class="form-control" placeholder="กรอกอีเมล" id="email" name="email" required>
                 </div>
                 <div class="form-group">
                     <label>เบอร์โทรศัพท์</label>
