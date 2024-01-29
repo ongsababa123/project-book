@@ -40,6 +40,17 @@ class BookController extends BaseController
         echo view('dashboard/stock_book_all', $data);
     }
 
+    public function index_book_stock_all()
+    {
+        $BookModels = new BookModels();
+
+        // ดึงข้อมูลเฉพาะ name_book และ id_book
+        $data['bookData'] = $BookModels->select('name_book, id_book')->findAll();
+
+        echo view('dashboard/layout/header');
+        echo view('dashboard/book_stock_book_all', $data);
+    }
+
 
     public function create_book()
     {
@@ -391,38 +402,95 @@ class BookController extends BaseController
         $BookModels = new BookModels();
         $StockBookModels = new StockBookModels();
 
-        $limit = $this->request->getVar('length');
-        $start = $this->request->getVar('start');
-        $draw = $this->request->getVar('draw');
-
-
-
-        $totalRecords = $StockBookModels->countAllResults();
-
-        $recordsFiltered = $totalRecords;
-
-
+        $count_all_book = $BookModels->countAllResults();
+        $count_all_stock = $StockBookModels->countAllResults();
         $ready_book = $StockBookModels->where('status_stock', 1)->countAllResults();
         $notready_book = $StockBookModels->where('status_stock', 0)->countAllResults();
         $reserve_book = $StockBookModels->where('status_stock', 6)->countAllResults();
         $rental_book = $StockBookModels->where('status_stock', 2)->countAllResults();
         $lost_book = $StockBookModels->where('status_stock', 3)->countAllResults();
         $damaged_book = $StockBookModels->where('status_stock', 4)->countAllResults();
+        $not_use_book = $StockBookModels->where('status_stock', 5)->countAllResults();
         $data = [
+            'count_all_book' => $count_all_book,
+            'count_all_stock' => $count_all_stock,
             'notready_book' => $notready_book,
             'ready_book' => $ready_book,
             'reserve_book' => $reserve_book,
             'rental_book' => $rental_book,
             'lost_book' => $lost_book,
             'damaged_book' => $damaged_book,
+            'not_use_book' => $not_use_book,
         ];
 
 
+        $response = [
+            'data' => $data,
+        ];
+
+        return $this->response->setJSON($response);
+    }
+
+    public function get_all_book_and_count_all_type()
+    {
+        $BookModels = new BookModels();
+        $StockBookModels = new StockBookModels();
+
+        $limit = $this->request->getVar('length');
+        $start = $this->request->getVar('start');
+        $draw = $this->request->getVar('draw');
+        $searchValue = $this->request->getVar('search')['value'];
+
+        if (!empty($searchValue)) {
+            $BookModels->groupStart()
+                ->like('name_book', $searchValue) // แทน 'column1', 'column2', ... ด้วยชื่อคอลัมน์ที่คุณต้องการค้นหา
+                ->orLike('price', $searchValue)
+                ->orLike('price_book', $searchValue)
+                // เพิ่มคอลัมน์เพิ่มเติมตามที่ต้องการค้นหา
+                ->groupEnd();
+        }
+
+        $totalRecords = $BookModels->countAllResults();
+        $recordsFiltered = $totalRecords;
+
+        if (!empty($searchValue)) {
+            $BookModels->groupStart()
+                ->like('name_book', $searchValue) // แทน 'column1', 'column2', ... ด้วยชื่อคอลัมน์ที่คุณต้องการค้นหา
+                ->orLike('price', $searchValue)
+                ->orLike('price_book', $searchValue)
+                // เพิ่มคอลัมน์เพิ่มเติมตามที่ต้องการค้นหา
+                ->groupEnd();
+        }
+
+        $data = $BookModels->findAll($limit, $start);
+
+        foreach ($data as $key => $value) {
+            $count_all_stock = $StockBookModels->where('id_book', $value['id_book'])->countAllResults();
+            $ready_book = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 1)->countAllResults();
+            $notready_book = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 0)->countAllResults();
+            $reserve_book = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 6)->countAllResults();
+            $rental_book = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 2)->countAllResults();
+            $lost_book = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 3)->countAllResults();
+            $damaged_book = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 4)->countAllResults();
+            $not_use_book = $StockBookModels->where('id_book', $value['id_book'])->where('status_stock', 5)->countAllResults();
+            $numver = [
+                'count_all_stock' => $count_all_stock,
+                'notready_book' => $notready_book,
+                'ready_book' => $ready_book,
+                'reserve_book' => $reserve_book,
+                'rental_book' => $rental_book,
+                'lost_book' => $lost_book,
+                'damaged_book' => $damaged_book,
+                'not_use_book' => $not_use_book,
+            ];
+            $data[$key]['stock_check'] = $numver;
+        }
         $response = [
             'draw' => intval($draw),
             'recordsTotal' => $totalRecords,
             'recordsFiltered' => $recordsFiltered,
             'data' => $data,
+            'searchValue' => $searchValue,
         ];
 
         return $this->response->setJSON($response);

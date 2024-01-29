@@ -80,7 +80,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <table id="table_book_stock" class="table table-hover">
+                                        <table id="table_book_stock" class="table table-hover table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>ลำดับ</th>

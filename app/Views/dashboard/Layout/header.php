@@ -201,6 +201,14 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/dashboard/book/book_stock_all/index'); ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-clipboard-list"></i>
+                                    <p>
+                                        ภาพรวมคลังหนังสือ
+                                    </p>
+                                </a>
+                            </li>
                             <div>
                                 <hr>
                             </div>

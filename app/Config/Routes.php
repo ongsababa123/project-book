@@ -85,7 +85,12 @@ $routes->group("dashboard/book/", ['filter' => ['CartCheck', 'HistoryCheck', 'Pr
     $routes->match(['get', 'post'], 'stock/getdata/(:num)', 'BookController::get_data_table_stock/$1');  //getData
     $routes->match(['get', 'post'], 'stock/create/(:num)', 'BookController::create_stock/$1');  //create
     $routes->match(['get', 'post'], 'stock/changestatus/(:num)/(:num)', 'BookController::change_status_stock/$1/$2');  //edit
-    $routes->match(['get', 'post'], 'stock/getdata/countall/', 'BookController::get_data_count_all/');  //edit
+    $routes->match(['get', 'post'], 'stock/getdata/countall', 'BookController::get_data_count_all/');  //edit
+
+    $routes->match(['get', 'post'], 'book_stock_all/index', 'BookController::index_book_stock_all', ['filter' => ['authGuard', 'ISLogin']]); //display
+    $routes->match(['get', 'post'], 'book_stock_all/getdata', 'BookController::get_all_book_and_count_all_type');  //getData
+
+
 
 });
 
