@@ -1,4 +1,4 @@
-<title>Profile</title>
+<title>ข้อมูลส่วนตัว</title>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 
 <style>
@@ -76,7 +76,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h3 class="modal-title text-center">แก้ไขข้อมูล</h3>
+                <h3 class="modal-title text-center">แก้ไขข้อมูลส่วนตัว</h3>
             </div>
             <div class="modal-body">
                 <form class="mb-3" id="form_user" action="javascript:void(0)" method="post"

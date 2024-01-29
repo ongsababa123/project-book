@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2024 at 05:00 PM
+-- Generation Time: Jan 29, 2024 at 11:15 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -35,6 +35,15 @@ CREATE TABLE `activity_log_table` (
   `date_activity` date NOT NULL,
   `time_activites` time DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `activity_log_table`
+--
+
+INSERT INTO `activity_log_table` (`id_activity`, `id_user`, `type_user`, `type`, `date_activity`, `time_activites`) VALUES
+(1, 22, 4, 1, '2024-01-29', '09:05:37'),
+(2, 22, 4, 2, '2024-01-29', '09:10:34'),
+(3, 1, 2, 1, '2024-01-29', '09:10:43');
 
 -- --------------------------------------------------------
 
@@ -241,6 +250,17 @@ CREATE TABLE `stock_book_table` (
   `status_stock` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `stock_book_table`
+--
+
+INSERT INTO `stock_book_table` (`id_stock`, `id_book`, `id_number_`, `description`, `status_stock`) VALUES
+(1, 1, '1-7-516685', NULL, 1),
+(2, 1, '1-7-541519', NULL, 1),
+(3, 1, '1-7-697831', NULL, 1),
+(4, 1, '1-7-976301', NULL, 1),
+(5, 1, '1-7-455878', NULL, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -272,7 +292,8 @@ INSERT INTO `user_table` (`id_user`, `email_user`, `name`, `lastname`, `phone`, 
 (22, 'bookbanglem2@gmail.com', 'sadasd', 'asdasdas', '1234567891', '$2y$10$sRzkNCjFnRHpvEdQIfYJmuTR/ZsTgCMwCzp7jwa/KjG3lufv9wmEi', '$2y$10$v4zJ.DZ4JUm7DOBcZCD2weCW55cYJdzb9MXz32DQ6sAUuGqSg9/IC', 1, 1, 4),
 (23, 'bookbanglem3@gmail.com', 'xxxx', 'xxxx', '1234567891', '$2y$10$J7Lxlokntyv2qbaGfrViKu12lz0JFP6E8MsSEiQw/iZ0jXwze7VBS', '$2y$10$s7PaTEfbyoOpZdNwFbrBnORMTvxwFNwve5epzwNI6nHMiwLTmDuqS', 1, 1, 4),
 (24, '6239010001@p-vec.ac.th', 'pvec', 'pvec', '1234567891', '$2y$10$eEupZ9.luZyX37GcTtFf6uGQuPQkp6WIKg3ixnWFlv5TZQxeDtJHC', '$2y$10$dohNMqBWkke1dYGiNbVOchyjAEjeJujzSkranM7povXv4C5R', 1, 1, 4),
-(29, 's6406021421171@email.kmutnb.ac.th', 'jirayut', 'บัณฑิต', '1234567891', '$2y$10$C.mn5gEo7iGmhXlN/PaTiOkpexCEpTOiMeUAR6N5zslifKBmfuwKq', '$2y$10$gAsVBbk63oAKCusMwLBD3eaqEbUUrpxNMSwZPWcmDZR4GrbMWdfui', 1, 3, 4);
+(29, 's6406021421171@email.kmutnb.ac.th', 'jirayut', 'บัณฑิต', '1234567891', '$2y$10$C.mn5gEo7iGmhXlN/PaTiOkpexCEpTOiMeUAR6N5zslifKBmfuwKq', '$2y$10$gAsVBbk63oAKCusMwLBD3eaqEbUUrpxNMSwZPWcmDZR4GrbMWdfui', 1, 3, 4),
+(30, 'asdasdasda@gmail.com', 'jriayut', 'bandit', '0972654762', '$2y$10$Fb4zZejH0Dv5TeeOi/diquLdRWJs/oyM10SSq/ZcpruvWqA6PQce2', '259424', 1, 1, 3);
 
 --
 -- Indexes for dumped tables
@@ -352,7 +373,7 @@ ALTER TABLE `user_table`
 -- AUTO_INCREMENT for table `activity_log_table`
 --
 ALTER TABLE `activity_log_table`
-  MODIFY `id_activity` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_activity` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `book_table`
@@ -406,13 +427,13 @@ ALTER TABLE `promotion_table`
 -- AUTO_INCREMENT for table `stock_book_table`
 --
 ALTER TABLE `stock_book_table`
-  MODIFY `id_stock` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_stock` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_table`
 --
 ALTER TABLE `user_table`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

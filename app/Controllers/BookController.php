@@ -110,21 +110,21 @@ class BookController extends BaseController
         $BookModels = new BookModels();
         $quantity = $this->request->getVar('quantity');
         $response = []; // Initialize the response array outside the loop
-    
+
         for ($i = 0; $i < $quantity; $i++) {
             do {
                 $number_random = mt_rand(100000, 999999);
                 $id_number_ = $this->generateIdNumber($id_book, $number_random, $BookModels);
                 $check = $StockBookModels->where('id_number_', $id_number_)->first();
             } while ($check); // Keep generating until a unique id_number_ is found
-    
+
             $data = [
                 'id_book' => $id_book,
                 'id_number_' => $id_number_,
-                'status_stock' => 0
+                'status_stock' => 1
             ];
             $check = $StockBookModels->save($data);
-    
+
             if (!$check) {
                 $response = [
                     'success' => false,
@@ -134,7 +134,7 @@ class BookController extends BaseController
                 break; // Exit the loop if an error occurs during saving
             }
         }
-    
+
         if (empty($response)) {
             $response = [
                 'success' => true,
@@ -142,16 +142,16 @@ class BookController extends BaseController
                 'reload' => true,
             ];
         }
-    
+
         return $this->response->setJSON($response);
     }
-    
+
     private function generateIdNumber($id_book, $number_random, $BookModels)
     {
         $data_book = $BookModels->where('id_book', $id_book)->find();
         return $data_book[0]['id_book'] . '-' . ($data_book[0]['category_id'] . '-' . $number_random);
     }
-    
+
 
     function change_status_stock_function($id_stock = null, $status = null, $bypass_edit = null)
     {
@@ -381,6 +381,48 @@ class BookController extends BaseController
             'recordsFiltered' => $recordsFiltered,
             'data' => $data,
             'searchValue' => $searchValue,
+        ];
+
+        return $this->response->setJSON($response);
+    }
+
+    public function get_data_count_all()
+    {
+        $BookModels = new BookModels();
+        $StockBookModels = new StockBookModels();
+
+        $limit = $this->request->getVar('length');
+        $start = $this->request->getVar('start');
+        $draw = $this->request->getVar('draw');
+
+
+
+        $totalRecords = $StockBookModels->countAllResults();
+
+        $recordsFiltered = $totalRecords;
+
+
+        $ready_book = $StockBookModels->where('status_stock', 1)->countAllResults();
+        $notready_book = $StockBookModels->where('status_stock', 0)->countAllResults();
+        $reserve_book = $StockBookModels->where('status_stock', 6)->countAllResults();
+        $rental_book = $StockBookModels->where('status_stock', 2)->countAllResults();
+        $lost_book = $StockBookModels->where('status_stock', 3)->countAllResults();
+        $damaged_book = $StockBookModels->where('status_stock', 4)->countAllResults();
+        $data = [
+            'notready_book' => $notready_book,
+            'ready_book' => $ready_book,
+            'reserve_book' => $reserve_book,
+            'rental_book' => $rental_book,
+            'lost_book' => $lost_book,
+            'damaged_book' => $damaged_book,
+        ];
+
+
+        $response = [
+            'draw' => intval($draw),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data,
         ];
 
         return $this->response->setJSON($response);

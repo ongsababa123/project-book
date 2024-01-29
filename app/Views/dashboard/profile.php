@@ -1,4 +1,4 @@
-<title>โปรไฟล์</title>
+<title>ข้อมูลส่วนตัว</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
 
 
@@ -8,12 +8,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>โปรไฟล์</h1>
+                        <h1>ข้อมูลส่วนตัว</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
-                            <li class="breadcrumb-item active">โปรไฟล์</li>
+                            <li class="breadcrumb-item active">ข้อมูลส่วนตัว</li>
                         </ol>
                     </div>
                 </div>
@@ -116,8 +116,8 @@
                 $('#changePasswordCheckbox').show();
                 $('#showPasswordCheckbox____').hide();
                 
-                $(".modal-header #title_modal").text("แก้ไขข้อมูลผู้ใช้");
-                $(".modal-footer #submit").text("แก้ไขข้อมูลผู้ใช้");
+                $(".modal-header #title_modal").text("แก้ไขข้อมูลส่วนตัว");
+                $(".modal-footer #submit").text("บันทึกข้อมูล");
                 $(".modal-body #url_route").val("dashboard/edit/user/profile/" + <?= $data_user[0]['id_user'] ?>);
             }
         }

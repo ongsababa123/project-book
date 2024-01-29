@@ -1,4 +1,4 @@
-<title>Book List</title>
+<title>รายการหนังสือ</title>
 <style>
     .page-item.active .page-link {
         background-color: #2eb6dd;

@@ -111,8 +111,8 @@
                 $(".modal-body #email").val(rowData.email_user);
                 $(".modal-body #phone").val(rowData.phone);
 
-                $(".modal-header #title_modal").text("แก้ไขข้อมูลผู้ใช้");
-                $(".modal-footer #submit").text("แก้ไขข้อมูลผู้ใช้");
+                $(".modal-header #title_modal").text("จัดการผู้ใช้งาน");
+                $(".modal-footer #submit").text("บันทึกข้อมูล");
                 $(".modal-body #url_route").val("dashboard/customer/edit/" + rowData.id_user);
             }
         }

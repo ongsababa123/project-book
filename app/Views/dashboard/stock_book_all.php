@@ -50,6 +50,48 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header bg-navy">
+                                <h4 class="card-title">
+                                </h4>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table id="table_book_stock_all" class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>จำนวนหนังสือทั้งหมด</th>
+                                                    <th>จำนวนหนังสือในสต๊อคทั้งหมด</th>
+                                                    <th>ไม่พร้อมใช้งาน</th>
+                                                    <th>พร้อมใช้งาน</th>
+                                                    <th>จอง</th>
+                                                    <th>กำลังเช่า</th>
+                                                    <th>หนังสือหาย</th>
+                                                    <th>หนังสือชำรุด</th>
+                                                    <th>หนังสือไม่สามารถใช้ต่อได้</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
                             <div class="card-header bg-lightblue">
                                 <h4 class="card-title">
                                 </h4>
@@ -142,6 +184,7 @@
     <script>
         $(document).ready(function () {
             getTableData();
+            getTableData_count_all();
         })
     </script>
     <script>
@@ -228,6 +271,53 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             return `<button type="button" class="btn btn-block-tool btn-info btn-sm mb-2" onclick="change_status_(${data.id_stock})">เปลี่ยนสถานะ</button>`;
+                        }
+                    },
+                ]
+            });
+            $('[data-toggle="tooltip"]').tooltip();
+        }
+    </script>
+        <script>
+        function getTableData_count_all() {
+            if ($.fn.DataTable.isDataTable('#table_book_stock_all')) {
+                $('#table_book_stock_all').DataTable().destroy();
+            }
+            $('#table_book_stock_all').DataTable({
+                "processing": $("#customer_Table .overlay").show(),
+                "pageLength": 10,
+                "pagingType": "full_numbers", // Display pagination as 1, 2, 3... instead of Previous, Next buttons
+                'serverSide': true,
+                'ajax': {
+                    'url': "<?php echo site_url('dashboard/book/stock/getdata/countall/'); ?>",
+                    'type': 'GET',
+                    'dataSrc': 'data',
+                },
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "ordering": false,
+                "lengthChange": false,
+                "autoWidth": false,
+                "searching": false,
+                "drawCallback": function (settings) {
+                    $("#customer_Table .overlay").hide();
+                    var daData = settings.json.data;
+                    console.log(daData);
+                    if (daData.length == 0) {
+                        $('#table_book_stock_all tbody').html(`
+                        <tr>
+                            <td colspan="9" class="text-center">
+                                ยังไม่มีข้อมูล
+                            </td>
+                        </tr>`
+                        );
+                    }
+                },
+                'columns': [
+                    {
+                        'data': null,
+                        'class': 'text-center',
+                        'render': function (data, type, row, meta) {
+                            return meta.settings.oAjaxData.start += 1;
                         }
                     },
                 ]

@@ -1,4 +1,4 @@
-<title>Cart</title>
+<title>ตระกร้าของฉัน</title>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <style>
     .center {

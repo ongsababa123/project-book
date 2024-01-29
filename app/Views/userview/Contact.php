@@ -1,4 +1,4 @@
-<title>Contact</title>
+<title>ติดต่อเรา</title>
 <style>
     .main {
         display: flex;

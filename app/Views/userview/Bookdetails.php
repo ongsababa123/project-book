@@ -1,4 +1,4 @@
-<title>Details Book</title>
+<title>หนังสือ <?= $bookData[0]['name_book'] ?></title>
 <style>
     .center {
         padding: 100px 0;
@@ -19,7 +19,7 @@
                         $decodedData = base64_decode($base64Data);
                         $imageSrc = 'data:image/png;base64,' . base64_encode($decodedData);
                     }
-                    $status = ($bookData[0]['status_book'] == 2) ? 'disabled' : '';
+                    $status = ($bookData[0]['status_book'] == 2 || $bookData[0]['count_stock'] == 0) ? 'disabled' : '';
                     ?>
                     <img src="<?= $imageSrc ?>" class="img-rounded img-responsive" alt="Rounded Image"
                         style="height: 30rem;">

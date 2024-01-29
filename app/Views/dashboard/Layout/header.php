@@ -81,7 +81,7 @@
                             <!-- Dropdown items go here -->
                             <a class="dropdown-item" href="<?= site_url('dashboard/profile/index'); ?>"> <i
                                     class="fas fa-id-card"></i>
-                                ประวัติ
+                                ข้อมูลส่วนตัว
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="nav-link" href="<?= site_url('/logout'); ?>" role="button">
@@ -181,7 +181,7 @@
                                 <a href="<?= site_url('/dashboard/history/index'); ?>" class="nav-link">
                                     <i class="nav-icon fas fa-history"></i>
                                     <p>
-                                        ประวัติการเช่า
+                                        ข้อมูลการเช่า-คืน หนังสือ
                                     </p>
                                 </a>
                             </li>

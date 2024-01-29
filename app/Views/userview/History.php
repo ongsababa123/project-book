@@ -1,4 +1,4 @@
-<title>History</title>
+<title>ประวัติการเช่า</title>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <style>
     .center {

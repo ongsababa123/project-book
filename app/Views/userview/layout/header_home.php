@@ -75,7 +75,7 @@
                                 aria-expanded="false" class="btn btn-warning btn-round"><i
                                     class="fas fa-user-circle"></i></a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="<?= site_url('/profile') ?>" style="font-size: medium">โปรไฟล์ <i
+                                <a class="dropdown-item" href="<?= site_url('/profile') ?>" style="font-size: medium">ข้อมูลส่วนตัว <i
                                         class="fas fa-id-card-alt"></i></a>
                                 <a class="dropdown-item" href="<?= site_url('/cart') ?>" style="font-size: medium">ตระกร้าสินค้า <i
                                         class="fas fa-shopping-cart"></i></a>
