@@ -64,8 +64,8 @@ class CategoryController extends BaseController
         helper(['form']);
         $CategoryModels = new CategoryModels();
         $rules = [
-            'name_category' => 'is_unique[category_table.name_category]',
-            'detail_category' => 'is_unique[category_table.details]',
+            'name_category' => 'is_unique[category_table.name_category,id_category,' . $id_category . ']',
+            'detail_category' => 'is_unique[category_table.details,id_category,' . $id_category . ']',
         ];
         if (!$this->validate($rules)) {
             $response = [
