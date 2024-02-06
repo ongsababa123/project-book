@@ -222,7 +222,6 @@
 
     });
 </script>
-
 <script>
     var cartData = <?php echo json_encode($cartData); ?>;
     var userData = <?php echo json_encode($userData); ?>;
