@@ -1,4 +1,4 @@
-<title>รายงานการเข้า-ออก</title>
+<title>รายงานเข้า-ออก</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
 <!-- daterange picker -->
 <link rel="stylesheet" href="<?= base_url('plugins/daterangepicker/daterangepicker.css'); ?>">
@@ -39,12 +39,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>รายงานการเข้า-ออก ระบบ</h1>
+                        <h1>รายงานเข้า-ออก</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
-                            <li class="breadcrumb-item active">รายงานการเข้า-ออก ระบบ</li>
+                            <li class="breadcrumb-item active">รายงานเข้า-ออก</li>
                         </ol>
                     </div>
                 </div>
@@ -262,4 +262,13 @@
             });
             $('[data-toggle="tooltip"]').tooltip();
         }
+    </script>
+    <script>
+        function preventSpacebar(e) {
+            if (e.keyCode === 32) {
+                e.preventDefault();
+            }
+        }
+
+        document.getElementById('date_activity').addEventListener('keydown', preventSpacebar);
     </script>

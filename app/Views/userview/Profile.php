@@ -168,7 +168,18 @@
     $('#check').on('change', function () {
         updateSubmitButton();
     });
+    function preventSpacebar(e) {
+        if (e.keyCode === 32) {
+            e.preventDefault();
+        }
+    }
 
+    document.getElementById('name').addEventListener('keydown', preventSpacebar);
+    document.getElementById('last').addEventListener('keydown', preventSpacebar);
+    document.getElementById('email').addEventListener('keydown', preventSpacebar);
+    document.getElementById('phone').addEventListener('keydown', preventSpacebar);
+    document.getElementById('password').addEventListener('keydown', preventSpacebar);
+    
     function checkPassword() {
         var passwordInput = document.getElementById("password");
         var lengthAlert = document.getElementById("lengthAlert");

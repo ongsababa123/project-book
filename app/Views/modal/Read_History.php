@@ -1,3 +1,18 @@
+<style>
+    .no-arrow {
+        -moz-appearance: textfield;
+    }
+
+    .no-arrow::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    .no-arrow::-webkit-outer-spin-button,
+    .no-arrow::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="overlay preloader">
@@ -154,7 +169,7 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>ส่วนลดโปรโมชั่น</label>
-                            <input type="text" class="form-control" id="sum_price_promotion" name="sum_price_promotion">
+                            <input type="number" class="form-control no-arrow" id="sum_price_promotion" name="sum_price_promotion" min="0" oninput="checkInput__(this);">
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -200,8 +215,8 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>ค่าปรับอื่นๆ</label>
-                            <input type="text" class="form-control" id="sum_late_price" name="sum_late_price"
-                                placeholder="ค่าปรับอื่นๆ">
+                            <input type="number" class="form-control no-arrow" id="sum_late_price" name="sum_late_price"
+                                placeholder="ค่าปรับอื่นๆ" min="0" oninput="checkInput__(this);">
                         </div>
                     </div>
                     <div class="col-sm-2">
@@ -224,7 +239,7 @@
                         <i class="far fa-calendar-check"></i> เข้ารับหนังสือ
                     </button>
                     <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit"></button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
                     <a class="btn btn-app bg-danger mt-3" target="_blank" id="print" name="print"><i
                             class="fas fa-print"></i> พิมพ์ใบเสร็จ</a>
                     <a class="btn btn-app bg-danger mt-3" target="_blank" id="print_return" name="print_return"><i
@@ -325,4 +340,25 @@
         updateTotalPrice();
 
     }
+</script>
+<script>
+    function checkInput__(input) {
+        if (input.value === '0') return; // ถ้าค่าเป็นเฉพาะ 0 ไม่ต้องทำอะไร
+        if (input.value.startsWith('0')) {
+            input.value = input.value.replace(/^0+/, ''); // ลบศูนย์ที่นำหน้าออก
+        }
+    }
+    var elements = document.querySelectorAll('input[type="number"]');
+
+    elements.forEach(function (element) {
+        element.addEventListener('input', function () {
+            // ตรวจสอบว่าเป็นตัวแรกของข้อความหรือไม่
+            if (this.value.startsWith(' ')) {
+                // ถ้าเป็นตัวแรก ลบช่องว่าง
+                this.value = this.value.trimStart();
+            }
+            // ลบตัวอักษรพิเศษที่ไม่ต้องการ
+            this.value = this.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g, '');
+        });
+    });
 </script>

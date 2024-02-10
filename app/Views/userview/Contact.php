@@ -169,3 +169,30 @@
         target: document.getElementById('range')
     }).updateProgressBar(0);
 </script>
+<script>
+
+    function preventSpacebar(e) {
+        if (e.keyCode === 32) {
+            e.preventDefault();
+        }
+    }
+
+    document.getElementById('email').addEventListener('keydown', preventSpacebar);
+    document.getElementById('name').addEventListener('keydown', preventSpacebar);
+    document.getElementById('lastname').addEventListener('keydown', preventSpacebar);
+    document.getElementById('details').addEventListener('keydown', preventSpacebar);
+</script>
+<script>
+    // ฟังก์ชันเพื่อตรวจสอบและป้องกันการพิมพ์ตัวอักษรที่ไม่ต้องการ
+    function preventInvalidCharacters(event) {
+        const invalidCharacters = ['!', '@', '#', '$', '%']; // ตัวอักษรที่ไม่ต้องการ
+
+        if (invalidCharacters.includes(event.key)) {
+            event.preventDefault(); // ยกเลิกการดำเนินการหากตัวอักษรไม่ถูกต้อง
+        }
+    }
+
+    // เรียกใช้ฟังก์ชันเมื่อพิมพ์ใน input fields
+    document.getElementById('name').addEventListener('keypress', preventInvalidCharacters);
+    document.getElementById('lastname').addEventListener('keypress', preventInvalidCharacters);
+</script>

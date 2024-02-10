@@ -80,7 +80,8 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <table id="table_book_stock" class="table table-hover table-bordered table-striped">
+                                        <table id="table_book_stock"
+                                            class="table table-hover table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>ลำดับ</th>
@@ -118,7 +119,8 @@
                             <div class="col-md-12" id="detail_group">
                                 <div class="form-group">
                                     <label>จำนวนที่เพิ่ม</label>
-                                    <input type="number" class="form-control no-arrow" id="quantity" name="quantity">
+                                    <input type="number" class="form-control no-arrow" id="quantity" name="quantity"
+                                        min="1" oninput="checkInput(this);">
                                 </div>
                             </div>
                         </div>
@@ -402,5 +404,26 @@
                 const url = '/dashboard/book/stock/create/' + $('#book_id').val();
                 action_(url, 'form_add_stock');
             }
+        });
+    </script>
+    <script>
+        function checkInput(input) {
+            if (input.value.startsWith('0')) {
+                input.value = input.value.replace(/^0+/, ''); // ลบศูนย์ที่นำหน้าออก
+            }
+        }
+
+        var elements = document.querySelectorAll('input[type="number"]');
+
+        elements.forEach(function (element) {
+            element.addEventListener('input', function () {
+                // ตรวจสอบว่าเป็นตัวแรกของข้อความหรือไม่
+                if (this.value.startsWith(' ')) {
+                    // ถ้าเป็นตัวแรก ลบช่องว่าง
+                    this.value = this.value.trimStart();
+                }
+                // ลบตัวอักษรพิเศษที่ไม่ต้องการ
+                this.value = this.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g, '');
+            });
         });
     </script>

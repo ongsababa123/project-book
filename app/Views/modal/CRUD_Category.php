@@ -11,7 +11,8 @@
                 enctype="multipart/form-data">
                 <div class="form-group" id="customSwitch">
                     <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch3" name="customSwitch3" onclick="change_status()">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch3" name="customSwitch3"
+                            onclick="change_status()">
                         <label class="custom-control-label" for="customSwitch3" id="LabelcustomSwitch3"></label>
                     </div>
                 </div>
@@ -50,11 +51,24 @@
 <script>
     function change_status() {
         const isChecked = document.getElementById("customSwitch3").checked;
-            if (isChecked) {
-                $(".modal-body #LabelcustomSwitch3").text("เปิดใช้งาน");
-            } else {
-                $(".modal-body #LabelcustomSwitch3").text("ปิดใช้งาน");
-            }
+        if (isChecked) {
+            $(".modal-body #LabelcustomSwitch3").text("เปิดใช้งาน");
+        } else {
+            $(".modal-body #LabelcustomSwitch3").text("ปิดใช้งาน");
+        }
     }
 
+    var elements = document.querySelectorAll('input[type="text"], textarea');
+
+    elements.forEach(function (element) {
+        element.addEventListener('input', function () {
+            // ตรวจสอบว่าเป็นตัวแรกของข้อความหรือไม่
+            if (this.value.startsWith(' ')) {
+                // ถ้าเป็นตัวแรก ลบช่องว่าง
+                this.value = this.value.trimStart();
+            }
+            // ลบตัวอักษรพิเศษที่ไม่ต้องการ
+            this.value = this.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g, '');
+        });
+    });
 </script>

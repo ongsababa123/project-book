@@ -36,8 +36,8 @@
     <nav class="navbar navbar-expand-lg fixed-top bg-success">
         <div class="container">
             <div class="navbar-translate">
-                <a class="navbar-brand" href="<?= site_url('/') ?>" rel="tooltip" title="Coded by Creative Tim" style="font-size: medium"
-                    data-placement="bottom">
+                <a class="navbar-brand" href="<?= site_url('/') ?>" rel="tooltip" title="Coded by Creative Tim"
+                    style="font-size: medium" data-placement="bottom">
                     ร้านบางเล่ม
                 </a>
                 <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse"
@@ -51,8 +51,8 @@
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown" id="dropdown">
-                        <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true" style="font-size: medium"
-                            aria-expanded="false" class="nav-link" >รายละเอียด</i></a>
+                        <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
+                            style="font-size: medium" aria-expanded="false" class="nav-link">รายละเอียด</i></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
                             <?php foreach ($details as $key => $value): ?>
                                 <a class="dropdown-item" style="font-size: medium">
@@ -63,7 +63,8 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('/book/booklist') ?>" class="nav-link" style="font-size: medium"> รายการหนังสือ</a>
+                        <a href="<?= site_url('/book/booklist') ?>" class="nav-link" style="font-size: medium">
+                            รายการหนังสือ</a>
                     </li>
                     <li class="nav-item">
                         <a href="<?= site_url('/contact') ?>" class="nav-link" style="font-size: medium"> ติดต่อเรา</a>
@@ -169,6 +170,15 @@
                 },
             });
         }
+    </script>
+    <script>
+        function preventSpacebar(e) {
+            if (e.keyCode === 32) {
+                e.preventDefault();
+            }
+        }
+
+        document.getElementById('email').addEventListener('keydown', preventSpacebar);
     </script>
 </body>
 

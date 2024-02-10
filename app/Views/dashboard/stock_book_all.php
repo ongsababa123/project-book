@@ -183,7 +183,8 @@
                             <div class="col-md-12" id="detail_group">
                                 <div class="form-group">
                                     <label>จำนวนที่เพิ่ม</label>
-                                    <input type="number" class="form-control no-arrow" id="quantity" name="quantity">
+                                    <input type="number" class="form-control no-arrow" id="quantity" name="quantity"
+                                        min="1" oninput="checkInput(this);">
                                 </div>
                             </div>
                         </div>
@@ -549,4 +550,25 @@
                 additionalInput_.style.display = (this.value === '4') ? 'block' : 'none';
             });
         }
+    </script>
+    <script>
+        function checkInput(input) {
+            if (input.value.startsWith('0')) {
+                input.value = input.value.replace(/^0+/, ''); // ลบศูนย์ที่นำหน้าออก
+            }
+        }
+
+        var elements = document.querySelectorAll('input[type="number"]');
+
+        elements.forEach(function (element) {
+            element.addEventListener('input', function () {
+                // ตรวจสอบว่าเป็นตัวแรกของข้อความหรือไม่
+                if (this.value.startsWith(' ')) {
+                    // ถ้าเป็นตัวแรก ลบช่องว่าง
+                    this.value = this.value.trimStart();
+                }
+                // ลบตัวอักษรพิเศษที่ไม่ต้องการ
+                this.value = this.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g, '');
+            });
+        });
     </script>

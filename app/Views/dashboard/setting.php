@@ -1,11 +1,27 @@
 <title>การตั้งค่าระบบ</title>
-<?php 
-if(session()->get('type') == '2'){
+<?php
+if (session()->get('type') == '2') {
     $hidden = '';
-}else{
+} else {
     $hidden = 'hidden';
 }
 ?>
+<style>
+    .no-arrow {
+        -moz-appearance: textfield;
+    }
+
+    .no-arrow::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    .no-arrow::-webkit-outer-spin-button,
+    .no-arrow::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+
 <body class="hold-transition sidebar-mini">
     <div class="content-wrapper">
         <section class="content-header">
@@ -39,20 +55,26 @@ if(session()->get('type') == '2'){
                                     </button>
                                 </div>
                             </div>
-                            <form class="mb-3" id="form_price_late" action="javascript:void(0)" method="post" enctype="multipart/form-data">
+                            <form class="mb-3" id="form_price_late" action="javascript:void(0)" method="post"
+                                enctype="multipart/form-data">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>อัตราค่าปรับ</label>
-                                                <input type="text" class="form-control" placeholder="ราคาค่าปรับ" id="late_price" name="late_price" value="<?= $late_fees[0]['price_fees']; ?>" required>
+                                                <input type="number" class="form-control no-arrow"
+                                                    placeholder="ราคาค่าปรับ" id="late_price" name="late_price"
+                                                    value="<?= $late_fees[0]['price_fees']; ?>" min="0"
+                                                    oninput="checkInput__(this);" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer text-center" id="btn_price_late">
-                                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit">บันทึก</button>
-                                    <button type="button" class="btn btn-danger" onclick="enable_edit(1,2)">ยกเลิก</button>
+                                    <button type="submit" class="btn btn-success" name="submit" value="Submit"
+                                        id="submit">บันทึก</button>
+                                    <button type="button" class="btn btn-danger"
+                                        onclick="enable_edit(1,2)">ยกเลิก</button>
                                 </div>
                             </form>
                             <div class="overlay dark">
@@ -73,20 +95,26 @@ if(session()->get('type') == '2'){
                                     </button>
                                 </div>
                             </div>
-                            <form class="mb-3" id="form_day" action="javascript:void(0)" method="post" enctype="multipart/form-data">
+                            <form class="mb-3" id="form_day" action="javascript:void(0)" method="post"
+                                enctype="multipart/form-data">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>จำนวนวันที่สามารถเช่าได้ หน่วย/ต่อวัน</label>
-                                                <input type="text" class="form-control" placeholder="ระยะเวลาเช่าหนังสือ" id="day_rent" name="day_rent" value="<?= $dayrent[0]['day_rent']; ?>" required>
+                                                <input type="number" class="form-control no-arrow"
+                                                    placeholder="ระยะเวลาเช่าหนังสือ" id="day_rent" name="day_rent"
+                                                    value="<?= $dayrent[0]['day_rent']; ?>" min="1"
+                                                    oninput="checkInput(this);" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer text-center" id="btn_day">
-                                    <button type="submit" class="btn btn-success" name="submit" value="Submit" id="submit">บันทึก</button>
-                                    <button type="button" class="btn btn-danger" onclick="enable_edit(2,2)">ยกเลิก</button>
+                                    <button type="submit" class="btn btn-success" name="submit" value="Submit"
+                                        id="submit">บันทึก</button>
+                                    <button type="button" class="btn btn-danger"
+                                        onclick="enable_edit(2,2)">ยกเลิก</button>
                                 </div>
                             </form>
                             <div class="overlay dark">
@@ -105,7 +133,8 @@ if(session()->get('type') == '2'){
                             <div class="card-header bg-info">
                                 <h2 class="card-title">รายละเอียด</h2>
                                 <div class="card-tools">
-                                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal-default" onclick="load_modal(1)" <?= $hidden ?>>
+                                    <button type="button" class="btn btn-dark" data-toggle="modal"
+                                        data-target="#modal-default" onclick="load_modal(1)" <?= $hidden ?>>
                                         เพิ่มรายละเอียด
                                     </button>
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -145,21 +174,21 @@ if(session()->get('type') == '2'){
         </div>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             getTableData();
             $("#btn_price_late").hide();
             $("#btn_day").hide();
             $("#late_price").prop("disabled", true);
             $("#day_rent").prop("disabled", true);
         });
-        
-        $("#form_price_late").on('submit', function(e) {
+
+        $("#form_price_late").on('submit', function (e) {
             e.preventDefault();
             const urlRouteInput = 'dashboard/setting/lateprice/edit/1';
             action_(urlRouteInput, 'form_price_late');
         });
 
-        $("#form_day").on('submit', function(e) {
+        $("#form_day").on('submit', function (e) {
             e.preventDefault();
             const urlRouteInput = 'dashboard/setting/dayrent/edit/1';
             action_(urlRouteInput, 'form_day');
@@ -208,6 +237,11 @@ if(session()->get('type') == '2'){
             if (action == '1') {
                 targetInputElement.prop('disabled', false);
             } else {
+                if (type == 1) {
+                    targetInputElement.val(<?= $late_fees[0]['price_fees']; ?>);
+                } else {
+                    targetInputElement.val(<?= $dayrent[0]['day_rent']; ?>);
+                }
                 targetInputElement.prop('disabled', true);
             }
         }
@@ -232,7 +266,7 @@ if(session()->get('type') == '2'){
                 "lengthChange": false,
                 "autoWidth": false,
                 "searching": false,
-                "drawCallback": function(settings) {
+                "drawCallback": function (settings) {
                     $("#late-price_Table .overlay").hide();
                     var daData = settings.json.data;
                     if (daData.length == 0) {
@@ -245,33 +279,33 @@ if(session()->get('type') == '2'){
                     }
                 },
                 'columns': [{
-                        'data': null,
-                        'class': 'text-center',
-                        'render': function(data, type, row, meta) {
-                            return meta.settings.oAjaxData.start += 1;
-                        }
-                    },
-                    {
-                        'data': null,
-                        'class': 'text-center',
-                        'render': function(data, type, row, meta) {
-                            return data.text_details;
-                        }
-                    },
-                    {
-                        'data': null,
-                        'class': 'text-center',
-                        'render': function(data, type, row, meta) {
-                            const encodedRowData = encodeURIComponent(JSON.stringify(row));
-                            <?php if (session()->get('type') == '2') : ?>
-                                return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"> แก้ไขข้อมูล</button>
-                            <button type="button" class="btn btn-danger" onclick="confirm_Alert('คุณต้องการลบรายการนี้ใช่หรือไม่ ?','dashboard/setting/details/delete/${data.id_details}')"> ลบ</button>`;
-                            <?php else : ?>
-                                return ``;
-                            <?php endif; ?>
+                    'data': null,
+                    'class': 'text-center',
+                    'render': function (data, type, row, meta) {
+                        return meta.settings.oAjaxData.start += 1;
+                    }
+                },
+                {
+                    'data': null,
+                    'class': 'text-center',
+                    'render': function (data, type, row, meta) {
+                        return data.text_details;
+                    }
+                },
+                {
+                    'data': null,
+                    'class': 'text-center',
+                    'render': function (data, type, row, meta) {
+                        const encodedRowData = encodeURIComponent(JSON.stringify(row));
+                        <?php if (session()->get('type') == '2'): ?>
+                            return `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default" onclick="load_modal(2,'${encodedRowData}')"> แก้ไขข้อมูล</button>
+                                <button type="button" class="btn btn-danger" onclick="confirm_Alert('คุณต้องการลบรายการนี้ใช่หรือไม่ ?','dashboard/setting/details/delete/${data.id_details}')"> ลบ</button>`;
+                        <?php else: ?>
+                            return ``;
+                        <?php endif; ?>
 
-                        }
-                    },
+                    }
+                },
                 ]
             });
             $('[data-toggle="tooltip"]').tooltip();
@@ -288,7 +322,7 @@ if(session()->get('type') == '2'){
                 processData: false,
                 contentType: false,
                 dataType: "JSON",
-                beforeSend: function() {
+                beforeSend: function () {
                     // Show loading indicator here
                     var loadingIndicator = Swal.fire({
                         title: 'กําลังดําเนินการ...',
@@ -297,7 +331,7 @@ if(session()->get('type') == '2'){
                         showConfirmButton: false,
                     });
                 },
-                success: function(response) {
+                success: function (response) {
                     Swal.close();
                     if (response.success) {
                         Swal.fire({
@@ -320,7 +354,7 @@ if(session()->get('type') == '2'){
                         });
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     Swal.fire({
                         title: "เกิดข้อผิดพลาด",
                         icon: 'error',
@@ -336,8 +370,8 @@ if(session()->get('type') == '2'){
             Swal.fire({
                 title: text,
                 icon: 'question',
-                            showCancelButton: true,
-            cancelButtonText: "ยกเลิก",
+                showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
                 confirmButtonColor: "#28a745",
                 confirmButtonText: "ตกลง",
             }).then((result) => {
@@ -347,7 +381,7 @@ if(session()->get('type') == '2'){
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
                         },
-                        beforeSend: function() {
+                        beforeSend: function () {
                             // Show loading indicator here
                             var loadingIndicator = Swal.fire({
                                 title: 'กําลังดําเนินการ...',
@@ -356,7 +390,7 @@ if(session()->get('type') == '2'){
                                 showConfirmButton: false,
                             });
                         },
-                    }).done(function(response) {
+                    }).done(function (response) {
                         if (response.success) {
                             Swal.fire({
                                 title: response.message,
@@ -380,4 +414,32 @@ if(session()->get('type') == '2'){
                 }
             });
         }
+    </script>
+    <script>
+        function checkInput(input) {
+            if (input.value.startsWith('0')) {
+                input.value = input.value.replace(/^0+/, ''); // ลบศูนย์ที่นำหน้าออก
+            }
+        }
+
+        function checkInput__(input) {
+            if (input.value === '0') return; // ถ้าค่าเป็นเฉพาะ 0 ไม่ต้องทำอะไร
+            if (input.value.startsWith('0')) {
+                input.value = input.value.replace(/^0+/, ''); // ลบศูนย์ที่นำหน้าออก
+            }
+        }
+
+        var elements = document.querySelectorAll('input[type="number"]');
+
+        elements.forEach(function (element) {
+            element.addEventListener('input', function () {
+                // ตรวจสอบว่าเป็นตัวแรกของข้อความหรือไม่
+                if (this.value.startsWith(' ')) {
+                    // ถ้าเป็นตัวแรก ลบช่องว่าง
+                    this.value = this.value.trimStart();
+                }
+                // ลบตัวอักษรพิเศษที่ไม่ต้องการ
+                this.value = this.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g, '');
+            });
+        });
     </script>

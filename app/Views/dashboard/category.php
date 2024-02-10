@@ -1,4 +1,4 @@
-<title>ข้อมูลหมวดหมู่</title>
+<title>หมวดหมู่หนังสือ</title>
 <?php if (session()->get('type') == '3') {
     $type_hideen = 'hidden';
     $type_disable = 'disabled';
@@ -14,12 +14,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>ข้อมูลหมวดหมู่</h1>
+                        <h1>หมวดหมู่หนังสือ</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
-                            <li class="breadcrumb-item active">ข้อมูลหมวดหมู่</li>
+                            <li class="breadcrumb-item active">หมวดหมู่หนังสือ</li>
                         </ol>
                     </div>
                 </div>

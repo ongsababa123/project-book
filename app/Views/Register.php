@@ -46,6 +46,7 @@
         margin: 0;
     }
 </style>
+
 <body class="register-page sidebar-collapse">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top bg-success">
@@ -334,6 +335,32 @@
                 passwordInput.type = 'password';
             }
         });
+    </script>
+    <script>
+        function preventSpacebar(e) {
+            if (e.keyCode === 32) {
+                e.preventDefault();
+            }
+        }
+
+        document.getElementById('name').addEventListener('keydown', preventSpacebar);
+        document.getElementById('last').addEventListener('keydown', preventSpacebar);
+        document.getElementById('email').addEventListener('keydown', preventSpacebar);
+        document.getElementById('phone').addEventListener('keydown', preventSpacebar);
+        document.getElementById('password').addEventListener('keydown', preventSpacebar);
+
+        // ฟังก์ชันเพื่อตรวจสอบและป้องกันการพิมพ์ตัวอักษรที่ไม่ต้องการ
+        function preventInvalidCharacters(event) {
+            const invalidCharacters = ['!', '@', '#', '$', '%']; // ตัวอักษรที่ไม่ต้องการ
+
+            if (invalidCharacters.includes(event.key)) {
+                event.preventDefault(); // ยกเลิกการดำเนินการหากตัวอักษรไม่ถูกต้อง
+            }
+        }
+
+        // เรียกใช้ฟังก์ชันเมื่อพิมพ์ใน input fields
+        document.getElementById('name').addEventListener('keypress', preventInvalidCharacters);
+        document.getElementById('last').addEventListener('keypress', preventInvalidCharacters);
     </script>
 </body>
 

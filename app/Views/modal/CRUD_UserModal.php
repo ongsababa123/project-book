@@ -58,7 +58,7 @@
                     <label>เบอร์โทรศัพท์</label>
                     <input id="phone" name="phone" class="no-arrow form-control"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                        type="number" maxlength="10" placeholder="กรอกเบอร์โทรศัพท์" required/>
+                        type="number" maxlength="10" placeholder="กรอกเบอร์โทรศัพท์" required />
                 </div>
                 <div class="form-group" id="password_group">
                     <label>รหัสผ่าน</label>
@@ -124,6 +124,32 @@
     }
 </script>
 <script>
+
+    // ฟังก์ชันเพื่อตรวจสอบและป้องกันการพิมพ์ตัวอักษรที่ไม่ต้องการ
+    function preventInvalidCharacters(event) {
+        const invalidCharacters = ['!', '@', '#', '$', '%']; // ตัวอักษรที่ไม่ต้องการ
+
+        if (invalidCharacters.includes(event.key)) {
+            event.preventDefault(); // ยกเลิกการดำเนินการหากตัวอักษรไม่ถูกต้อง
+        }
+    }
+
+    // เรียกใช้ฟังก์ชันเมื่อพิมพ์ใน input fields
+    document.getElementById('name').addEventListener('keypress', preventInvalidCharacters);
+    document.getElementById('last').addEventListener('keypress', preventInvalidCharacters);
+
+    function preventSpacebar(e) {
+        if (e.keyCode === 32) {
+            e.preventDefault();
+        }
+    }
+
+    document.getElementById('name').addEventListener('keydown', preventSpacebar);
+    document.getElementById('last').addEventListener('keydown', preventSpacebar);
+    document.getElementById('email').addEventListener('keydown', preventSpacebar);
+    document.getElementById('phone').addEventListener('keydown', preventSpacebar);
+    document.getElementById('password').addEventListener('keydown', preventSpacebar);
+
     document.getElementById('password').addEventListener('input', function () {
         // Remove any existing alert
         removeAlert();

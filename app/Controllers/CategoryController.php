@@ -21,7 +21,6 @@ class CategoryController extends BaseController
         // Validation rules
         $rules = [
             'name_category' => 'is_unique[category_table.name_category]',
-            'detail_category' => 'is_unique[category_table.details]',
         ];
 
         if (!$this->validate($rules)) {

@@ -1,4 +1,4 @@
-<title>ประวัติการเช่า</title>
+<title>ข้อมูลการเช่า-คืน หนังสือ</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
 <!-- daterange picker -->
 <link rel="stylesheet" href="<?= base_url('plugins/daterangepicker/daterangepicker.css'); ?>">
@@ -35,12 +35,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>ประวัติการเช่า</h1>
+                        <h1>ข้อมูลการเช่า-คืน หนังสือ</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
-                            <li class="breadcrumb-item active">ประวัติการเช่า</li>
+                            <li class="breadcrumb-item active">ข้อมูลการเช่า-คืน หนังสือ</li>
                         </ol>
                     </div>
                 </div>
@@ -309,7 +309,7 @@
                         $(".modal-body #price_book_destroy_" + data_id_).val(result_price_book_des);
                     });
                     count_id += 1;
-
+                    $(".modal-footer #submit").show();
                     if (rowData.status_his == 2) {
                         $(".modal-footer #print").show();
                         $(".modal-footer #print_return").show();
@@ -324,6 +324,7 @@
                         $(".modal-footer #submit_inbook").hide();
                         $(".modal-body .score-radio, #return_date, #sum_late_price, #sum_price_promotion").prop("disabled", true);
                         $("#text_book_description_" + data_id_).prop("disabled", true);
+                        $(".modal-footer #submit").hide();
                     } else {
                         $(".modal-footer #print").hide();
                         $(".modal-footer #print_return").hide();

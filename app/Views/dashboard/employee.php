@@ -167,14 +167,14 @@
                         'data': null,
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
-                            return data.name;
+                            return data.name + ' ' + data.lastname;
                         }
                     },
                     {
                         'data': null,
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
-                            return data.lastname;
+                            return data.phone;
                         }
                     },
                     {

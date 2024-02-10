@@ -258,7 +258,7 @@
             }
         }
     </script>
-        <script>
+    <script>
         const passwordInput1 = document.getElementById('password');
         const passwordInput2 = document.getElementById('password_confirmation');
         const showPasswordCheckbox1 = document.getElementById('showpassword1');
@@ -278,6 +278,16 @@
                 passwordInput2.type = 'password';
             }
         });
+    </script>
+    <script>
+        function preventSpacebar(e) {
+            if (e.keyCode === 32) {
+                e.preventDefault();
+            }
+        }
+
+        document.getElementById('password_confirmation').addEventListener('keydown', preventSpacebar);
+        document.getElementById('password').addEventListener('keydown', preventSpacebar);
     </script>
 </body>
 

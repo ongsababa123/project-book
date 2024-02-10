@@ -48,9 +48,9 @@
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown" id="dropdown">
-                        <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true" style="font-size: medium"
-                            aria-expanded="false" class="nav-link">รายละเอียด</i></a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                        <a href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
+                            style="font-size: medium" aria-expanded="false" class="nav-link">รายละเอียด</i></a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
                             <?php foreach ($details as $key => $value): ?>
                                 <a class="dropdown-item" style="font-size: medium">
                                     <?= $key + 1 ?> :
@@ -60,29 +60,31 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= site_url('/book/booklist') ?>" class="nav-link" style="font-size: medium"> รายการหนังสือ</a>
+                        <a href="<?= site_url('/book/booklist') ?>" class="nav-link" style="font-size: medium">
+                            รายการหนังสือ</a>
                     </li>
                     <li class="nav-item">
                         <a href="<?= site_url('/contact') ?>" class="nav-link" style="font-size: medium"> ติดต่อเรา</a>
                     </li>
                     <?php if (!session()->get('isLoggedIn')): ?>
                         <li class="nav-item">
-                            <a href="<?= site_url('/login') ?>" class="btn btn-warning btn-round" style="font-size: medium">เข้าสู่ระบบ</a>
+                            <a href="<?= site_url('/login') ?>" class="btn btn-warning btn-round"
+                                style="font-size: medium">เข้าสู่ระบบ</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item dropdown">
-                            <a href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" 
+                            <a href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" class="btn btn-warning btn-round"><i
-                                    class="fas fa-user-circle"></i></a>
+                                    class="fas fa-user-circle"></i>&nbsp; <?= session()->get('name') .' '. session()->get('lastname')?></a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="<?= site_url('/profile') ?>" style="font-size: medium">ข้อมูลส่วนตัว <i
-                                        class="fas fa-id-card-alt"></i></a>
-                                <a class="dropdown-item" href="<?= site_url('/cart') ?>" style="font-size: medium">ตระกร้าสินค้า <i
-                                        class="fas fa-shopping-cart"></i></a>
-                                <a class="dropdown-item" href="<?= site_url('/history') ?>" style="font-size: medium">ประวัติเช่าหนังสือ <i
-                                        class="fas fa-history"></i></a>
-                                <a class="dropdown-item" href="<?= site_url('/logout'); ?>" style="font-size: medium">ออกจากระบบ <i
-                                        class="fas fa-sign-out-alt"></i></a>
+                                <a class="dropdown-item" href="<?= site_url('/profile') ?>"
+                                    style="font-size: medium">ข้อมูลส่วนตัว <i class="fas fa-id-card-alt"></i></a>
+                                <a class="dropdown-item" href="<?= site_url('/cart') ?>"
+                                    style="font-size: medium">ตระกร้าสินค้า <i class="fas fa-shopping-cart"></i></a>
+                                <a class="dropdown-item" href="<?= site_url('/history') ?>"
+                                    style="font-size: medium">ประวัติเช่าหนังสือ <i class="fas fa-history"></i></a>
+                                <a class="dropdown-item" href="<?= site_url('/logout'); ?>"
+                                    style="font-size: medium">ออกจากระบบ <i class="fas fa-sign-out-alt"></i></a>
                             </div>
                         </li>
                     <?php endif; ?>

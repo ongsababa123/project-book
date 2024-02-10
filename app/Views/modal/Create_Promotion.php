@@ -82,7 +82,7 @@
                         </div>
                         <div class="form-group" id="book_cat_2" name="book_cat_2">
                             <input class="form-control no-arrow" type="number" id="id_book_cat_2" name="id_book_cat_2"
-                                placeholder="กรอกจำนวนเลขที่ต้องการคำนวน">
+                                placeholder="กรอกจำนวนเลขที่ต้องการคำนวน" min="1" oninput="checkInput(this);">
                         </div>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                     <div class="col-md-6 mt-2">
                         <div class="form-group">
                             <input class="form-control no-arrow" type="number" id="number_cal" name="number_cal"
-                                placeholder="กรอกจำนวนเลขที่ต้องการคำนวน" required>
+                                placeholder="กรอกจำนวนเลขที่ต้องการคำนวน" required min="1" oninput="checkInput(this);">
                         </div>
                     </div>
                 </div>
@@ -247,16 +247,22 @@
         $(".modal-body #book_cat_1").show();
         $(".modal-body #book_cat_2").hide();
         if (radioButton.value == 1) {
+            $(".modal-body #id_book_cat").prop('required', true);
+            $(".modal-body #id_book_cat_2").prop('required', false);
             data_book.forEach(element_book_cr => {
                 var newOption = $('<option>').val(element_book_cr.id_book).text(element_book_cr.name_book);
                 $(".modal-body #id_book_cat").append(newOption);
             });
         } else if (radioButton.value == 2) {
+            $(".modal-body #id_book_cat").prop('required', true);
+            $(".modal-body #id_book_cat_2").prop('required', false);
             data_category.forEach(element_category_cr => {
                 var newOption = $('<option>').val(element_category_cr.id_category).text(element_category_cr.name_category);
                 $(".modal-body #id_book_cat").append(newOption);
             })
         } else if (radioButton.value == 3 || radioButton.value == 4) {
+            $(".modal-body #id_book_cat").prop('required', false);
+            $(".modal-body #id_book_cat_2").prop('required', true);
             $(".modal-body #book_cat_1").hide();
             $(".modal-body #book_cat_2").show();
 
@@ -264,4 +270,25 @@
         }
         change_text();
     }
+</script>
+<script>
+    function checkInput(input) {
+        if (input.value.startsWith('0')) {
+            input.value = input.value.replace(/^0+/, ''); // ลบศูนย์ที่นำหน้าออก
+        }
+    }
+
+    var elements = document.querySelectorAll('input[type="number"]');
+
+        elements.forEach(function (element) {
+            element.addEventListener('input', function () {
+                // ตรวจสอบว่าเป็นตัวแรกของข้อความหรือไม่
+                if (this.value.startsWith(' ')) {
+                    // ถ้าเป็นตัวแรก ลบช่องว่าง
+                    this.value = this.value.trimStart();
+                }
+                // ลบตัวอักษรพิเศษที่ไม่ต้องการ
+                this.value = this.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g, '');
+            });
+        });
 </script>

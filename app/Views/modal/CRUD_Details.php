@@ -11,9 +11,10 @@
                 enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-sm-12 mx-auto" id="detail_group">
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label>รายละเอียด</label>
-                            <textarea class="form-control" name="detail" id="detail" cols="5" rows="5" required></textarea>
+                            <textarea class="form-control" name="detail" id="detail" cols="5" rows="5"
+                                required></textarea>
                         </div>
                     </div>
                 </div>
@@ -73,4 +74,19 @@
             existingAlert.parentNode.removeChild(existingAlert);
         }
     }
+</script>
+<script>
+    var elements = document.querySelectorAll('input[type="text"], textarea');
+
+    elements.forEach(function (element) {
+        element.addEventListener('input', function () {
+            // ตรวจสอบว่าเป็นตัวแรกของข้อความหรือไม่
+            if (this.value.startsWith(' ')) {
+                // ถ้าเป็นตัวแรก ลบช่องว่าง
+                this.value = this.value.trimStart();
+            }
+            // ลบตัวอักษรพิเศษที่ไม่ต้องการ
+            this.value = this.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g, '');
+        });
+    });
 </script>

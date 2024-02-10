@@ -1,4 +1,4 @@
-<title>ข้อมูลการจัดการโปรโมชั่น</title>
+<title>ข้อมูลโปรโมชั่น</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
 <!-- daterange picker -->
 <link rel="stylesheet" href="<?= base_url('plugins/daterangepicker/daterangepicker.css'); ?>">
@@ -50,12 +50,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>ข้อมูลการจัดการโปรโมชั่น</h1>
+                        <h1>ข้อมูลโปรโมชั่น</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
-                            <li class="breadcrumb-item active">ข้อมูลการจัดการโปรโมชั่น</li>
+                            <li class="breadcrumb-item active">ข้อมูลโปรโมชั่น</li>
                         </ol>
                     </div>
                 </div>

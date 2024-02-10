@@ -37,36 +37,35 @@
                         <div class="form-group">
                             <label>ชื่อหนังสือ</label>
                             <input type="text" class="form-control" placeholder="กรอกชื่อหนังสือ" id="name_book"
-                                name="name_book" required>
+                                name="name_book" required oninput="validateInput(this);">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label>ชื่อผู้แต่ง</label>
                             <input type="text" class="form-control" placeholder="กรอกชื่อผู้แต่ง" id="name_book_author"
-                                name="name_book_author" required>
+                                name="name_book_author" required oninput="validateInput(this);">
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label>รายละเอียด</label>
                     <textarea class="form-control" placeholder="กรอกรายละเอียด" id="detail_category" cols="5" rows="5"
-                        name="detail_category" required></textarea>
+                        name="detail_category" required oninput="validateInput(this);"></textarea>
                 </div>
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
                             <label>ราคาเช่า</label>
                             <input type="number" class="form-control" placeholder="ราคาหนังสือ" id="price_book"
-                                name="price_book" required <?= $type_disable ?>>
+                                name="price_book" required <?= $type_disable ?> min="0" oninput="checkInput(this);">
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label>ราคาหนังสือ</label>
                             <input type="number" class="form-control" placeholder="ราคาหนังสือ" id="price_book_book"
-                                name="price_book_book" required>
+                                name="price_book_book" required min="0" oninput="checkInput(this);">
                         </div>
                     </div>
                     <div class="col-4" id="stock">
@@ -120,4 +119,26 @@
             reader.readAsDataURL(file);
         }
     }
+</script>
+<script>
+    function checkInput(input) {
+        if (input.value === '0') return; // ถ้าค่าเป็นเฉพาะ 0 ไม่ต้องทำอะไร
+        if (input.value.startsWith('0')) {
+            input.value = input.value.replace(/^0+/, ''); // ลบศูนย์ที่นำหน้าออก
+        }
+    }
+
+    var elements = document.querySelectorAll('input[type="text"], textarea');
+
+    elements.forEach(function (element) {
+        element.addEventListener('input', function () {
+            // ตรวจสอบว่าเป็นตัวแรกของข้อความหรือไม่
+            if (this.value.startsWith(' ')) {
+                // ถ้าเป็นตัวแรก ลบช่องว่าง
+                this.value = this.value.trimStart();
+            }
+            // ลบตัวอักษรพิเศษที่ไม่ต้องการ
+            this.value = this.value.replace(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g, '');
+        });
+    });
 </script>

@@ -1,4 +1,4 @@
-<title>ข้อมูลลูกค้า</title>
+<title>ข้อมูลสมาชิก</title>
 <style>
     #form_details_history {
         display: none;
@@ -15,12 +15,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>ข้อมูลลูกค้า</h1>
+                        <h1>ข้อมูลสมาชิก</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
-                            <li class="breadcrumb-item active">ข้อมูลลูกค้า</li>
+                            <li class="breadcrumb-item active">ข้อมูลสมาชิก</li>
                         </ol>
                     </div>
                 </div>
@@ -178,14 +178,14 @@
                         'data': null,
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
-                            return data.name;
+                            return data.name + ' ' + data.lastname;
                         }
                     },
                     {
                         'data': null,
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
-                            return data.lastname;
+                            return data.phone;
                         }
                     },
                     {

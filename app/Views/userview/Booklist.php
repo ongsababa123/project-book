@@ -374,3 +374,12 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
         });
     }
 </script>
+<script>
+    function preventSpacebar(e) {
+        if (e.keyCode === 32) {
+            e.preventDefault();
+        }
+    }
+
+    document.getElementById('searchBook').addEventListener('keydown', preventSpacebar);
+</script>

@@ -1,4 +1,4 @@
-<title>รายงานการขาย</title>
+<title>รายงานยอดเช่า</title>
 <link rel="stylesheet" href="<?= base_url('plugins/ekko-lightbox/ekko-lightbox.css'); ?>">
 <!-- daterange picker -->
 <link rel="stylesheet" href="<?= base_url('plugins/daterangepicker/daterangepicker.css'); ?>">
@@ -18,12 +18,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>รายงานการขาย
+                        <h1>รายงานยอดเช่า
                         </h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item active"><a>รายงานการขาย</a></li>
+                        <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item active"><a>รายงานยอดเช่า</a></li>
                         </ol>
                     </div>
                 </div>
@@ -496,7 +497,7 @@
             var monthInput = $("#month_input").val();
             var yearInput = $("#year_input").val();
             if (checkedRadioValue == 1) {
-                var baseUrl = "<?= base_url('dashboard/report/generate/view/') ?>" + dayInput + "/" + checkedRadioValue + "/" + type ;
+                var baseUrl = "<?= base_url('dashboard/report/generate/view/') ?>" + dayInput + "/" + checkedRadioValue + "/" + type;
             } else if (checkedRadioValue == 2) {
                 var baseUrl = "<?= base_url('dashboard/report/generate/view/') ?>" + monthInput + "/" + checkedRadioValue + "/" + type;
             } else if (checkedRadioValue == 3) {
@@ -505,4 +506,15 @@
 
             window.open(baseUrl, '_blank');
         }
+    </script>
+        <script>
+        function preventSpacebar(e) {
+            if (e.keyCode === 32) {
+                e.preventDefault();
+            }
+        }
+
+        document.getElementById('day_input').addEventListener('keydown', preventSpacebar);
+        document.getElementById('month_input').addEventListener('keydown', preventSpacebar);
+        document.getElementById('year_input').addEventListener('keydown', preventSpacebar);
     </script>

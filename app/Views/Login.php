@@ -209,6 +209,16 @@
             }
         });
     </script>
+    <script>
+        function preventSpacebar(e) {
+            if (e.keyCode === 32) {
+                e.preventDefault();
+            }
+        }
+
+        document.getElementById('email').addEventListener('keydown', preventSpacebar);
+        document.getElementById('password').addEventListener('keydown', preventSpacebar);
+    </script>
 </body>
 
 </html>
