@@ -89,7 +89,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>วันที่ต้องคืน</label>
+                                            <label>วันที่</label>
                                             <div class="input-group date" id="date_activity__"
                                                 data-target-input="nearest">
                                                 <input type="text" class="form-control datetimepicker-input gray-text"
