@@ -32,23 +32,30 @@
                 </p>
             <?php endif; ?>
             <form id="form_sendemail" action="javascript:void(0)" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col">
-                            <label for="name">ชื่อ</label>
-                            <input type="text" class="form-control" placeholder="ชื่อจริง" id="name" name="name">
-                        </div>
-                        <div class="col">
-                            <label for="lastname">นามสกุล</label>
-                            <input type="text" class="form-control" placeholder="นามสกุล" id="lastname" name="lastname">
+                <?php if (!session()->get('isLoggedIn')): ?>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label for="name">ชื่อ</label>
+                                <input type="text" class="form-control" placeholder="ชื่อจริง" id="name" name="name">
+                            </div>
+                            <div class="col">
+                                <label for="lastname">นามสกุล</label>
+                                <input type="text" class="form-control" placeholder="นามสกุล" id="lastname" name="lastname">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="email">อีเมล</label>
-                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
-                        placeholder="อีเมลของคุณ" required>
-                </div>
+                    <div class="form-group">
+                        <label for="email">อีเมล</label>
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                            placeholder="อีเมลของคุณ" required>
+                    </div>
+                <?php else: ?>
+                    <input type="text" class="form-control" placeholder="ชื่อจริง" id="name" name="name" value="<?= session()->get('name') ?>" hidden>
+                    <input type="text" class="form-control" placeholder="นามสกุล" id="lastname" name="lastname" value="<?= session()->get('lastname') ?>" hidden>
+                    <input type="text" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                            placeholder="อีเมลของคุณ" value="<?= session()->get('email') ?>" hidden>
+                <?php endif; ?>
                 <div class="form-group">
                     <label for="details">ส่งคำติชมหรือเสนอคำแนะนำเพิ่มเติม</label>
                     <textarea class="form-control" id="details" rows="4" name="details"></textarea>

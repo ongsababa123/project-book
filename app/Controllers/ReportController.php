@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\BookModels;
 use App\Models\HistoryModels;
+use App\Models\CategoryModels;
 use Config\Services;
 use Mpdf\Mpdf;
 
@@ -12,7 +13,11 @@ class ReportController extends BaseController
     public function report_index()
     {
         $BookModels = new BookModels();
+        $CategoryModels = new CategoryModels();
         $data['book'] = $BookModels->findAll();
+        foreach ($data['book'] as $key => $value) {
+            $data['book'][$key]['category'] = $CategoryModels->where('id_category', $value['category_id'])->select('name_category')->first();
+        }
         echo view('dashboard/layout/header');
         echo view('dashboard/report', $data);
     }

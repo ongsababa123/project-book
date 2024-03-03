@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('/dashboard/index'); ?>">หน้าหลัก</a></li>
                             <li class="breadcrumb-item active"><a>รายงานยอดเช่า</a></li>
                         </ol>
                     </div>
@@ -151,6 +151,7 @@
                                     <thead>
                                         <tr>
                                             <th>ชื่อหนังสือ</th>
+                                            <!-- <th>ประเภท</th> -->
                                             <th>ราคาเช่า</th>
                                             <th>จำนวนที่เช่า (รวม)</th>
                                             <th>ยอดเช่า (รวม)</th>
@@ -158,10 +159,13 @@
                                     </thead>
                                     <tbody>
                                         <?php foreach ($book as $key => $value): ?>
-                                            <tr>
+                                            <tr id="tr_<?= $value['id_book']; ?>">
                                                 <td>
                                                     <?= $value['name_book']; ?>
                                                 </td>
+                                                <!-- <td>
+                                                    <?= $value['category']['name_category']; ?>
+                                                </td> -->
                                                 <td>
                                                     <?= $value['price']; ?> บาท
                                                 </td>
@@ -286,6 +290,8 @@
         }
     </script>
     <script>
+        var book = <?php echo json_encode($book); ?>;
+        // console.log(book);
         function getdata(type_data) {
             var baseUrl = "<?= base_url('dashboard/report/getdata/') ?>";
             var dayInput = $("#day_input").val();
@@ -383,7 +389,6 @@
                             data_count_history_set.push(count_history);
                             data_count_price_set.push(count_price_sum);
                         });
-
                         if (!areAllZeros(data_count_history_set)) {
                             var dataset1 = {
                                 label: element_bookdata.name_book,
@@ -428,7 +433,11 @@
                                 }
                             });
                         });
-
+                        if (count_history == 0) {
+                            $("#tr_" + element_bookdata.id_book).hide();
+                        } else {
+                            $("#tr_" + element_bookdata.id_book).show();
+                        }
                         $("#count_history_" + element_bookdata.id_book).text(count_history + ' ครั้ง');
                         $("#count_price_sum_" + element_bookdata.id_book).text(count_price_sum + ' บาท');
                     });
@@ -460,14 +469,66 @@
                         barChartCanvasCountSumPrice.chart.destroy();
                     }
 
+                    // กรอง labels เพื่อเลือกเฉพาะ labels ที่มี dataset data ที่ไม่เป็น 0
+                    const filteredLabels = areaChartData_book.labels.filter((_, index) =>
+                        areaChartData_book.datasets.some(dataset => dataset.data[index] !== 0)
+                    );
+
+                    // กรอง datasets เพื่อเลือกเฉพาะ dataset ที่มีค่าไม่เป็น 0 และมีค่ามากกว่า 1
+                    const filteredDatasets = areaChartData_book.datasets.map(dataset => ({
+                        label: dataset.label,
+                        data: dataset.data.filter(data => data > 0),
+                        backgroundColor: dataset.backgroundColor,
+                        borderColor: dataset.borderColor,
+                        pointRadius: false,
+                        pointColor: dataset.pointColor,
+                        pointStrokeColor: dataset.pointStrokeColor,
+                        pointHighlightFill: dataset.pointHighlightFill,
+                        pointHighlightStroke: dataset.pointHighlightStroke,
+                    }));
+
+                    // สร้างข้อมูลใหม่ที่ประกอบด้วย labels และ datasets ที่ผ่านการกรอง
+                    const filteredChartData = {
+                        labels: filteredLabels,
+                        datasets: filteredDatasets,
+
+                    };
+
+                    // สร้างกราฟโดยใช้ข้อมูลที่ผ่านการกรอง
                     barChartCanvasCountSale.chart = new Chart(barChartCanvasCountSale, {
                         type: 'bar',
-                        data: areaChartData_book,
+                        data: filteredChartData,
                         options: barChartOptions
                     });
+
+
+                    // กรอง labels เพื่อเลือกเฉพาะ labels ที่มี dataset data ที่ไม่เป็น 0
+                    const filteredLabels2 = areaChartData_book_sum_price.labels.filter((_, index) =>
+                        areaChartData_book_sum_price.datasets.some(dataset => dataset.data[index] !== 0)
+                    );
+
+                    // กรอง datasets เพื่อเลือกเฉพาะ dataset ที่มีค่าไม่เป็น 0 และมีค่ามากกว่า 1
+                    const filteredDatasets2 = areaChartData_book_sum_price.datasets.map(dataset => ({
+                        label: dataset.label,
+                        data: dataset.data.filter(data => data > 0),
+                        backgroundColor: dataset.backgroundColor,
+                        borderColor: dataset.borderColor,
+                        pointRadius: false,
+                        pointColor: dataset.pointColor,
+                        pointStrokeColor: dataset.pointStrokeColor,
+                        pointHighlightFill: dataset.pointHighlightFill,
+                        pointHighlightStroke: dataset.pointHighlightStroke,
+                    }));
+
+                    // สร้างข้อมูลใหม่ที่ประกอบด้วย labels และ datasets ที่ผ่านการกรอง
+                    const filteredChartData2 = {
+                        labels: filteredLabels2,
+                        datasets: filteredDatasets2,
+
+                    };
                     barChartCanvasCountSumPrice.chart = new Chart(barChartCanvasCountSumPrice, {
                         type: 'bar',
-                        data: areaChartData_book_sum_price,
+                        data: filteredChartData2,
                         options: barChartOptions
                     });
                 }
@@ -507,7 +568,7 @@
             window.open(baseUrl, '_blank');
         }
     </script>
-        <script>
+    <script>
         function preventSpacebar(e) {
             if (e.keyCode === 32) {
                 e.preventDefault();

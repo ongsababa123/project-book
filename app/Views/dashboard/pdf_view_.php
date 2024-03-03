@@ -116,23 +116,25 @@
             $sum = 0;
             ?>
             <?php foreach ($book as $key => $value): ?>
-                <tr>
-                    <td>
-                        <?= $count++; ?>
-                    </td>
-                    <td>
-                        <?= $value['name_book']; ?>
-                    </td>
-                    <td>
-                        <?= $value['price']; ?> บาท
-                    </td>
-                    <td>
-                        <?= $value['count_history']; ?> ครั้ง
-                    </td>
-                    <td>
-                        <?= $value['count_price_sum']; ?> บาท
-                    </td>
-                </tr>
+                <?php if ($value['count_history'] != 0): ?>
+                    <tr>
+                        <td>
+                            <?= $count++; ?>
+                        </td>
+                        <td>
+                            <?= $value['name_book']; ?>
+                        </td>
+                        <td>
+                            <?= $value['price']; ?> บาท
+                        </td>
+                        <td>
+                            <?= $value['count_history']; ?> ครั้ง
+                        </td>
+                        <td>
+                            <?= $value['count_price_sum']; ?> บาท
+                        </td>
+                    </tr>
+                <?php endif; ?>
                 <?php
                 $total += $value['count_history'];
                 $sum += $value['count_price_sum'];

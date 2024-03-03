@@ -239,8 +239,8 @@
             Swal.fire({
                 title: text,
                 icon: 'question',
-                            showCancelButton: true,
-            cancelButtonText: "ยกเลิก",
+                showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
                 confirmButtonColor: "#28a745",
                 confirmButtonText: "ตกลง",
             }).then((result) => {
@@ -330,10 +330,17 @@
                     {
                         'data': null,
                         'render': function (data, type, row, meta) {
-                            var imageSrc = 'data:image/png;base64,' + data.pic_book;
-                            return '<a href="' + imageSrc + '" data-toggle="lightbox" id="image-preview-extra">' +
-                                '<img class="img-fluid" style="width: 15rem; height: 12rem" src="' + imageSrc + '" alt="white sample" id="image-preview" />' +
-                                '</a>';
+                            if (data.pic_book == null) {
+                                return '<a href="<?= base_url('dist/img/logo11.png') ?>" data-toggle="lightbox" id="image-preview-extra">' +
+                                    '<img class="img-fluid" style="width: 15rem;" src="<?= base_url('dist/img/logo11.png') ?>" alt="white sample" id="image-preview" />' +
+                                    '</a>';
+                            } else {
+                                var imageSrc = 'data:image/png;base64,' + data.pic_book;
+                                return '<a href="' + imageSrc + '" data-toggle="lightbox" id="image-preview-extra">' +
+                                    '<img class="img-fluid" style="width: 15rem; height: 12rem" src="' + imageSrc + '" alt="white sample" id="image-preview" />' +
+                                    '</a>';
+                            }
+
                         }
                     },
                     {

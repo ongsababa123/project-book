@@ -81,23 +81,25 @@
                         $sum = 0;
                         ?>
                         <?php foreach ($book as $key => $value): ?>
-                            <tr>
-                                <td class="text-center">
-                                    <?= $count++; ?>
-                                </td>
-                                <td>
-                                    <?= $value['name_book']; ?>
-                                </td>
-                                <td class="text-center">
-                                    <?= $value['price']; ?> บาท
-                                </td>
-                                <td class="text-center">
-                                    <?= $value['count_history']; ?> ครั้ง
-                                </td>
-                                <td class="text-center">
-                                    <?= $value['count_price_sum']; ?> บาท
-                                </td>
-                            </tr>
+                            <?php if ($value['count_history'] != 0): ?>
+                                <tr>
+                                    <td class="text-center">
+                                        <?= $count++; ?>
+                                    </td>
+                                    <td>
+                                        <?= $value['name_book']; ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <?= $value['price']; ?> บาท
+                                    </td>
+                                    <td class="text-center">
+                                        <?= $value['count_history']; ?> ครั้ง
+                                    </td>
+                                    <td class="text-center">
+                                        <?= $value['count_price_sum']; ?> บาท
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                             <?php
                             $total = $total + $value['count_history'];
                             $sum = $sum + $value['count_price_sum'];

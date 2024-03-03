@@ -141,7 +141,7 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                 function generateBookCard($book)
                 {
                     // Set default image source
-                    $imageSrc = base_url('dist/img/image-preview.png');
+                    $imageSrc = base_url('dist/img/logo1.png');
 
                     // Check if the book has an image
                     if ($book['pic_book'] !== null) {

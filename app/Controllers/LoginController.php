@@ -36,6 +36,7 @@ class LoginController extends BaseController
                         'id' => $data['id_user'],
                         'name' => $data['name'],
                         'lastname' => $data['lastname'],
+                        'email' => $data['email_user'],
                         'type' => $data['type_user'],
                         'isLoggedIn' => TRUE
                     ];
@@ -69,6 +70,7 @@ class LoginController extends BaseController
                             'id' => $data['id_user'],
                             'name' => $data['name'],
                             'lastname' => $data['lastname'],
+                            'email' => $data['email_user'],
                             'type' => $data['type_user'],
                             'isLoggedIn' => TRUE
                         ];

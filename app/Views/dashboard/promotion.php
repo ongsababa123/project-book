@@ -192,7 +192,7 @@
                 } else {
                     $(".modal-body #answer_6").prop('checked', true);
                 }
-                
+
                 $(".modal-body #id_book_cat").prop("disabled", true);
                 $(".modal-body #id_book_cat_2").prop("disabled", true);
                 $(".modal-body #answer_1").prop("disabled", true);
@@ -317,7 +317,9 @@
                         'class': 'text-center',
                         'render': function (data, type, row, meta) {
                             if (data.image_promotion == null) {
-                                return "ไม่มีรูปภาพ"
+                                return '<a href="<?= base_url('dist/img/logo11.png') ?>" data-toggle="lightbox" id="image-preview-extra">' +
+                                    '<img class="img-fluid" style="width: 15rem;" src="<?= base_url('dist/img/logo11.png') ?>" alt="white sample" id="image-preview" />' +
+                                    '</a>';
                             } else {
                                 var imageSrc = 'data:image/png;base64,' + data.image_promotion;
                                 return '<a href="' + imageSrc + '" data-toggle="lightbox" id="image-preview-extra">' +

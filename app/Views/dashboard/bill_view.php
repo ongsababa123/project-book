@@ -122,46 +122,48 @@ $book_total = 0;
                                             </td>
                                         </tr>
                                         <?php if (!empty($data_history[0]['data_promotion'])): ?>
-                                            <?php foreach ($data_history[0]['data_promotion'] as $index_pro => $element_pro): ?>
-                                                <?php
-                                                if ($element_pro['type_sale'] == '1') {
-                                                    $text_pro = ' บาท';
-                                                } elseif ($element_pro['type_sale'] == '2') {
-                                                    $text_pro = ' %';
-                                                }
-                                                ?>
-                                                <?php if ($element_pro['type_promotion'] == '1'): ?>
-                                                    <?php if ($element_pro['id_book_cat'] == $matching_book['id_book']): ?>
-                                                        <tr>
-                                                            <td class="text-left border-0" width="5%">
-                                                            </td>
-                                                            <td class="text-left border-0">
-                                                            </td>
-                                                            <td class="text-left border-0">
-                                                                **ส่วนลดหนังสือ
-                                                            </td>
-                                                            <td class="text-right border-0">
-                                                                <?= $element_pro['number_cal'] . $text_pro ?>
-                                                            </td>
-                                                        </tr>
+                                            <?php if (!empty($data_history[0]['id_promotion'])): ?>
+                                                <?php foreach ($data_history[0]['data_promotion'] as $index_pro => $element_pro): ?>
+                                                    <?php
+                                                    if ($element_pro['type_sale'] == '1') {
+                                                        $text_pro = ' บาท';
+                                                    } elseif ($element_pro['type_sale'] == '2') {
+                                                        $text_pro = ' %';
+                                                    }
+                                                    ?>
+                                                    <?php if ($element_pro['type_promotion'] == '1'): ?>
+                                                        <?php if ($element_pro['id_book_cat'] == $matching_book['id_book']): ?>
+                                                            <tr>
+                                                                <td class="text-left border-0" width="5%">
+                                                                </td>
+                                                                <td class="text-left border-0">
+                                                                </td>
+                                                                <td class="text-left border-0">
+                                                                    **ส่วนลดหนังสือ
+                                                                </td>
+                                                                <td class="text-right border-0">
+                                                                    <?= $element_pro['number_cal'] . $text_pro ?>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endif; ?>
+                                                    <?php elseif ($element_pro['type_promotion'] == '2'): ?>
+                                                        <?php if ($element_pro['id_book_cat'] == $matching_book['category_id']): ?>
+                                                            <tr>
+                                                                <td class="text-left border-0" width="5%">
+                                                                </td>
+                                                                <td class="text-left border-0">
+                                                                </td>
+                                                                <td class="text-left border-0">
+                                                                    **ส่วนลดหมวดหมู่
+                                                                </td>
+                                                                <td class="text-right border-0">
+                                                                    <?= $element_pro['number_cal'] . $text_pro ?>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endif; ?>
                                                     <?php endif; ?>
-                                                <?php elseif ($element_pro['type_promotion'] == '2'): ?>
-                                                    <?php if ($element_pro['id_book_cat'] == $matching_book['category_id']): ?>
-                                                        <tr>
-                                                            <td class="text-left border-0" width="5%">
-                                                            </td>
-                                                            <td class="text-left border-0">
-                                                            </td>
-                                                            <td class="text-left border-0">
-                                                                **ส่วนลดหมวดหมู่
-                                                            </td>
-                                                            <td class="text-right border-0">
-                                                                <?= $element_pro['number_cal'] . $text_pro ?>
-                                                            </td>
-                                                        </tr>
-                                                    <?php endif; ?>
-                                                <?php endif; ?>
-                                            <?php endforeach; ?>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -171,11 +173,13 @@ $book_total = 0;
                     <hr class="border border-dark">
                     <?php if (!empty($data_history[0]['data_promotion'])): ?>
                         <?php $check = 0 ?>
-                        <?php foreach ($data_history[0]['data_promotion'] as $index_pro => $element_pro): ?>
-                            <?php if ($element_pro['type_promotion'] != '1' && $element_pro['type_promotion'] != '2'): ?>
-                                <?php $check = 1 ?>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
+                        <?php if (!empty($data_history[0]['id_promotion'])): ?>
+                            <?php foreach ($data_history[0]['data_promotion'] as $index_pro => $element_pro): ?>
+                                <?php if ($element_pro['type_promotion'] != '1' && $element_pro['type_promotion'] != '2'): ?>
+                                    <?php $check = 1 ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     <?php endif; ?>
                     <?php if ($check == 1): ?>
                         <div class="row">

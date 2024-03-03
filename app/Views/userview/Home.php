@@ -106,7 +106,7 @@
                                 <?php
                                 // Assuming $book['pic_book'] contains the base64-encoded image data
                                 if ($value['pic_book'] === null) {
-                                    $imageSrc = base_url('dist/img/image-preview.png');
+                                    $imageSrc = base_url('dist/img/logo1.png');
                                 } else {
                                     $base64Data = $value['pic_book'];
                                     $decodedData = base64_decode($base64Data);

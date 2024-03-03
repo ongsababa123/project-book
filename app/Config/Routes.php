@@ -89,9 +89,6 @@ $routes->group("dashboard/book/", ['filter' => ['CartCheck', 'HistoryCheck', 'Pr
 
     $routes->match(['get', 'post'], 'book_stock_all/index', 'BookController::index_book_stock_all', ['filter' => ['authGuard', 'ISLogin']]); //display
     $routes->match(['get', 'post'], 'book_stock_all/getdata', 'BookController::get_all_book_and_count_all_type');  //getData
-
-
-
 });
 
 $routes->group("dashboard/category/", ['filter' => ['CartCheck', 'HistoryCheck', 'PromotionCheck']], function ($routes) {
