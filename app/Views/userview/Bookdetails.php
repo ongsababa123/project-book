@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-5 col-md-12 text-center">
                     <?php
-                    $imageSrc = base_url('dist/img/image-preview.png');
+                    $imageSrc = base_url('dist/img/logo1.png');
                     if ($bookData[0]['pic_book'] !== null) {
                         $base64Data = $bookData[0]['pic_book'];
                         $decodedData = base64_decode($base64Data);
