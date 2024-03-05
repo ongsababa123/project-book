@@ -24,10 +24,14 @@ class PromotionController extends BaseController
     {
         $PromotionModels = new PromotionModels();
         $profile_picture = $this->request->getFile('uploadImage');
+        $status = $this->request->getVar('status_promotion');
         $data = [
             'date_end' => $this->request->getVar('end_date_promotion'),
-            'status' => $this->request->getVar('status_promotion'),
+            'status' => $status
         ];
+        if ($status == '1') {
+            $this->change_status($id_promotion);
+        }
         if ($profile_picture->isValid() && !$profile_picture->hasMoved()) {
             $validationRules = [
                 'uploadImage' => 'max_size[uploadImage,10240]', // 10MB in kilobytes
@@ -75,6 +79,17 @@ class PromotionController extends BaseController
         }
 
         return $this->response->setJSON($response);
+    }
+
+    public function change_status($id_promotion = null)
+    {
+        $PromotionModels = new PromotionModels();
+        $data['promotion'] = $PromotionModels->findAll();
+        foreach ($data['promotion'] as $key => $value) {
+            if ($value['id_promotion'] != $id_promotion) {
+                $PromotionModels->update($value['id_promotion'], ['status' => '0']);
+            }
+        }
     }
 
     public function get_data_table()
@@ -153,6 +168,8 @@ class PromotionController extends BaseController
         }
         $check = $PromotionModels->save($data);
         if ($check) {
+            $id_promotion = $PromotionModels->getInsertID();
+            $this->change_status($id_promotion);
             $response = [
                 'success' => true,
                 'message' => 'สร้างข้อมูลสำเร็จ',

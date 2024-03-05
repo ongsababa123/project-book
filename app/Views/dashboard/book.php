@@ -393,7 +393,9 @@
                             return `<button type="button" class="btn btn-block-tool btn-info btn-sm mb-2" data-toggle="modal" data-target="#modal-default"
                                 onclick="load_modal(2, '${encodedRowData}')">รายละเอียด</button>
                                 <hr>
-                                <a type="button" class="btn btn-block-tool btn-warning btn-sm mb-2" target="_blank" href="<?= site_url('dashboard/book/stock/index/'); ?>${data.id_book}">จัดการคลัง</a>`;
+                                <a type="button" class="btn btn-block-tool btn-warning btn-sm mb-2" target="_blank" href="<?= site_url('dashboard/book/stock/index/'); ?>${data.id_book}">จัดการคลัง</a>
+                                <hr>
+                                <a type="button" class="btn btn-block-tool btn-primary btn-sm mb-2" target="_blank" href="<?= site_url('dashboard/book/review/index/'); ?>${data.id_book}">รีวิวหนังสือ</a>`;
                         }
                     },
                 ]

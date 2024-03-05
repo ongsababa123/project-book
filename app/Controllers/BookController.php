@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\CategoryModels;
 use App\Models\BookModels;
 use App\Models\StockBookModels;
+use App\Models\ReviewBookModels;
+use App\Models\UserModels;
 use App\Controllers\HistoryController;
 
 class BookController extends BaseController
@@ -492,6 +494,49 @@ class BookController extends BaseController
             'data' => $data,
             'searchValue' => $searchValue,
         ];
+
+        return $this->response->setJSON($response);
+    }
+
+    public function review_index($id_book = null)
+    {
+        $BookModels = new BookModels();
+        $ReviewBookModels = new ReviewBookModels();
+        $UserModels = new UserModels();
+        $data['bookData'] = $BookModels->where('id_book', $id_book)->first();
+        $data['reviewData'] = $ReviewBookModels->where('id_book', $id_book)->findAll();
+        foreach ($data['reviewData'] as $key => $value) {
+            $data['reviewData'][$key]['user'] = $UserModels->where('id_user', $value['id_user'])->first();
+        }
+        echo view('dashboard/layout/header');
+        echo view('dashboard/review_book', $data);
+    }
+
+    public function create_review($id_book = null , $id_history = null)
+    {
+        helper('form');
+        $ReviewBookModels = new ReviewBookModels();
+        $data = [
+            'id_book' => $id_book,
+            'id_history' => $id_history,
+            'id_user' => session()->get('id'),
+            'rating_value' => $this->request->getVar('rating_value'),
+            'comment' => $this->request->getVar('comment'),
+        ];
+        $check = $ReviewBookModels->insert($data);
+        if ($check) {
+            $response = [
+                'success' => true,
+                'message' => 'บันทึกคะแนนเรียบร้อย',
+                'reload' => true,
+            ];
+        }else{
+            $response = [
+                'success' => false,
+                'message' => 'บันทึกคะแนนไม่สําเร็จ',
+                'reload' => false,
+            ];
+        }
 
         return $this->response->setJSON($response);
     }

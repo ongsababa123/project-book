@@ -22,6 +22,10 @@
         background-color: #86d9ab;
         border: #86d9ab;
     }
+
+    .fa-star.checked {
+        color: #FFD43B;
+    }
 </style>
 
 <div class="main" style="background-color: #bddce5;">
@@ -419,6 +423,7 @@
                             <div id="collapseTab3_<?= $value['id_history'] ?>" class="collapse">
                                 <div class="p-4 border mb-3" style="background-color: white;">
                                     <?php $id_books = explode(',', $value['id_book']); ?>
+                                    <?php $check_id = 0; ?>
                                     <?php foreach ($bookData as $keybookData => $valuebookData): ?>
                                         <?php if (in_array($valuebookData['id_book'], $id_books)): ?>
                                             <div class="row mt-2">
@@ -462,6 +467,12 @@
                                                     </h6>
                                                     <a href="<?= site_url('/book/details/') . $valuebookData['id_book'] ?>"
                                                         class="btn btn-default ">เพิ่มเติม</a>
+                                                    <?php if (!$value['data_review'][$check_id]): ?>
+                                                    <button class="btn btn-warning" data-toggle="modal" data-target="#review_book"
+                                                        onclick="load_review(<?= $valuebookData['id_book'] ?>, <?= $value['id_history'] ?>)"
+                                                        id="button_modal" name="button_modal">ให้คะแนนหนังสือ</button>
+                                                    <?php endif; ?>
+                                                    <?php $check_id++; ?>
                                                 </div>
                                             </div>
                                         <?php endif; ?>
@@ -523,6 +534,48 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="review_book" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">ให้คะแนนหนังสือ</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_create_review" action="javascript:void(0)" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>คะแนน</label>
+                        <div>
+                            <i class="far fa-star fas checked" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                            <input type="hidden" name="rating_value" id="rating_value">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">ความคิดเห็น</label>
+                            <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <input type="text" name="url_route" id="url_route" hidden>
+                </div>
+                <div class="modal-footer">
+                    <div class="left-side">
+                        <button type="submit" class="btn btn-success btn-link">บันทึกคะแนน</button>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="right-side">
+                        <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">ยกเลิก</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -683,6 +736,26 @@
     }
 </script>
 <script>
+    function load_review(id_book, id_history) {
+        document.getElementById('rating_value').value = 1;
+        const stars = document.querySelectorAll('.fa-star');
+
+        stars.forEach(s => {
+            if (s.getAttribute('data-rating') !== "1") {
+                s => s.classList.remove('fas')
+                s => s.classList.remove('checked')
+            }
+        });
+        $("#comment").val("");
+        $("#url_route").val("dashboard/book/review/create/" + id_book + '/' + id_history);
+    }
+    $("#form_create_review").on('submit', function (e) {
+        e.preventDefault();
+        const urlRouteInput = document.getElementById("url_route");
+        action_(urlRouteInput.value, 'form_create_review');
+    });
+</script>
+<script>
     function confirm_Alert(text, url) {
         Swal.fire({
             title: text,
@@ -728,6 +801,86 @@
                             showConfirmButton: true
                         });
                     }
+                });
+            }
+        });
+    }
+</script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll('.fa-star');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                const ratingValue = this.getAttribute('data-rating');
+                document.getElementById('rating_value').value = ratingValue;
+                // ตรวจสอบเพื่อเพิ่มหรือลบ class 'checked' เพื่อแสดงว่าดาวไหนถูกเลือก
+                stars.forEach(s => {
+                    if (ratingValue !== "1" || s.getAttribute('data-rating') === "1") {
+                        stars.forEach(s => s.classList.remove('fas'));
+                        stars.forEach(s => s.classList.remove('checked'));
+                    }
+                });
+                for (let i = 0; i < ratingValue; i++) {
+                    stars[i].classList.add('fas');
+                    stars[i].classList.add('checked');
+                }
+            });
+        });
+    });
+</script>
+<script>
+    function action_(url, form) {
+        var formData = new FormData(document.getElementById(form));
+        $.ajax({
+            url: '<?= base_url() ?>' + url,
+            type: "POST",
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "JSON",
+            beforeSend: function () {
+                // Show loading indicator here
+                var loadingIndicator = Swal.fire({
+                    title: 'กําลังดําเนินการ...',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            },
+            success: function (response) {
+                Swal.close();
+                console.log(response);
+                if (response.success) {
+                    Swal.fire({
+                        title: response.message,
+                        icon: 'success',
+                        showConfirmButton: false,
+                        allowOutsideClick: true
+                    });
+                    setTimeout(() => {
+                        if (response.reload) {
+                            window.location.reload();
+                        }
+                    }, 1000);
+                } else {
+                    Swal.fire({
+                        title: response.image_error,
+                        icon: 'error',
+                        confirmButtonText: "ตกลง",
+                        showConfirmButton: true,
+                        width: '55%'
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    title: "เกิดข้อผิดพลาด",
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonText: "ตกลง",
                 });
             }
         });

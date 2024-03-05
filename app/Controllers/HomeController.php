@@ -13,6 +13,7 @@ use App\Models\DetailsModels;
 use App\Models\DayrentModels;
 use App\Models\StockBookModels;
 use App\Controllers\HistoryController;
+use App\Models\ReviewBookModels;
 
 class HomeController extends BaseController
 {
@@ -73,6 +74,7 @@ class HomeController extends BaseController
         $PromotionModels = new PromotionModels();
         $DetailsModels = new DetailsModels();
         $StockBookModels = new StockBookModels();
+        $ReviewBookModels = new ReviewBookModels();
         $data_details['details'] = $DetailsModels->findAll();
         $data['userData'] = $UserModels->where('id_user', session()->get('id'))->findAll();
 
@@ -103,6 +105,14 @@ class HomeController extends BaseController
                 'count_stock' => $count_stock
             ];
             $data['bookData'][$key] = array_merge($data['bookData'][$key], $numver);
+
+            $review_data = $ReviewBookModels->where('id_book', $value['id_book'])->select('rating_value')->findAll();
+            $averageRating = count($review_data) > 0 ? array_sum(array_column($review_data, 'rating_value')) / count($review_data) : 0;
+            $data['bookData'][$key] = array_merge($data['bookData'][$key], [
+                'averageRating' => $averageRating
+            ]);
+            // $averageRating = count($data['review_data']) > 0 ? array_sum(array_column($data['review_data'], 'rating_value')) / count($data['review_data']) : 0;
+
         }
         // เรียงลำดับอาร์เรย์ bookData ตามชื่อหนังสือ (คาดว่าชื่อหนังสือถูกเก็บไว้ในฟิลด์ที่ชื่อ 'name' ในฐานข้อมูล)
         $this->sortBookData($data['bookData']);
@@ -135,6 +145,7 @@ class HomeController extends BaseController
         $UserModels = new UserModels();
         $DetailsModels = new DetailsModels();
         $StockBookModels = new StockBookModels();
+        $ReviewBookModels = new ReviewBookModels();
         $data_details['details'] = $DetailsModels->findAll();
         $data['bookData'] = $BookModels->where('id_book', $id_book)->findAll();
         $data['categoryData'] = $CategoryModels->where('id_category', $data['bookData'][0]['category_id'])->findAll();
@@ -146,6 +157,14 @@ class HomeController extends BaseController
                 'count_stock' => $count_stock
             ];
             $data['bookData'][$key] = array_merge($data['bookData'][$key], $numver);
+        }
+        $data['review_data'] = $ReviewBookModels->where('id_book', $id_book)->findAll();
+        $averageRating = count($data['review_data']) > 0 ? array_sum(array_column($data['review_data'], 'rating_value')) / count($data['review_data']) : 0;
+        $data['averageRating'] = $averageRating;
+        if ($data['review_data'] != null) {
+            foreach ($data['review_data'] as $key => $value) {
+                $data['review_data'][$key]['user_data'] = $UserModels->where('id_user', $value['id_user'])->first();
+            }
         }
         echo view('userview/layout/header_base', $data_details);
         echo view('userview/Bookdetails', $data);
@@ -303,6 +322,7 @@ class HomeController extends BaseController
         $PromotionModels = new PromotionModels();
         $LateFeesModels = new LateFeesModels();
         $DetailsModels = new DetailsModels();
+        $ReviewBookModels = new ReviewBookModels();
         $data_details['details'] = $DetailsModels->findAll();
         // Fetch history data for user with id session()->get('id')
         $data['HistoryData_1'] = $HistoryModels->where('status_his', 1)
@@ -384,7 +404,7 @@ class HomeController extends BaseController
             // Create an array to store promotion data
 
             // Fetch book data for each id
-            foreach ($id_books as $id) {
+            foreach ($id_books as $key2 => $id) {
                 // Check if the book id is not already in the array
                 $bookData = $BookModels->where('id_book', $id)->findAll();
 
@@ -399,7 +419,16 @@ class HomeController extends BaseController
                     // Add the fetched book data with associated category and promotion data to the array
                     $data['bookData'][] = $bookData[0];
                 }
+
+                $check = $ReviewBookModels->where('id_history', $value['id_history'])->where('id_book', $id)->first();
+                if ($check) {
+                    $data['HistoryData_3'][$key]['data_review'][$key2] = true;
+                } else {
+                    $data['HistoryData_3'][$key]['data_review'][$key2] = false;
+                }
             }
+
+
         }
         // Load views
         echo view('userview/layout/header_base', $data_details);

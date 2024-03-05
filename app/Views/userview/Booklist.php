@@ -49,7 +49,7 @@ $searchTerm = isset($_GET['searchBook']) ? $_GET['searchBook'] : '';
 
 // Assuming $bookData is an array of books and $categories is an array of categories
 $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
-    return stripos($book['name_book'], $searchTerm) !== false || empty($searchTerm);
+    return stripos($book['name_book'], $searchTerm) !== false || empty ($searchTerm);
 });
 
 ?>
@@ -179,6 +179,25 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
                                     <span class="badge badge-pill badge-danger">กำลังเช่าอยู่</span>
                                 <?php endif; ?>
                                 <br>
+                                <?php
+                                // Display full stars
+                                if ($book['averageRating'] > 0): ?>
+                                    <?php for ($i = 0; $i < floor($book['averageRating']); $i++): ?>
+                                        <i class="fas fa-star" style="color: #FFD43B;"></i>
+                                    <?php endfor; ?>
+
+                                    <?php if (strpos($book['averageRating'], '.') !== false): ?>
+                                        <i class="fas fa-star-half" style="color: #FFD43B;"></i>
+                                    <?php endif; ?>
+
+                                    <?php for ($i = 0; $i < 5 - floor($book['averageRating']); $i++): ?>
+                                        <i class="far fa-star"></i>
+                                    <?php endfor; ?>
+                                <?php else: ?>
+                                    <?php for ($i = 0; $i < 5; $i++): ?>
+                                    <i class="far fa-star"></i>
+                                    <?php endfor; ?>
+                                <?php endif; ?>
                             </div>
                             <div class="card-footer">
                                 <span class="badge badge-default">คงเหลือในสต๊อก
@@ -247,6 +266,8 @@ $filteredBooks = array_filter($bookData, function ($book) use ($searchTerm) {
 </div>
 
 <script>
+    var HistoryData = <?php echo json_encode($bookData); ?>;
+    console.log(HistoryData);
     $(document).ready(function () {
         var categoryData = <?php echo json_encode($categoryData); ?>;
         var newOption = $('<option>').val(0).text("ทั้งหมด");

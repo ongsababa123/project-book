@@ -89,6 +89,9 @@ $routes->group("dashboard/book/", ['filter' => ['CartCheck', 'HistoryCheck', 'Pr
 
     $routes->match(['get', 'post'], 'book_stock_all/index', 'BookController::index_book_stock_all', ['filter' => ['authGuard', 'ISLogin']]); //display
     $routes->match(['get', 'post'], 'book_stock_all/getdata', 'BookController::get_all_book_and_count_all_type');  //getData
+
+    $routes->match(['get', 'post'], 'review/index/(:num)', 'BookController::review_index/$1', ['filter' => ['authGuard', 'ISLogin']]); //display
+    $routes->match(['get', 'post'], 'review/create/(:num)/(:num)', 'BookController::create_review/$1/$2');  //create review
 });
 
 $routes->group("dashboard/category/", ['filter' => ['CartCheck', 'HistoryCheck', 'PromotionCheck']], function ($routes) {

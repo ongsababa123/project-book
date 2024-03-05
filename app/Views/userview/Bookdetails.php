@@ -1,4 +1,6 @@
-<title>หนังสือ <?= $bookData[0]['name_book'] ?></title>
+<title>หนังสือ
+    <?= $bookData[0]['name_book'] ?>
+</title>
 <style>
     .center {
         padding: 100px 0;
@@ -8,7 +10,7 @@
 </style>
 <div class="main" style="background-color: #bddce5;">
     <br>
-    <div class="section mb-6 px-3" style="background-color: #bddce5; padding-bottom: 14rem;">
+    <div class="section px-3" style="background-color: #bddce5; ">
         <div class="p-4 border mb-3" style="background-color: white;">
             <div class="row">
                 <div class="col-lg-5 col-md-12 text-center">
@@ -59,7 +61,9 @@
                         <?= $bookData[0]['price_book'] ?> บาท
                     </p>
                     <p class="description">
-                    <span class="badge badge-default">คงเหลือในสต๊อก <?= $bookData[0]['count_stock'] ?> เล่ม</span>
+                        <span class="badge badge-default">คงเหลือในสต๊อก
+                            <?= $bookData[0]['count_stock'] ?> เล่ม
+                        </span>
                     </p>
                     <br>
                     <?php if (session()->get('isLoggedIn')): ?>
@@ -75,8 +79,322 @@
                 </div>
             </div>
         </div>
+        <div class="p-4 border mb-3" style="background-color: white;">
+            <h3><strong>คะแนนของหนังสือ</strong></h3>
+            <div class="row">
+                <div class="col-2">
+                    <strong>
+                        <p style="font-size: 2vw;">
+                            <?= $averageRating ?> เต็ม 5
+                        </p>
+                    </strong>
+                    <?php
+                    // Display full stars
+                    for ($i = 0; $i < floor($averageRating); $i++): ?>
+                        <i class="fas fa-star" style="color: #63E6BE;"></i>
+                    <?php endfor;
+
+                    // Display half star if applicable
+                    if (strpos($averageRating, '.') !== false): ?>
+                        <i class="fas fa-star-half" style="color: #63E6BE;"></i>
+                    <?php endif; ?>
+
+                    <?php for ($i = 0; $i < 5 - floor($averageRating); $i++): ?>
+                        <i class="far fa-star"></i>
+                    <?php endfor; ?>
+                </div>
+
+                <?php
+                $count_1 = 0;
+                $count_2 = 0;
+                $count_3 = 0;
+                $count_4 = 0;
+                $count_5 = 0;
+                $count_all = 0;
+                if ($review_data) {
+                    foreach ($review_data as $review) {
+                        if ($review['rating_value'] == 1) {
+                            $count_1++;
+                        } else if ($review['rating_value'] == 2) {
+                            $count_2++;
+                        } else if ($review['rating_value'] == 3) {
+                            $count_3++;
+                        } else if ($review['rating_value'] == 4) {
+                            $count_4++;
+                        } else if ($review['rating_value'] == 5) {
+                            $count_5++;
+                        }
+                        $count_all++;
+                    }
+                }
+                ?>
+                <div class="col-10">
+                    <button type="button" class="btn btn-secondary active ml-2" id="tab1" data-toggle="pill" name="tab_"
+                        href="#tabContent1" onclick="toggleActive(this.id)">ทั้งหมด (
+                        <?= $count_all ?>)
+                    </button>
+                    <button type="button" class="btn btn-secondary ml-2" id="tab2" data-toggle="pill" name="tab_"
+                        href="#tabContent2" onclick="toggleActive(this.id)">5 ดาว (
+                        <?= $count_5 ?>)
+                    </button>
+                    <button type="button" class="btn btn-secondary ml-2" id="tab3" data-toggle="pill" name="tab_"
+                        href="#tabContent3" onclick="toggleActive(this.id)">4 ดาว (
+                        <?= $count_4 ?>)
+                    </button>
+                    <button type="button" class="btn btn-secondary ml-2" id="tab4" data-toggle="pill" name="tab_"
+                        href="#tabContent4" onclick="toggleActive(this.id)">3 ดาว (
+                        <?= $count_3 ?>)
+                    </button>
+                    <button type="button" class="btn btn-secondary ml-2" id="tab5" data-toggle="pill" name="tab_"
+                        href="#tabContent5" onclick="toggleActive(this.id)">2 ดาว (
+                        <?= $count_2 ?>)
+                    </button>
+                    <button type="button" class="btn btn-secondary ml-2" id="tab6" data-toggle="pill" name="tab_"
+                        href="#tabContent6" onclick="toggleActive(this.id)">1 ดาว (
+                        <?= $count_1 ?>)
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tabContent1">
+                    <?php if ($review_data): ?>
+                        <?php foreach ($review_data as $review): ?>
+                            <div class="row pl-5">
+                                <div class="col-1">
+                                    <img src="<?= base_url('dist/img/avatar7.png') ?>" alt="Circle Image"
+                                        class="img-circle img-no-padding img-responsive" width="100%">
+                                </div>
+                                <div class="col-11">
+                                    <p><strong>
+                                            <?= $review['user_data']['name'] ?>
+                                            <?= $review['user_data']['lastname'] ?>
+                                        </strong></p>
+                                    <?php for ($i = 0; $i < $review['rating_value']; $i++) { ?>
+                                        <i class="fas fa-star" style="color: #FFD43B;"></i>
+                                    <?php } ?>
+                                    <?php for ($i = 0; $i < 5 - floor($review['rating_value']); $i++): ?>
+                                        <i class="far fa-star"></i>
+                                    <?php endfor; ?>
+                                    <p class="description">
+                                        <?= $review['date_time'] ?>
+                                    </p>
+                                    <p>
+                                        <?= $review['comment'] ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>ยังไม่มีความคิดเห็น</p>
+                    <?php endif; ?>
+                </div>
+                <div class="tab-pane fade" id="tabContent2">
+                    <?php if ($review_data): ?>
+                        <?php $check_rating_5 = 0; ?>
+                        <?php foreach ($review_data as $review): ?>
+                            <?php if ($review['rating_value'] == 5): ?>
+                                <?php $check_rating_5++; ?>
+                                <div class="row pl-5">
+                                    <div class="col-1">
+                                        <img src="<?= base_url('dist/img/avatar7.png') ?>" alt="Circle Image"
+                                            class="img-circle img-no-padding img-responsive" width="100%">
+                                    </div>
+                                    <div class="col-11">
+                                        <p><strong>
+                                                <?= $review['user_data']['name'] ?>
+                                                <?= $review['user_data']['lastname'] ?>
+                                            </strong></p>
+                                        <?php for ($i = 0; $i < $review['rating_value']; $i++) { ?>
+                                            <i class="fas fa-star" style="color: #FFD43B;"></i>
+                                        <?php } ?>
+                                        <?php for ($i = 0; $i < 5 - floor($review['rating_value']); $i++): ?>
+                                            <i class="far fa-star"></i>
+                                        <?php endfor; ?>
+                                        <p class="description">
+                                            <?= $review['date_time'] ?>
+                                        </p>
+                                        <p>
+                                            <?= $review['comment'] ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php if ($check_rating_5 == 0): ?>
+                            <p>ยังไม่มีความคิดเห็น</p>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <p>ยังไม่มีความคิดเห็น</p>
+                    <?php endif; ?>
+                </div>
+                <div class="tab-pane fade" id="tabContent3">
+                    <?php if ($review_data): ?>
+                        <?php $check_rating_4 = 0; ?>
+                        <?php foreach ($review_data as $review): ?>
+                            <?php if ($review['rating_value'] == 4): ?>
+                                <?php $check_rating_4++; ?>
+                                <div class="row pl-5">
+                                    <div class="col-1">
+                                        <img src="<?= base_url('dist/img/avatar7.png') ?>" alt="Circle Image"
+                                            class="img-circle img-no-padding img-responsive" width="100%">
+                                    </div>
+                                    <div class="col-11">
+                                        <p><strong>
+                                                <?= $review['user_data']['name'] ?>
+                                                <?= $review['user_data']['lastname'] ?>
+                                            </strong></p>
+                                        <?php for ($i = 0; $i < $review['rating_value']; $i++) { ?>
+                                            <i class="fas fa-star" style="color: #FFD43B;"></i>
+                                        <?php } ?>
+                                        <?php for ($i = 0; $i < 5 - floor($review['rating_value']); $i++): ?>
+                                            <i class="far fa-star"></i>
+                                        <?php endfor; ?>
+                                        <p class="description">
+                                            <?= $review['date_time'] ?>
+                                        </p>
+                                        <p>
+                                            <?= $review['comment'] ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php if ($check_rating_4 == 0): ?>
+                            <p>ยังไม่มีความคิดเห็น</p>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <p>ยังไม่มีความคิดเห็น</p>
+                    <?php endif; ?>
+                </div>
+                <div class="tab-pane fade" id="tabContent4">
+                    <?php if ($review_data): ?>
+                        <?php $check_rating_3 = 0; ?>
+                        <?php foreach ($review_data as $review): ?>
+                            <?php if ($review['rating_value'] == 3): ?>
+                                <?php $check_rating_3++; ?>
+                                <div class="row pl-5">
+                                    <div class="col-1">
+                                        <img src="<?= base_url('dist/img/avatar7.png') ?>" alt="Circle Image"
+                                            class="img-circle img-no-padding img-responsive" width="100%">
+                                    </div>
+                                    <div class="col-11">
+                                        <p><strong>
+                                                <?= $review['user_data']['name'] ?>
+                                                <?= $review['user_data']['lastname'] ?>
+                                            </strong></p>
+                                        <?php for ($i = 0; $i < $review['rating_value']; $i++) { ?>
+                                            <i class="fas fa-star" style="color: #FFD43B;"></i>
+                                        <?php } ?>
+                                        <?php for ($i = 0; $i < 5 - floor($review['rating_value']); $i++): ?>
+                                            <i class="far fa-star"></i>
+                                        <?php endfor; ?>
+                                        <p class="description">
+                                            <?= $review['date_time'] ?>
+                                        </p>
+                                        <p>
+                                            <?= $review['comment'] ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php if ($check_rating_3 == 0): ?>
+                            <p>ยังไม่มีความคิดเห็น</p>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <p>ยังไม่มีความคิดเห็น</p>
+                    <?php endif; ?>
+                </div>
+                <div class="tab-pane fade" id="tabContent5">
+                    <?php if ($review_data): ?>
+                        <?php $check_rating_2 = 0; ?>
+                        <?php foreach ($review_data as $review): ?>
+                            <?php if ($review['rating_value'] == 2): ?>
+                                <?php $check_rating_2++; ?>
+                                <div class="row pl-5">
+                                    <div class="col-1">
+                                        <img src="<?= base_url('dist/img/avatar7.png') ?>" alt="Circle Image"
+                                            class="img-circle img-no-padding img-responsive" width="100%">
+                                    </div>
+                                    <div class="col-11">
+                                        <p><strong>
+                                                <?= $review['user_data']['name'] ?>
+                                                <?= $review['user_data']['lastname'] ?>
+                                            </strong></p>
+                                        <?php for ($i = 0; $i < $review['rating_value']; $i++) { ?>
+                                            <i class="fas fa-star" style="color: #FFD43B;"></i>
+                                        <?php } ?>
+                                        <?php for ($i = 0; $i < 5 - floor($review['rating_value']); $i++): ?>
+                                            <i class="far fa-star"></i>
+                                        <?php endfor; ?>
+                                        <p class="description">
+                                            <?= $review['date_time'] ?>
+                                        </p>
+                                        <p>
+                                            <?= $review['comment'] ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php if ($check_rating_2 == 0): ?>
+                            <p>ยังไม่มีความคิดเห็น</p>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <p>ยังไม่มีความคิดเห็น</p>
+                    <?php endif; ?>
+                </div>
+                <div class="tab-pane fade" id="tabContent6">
+                    <?php if ($review_data): ?>
+                        <?php $check_rating_1 = 0; ?>
+                        <?php foreach ($review_data as $review): ?>
+                            <?php if ($review['rating_value'] == 1): ?>
+                                <?php $check_rating_1++; ?>
+                                <div class="row pl-5">
+                                    <div class="col-1">
+                                        <img src="<?= base_url('dist/img/avatar7.png') ?>" alt="Circle Image"
+                                            class="img-circle img-no-padding img-responsive" width="100%">
+                                    </div>
+                                    <div class="col-11">
+                                        <p><strong>
+                                                <?= $review['user_data']['name'] ?>
+                                                <?= $review['user_data']['lastname'] ?>
+                                            </strong></p>
+                                        <?php for ($i = 0; $i < $review['rating_value']; $i++) { ?>
+                                            <i class="fas fa-star" style="color: #FFD43B;"></i>
+                                        <?php } ?>
+                                        <?php for ($i = 0; $i < 5 - floor($review['rating_value']); $i++): ?>
+                                            <i class="far fa-star"></i>
+                                        <?php endfor; ?>
+                                        <p class="description">
+                                            <?= $review['date_time'] ?>
+                                        </p>
+                                        <p>
+                                            <?= $review['comment'] ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php if ($check_rating_1 == 0): ?>
+                            <p>ยังไม่มีความคิดเห็น</p>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <p>ยังไม่มีความคิดเห็น</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 <script>
     function alert_(id_book) {
         var userData = <?php echo json_encode($userData); ?>;
@@ -171,5 +489,29 @@
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'ตกลง'
         });
+    }
+</script>
+<script>
+    function toggleActive(id) {
+        var buttons = document.querySelectorAll('button[name="tab_"]');
+        buttons.forEach(function (button) {
+            if (button.id === id) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
+
+        // ลบคลาส "active" ทั้งหมดออกจากเนื้อหา
+        var contentElements = document.querySelectorAll('.tab-pane');
+        contentElements.forEach(function (content) {
+            content.classList.remove('active', 'show');
+        });
+
+        // เพิ่มคลาส "active" และ "show" ให้กับเนื้อหาที่ตรงกับปุ่มที่ถูกคลิก
+        var targetContent = document.getElementById('tabContent' + id.substr(3)); // ตัด 'tab' ออกเพื่อให้เหลือเฉพาะตัวเลข
+        if (targetContent) {
+            targetContent.classList.add('active', 'show');
+        }
     }
 </script>
