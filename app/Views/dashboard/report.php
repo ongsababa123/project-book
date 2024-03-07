@@ -50,8 +50,7 @@
                                         <div class="icheck-success d-inline">
                                             <input type="radio" class="score-radio" id="answer_mounth" name="r_"
                                                 value="2" onclick="change_radio(this)">
-                                            <label for="answer_mounth"
-                                                id="label_answer_mounth">ยอดเช่าเดือน</label>
+                                            <label for="answer_mounth" id="label_answer_mounth">ยอดเช่าเดือน</label>
                                         </div>
                                     </div>
                                     <div class="col-2">
@@ -229,6 +228,71 @@
                     </div>
                 </div>
         </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <div class="card card-navy">
+                            <div class="card-header border-0">
+                                <h3 class="card-title">รายการประวัติการเช่า</h3>
+                                <div class="card-tools">
+                                    <a href="#" onclick="exportPdf(3)" class="btn btn-primary">
+                                        <i class="fas fa-download"></i>
+                                        โหลดสรุปรายงานประวัติการเช่า PDF
+                                    </a>
+                                    <a href="#" onclick="exportPdf(4)" class="btn btn-primary">
+                                        <i class="nav-icon fas fa-print"></i>
+                                        ปริ้นงานรายงานสรุปประวัติการเช่า
+                                    </a>
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table id="table_history" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ลำดับบิลที่</th>
+                                            <th>หนังสือที่ยืม</th>
+                                            <th>ค่าเช่ารวมทั้งสิ้น</th>
+                                            <th>ค่ามัดจำรวมทั้งสิ้น</th>
+                                            <th>ส่วนลดโปรโมชั่นรวมทั้งสิ้น</th>
+                                            <th>ค่าปรับรวมทั้งสิ้น</th>
+                                            <th>รวมทั้งสิ้น</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <div class="card card-navy">
+                            <div class="card-header border-0">
+                                <h3 class="card-title">กราฟแท่งเปรียบเทียบประวัติยอดเช่า</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart">
+                                    <canvas id="barChart_count_history"
+                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
     </div>
     <!-- InputMask -->
     <script src="<?= base_url('plugins/moment/moment.min.js'); ?>"></script>
@@ -352,10 +416,14 @@
                         datasets: []
                     };
 
+                    var areaChartData_count_history = {
+                        labels: ['ข้อมูล'],
+                        datasets: []
+                    };
+
                     function areAllZeros(array) {
                         return array.every(value => value === 0);
                     }
-
                     bookData.forEach(element_bookdata => {
                         var data_count_history_set = [];
                         var data_count_price_set = [];
@@ -385,9 +453,9 @@
                                     }
                                 });
                             });
-
                             data_count_history_set.push(count_history);
-                            data_count_price_set.push(count_price_sum);
+
+                            data_count_price_set.push(count_history * element_bookdata.price);
                         });
                         if (!areAllZeros(data_count_history_set)) {
                             var dataset1 = {
@@ -417,12 +485,12 @@
                             areaChartData_book_sum_price.datasets.push(dataset2);
                         }
                     });
-
+                    var html_his;
                     bookData.forEach(element_bookdata => {
                         var count_history = 0;
                         var count_price_sum = 0;
 
-                        data.data.forEach(element_history => {
+                        data.data.forEach((element_history, key) => {
                             var id_book_splite = element_history.id_book.split(",");
                             id_book_splite.forEach(element_id_book => {
                                 if (element_bookdata.id_book == element_id_book) {
@@ -439,7 +507,54 @@
                             $("#tr_" + element_bookdata.id_book).show();
                         }
                         $("#count_history_" + element_bookdata.id_book).text(count_history + ' ครั้ง');
-                        $("#count_price_sum_" + element_bookdata.id_book).text(count_price_sum + ' บาท');
+                        $("#count_price_sum_" + element_bookdata.id_book).text((count_history * element_bookdata.price) + ' บาท');
+                    });
+                    $("#table_history tbody").empty();
+
+                    var data_history_set = [];
+                    var data_history_set_label = [];
+                    data.data.forEach((element_history, key) => {
+                        var count_price_sum;
+                        var late_price;
+                        var price;
+                        var html_book_name = '';
+                        var id_book_splite = element_history.id_book.split(",");
+                        id_book_splite.forEach(element_id_book => {
+                            let matbook = bookData.find(element_book => element_book.id_book === element_id_book);
+                            if (matbook) {
+                                html_book_name += matbook.name_book + '<br/>';
+                            } else {
+                                html_book_name += '';
+                            }
+                        });
+                        price = (parseInt(element_history.sum_rental_price) + parseInt(element_history.sum_deposit_price)) - parseInt(element_history.sum_price_promotion);
+                        late_price = parseInt(element_history.sum_late_price) + parseInt(element_history.sum_day_late_price) + parseInt(element_history.sum_book_des_price);
+                        count_price_sum = price + late_price;
+                        html_his = `<tr id="tr_${key}">
+                                            <td>${key + 1}</td>
+                                            <td>${html_book_name}</td>
+                                            <td>${element_history.sum_rental_price}</td>
+                                            <td>${element_history.sum_deposit_price}</td>
+                                            <td>${element_history.sum_price_promotion}</td>
+                                            <td>${late_price}</td>
+                                            <td>${count_price_sum}</td>
+                                        </tr>`;
+                        $("#table_history").append(html_his);
+                        data_history_set_label.push(element_history.submit_date);
+
+                        var dataset_his = {
+                            label: '(' + (key + 1) + ')',
+                            backgroundColor: getRandomColor(),
+                            borderColor: getRandomColor(),
+                            pointRadius: false,
+                            pointColor: getRandomColor(),
+                            pointStrokeColor: getRandomColor(),
+                            pointHighlightFill: getRandomColor(),
+                            pointHighlightStroke: getRandomColor(),
+                            data: [count_price_sum]
+                        };
+                        areaChartData_count_history.datasets.push(dataset_his);
+                        // areaChartData_count_history.labels.push(element_history.submit_date);
                     });
 
                     var barChartOptions = {
@@ -458,15 +573,20 @@
 
                     var barChartCanvasCountSale = $('#barChart_count_sale')[0];
                     var barChartCanvasCountSumPrice = $('#barChart_count_sum_price')[0];
+                    var barChartCanvasHistory = $('#barChart_count_history')[0];
 
                     barChartCanvasCountSale.getContext('2d').clearRect(0, 0, barChartCanvasCountSale.width, barChartCanvasCountSale.height);
                     barChartCanvasCountSumPrice.getContext('2d').clearRect(0, 0, barChartCanvasCountSumPrice.width, barChartCanvasCountSumPrice.height);
+                    barChartCanvasHistory.getContext('2d').clearRect(0, 0, barChartCanvasHistory.width, barChartCanvasHistory.height);
 
                     if (barChartCanvasCountSale.chart) {
                         barChartCanvasCountSale.chart.destroy();
                     }
                     if (barChartCanvasCountSumPrice.chart) {
                         barChartCanvasCountSumPrice.chart.destroy();
+                    }
+                    if (barChartCanvasHistory.chart) {
+                        barChartCanvasHistory.chart.destroy();
                     }
 
                     // กรอง labels เพื่อเลือกเฉพาะ labels ที่มี dataset data ที่ไม่เป็น 0
@@ -491,7 +611,6 @@
                     const filteredChartData = {
                         labels: filteredLabels,
                         datasets: filteredDatasets,
-
                     };
 
                     // สร้างกราฟโดยใช้ข้อมูลที่ผ่านการกรอง
@@ -531,6 +650,13 @@
                         data: filteredChartData2,
                         options: barChartOptions
                     });
+
+
+                    barChartCanvasHistory.chart = new Chart(barChartCanvasHistory, {
+                        type: 'bar',
+                        data: areaChartData_count_history,
+                        options: barChartOptions
+                    });
                 }
             });
         }
@@ -557,6 +683,7 @@
             var dayInput = $("#day_input").val();
             var monthInput = $("#month_input").val();
             var yearInput = $("#year_input").val();
+
             if (checkedRadioValue == 1) {
                 var baseUrl = "<?= base_url('dashboard/report/generate/view/') ?>" + dayInput + "/" + checkedRadioValue + "/" + type;
             } else if (checkedRadioValue == 2) {

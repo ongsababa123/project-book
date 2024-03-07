@@ -106,12 +106,13 @@ class ReportController extends BaseController
 
                 $id_book_splite = explode(',', $value_history['id_book']);
                 foreach ($id_book_splite as $key_id_book => $id_book) {
-
                     if ($value['id_book'] == $id_book) {
                         $data['book'][$key]['count_history']++;
                         $price = $value_history['sum_rental_price'] + $value_history['sum_deposit_price'] - $value_history['sum_price_promotion'];
                         $late_price = $value_history['sum_late_price'] + $value_history['sum_day_late_price'] + $value_history['sum_book_des_price'];
-                        $data['book'][$key]['count_price_sum'] += ($price + $late_price);
+                        $data['book'][$key]['count_price_sum'] = ($value['price'] * $data['book'][$key]['count_history']);
+                        $data['history'][$key_history]['late_price'] = $late_price;
+                        $data['history'][$key_history]['count_price_sum'] = $price + $late_price;
                     }
                 }
             }
@@ -146,8 +147,36 @@ class ReportController extends BaseController
             // Output the PDF to the browser or save it to a file
             $this->response->setHeader('Content-Type', 'application/pdf');
             $mpdf->Output('รายงานยอดขาย.pdf', 'I'); // opens in browser
-        } else {
+        } else if ($type == 2) {
             echo view('dashboard/print_view', $data);
+        } else if ($type == 3) {
+            // Create an instance of Mpdf
+            $mpdf = new \Mpdf\Mpdf([
+                'fontDir' => __DIR__ . '/fonts',
+                'fontdata' => [
+                    'sarabun' => [
+                        'R' => 'THSarabunNew.ttf',
+                        'I' => 'THSarabunNew Italic.ttf',
+                        'B' => 'THSarabunNew Bold.ttf',
+                    ],
+                ],
+                'default_font' => 'sarabun',
+            ]);
+
+            // Set additional properties
+            $mpdf->autoScriptToLang = true;
+            $mpdf->autoLangToFont = true;
+
+            // Generate PDF content
+            $html = view('dashboard/pdf_view_his', $data);
+
+            $mpdf->WriteHTML($html);
+
+            // Output the PDF to the browser or save it to a file
+            $this->response->setHeader('Content-Type', 'application/pdf');
+            $mpdf->Output('รายงานยอดขาย.pdf', 'I'); // opens in browser
+        } else if ($type == 4) {
+            echo view('dashboard/print_view_his', $data);
         }
 
     }

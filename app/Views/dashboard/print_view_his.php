@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>รายงานยอดเช่า</title>
+    <title>รายงานประวัติยอดเช่า</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="<?= base_url('dist/css/fontsgoogle.css'); ?>">
     <!-- Font Awesome -->
@@ -44,7 +44,7 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h2>รายงานยอดเช่า</h2>
+                        <h2>รายงานประวัติยอดเช่า</h2>
                     </div>
                 </div>
                 <br>
@@ -62,58 +62,106 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <h6>รายการหนังสือ</h6>
+                <h6>รายการประวัติ</h6>
                 <br>
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr class="text-center" style="background-color: #86d9ab;">
-                            <th>ลำดับ</th>
-                            <th>ชื่อหนังสือ</th>
-                            <th>ราคาเช่า</th>
-                            <th>จำนวนที่ขาย</th>
-                            <th>ยอดเช่า (รวม)</th>
+                            <th>ลำดับบิลที่</th>
+                            <th>หนังสือที่ยืม</th>
+                            <th>ค่าเช่ารวมทั้งสิ้น</th>
+                            <th>ค่ามัดจำรวมทั้งสิ้น</th>
+                            <th>ส่วนลดโปรโมชั่นรวมทั้งสิ้น</th>
+                            <th>ค่าปรับรวมทั้งสิ้น</th>
+                            <th>รวมทั้งสิ้น</th>
                         </tr style="background-color: #86d9ab;">
                     </thead>
                     <tbody>
                         <?php
                         $count = 1;
-                        $total = 0;
-                        $sum = 0;
+                        $sum_book = 0;
+                        $all_sum_rental_price = 0;
+                        $all_sum_deposit_price = 0;
+                        $all_price_promotion = 0;
+                        $all_late_price = 0;
+                        $all_count_price_sum = 0;
                         ?>
-                        <?php foreach ($book as $key => $value): ?>
-                            <?php if ($value['count_history'] != 0): ?>
-                                <tr>
-                                    <td class="text-center">
-                                        <?= $count++; ?>
-                                    </td>
-                                    <td>
-                                        <?= $value['name_book']; ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?= $value['price']; ?> บาท
-                                    </td>
-                                    <td class="text-center">
-                                        <?= $value['count_history']; ?> ครั้ง
-                                    </td>
-                                    <td class="text-center">
-                                        <?= $value['count_price_sum']; ?> บาท
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
-                            <?php
-                            $total = $total + $value['count_history'];
-                            $sum = $sum + $value['count_price_sum'];
-                            ?>
-                        <?php endforeach; ?>
+                        <?php foreach ($history as $key => $value): ?>
+                            <tr>
+                                <td>
+                                    <?= $count; ?>
+                                </td>
+                                <td>
+                                    <?php $id_books = explode(',', $value['id_book']) ?>
+                                    <?php $sum_book += count($id_books); ?>
+                                    <?php foreach ($id_books as $key_book => $value_book): ?>
+                                        <?php foreach ($book as $key_data_book => $value_data_book): ?>
+                                            <?php if ($value_data_book['id_book'] == $value_book): ?>
+                                                <?= $value_data_book['name_book']; ?>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
+
+                                </td>
+                                <td class="text-center">
+                                    <?php $all_sum_rental_price += $value['sum_rental_price']; ?>
+                                    <?= $value['sum_rental_price']; ?> บาท
+                                </td>
+                                <td class="text-center">
+                                    <?php $all_sum_deposit_price += $value['sum_deposit_price']; ?>
+                                    <?= $value['sum_deposit_price']; ?> บาท
+                                </td>
+                                <td class="text-center">
+                                    <?php $all_price_promotion += $value['sum_price_promotion']; ?>
+                                    <?= $value['sum_price_promotion']; ?> บาท
+                                </td>
+                                <td class="text-center">
+                                    <?php $all_late_price += $value['late_price']; ?>
+                                    <?= $value['late_price']; ?> บาท
+                                </td>
+                                <td class="text-center">
+                                    <?php $all_count_price_sum += $value['count_price_sum']; ?>
+                                    <?= $value['count_price_sum']; ?> บาท
+                                </td>
+                            </tr>
+                            <?php $count++;
+                        endforeach; ?>
+                    </tbody>
+                </table>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr class="text-center" style="background-color: #86d9ab;">
+                            <th>ประวัติทั้งหมด</th>
+                            <th>จำนวนหนังสือที่เช่าทั้งหมด</th>
+                            <th>ค่าเช่ารวมทั้งหมด</th>
+                            <th>ค่ามัดจำรวมทั้งหมด</th>
+                            <th>ส่วนลดโปรโมชั่นรวมทั้งหมด</th>
+                            <th>ค่าปรับรวมทั้งหมด</th>
+                            <th>รวมทั้งหมด</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <tr>
-                            <td colspan="3" class="text-center">
-                                รวม
+                            <td class="text-center">
+                                <?= $count - 1 ?>
                             </td>
                             <td class="text-center">
-                                <?= $total; ?> ครั้ง
+                                <?= $sum_book . ' เล่ม' ?>
                             </td>
                             <td class="text-center">
-                                <?= $sum; ?> บาท
+                                <?= $all_sum_rental_price . ' บาท' ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $all_sum_deposit_price . ' บาท' ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $all_price_promotion . ' บาท' ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $all_late_price . ' บาท' ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $all_count_price_sum . ' บาท' ?>
                             </td>
                         </tr>
                     </tbody>
@@ -161,7 +209,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
     <script>
         var type_load = <?php echo json_encode($type_load); ?>;
-        if (type_load == 1) {
+        if (type_load == 3) {
             var element = document.querySelector('.wrapper'); // ใช้ .wrapper เพราะเป็นคลาสที่ครอบ HTML ทั้งหมด
             // กำหนด margin และ scale
             var options = {
@@ -175,7 +223,7 @@
                 // เมื่อการดาวน์โหลด PDF เสร็จสิ้น
                 window.close(); // ปิดหน้าต่างหลังจากดาวน์โหลดเสร็จ
             });
-        } else if (type_load == 2) {
+        } else if (type_load == 4) {
             window.addEventListener("load", window.print());
         }
 

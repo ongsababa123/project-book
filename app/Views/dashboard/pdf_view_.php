@@ -86,9 +86,9 @@
         $text = "รายงานยอดเช่าประจำวัน " . $formattedDateFormatted;
     } else if ($type == 2) {
         $date = explode('-', $date);
-        $text = "รายงานยอดเช่ารายวันของเดือน " . $months[(int) $date[1]] . " " . $date[0];
+        $text = "รายงานเดือน " . $months[(int) $date[1]] . " " . $date[0];
     } else if ($type == 3) {
-        $text = "รายงานยอดเช่ารายเดือนของปี " . $date;
+        $text = "รายงานยอดเช่าปี " . $date;
     }
     ?>
     <h3 style="text-align: right;">
