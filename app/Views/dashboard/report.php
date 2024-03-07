@@ -51,14 +51,14 @@
                                             <input type="radio" class="score-radio" id="answer_mounth" name="r_"
                                                 value="2" onclick="change_radio(this)">
                                             <label for="answer_mounth"
-                                                id="label_answer_mounth">ยอดเช่ารายวันของเดือน</label>
+                                                id="label_answer_mounth">ยอดเช่าเดือน</label>
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="icheck-success d-inline">
                                             <input type="radio" class="score-radio" id="answer_year" name="r_" value="3"
                                                 onclick="change_radio(this)">
-                                            <label for="answer_year" id="label_answer_year">ยอดเช่ารายเดือนของปี</label>
+                                            <label for="answer_year" id="label_answer_year">ยอดเช่าปี</label>
                                         </div>
                                     </div>
                                 </div>

@@ -75,16 +75,35 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <table id="table_stock_all" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>จำนวนหนังสือทั้งหมด</th>
                                                     <th>จำนวนหนังสือในคลังทั้งหมด</th>
-                                                    <th>ไม่พร้อมใช้งาน</th>
                                                     <th>พร้อมใช้งาน</th>
                                                     <th>จอง</th>
                                                     <th>กำลังเช่า</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td id="book_all"></td>
+                                                    <td id="stock_all"></td>
+                                                    <td id="ready_all"></td>
+                                                    <td id="reserve_all"></td>
+                                                    <td id="rental_all"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table id="table_stock_all" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>จำนวนหนังสือไม่พร้อมใช้งาน</th>
+
+                                                    <th>ไม่พร้อมใช้งาน</th>
                                                     <th>หนังสือหาย</th>
                                                     <th>หนังสือชำรุด</th>
                                                     <th>หนังสือไม่สามารถใช้ต่อได้</th>
@@ -92,12 +111,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td id="book_all"></td>
-                                                    <td id="stock_all"></td>
+                                                    <td id="boo_not_use_all"></td>
                                                     <td id="not_ready_all"></td>
-                                                    <td id="ready_all"></td>
-                                                    <td id="reserve_all"></td>
-                                                    <td id="rental_all"></td>
                                                     <td id="lost_all"></td>
                                                     <td id="damaged_all"></td>
                                                     <td id="not_use_all"></td>
@@ -307,13 +322,16 @@
                 dataType: "JSON",
                 success: function (response) {
                     $('#overlay1').hide();
-                    console.log(response);
+                    var count_all_book_not_ready = parseInt(response.data.notready_book) + parseInt(response.data.lost_book) + parseInt(response.data.damaged_book) + parseInt(response.data.not_use_book);
+                    var count_all_book_ready = response.data.count_all_stock - count_all_book_not_ready;
                     $('#book_all').text(response.data.count_all_book + ' เล่ม');
-                    $('#stock_all').text(response.data.count_all_stock + ' เล่ม');
-                    $('#not_ready_all').text(response.data.notready_book + ' เล่ม');
+                    $('#stock_all').text(count_all_book_ready + ' เล่ม');
                     $('#ready_all').text(response.data.ready_book + ' เล่ม');
                     $('#reserve_all').text(response.data.reserve_book + ' เล่ม');
                     $('#rental_all').text(response.data.rental_book + ' เล่ม');
+
+                    $('#boo_not_use_all').text(count_all_book_not_ready + ' เล่ม');
+                    $('#not_ready_all').text(response.data.notready_book + ' เล่ม');
                     $('#lost_all').text(response.data.lost_book + ' เล่ม');
                     $('#damaged_all').text(response.data.damaged_book + ' เล่ม');
                     $('#not_use_all').text(response.data.not_use_book + ' เล่ม');
