@@ -467,10 +467,10 @@
                                                     </h6>
                                                     <a href="<?= site_url('/book/details/') . $valuebookData['id_book'] ?>"
                                                         class="btn btn-default ">เพิ่มเติม</a>
-                                                    <?php if (!$value['data_review'][$check_id]): ?>
-                                                    <button class="btn btn-warning" data-toggle="modal" data-target="#review_book"
-                                                        onclick="load_review(<?= $valuebookData['id_book'] ?>, <?= $value['id_history'] ?>)"
-                                                        id="button_modal" name="button_modal">ให้คะแนนหนังสือ</button>
+                                                    <?php if (!$value['data_review'][$keybookData]): ?>
+                                                        <button class="btn btn-warning" data-toggle="modal" data-target="#review_book"
+                                                            onclick="load_review(<?= $valuebookData['id_book'] ?>, <?= $value['id_history'] ?>)"
+                                                            id="button_modal" name="button_modal">ให้คะแนนหนังสือ</button>
                                                     <?php endif; ?>
                                                     <?php $check_id++; ?>
                                                 </div>
@@ -593,6 +593,10 @@
     }
 </script>
 <script>
+    var HistoryData = <?php echo json_encode($HistoryData_3); ?>;
+    var bookData = <?php echo json_encode($bookData); ?>;
+    console.log(HistoryData);
+    console.log(bookData);
     function loadmodal(id_history, type) {
         var HistoryData = null;
         if (type == 1) {
@@ -807,7 +811,6 @@
     }
 </script>
 <script>
-
     document.addEventListener("DOMContentLoaded", function () {
         const stars = document.querySelectorAll('.fa-star');
 
@@ -852,7 +855,6 @@
             },
             success: function (response) {
                 Swal.close();
-                console.log(response);
                 if (response.success) {
                     Swal.fire({
                         title: response.message,
